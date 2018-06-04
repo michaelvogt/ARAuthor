@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AR Author</string>
+    <string name="app_intro">This app is a playground for Augmented Reality functionality around
+        ARCore from Google. Currently mainly based around the image marker functionality.\n\n
+
+        It allows to capture marker images, crop them and try them out on the spot, to make sure
+        the captures images are actually usable for the ARCore recognition engine.\n\n
+
+        Next step is to provide simple authoring functionality to define areas on the marker image
+        and place interactive elements to sketch out some scene ideas, that can then be implemented
+        for a specific application.\n\n
+
+        When required functionality is available, the functionality of this app will be provided
+        as a browser app.
+    </string>
+
+    <string name="req_header">The following requirements are needed</string>
+
+    <string name="camera_req">The camera requirement is needed for the ARCore preview. Image
+        processing is handled locally, no images are sent over the network</string>
+    <string name="camera_req_btn">Approve camera access</string>
+
+    <string name="storage_req">Images and settings are stored in files on the public local storage
+        of the device in a folder called \'TouristAR\'. Other locations on the device aren\'t
+        accessed
+    </string>
+    <string name="storage_req_btn">Approve storage access</string>
+
+    <string name="marker_import_button">import</string>
+    <string name="marker_capture_button">capture</string>
+
+    <string name="marker_image">Marker Image</string>
+    <string name="marker_image_desc">Marker image for ARCore</string>
+
+</resources>
