@@ -32,5 +32,8 @@
 
     <string name="marker_image">Marker Image</string>
     <string name="marker_image_desc">Marker image for ARCore</string>
+    <string name="button_grab_desc">Grab AR content to device</string>
+    <string name="button_image_desc">Show product images</string>
+    <string name="button_video_desc">Play promo video</string>
 
 </resources>
