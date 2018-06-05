@@ -16,6 +16,7 @@ import static android.os.Environment.getExternalStorageDirectory;
 
 public class FileUtils {
     public static final String MARKERS_PATH = "/Touristar/Markers/";
+    public static final String HIDAKA_PATH = "/Touristar/Hidaka/";
 
     public static File getFullPuplicFolderFile(String path) {
         return new File(getExternalStorageDirectory(), path);

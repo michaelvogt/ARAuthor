@@ -49,7 +49,9 @@ public class LoopArFragment extends ArFragment {
                 bitmap = ImageUtils.decodeSampledBitmapFromImagePath(
                         marker.getImagePath(), Marker.MIN_SIZE, Marker.MIN_SIZE);
                 if (bitmap != null) {
-                    int index = imageDatabase.addImage(marker.getTitle(), bitmap);
+                    int index = marker.getSizeInM() <= 0
+                            ? imageDatabase.addImage(marker.getTitle(), bitmap)
+                            : imageDatabase.addImage(marker.getTitle(), bitmap, marker.getSizeInM());
                     Log.d(TAG, "marker " + marker.getTitle() + " imported");
                 } else {
                     Log.d(TAG, "marker " + marker.getTitle() + " NOT imported");
