@@ -2,9 +2,6 @@ package eu.michaelvogt.ar.author.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Environment;
-
-import java.io.File;
 
 public class ImageUtils {
 

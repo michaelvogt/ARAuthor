@@ -1,7 +1,5 @@
 package eu.michaelvogt.ar.author.data;
 
-import java.io.Serializable;
-
 public class Marker {
     public static final int MIN_SIZE = 300;
 

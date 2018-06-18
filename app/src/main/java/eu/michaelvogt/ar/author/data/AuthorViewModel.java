@@ -1,14 +1,12 @@
 package eu.michaelvogt.ar.author.data;
 
 import android.arch.lifecycle.ViewModel;
-import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class AuthorViewModel extends ViewModel {
-    private List<Marker> markers = new ArrayList<>();
+    private final List<Marker> markers = new ArrayList<>();
     private Marker cropMarker = null;
 
     public void addMarker(Marker marker) { markers.add(marker); }
@@ -18,12 +16,7 @@ public class AuthorViewModel extends ViewModel {
     public int getMarkerSize() { return markers.size(); }
 
     public Iterable<Marker> markerIterable() {
-        return new Iterable<Marker>() {
-            @NonNull @Override
-            public Iterator<Marker> iterator() {
-                return markers.iterator();
-            }
-        };
+        return () -> markers.iterator();
     }
 
     public void setCropMarker(Marker editMarker) {

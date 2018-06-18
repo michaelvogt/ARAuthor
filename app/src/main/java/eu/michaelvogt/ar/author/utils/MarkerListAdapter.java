@@ -12,7 +12,7 @@ import eu.michaelvogt.ar.author.data.AuthorViewModel;
 import eu.michaelvogt.ar.author.data.Marker;
 
 public class MarkerListAdapter extends RecyclerView.Adapter<MarkerListAdapter.ViewHolder> {
-    private AuthorViewModel mViewModel;
+    private final AuthorViewModel mViewModel;
     private OnItemClickListener mListener;
 
     public interface OnItemClickListener {

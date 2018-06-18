@@ -33,8 +33,8 @@ import static android.app.Activity.RESULT_OK;
 
 
 public class EditFragment extends Fragment {
-    static final int REQUEST_IMAGE_CAPTURE = 1;
-    static final int REQUEST_PICK_IMAGE = 2;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int REQUEST_PICK_IMAGE = 2;
 
     private int editIndex;
     private TextView editLocation;
@@ -44,11 +44,6 @@ public class EditFragment extends Fragment {
     private AuthorViewModel viewModel;
 
     public EditFragment() {/* Required empty public constructor*/}
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -86,21 +81,13 @@ public class EditFragment extends Fragment {
                     editMarker.getImagePath(), 300, 300));
         }
 
-        view.findViewById(R.id.button_save).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) { handleSave(view); }
-        });
+        view.findViewById(R.id.button_save).setOnClickListener(this::handleSave);
 
-        view.findViewById(R.id.button_capture).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) { handleCapture(view); }
-        });
+        view.findViewById(R.id.button_capture).setOnClickListener(this::handleCapture);
 
-        view.findViewById(R.id.button_import).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) { handleImport(); }
-        });
+        view.findViewById(R.id.button_import).setOnClickListener(view13 -> handleImport());
 
-        view.findViewById(R.id.button_edit).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) { handleCrop(view); }
-        });
+        view.findViewById(R.id.button_edit).setOnClickListener(v -> handleCrop(view));
     }
 
     @Override

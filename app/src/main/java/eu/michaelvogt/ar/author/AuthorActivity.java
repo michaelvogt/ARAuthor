@@ -52,5 +52,10 @@ public class AuthorActivity extends AppCompatActivity {
                 "aoyamake_sign",
                 "青山家",
                 0.648f));
+        viewModel.addMarker(new Marker(
+                "/Touristar/Markers/IMG_20180419_100356.jpg",
+                "kumagaike_sign",
+                "熊谷家",
+                0.648f));
     }
 }

@@ -24,11 +24,6 @@ public class IntroFragment extends Fragment {
     public IntroFragment() {/* Required empty public constructor*/}
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -45,13 +40,8 @@ public class IntroFragment extends Fragment {
             view.findViewById(R.id.camera_req_text).setVisibility(View.VISIBLE);
             View requestCamera = view.findViewById(R.id.camera_req_btn);
             requestCamera.setVisibility(View.VISIBLE);
-            requestCamera.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ActivityCompat.requestPermissions(getActivity(),
-                            new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
-                }
-            });
+            requestCamera.setOnClickListener(v -> ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA));
 
         }
 
@@ -61,13 +51,8 @@ public class IntroFragment extends Fragment {
             view.findViewById(R.id.storage_req_text).setVisibility(View.VISIBLE);
             View requestStorage = view.findViewById(R.id.storage_req_btn);
             requestStorage.setVisibility(View.VISIBLE);
-            requestStorage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ActivityCompat.requestPermissions(getActivity(),
-                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_STORAGE);
-                }
-            });
+            requestStorage.setOnClickListener(v -> ActivityCompat.requestPermissions(getActivity(),
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_STORAGE));
         }
 
         view.findViewById(R.id.start_authoring_btn).setOnClickListener(

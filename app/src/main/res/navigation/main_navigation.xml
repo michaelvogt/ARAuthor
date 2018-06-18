@@ -24,7 +24,7 @@
         android:id="@+id/previewFragment"
         android:name="eu.michaelvogt.ar.author.PreviewFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_preview" ></fragment>
+        tools:layout="@layout/fragment_preview" />
     <fragment
         android:id="@+id/listFragment"
         android:name="eu.michaelvogt.ar.author.ListFragment"

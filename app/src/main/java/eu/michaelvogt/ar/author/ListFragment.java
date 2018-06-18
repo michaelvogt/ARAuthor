@@ -24,12 +24,7 @@ public class ListFragment extends Fragment implements MarkerListAdapter.OnItemCl
 
     public ListFragment() {/* Required empty public constructor*/}
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
+  @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -64,15 +59,7 @@ public class ListFragment extends Fragment implements MarkerListAdapter.OnItemCl
         );
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() { super.onDetach(); }
-
-    @Override
+  @Override
     public void onItemClicked(int position) {
         Bundle bundle = new Bundle();
         bundle.putInt("edit_index", position);

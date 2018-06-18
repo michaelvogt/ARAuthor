@@ -19,7 +19,7 @@ import eu.michaelvogt.ar.author.data.Marker;
 import eu.michaelvogt.ar.author.utils.ImageUtils;
 
 public class LoopArFragment extends ArFragment {
-    static  final String TAG = "LoopArFragment";
+    private static  final String TAG = "LoopArFragment";
     FrameListener listener = null;
 
     public interface FrameListener {
@@ -67,8 +67,11 @@ public class LoopArFragment extends ArFragment {
             }
         }
 
+
+
         Config config = new Config(session);
         config.setAugmentedImageDatabase(imageDatabase);
+        config.setLightEstimationMode(Config.LightEstimationMode.AMBIENT_INTENSITY);
 
         return config;
     }

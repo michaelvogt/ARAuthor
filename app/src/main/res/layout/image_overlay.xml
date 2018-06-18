@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:id="@+id/image_overlay_text"
+    android:layout_width="100dp"
+    android:layout_height="76dp"
+    android:padding="6dp"
+    android:background="@drawable/info_text"
+    android:text=".build(context)         .thenAccept(infoPanel -> {           Node panel = new Node();           panel.setRenderable(infoPanel);           panel.setLocalPosition(new Vector3(image.getExtentX(), 0, image.getExtentZ()));           panel.setLocalRotation(Quaternion.axisAngle(new Vector3(1, 0, 0), -90));           panel.setParent(anchorNode);" />

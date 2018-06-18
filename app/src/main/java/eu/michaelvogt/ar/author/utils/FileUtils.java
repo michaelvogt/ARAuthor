@@ -1,9 +1,7 @@
 package eu.michaelvogt.ar.author.utils;
 
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Environment;
-import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileInputStream;
