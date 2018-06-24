@@ -1,11 +1,9 @@
-package eu.michaelvogt.ar.author.locations;
-
+package eu.michaelvogt.ar.author.locations.iwamiginzan;
 
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
 
-import com.google.ar.core.Anchor;
 import com.google.ar.core.AugmentedImage;
 import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.Node;
@@ -19,14 +17,15 @@ import com.google.ar.sceneform.rendering.Texture;
 import java.util.concurrent.CompletableFuture;
 
 import eu.michaelvogt.ar.author.R;
+import eu.michaelvogt.ar.author.nodes.InfoPanel;
 
-public class Kumagaike {
-  private static final String TAG = Kumagaike.class.getSimpleName();
+public class Hidakaya {
+  private static final String TAG = Hidakaya.class.getSimpleName();
 
-  public static final String SIGN = "kumagaike_sign";
+  public static final String SIGN = "hidakaya_sign";
 
   public static void displayInfoScene(Context context, AnchorNode anchorNode, AugmentedImage image) {
-    InfoPanel
+    new InfoPanel()
         .build(context)
         .thenAccept(infoPanel -> {
           Node panel = new Node();
@@ -39,8 +38,14 @@ public class Kumagaike {
           panelView.findViewById(R.id.button_video).setOnClickListener((event) -> {
             Log.d(TAG, "video pressed");
 
+            // Show video on top of sign
+          });
+
+          panelView.findViewById(R.id.button_image).setOnClickListener((event) -> {
+            Log.d(TAG, "image pressed");
+
             CompletableFuture<Texture> textureFuture = Texture.builder()
-                .setSource(context, R.drawable.info_text)
+                .setSource(context, R.drawable.hidakabreads)
                 .setUsage(Texture.Usage.DATA)
                 .build()
                 .exceptionally(throwable -> {
@@ -48,11 +53,12 @@ public class Kumagaike {
                   return null;
                 });
 
+            // Show images on top of sign
             textureFuture.thenAccept(texture -> MaterialFactory.makeOpaqueWithTexture(context, texture)
                 .thenAccept(material -> {
                   ModelRenderable panelDisplayRenderable = ShapeFactory.makeCube(
-                      new Vector3(image.getExtentX() * 0.637f, .01f, image.getExtentZ() * 0.646f),
-                      new Vector3(0.008f, 0, -0.014f), material);
+                      new Vector3(image.getExtentX() - 0.02f, .01f, image.getExtentZ() - 0.025f),
+                      new Vector3(0, 0, 0), material);
 
                   Node display = new Node();
                   display.setRenderable(panelDisplayRenderable);
@@ -62,7 +68,6 @@ public class Kumagaike {
                   Log.e(TAG, "Unable build overlay", throwable);
                   return null;
                 }));
-
           });
         })
         .exceptionally(throwable -> {

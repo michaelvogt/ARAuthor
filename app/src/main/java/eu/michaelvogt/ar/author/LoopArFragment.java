@@ -19,7 +19,8 @@ import eu.michaelvogt.ar.author.data.Marker;
 import eu.michaelvogt.ar.author.utils.ImageUtils;
 
 public class LoopArFragment extends ArFragment {
-    private static  final String TAG = "LoopArFragment";
+    private static  final String TAG = LoopArFragment.class.getSimpleName();
+
     FrameListener listener = null;
 
     public interface FrameListener {
@@ -41,29 +42,26 @@ public class LoopArFragment extends ArFragment {
         AuthorViewModel viewModel = ViewModelProviders.of(getActivity()).get(AuthorViewModel.class);
         AugmentedImageDatabase imageDatabase = new AugmentedImageDatabase(session);
 
-        View view = getActivity().findViewById(R.id.previewFragment);
-
         Bitmap bitmap = null;
         for (Marker marker : viewModel.markerIterable()) {
             try {
                 bitmap = ImageUtils.decodeSampledBitmapFromImagePath(
                         marker.getImagePath(), Marker.MIN_SIZE, Marker.MIN_SIZE);
                 if (bitmap != null) {
-                    int index = marker.getSizeInM() <= 0
+                    int index = marker.getWidthInM() <= 0
                             ? imageDatabase.addImage(marker.getTitle(), bitmap)
-                            : imageDatabase.addImage(marker.getTitle(), bitmap, marker.getSizeInM());
+                            : imageDatabase.addImage(marker.getTitle(), bitmap, marker.getWidthInM());
                     Log.d(TAG, "marker " + marker.getTitle() + " imported");
                 } else {
                     Log.d(TAG, "marker " + marker.getTitle() + " NOT imported");
-                    Snackbar.make(view, "marker " + marker.getTitle() + " NOT imported",
+                    Snackbar.make(this.getView(), "marker " + marker.getTitle() + " NOT imported",
                             Snackbar.LENGTH_SHORT).show();
 
                 }
             } catch (Throwable ex) {
                 Log.e(TAG, "Something bad happened", ex);
-                Snackbar.make(view, "Exception: " + ex.getMessage(),
+                Snackbar.make(this.getView(), "Exception: " + ex.getMessage(),
                         Snackbar.LENGTH_SHORT).show();
-
             }
         }
 
@@ -71,7 +69,6 @@ public class LoopArFragment extends ArFragment {
 
         Config config = new Config(session);
         config.setAugmentedImageDatabase(imageDatabase);
-        config.setLightEstimationMode(Config.LightEstimationMode.AMBIENT_INTENSITY);
 
         return config;
     }

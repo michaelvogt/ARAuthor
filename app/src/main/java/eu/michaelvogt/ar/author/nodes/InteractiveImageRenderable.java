@@ -1,4 +1,4 @@
-package eu.michaelvogt.ar.author.locations;
+package eu.michaelvogt.ar.author.nodes;
 
 import android.content.Context;
 
@@ -8,10 +8,10 @@ import java.util.concurrent.CompletableFuture;
 
 import eu.michaelvogt.ar.author.R;
 
-public class InfoPanel {
-  public static CompletableFuture<ViewRenderable> build(Context context) {
+public class InteractiveImageRenderable {
+  public CompletableFuture<ViewRenderable> build(Context context) {
     return ViewRenderable.builder()
-        .setView(context, R.layout.user_panel)
+        .setView(context, R.layout.image_interactive)
         .build();
   }
 }

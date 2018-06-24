@@ -15,37 +15,35 @@ import com.google.ar.core.AugmentedImage;
 import com.google.ar.core.TrackingState;
 import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.HitTestResult;
+import com.google.ar.sceneform.Node;
 import com.google.ar.sceneform.Scene;
+import com.google.ar.sceneform.math.Quaternion;
+import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.ModelRenderable;
-import com.google.ar.sceneform.ux.ArFragment;
-import com.google.ar.sceneform.ux.GesturePointersUtility;
-import com.google.ar.sceneform.ux.TransformableNode;
 
 import java.util.Collection;
 
 import androidx.navigation.Navigation;
-import eu.michaelvogt.ar.author.locations.Hidakaya;
-import eu.michaelvogt.ar.author.locations.Kumagaike;
-import eu.michaelvogt.ar.author.rotation.RotateGestureRecognizer;
+import eu.michaelvogt.ar.author.locations.iwamiginzan.Hidakaya;
+import eu.michaelvogt.ar.author.locations.iwamiginzan.Kumagaike;
+import eu.michaelvogt.ar.author.locations.goryoukaku.Office;
 
 public class PreviewFragment extends Fragment {
   private LoopArFragment loopArFragment;
 
-  private TransformableNode butterfly;
+  private Node butterfly;
   private ModelRenderable butterflyRenderable;
-
-  private RotateGestureRecognizer rotateRecognizer;
 
   private boolean hidakainfoDone;
   private boolean kumagaikeinfoDone;
   private boolean butterflyDone;
+  private boolean officeinfoDone;
 
 
   private final Scene.OnPeekTouchListener peekTouchListener = new Scene.OnPeekTouchListener() {
     @Override
     public void onPeekTouch(HitTestResult hitTestResult, MotionEvent motionEvent) {
       loopArFragment.onPeekTouch(hitTestResult, motionEvent);
-      rotateRecognizer.onTouch(hitTestResult, motionEvent);
     }
   };
 
@@ -59,16 +57,13 @@ public class PreviewFragment extends Fragment {
 
   @Override
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-    loopArFragment = (LoopArFragment)
-        getChildFragmentManager().findFragmentById(R.id.ux_fragment);
+    loopArFragment = (LoopArFragment) getChildFragmentManager().findFragmentById(R.id.ux_fragment);
     loopArFragment.getArSceneView().getScene().setOnPeekTouchListener(peekTouchListener);
     loopArFragment.getPlaneDiscoveryController().hide();
     loopArFragment.getPlaneDiscoveryController().setInstructionView(null);
 
-    rotateRecognizer = new RotateGestureRecognizer(new GesturePointersUtility(getResources().getDisplayMetrics()));
-
     ModelRenderable.builder()
-        .setSource(getContext(), R.raw.butterfly)
+        .setSource(getContext(), R.raw.monarch)
         .build()
         .thenAccept(renderable -> butterflyRenderable = renderable)
         .exceptionally(throwable -> {
@@ -100,10 +95,17 @@ public class PreviewFragment extends Fragment {
                   Kumagaike.displayInfoScene(getContext(), anchorNode, image);
                 }
                 break;
+              case Office.SIGN:
+                if (!officeinfoDone) {
+                  officeinfoDone = true;
+                  new Office().displayInfoScene(getContext(),
+                      anchorNode, image, loopArFragment.getArSceneView().getSession());
+                }
+                break;
               default:
                 if (!butterflyDone) {
                   butterflyDone = true;
-                  makeButterfly(anchor);
+                  makeButterfly(anchor, image);
                 }
                 break;
             }
@@ -117,7 +119,7 @@ public class PreviewFragment extends Fragment {
     );
   }
 
-  private void makeButterfly(Anchor anchor) {
+  private void makeButterfly(Anchor anchor, AugmentedImage image) {
     if (this.butterfly != null)
       return;
 
@@ -125,11 +127,13 @@ public class PreviewFragment extends Fragment {
     anchorNode.setParent(loopArFragment.getArSceneView().getScene());
 
     // Create the transformable butterfly and add it to the anchor.
-    TransformableNode andy = new TransformableNode(loopArFragment.getTransformationSystem());
-    andy.setParent(anchorNode);
-    andy.setRenderable(butterflyRenderable);
-    andy.select();
+    Node butterfly = new Node();
+    butterfly.setRenderable(butterflyRenderable);
+    butterfly.setLocalPosition(new Vector3(-image.getExtentX(), 0, -image.getExtentZ()));
+    butterfly.setLocalRotation(new Quaternion(new Vector3(0, 1, 0 ), 180));
 
-    this.butterfly = andy;
+    butterfly.setParent(anchorNode);
+
+    this.butterfly = butterfly;
   }
 }

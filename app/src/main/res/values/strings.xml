@@ -35,5 +35,6 @@
     <string name="button_grab_desc">Grab AR content to device</string>
     <string name="button_image_desc">Show product images</string>
     <string name="button_video_desc">Play promo video</string>
+    <string name="image_alternative_desc">Interactive image for use in AR scene</string>
 
 </resources>

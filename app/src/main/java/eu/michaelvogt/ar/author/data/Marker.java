@@ -7,17 +7,17 @@ public class Marker {
     private String imagePath;
     private String title;
     private String location;
-    private float sizeInM = -1;
+    private float widthInM = -1;
 
     public Marker() {
         this("", "", "", .03f);
     }
 
-    public Marker(String imagePath, String title, String location, float sizeInM) {
+    public Marker(String imagePath, String title, String location, float widthInM) {
         this.imagePath = imagePath;
         this.title = title;
         this.location = location;
-        this.sizeInM = sizeInM;
+        this.widthInM = widthInM;
     }
 
     public String getThumbPath() { return thumbPath; }
@@ -38,7 +38,7 @@ public class Marker {
         return !imagePath.isEmpty();
     }
 
-    public float getSizeInM() { return sizeInM; }
+    public float getWidthInM() { return widthInM; }
 
-    public void setSizeInM(float sizeInM) { this.sizeInM = sizeInM; }
+    public void setWidthInM(float widthInM) { this.widthInM = widthInM; }
 }
