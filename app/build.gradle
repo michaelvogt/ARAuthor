@@ -38,8 +38,8 @@ android {
 }
 
 dependencies {
-    implementation "com.google.ar.sceneform:core:1.0.0"
-    implementation "com.google.ar.sceneform.ux:sceneform-ux:1.0.0"
+    implementation "com.google.ar.sceneform:core:1.3"
+    implementation "com.google.ar.sceneform.ux:sceneform-ux:1.3.0"
 
     implementation "com.android.support:appcompat-v7:27.1.1"
     implementation 'com.android.support:cardview-v7:27.1.1'
@@ -62,12 +62,6 @@ sceneform.asset('sampledata/models/monarch.obj',
         'src/main/res/raw/monarch')
 
 sceneform.asset('sampledata/models/big_old_house.obj',
-        'default',
+        'sampledata/models/big_old_house.mat',
         'sampledata/models/big_old_house.sfa',
         'src/main/res/raw/big_old_house')
-
-
-sceneform.asset('sampledata/models/goryoukaku.obj',
-        'default',
-        'sampledata/models/goryoukaku.sfa',
-        'src/main/res/raw/goryoukaku')

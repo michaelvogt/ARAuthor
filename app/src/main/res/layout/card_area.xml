@@ -2,7 +2,7 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
 
-    android:id="@+id/marker_card"
+    android:id="@+id/area_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="3dp"
@@ -17,20 +17,20 @@
         android:layout_height="116dp">
 
         <ImageView
-            android:id="@+id/marker_image"
+            android:id="@+id/area_image"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:contentDescription="@string/marker_image_desc"
+            android:contentDescription="@string/area_image_desc"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toTopOf="parent"
             card_view:srcCompat="@android:drawable/picture_frame" />
 
         <TextView
-            android:id="@+id/marker_title"
+            android:id="@+id/area_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -38,24 +38,22 @@
             android:fontFamily="serif"
             android:textAlignment="center"
             android:textAppearance="@android:style/TextAppearance.Material.Title"
-            android:textSize="24sp"
+            android:textSize="14sp"
             android:textStyle="bold"
             card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintStart_toEndOf="@+id/marker_image"
+            card_view:layout_constraintStart_toEndOf="@+id/area_image"
             card_view:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/marker_location"
-            android:layout_width="0dp"
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:textAppearance="@android:style/TextAppearance.Material.Subhead"
-            card_view:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="8dp"
+            android:background="@color/cardview_light_background"
             card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintStart_toEndOf="@+id/marker_image"
-            card_view:layout_constraintTop_toBottomOf="@+id/marker_title" />
+            card_view:layout_constraintTop_toTopOf="parent"
+            card_view:srcCompat="@drawable/ic_more_vert_black_24dp" />
 
     </android.support.constraint.ConstraintLayout>
 

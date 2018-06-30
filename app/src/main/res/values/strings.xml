@@ -7,7 +7,7 @@
         It allows to capture marker images, crop them and try them out on the spot, to make sure
         the captures images are actually usable for the ARCore recognition engine.\n\n
 
-        Next step is to provide simple authoring functionality to define areas on the marker image
+        Next step is to provide simple authoring functionality to define areaIds on the marker image
         and place interactive elements to sketch out some scene ideas, that can then be implemented
         for a specific application.\n\n
 
@@ -32,9 +32,14 @@
 
     <string name="marker_image">Marker Image</string>
     <string name="marker_image_desc">Marker image for ARCore</string>
+    <string name="area_image">Marker Image</string>
+    <string name="area_image_desc">Marker image for ARCore</string>
     <string name="button_grab_desc">Grab AR content to device</string>
     <string name="button_image_desc">Show product images</string>
     <string name="button_video_desc">Play promo video</string>
     <string name="image_alternative_desc">Interactive image for use in AR scene</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

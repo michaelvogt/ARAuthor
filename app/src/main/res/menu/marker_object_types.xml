@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/marker_type_infoboard"
+        android:title="Infoboard" />
+    <item
+        android:id="@+id/marker_type_building"
+        android:title="Building" />
+    <item
+        android:id="@+id/marker_type_location"
+        android:title="Location" />
+</menu>

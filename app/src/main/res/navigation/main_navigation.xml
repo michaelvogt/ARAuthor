@@ -19,12 +19,19 @@
         <action
             android:id="@+id/action_crop_marker_image"
             app:destination="@id/cropFragment" />
+        <action
+            android:id="@+id/action_edit_area_placement"
+            app:destination="@id/areaFragment" />
     </fragment>
     <fragment
         android:id="@+id/previewFragment"
         android:name="eu.michaelvogt.ar.author.PreviewFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_preview" />
+        tools:layout="@layout/fragment_preview" >
+        <action
+            android:id="@+id/action_previewFragment_to_listFragment"
+            app:destination="@id/listFragment" />
+    </fragment>
     <fragment
         android:id="@+id/listFragment"
         android:name="eu.michaelvogt.ar.author.ListFragment"
@@ -54,5 +61,22 @@
         <action
             android:id="@+id/action_edit_marker"
             app:destination="@id/editFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/areaFragment"
+        android:name="eu.michaelvogt.ar.author.AreaFragment"
+        android:label="fragment_area"
+        tools:layout="@layout/fragment_area" >
+        <action
+            android:id="@+id/action_edit_marker"
+            app:destination="@id/editFragment" />
+        <argument
+            android:name="markerid"
+            android:defaultValue="-1"
+            app:type="integer" />
+        <argument
+            android:name="areaid"
+            android:defaultValue="-1"
+            app:type="integer" />
     </fragment>
 </navigation>

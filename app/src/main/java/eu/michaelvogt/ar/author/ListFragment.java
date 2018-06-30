@@ -1,7 +1,24 @@
+/*
+    ARTester - AR for tourists by tourists
+    Copyright (C) 2018  Michael Vogt
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 package eu.michaelvogt.ar.author;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,7 +37,7 @@ import eu.michaelvogt.ar.author.utils.MarkerListAdapter;
 
 
 public class ListFragment extends Fragment implements MarkerListAdapter.OnItemClickListener {
-    private View mView;
+    private View view;
 
     public ListFragment() {/* Required empty public constructor*/}
 
@@ -35,7 +52,7 @@ public class ListFragment extends Fragment implements MarkerListAdapter.OnItemCl
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mView = view;
+        this.view = view;
 
         RecyclerView mRecyclerView = view.findViewById(R.id.marker_list);
         mRecyclerView.setHasFixedSize(true);
@@ -63,6 +80,6 @@ public class ListFragment extends Fragment implements MarkerListAdapter.OnItemCl
     public void onItemClicked(int position) {
         Bundle bundle = new Bundle();
         bundle.putInt("edit_index", position);
-        Navigation.findNavController(mView).navigate(R.id.action_edit_marker, bundle);
+        Navigation.findNavController(view).navigate(R.id.action_edit_marker, bundle);
     }
 }
