@@ -18,20 +18,22 @@
 
 package eu.michaelvogt.ar.author.data;
 
-import android.arch.lifecycle.ViewModel;
-
-import com.google.ar.sceneform.math.Quaternion;
-import com.google.ar.sceneform.math.Vector3;
+import android.app.Application;
+import android.arch.lifecycle.AndroidViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class AuthorViewModel extends ViewModel {
+public class AuthorViewModel extends AndroidViewModel {
   private final List<Marker> markers = new ArrayList<>();
   private final List<Area> areas = new ArrayList<>();
 
   private Marker cropMarker = null;
+
+  public AuthorViewModel(Application application) {
+    super(application);
+  }
 
   public void addMarker(Marker marker) {
     markers.add(marker);
@@ -69,7 +71,7 @@ public class AuthorViewModel extends ViewModel {
     cropMarker = null;
   }
 
-  public void addArea(Area area, Vector3 vector3, Quaternion quaternion) {
+  public void addArea(Area area) {
     areas.add(area);
   }
 

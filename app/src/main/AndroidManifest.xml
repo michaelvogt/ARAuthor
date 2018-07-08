@@ -18,6 +18,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="false"
+        android:screenOrientation="portrait"
         tools:ignore="GoogleAppIndexingWarning">
 
         <meta-data
@@ -37,7 +38,8 @@
         <activity
             android:name=".AuthorActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="AR Author">
+            android:label="AR Author"
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

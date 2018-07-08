@@ -21,28 +21,28 @@
             app:destination="@id/cropFragment" />
         <action
             android:id="@+id/action_edit_area_placement"
-            app:destination="@id/areaFragment" />
+            app:destination="@id/areaPreviewFragment" />
     </fragment>
     <fragment
-        android:id="@+id/previewFragment"
-        android:name="eu.michaelvogt.ar.author.PreviewFragment"
+        android:id="@+id/markerpreviewFragment"
+        android:name="eu.michaelvogt.ar.author.MarkerPreviewFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_preview" >
+        tools:layout="@layout/fragment_markerpreview" >
         <action
             android:id="@+id/action_previewFragment_to_listFragment"
             app:destination="@id/listFragment" />
     </fragment>
     <fragment
         android:id="@+id/listFragment"
-        android:name="eu.michaelvogt.ar.author.ListFragment"
+        android:name="eu.michaelvogt.ar.author.MarkerListFragment"
         android:label="fragment_list"
-        tools:layout="@layout/fragment_list" >
+        tools:layout="@layout/fragment_markerlist" >
         <action
             android:id="@+id/action_edit_marker"
             app:destination="@id/editFragment" />
         <action
             android:id="@+id/action_test_markers"
-            app:destination="@id/previewFragment" />
+            app:destination="@id/markerpreviewFragment" />
     </fragment>
     <fragment
         android:id="@+id/introFragment"
@@ -63,10 +63,10 @@
             app:destination="@id/editFragment" />
     </fragment>
     <fragment
-        android:id="@+id/areaFragment"
-        android:name="eu.michaelvogt.ar.author.AreaFragment"
+        android:id="@+id/areaPreviewFragment"
+        android:name="eu.michaelvogt.ar.author.AreaPreviewFragment"
         android:label="fragment_area"
-        tools:layout="@layout/fragment_area" >
+        tools:layout="@layout/fragment_areapreview" >
         <action
             android:id="@+id/action_edit_marker"
             app:destination="@id/editFragment" />
@@ -77,6 +77,46 @@
         <argument
             android:name="areaid"
             android:defaultValue="-1"
+            app:type="integer" />
+        <action
+            android:id="@+id/action_edit_area"
+            app:destination="@id/areaEditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/areaEditFragment"
+        android:name="eu.michaelvogt.ar.author.AreaEditFragment"
+        android:label="fragment_area_edit"
+        tools:layout="@layout/fragment_area_edit" >
+        <action
+            android:id="@+id/action_edit_area_placement"
+            app:destination="@id/areaPreviewFragment" />
+        <argument
+            android:name="loc_x"
+            android:defaultValue="0"
+            app:type="integer" />
+        <argument
+            android:name="loc_y"
+            android:defaultValue="0"
+            app:type="integer" />
+        <argument
+            android:name="loc_z"
+            android:defaultValue="0"
+            app:type="integer" />
+        <argument
+            android:name="rot_x"
+            android:defaultValue="0"
+            app:type="integer" />
+        <argument
+            android:name="rot_y"
+            android:defaultValue="0"
+            app:type="integer" />
+        <argument
+            android:name="rot_z"
+            android:defaultValue="0"
+            app:type="integer" />
+        <argument
+            android:name="rot_w"
+            android:defaultValue="0"
             app:type="integer" />
     </fragment>
 </navigation>

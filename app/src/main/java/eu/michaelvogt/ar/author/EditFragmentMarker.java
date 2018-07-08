@@ -70,7 +70,7 @@ public class EditFragmentMarker extends Fragment {
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
 
-    // TODO: Use value binding
+    // TODO: Use value binding?
     editTitle = view.findViewById(R.id.edit_title);
     editTitle.setText(editMarker.getTitle());
     editTitle.setOnFocusChangeListener((editView, hasFocus) -> {

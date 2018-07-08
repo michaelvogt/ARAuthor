@@ -23,7 +23,7 @@
     android:id="@+id/arLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PreviewFragment">
+    tools:context=".MarkerPreviewFragment">
 
     <fragment
         android:id="@+id/ux_fragment"

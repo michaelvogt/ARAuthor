@@ -52,6 +52,9 @@ dependencies {
     implementation 'android.arch.navigation:navigation-fragment:1.0.0-alpha02'
     implementation 'android.arch.navigation:navigation-ui-ktx:1.0.0-alpha02'
 
+    implementation "android.arch.persistence.room:runtime:1.1.1"
+    annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
+
     implementation 'com.lyft:scissors:1.1.1'
 }
 
@@ -65,3 +68,17 @@ sceneform.asset('sampledata/models/big_old_house.obj',
         'sampledata/models/big_old_house.mat',
         'sampledata/models/big_old_house.sfa',
         'src/main/res/raw/big_old_house')
+
+
+sceneform.asset('sampledata/models/Office/office_full.obj',
+        'default',
+        'sampledata/models/Office/office_full.sfa',
+        'src/main/res/raw/office_full')
+
+
+
+
+sceneform.asset('sampledata/models/cube.obj',
+        'default',
+        'sampledata/models/cube.sfa',
+        'src/main/res/raw/cube')

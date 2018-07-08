@@ -92,14 +92,15 @@ public class AuthorActivity extends AppCompatActivity {
 //                0.648f));
 
     viewModel.addMarker(new Marker(
-            "/Touristar/Markers/office.png",
+            "/Touristar/Markers/office.jpg",
             "office_sign",
             "五稜郭",
             0.9f,
-            new ArrayList<String>(Arrays.asList(
-                "Magistrat Office Building",
-                "Magistrat Office Building Infoboard",
-                "Cherry blossoms view point"
+            new ArrayList<>(Arrays.asList(
+                "Magistrate Office Building",
+                "Magistrate Office Building Schema",
+                "Magistrate Office Building Explanation",
+                "Magistrate Office Building Map"
             ))
         )
     );
@@ -107,21 +108,39 @@ public class AuthorActivity extends AppCompatActivity {
 
     viewModel.addArea(
         new Area(Area.TYPE_3DOBJECT,
-            "Magistrat Office Building"),
-        new Vector3(),
-        new Quaternion());
+            "Magistrate Office Building",
+            R.raw.office_full,
+            Vector3.zero(),
+            Area.COORDINATE_GLOBAL,
+            new Vector3(0.0f, -3.0f, -1.1f),
+            new Quaternion(new Vector3(0.0f, 0.0f, 0.0f), 0)));
 
     viewModel.addArea(
         new Area(Area.TYPE_INTERACTIVEOVERLAY,
-            "Magistrat Office Building Infoboard"),
-        new Vector3(),
-        new Quaternion());
+            "Magistrate Office Building Schema",
+            R.drawable.office_schema,
+            new Vector3(0.415f, .0001f, 0.54f),
+            Area.COORDINATE_LOCAL,
+            new Vector3(0.2025f, 0, 0.285f),
+            new Quaternion((float) (Math.PI / 2), 0f, 0f, 1f)));
 
     viewModel.addArea(
         new Area(Area.TYPE_FLATOVERLAY,
-            "Cherry blossoms view point"),
-        new Vector3(),
-        new Quaternion());
+            "Magistrate Office Building Explanation",
+            0,
+            new Vector3(0.42f, 0.0001f, 0.24f),
+            Area.COORDINATE_LOCAL,
+            new Vector3(-0.22f, 0, -0.10f),
+            new Quaternion((float) (Math.PI / 2), 0f, 0f, 1f)));
+
+    viewModel.addArea(
+        new Area(Area.TYPE_FLATOVERLAY,
+            "Magistrate Office Building Map",
+            0,
+            new Vector3(0.247f, .001f, 0.247f),
+            Area.COORDINATE_LOCAL,
+            new Vector3(-0.2125f, 0f, 0.1565f),
+            new Quaternion(0f, 0f, 0f, 0f)));
   }
 
   @Override

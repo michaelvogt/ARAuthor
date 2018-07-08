@@ -73,19 +73,19 @@ public class Office {
               oldHouseAttached = true;
 
               ModelRenderable.builder()
-                  .setSource(context, R.raw.big_old_house)
+                  .setSource(context, R.raw.office_full)
                   .build()
                   .thenAccept(oldHouse -> {
                     Pose centerPose = arImage.getCenterPose();
                     oldHouseAnchor = session.createAnchor(centerPose.compose(Pose
-                        .makeTranslation(0, -5, 0)).extractTranslation());
+                        .makeTranslation(0, 0, 1.5f)).extractTranslation());
 
                     oldHouseAnchorNode = new AnchorNode(oldHouseAnchor);
                     oldHouseAnchorNode.setParent(anchorNode.getScene());
 
                     oldHouseNode = new Node();
                     oldHouseNode.setRenderable(oldHouse);
-                    oldHouseNode.setLocalPosition(new Vector3(0, -3, -3));
+                    oldHouseNode.setLocalPosition(new Vector3(0.0f, -3.0f, -3.0f));
                     oldHouseNode.setParent(oldHouseAnchorNode);
                   })
                   .exceptionally(
@@ -117,11 +117,8 @@ public class Office {
         });
 
     MaterialFactory
-        .makeTransparentWithColor(context, new Color(1, .5f, .5f, .5f))
+        .makeTransparentWithColor(context, new Color(1.0f, .5f, .5f, .5f))
         .thenAccept(color -> {
-          Node imageNode = new Node();
-          imageNode.setParent(anchorNode);
-
 //          attachNode(anchorNode, getSchemaRenderable(color));
           attachNode(anchorNode, getTextRenderable(color));
           attachNode(anchorNode, getMapRenderable(color));

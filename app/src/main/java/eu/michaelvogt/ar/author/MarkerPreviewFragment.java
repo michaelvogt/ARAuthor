@@ -65,7 +65,7 @@ import eu.michaelvogt.ar.author.locations.goryoukaku.Office;
 import eu.michaelvogt.ar.author.locations.iwamiginzan.Hidakaya;
 import eu.michaelvogt.ar.author.locations.iwamiginzan.Kumagaike;
 
-public class PreviewFragment extends Fragment {
+public class MarkerPreviewFragment extends Fragment {
   private LoopArFragment loopArFragment;
 
   private Node butterfly;
@@ -84,12 +84,12 @@ public class PreviewFragment extends Fragment {
     }
   };
 
-  public PreviewFragment() {/* Required empty public constructor*/}
+  public MarkerPreviewFragment() {/* Required empty public constructor*/}
 
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
-    return inflater.inflate(R.layout.fragment_preview, container, false);
+    return inflater.inflate(R.layout.fragment_markerpreview, container, false);
   }
 
   @Override
@@ -117,6 +117,7 @@ public class PreviewFragment extends Fragment {
           if (image.getTrackingState() == TrackingState.TRACKING) {
             Anchor anchor = image.createAnchor(image.getCenterPose());
             AnchorNode anchorNode = new AnchorNode(anchor);
+            anchorNode.setSmoothed(false);
             anchorNode.setParent(loopArFragment.getArSceneView().getScene());
 
             switch (image.getName()) {

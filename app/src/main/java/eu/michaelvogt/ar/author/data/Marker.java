@@ -18,16 +18,38 @@
 
 package eu.michaelvogt.ar.author.data;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
+
 import java.util.ArrayList;
 
+@Entity
 public class Marker {
   public static final int MIN_SIZE = 300;
 
+  @PrimaryKey(autoGenerate = true)
+  @NonNull
+  private int uid;
+
+  @ColumnInfo(name = "thumb_path")
   private String thumbPath;
+
+  @ColumnInfo(name = "image_path")
   private String imagePath;
+
+  @ColumnInfo(name = "title")
   private String title;
+
+  @ColumnInfo(name = "location")
   private String location;
+
+  @ColumnInfo(name = "width_in_m")
   private float widthInM = -1;
+
+  @Ignore
   private ArrayList<String> areaIds;
 
   public Marker() {
@@ -50,6 +72,19 @@ public class Marker {
     this.widthInM = marker.getWidthInM();
     this.thumbPath = "";
     this.areaIds = marker.getAreaIds();
+  }
+
+  @NonNull
+  public int getUid() {
+    return uid;
+  }
+
+  public void setUid(@NonNull int uid) {
+    this.uid = uid;
+  }
+
+  public void setThumbPath(String thumbPath) {
+    this.thumbPath = thumbPath;
   }
 
   public String getThumbPath() {

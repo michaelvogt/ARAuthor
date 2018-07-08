@@ -36,16 +36,16 @@ import eu.michaelvogt.ar.author.data.AuthorViewModel;
 import eu.michaelvogt.ar.author.utils.MarkerListAdapter;
 
 
-public class ListFragment extends Fragment implements MarkerListAdapter.OnItemClickListener {
+public class MarkerListFragment extends Fragment implements MarkerListAdapter.OnItemClickListener {
     private View view;
 
-    public ListFragment() {/* Required empty public constructor*/}
+    public MarkerListFragment() {/* Required empty public constructor*/}
 
   @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_list, container, false);
+        return inflater.inflate(R.layout.fragment_markerlist, container, false);
     }
 
     @Override

@@ -85,7 +85,7 @@ public class AreasListAdapter extends RecyclerView.Adapter<AreasListAdapter.View
 
     int typeResource = R.drawable.ic_launcher;
 
-    switch (item.getType()) {
+    switch (item.getObjectType()) {
       case Area.TYPE_3DOBJECT:
         typeResource = Area.ICON_3DOBJECT;
         break;

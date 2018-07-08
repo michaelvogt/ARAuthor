@@ -23,7 +23,7 @@
     android:id="@+id/arLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AreaFragment">
+    tools:context=".AreaPreviewFragment">
 
     <fragment
         android:id="@+id/ux_fragment"
@@ -34,5 +34,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/area_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginBottom="@dimen/fab_margin"
+        android:focusable="auto"
+        android:src="@drawable/ic_edit_black_24dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
