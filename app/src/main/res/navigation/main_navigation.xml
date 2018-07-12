@@ -71,16 +71,20 @@
             android:id="@+id/action_edit_marker"
             app:destination="@id/editFragment" />
         <argument
-            android:name="markerid"
+            android:name="marker_id"
             android:defaultValue="-1"
             app:type="integer" />
         <argument
-            android:name="areaid"
+            android:name="area_id"
             android:defaultValue="-1"
             app:type="integer" />
         <action
             android:id="@+id/action_edit_area"
             app:destination="@id/areaEditFragment" />
+        <argument
+            android:name="area_edit_translucency"
+            android:defaultValue="1"
+            app:type="integer" />
     </fragment>
     <fragment
         android:id="@+id/areaEditFragment"
@@ -91,32 +95,16 @@
             android:id="@+id/action_edit_area_placement"
             app:destination="@id/areaPreviewFragment" />
         <argument
-            android:name="loc_x"
-            android:defaultValue="0"
+            android:name="area_id"
+            android:defaultValue="-1"
             app:type="integer" />
         <argument
-            android:name="loc_y"
-            android:defaultValue="0"
+            android:name="area_edit_translucency"
+            android:defaultValue="1"
             app:type="integer" />
         <argument
-            android:name="loc_z"
-            android:defaultValue="0"
-            app:type="integer" />
-        <argument
-            android:name="rot_x"
-            android:defaultValue="0"
-            app:type="integer" />
-        <argument
-            android:name="rot_y"
-            android:defaultValue="0"
-            app:type="integer" />
-        <argument
-            android:name="rot_z"
-            android:defaultValue="0"
-            app:type="integer" />
-        <argument
-            android:name="rot_w"
-            android:defaultValue="0"
+            android:name="marker_id"
+            android:defaultValue="-1"
             app:type="integer" />
     </fragment>
 </navigation>

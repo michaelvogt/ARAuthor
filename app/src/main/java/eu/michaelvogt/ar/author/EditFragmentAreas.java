@@ -29,6 +29,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.ar.sceneform.math.Quaternion;
+
 import java.util.Objects;
 
 import androidx.navigation.Navigation;
@@ -62,8 +64,7 @@ public class EditFragmentAreas extends Fragment implements AreasListAdapter.OnIt
     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
     mRecyclerView.setLayoutManager(mLayoutManager);
 
-    AreasListAdapter mAdapter = new AreasListAdapter(
-        ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(AuthorViewModel.class));
+    AreasListAdapter mAdapter = new AreasListAdapter(viewModel,markerId);
     mAdapter.setOnItemClickListener(this);
 
     mRecyclerView.setAdapter(mAdapter);
@@ -72,8 +73,8 @@ public class EditFragmentAreas extends Fragment implements AreasListAdapter.OnIt
   @Override
   public void onItemClicked(int position) {
     Bundle bundle = new Bundle();
-    bundle.putInt("markerid", markerId);
-    bundle.putInt("areaid", position);
+    bundle.putInt("marker_id", markerId);
+    bundle.putInt("area_id", position);
     Navigation.findNavController(view).navigate(R.id.action_edit_area_placement, bundle);
   }
 

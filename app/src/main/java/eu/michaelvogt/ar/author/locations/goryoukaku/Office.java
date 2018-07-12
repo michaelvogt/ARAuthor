@@ -47,7 +47,8 @@ public class Office {
   private static final float IMAGE_YEXTEND = 0.3f;
   private static final float IMAGE_XEXTEND = 0.45f;
 
-  public static final String SIGN = "office_sign";
+  public static final String SIGN_FRONT = "office_sign_front";
+  public static final String SIGN_BACK = "office_sign_back";
 
   private boolean oldHouseAttached;
   private Anchor oldHouseAnchor;
@@ -109,7 +110,9 @@ public class Office {
         .build(context)
         .thenAccept(interactiveImage -> {
           CropView imageView = interactiveImage.getView().findViewById(R.id.image_interactive);
-          imageView.setImageResource(R.drawable.office_schema);
+          int resource = arImage.getName().equals(SIGN_FRONT)
+              ? R.drawable.office_schema_front : R.drawable.office_schema_back;
+          imageView.setImageResource(resource);
 
           Node image = attachNode(anchorNode, interactiveImage);
           image.setLocalPosition(new Vector3(0.2025f, 0, 0.285f));

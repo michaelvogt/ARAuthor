@@ -133,7 +133,8 @@ public class MarkerPreviewFragment extends Fragment {
                   Kumagaike.displayInfoScene(getContext(), anchorNode, image);
                 }
                 break;
-              case Office.SIGN:
+              case Office.SIGN_FRONT:
+              case Office.SIGN_BACK:
                 if (!officeinfoDone) {
                   officeinfoDone = true;
                   new Office().displayInfoScene(getContext(),

@@ -78,20 +78,25 @@ public class Area {
   @ColumnInfo(name = "rotation")
   private Quaternion rotation;
 
+  @Ignore
+  @ColumnInfo(name = "scale")
+  private Vector3 scale;
+
   @ColumnInfo(name = "marker_id")
   private int markerId;
 
   public Area() {
-    this(0, "", 0, Vector3.zero(), COORDINATE_LOCAL, Vector3.zero(), new Quaternion());
+    this(0, "", 0, Vector3.zero(), COORDINATE_LOCAL, Vector3.zero(), Quaternion.identity(), Vector3.one());
   }
 
-  public Area(int typeResource, String title, int resource, Vector3 size, int coordType, Vector3 location, Quaternion rotation) {
+  public Area(int typeResource, String title, int resource, Vector3 size, int coordType, Vector3 location, Quaternion rotation, Vector3 scale) {
     this.objectType = typeResource;
     this.title = title;
     this.size = size;
     this.resource = resource;
     this.position = location;
     this.rotation = rotation;
+    this.scale  = scale;
   }
 
   public Area(Area area) {
@@ -102,6 +107,7 @@ public class Area {
     this.coordType = area.getCoordType();
     this.position = area.getPosition();
     this.rotation = area.getRotation();
+    this.scale = area.getScale();
   }
 
   public int getUid() {
@@ -166,6 +172,14 @@ public class Area {
 
   public void setRotation(Quaternion rotation) {
     this.rotation = rotation;
+  }
+
+  public Vector3 getScale() {
+    return scale;
+  }
+
+  public void setScale(Vector3 scale) {
+    this.scale = scale;
   }
 
   public int getResource() {

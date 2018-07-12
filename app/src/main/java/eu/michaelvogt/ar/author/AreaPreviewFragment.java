@@ -36,10 +36,13 @@ import com.google.ar.core.Pose;
 import com.google.ar.core.Session;
 import com.google.ar.core.TrackingState;
 import com.google.ar.sceneform.AnchorNode;
+import com.google.ar.sceneform.ArSceneView;
 import com.google.ar.sceneform.FrameTime;
+import com.google.ar.sceneform.Node;
 import com.google.ar.sceneform.math.Quaternion;
 import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.Color;
+import com.google.ar.sceneform.rendering.Material;
 import com.google.ar.sceneform.rendering.MaterialFactory;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.rendering.Renderable;
@@ -47,6 +50,7 @@ import com.google.ar.sceneform.rendering.ShapeFactory;
 import com.google.ar.sceneform.ux.TransformableNode;
 
 import java.util.Collection;
+import java.util.concurrent.CompletableFuture;
 
 import androidx.navigation.Navigation;
 import eu.michaelvogt.ar.author.data.Area;
@@ -55,17 +59,16 @@ import eu.michaelvogt.ar.author.data.Marker;
 
 public class AreaPreviewFragment extends Fragment {
   private static final String TAG = AreaPreviewFragment.class.getSimpleName();
-  private final Color TRANSPARENT_COLOR = new Color(0.7f, 0.45f, 0.15f, 0.5f);
+  private final Color PREVIEWCOLOR = new Color(0.7f, 0.45f, 0.15f, 0.5f);
 
   private int areaIndex;
   private Marker editMarker;
   private Area editArea;
-  private AuthorViewModel viewModel;
 
   private LoopArFragment arFragment;
   private AugmentedImage augmentedImage;
-  private TransformableNode areaNode;
   private View editButton;
+  private boolean useTranslucency;
 
   public AreaPreviewFragment() {
   }
@@ -83,44 +86,27 @@ public class AreaPreviewFragment extends Fragment {
 
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-    viewModel = ViewModelProviders.of(getActivity()).get(AuthorViewModel.class);
-    int markerId = getArguments().getInt("markerid");
+    AuthorViewModel viewModel = ViewModelProviders.of(getActivity()).get(AuthorViewModel.class);
+    int markerId = getArguments().getInt("marker_id");
     editMarker = viewModel.getMarker(markerId);
 
-    areaIndex = getArguments().getInt("areaid");
-    String areaId = editMarker.getAreaId(areaIndex);
-    editArea = viewModel.getArea(areaId).get();
+    areaIndex = getArguments().getInt("area_id");
+    editArea = viewModel.getArea(editMarker.getAreaId(areaIndex));
 
     arFragment = (LoopArFragment) getChildFragmentManager().findFragmentById(R.id.ux_fragment);
     arFragment.getPlaneDiscoveryController().hide();
     arFragment.getPlaneDiscoveryController().setInstructionView(null);
 
+    useTranslucency = getArguments().getInt("area_edit_translucency") == 1;
+
     // TODO: Currently all markers are imported. Restrict to the currently edited marker
 
     editButton = view.findViewById(R.id.area_edit);
     editButton.setOnClickListener(event -> {
-      Vector3 position;
-      Quaternion rotation;
-
-      if (editArea.getCoordType() == Area.COORDINATE_LOCAL) {
-        position = areaNode.getLocalPosition();
-        rotation = areaNode.getLocalRotation();
-      } else {
-        position = areaNode.getWorldPosition();
-        rotation = areaNode.getWorldRotation();
-      }
-
       Bundle bundle = new Bundle();
-      bundle.putInt("markerid", markerId);
-      bundle.putInt("areaid", areaIndex);
-
-      bundle.putFloat("loc_x", position.x);
-      bundle.putFloat("loc_y", position.y);
-      bundle.putFloat("loc_z", position.z);
-      bundle.putFloat("rot_x", rotation.x);
-      bundle.putFloat("rot_y", rotation.y);
-      bundle.putFloat("rot_z", rotation.z);
-      bundle.putFloat("rot_w", rotation.w);
+      bundle.putInt("marker_id", markerId);
+      bundle.putInt("area_id", areaIndex);
+      bundle.putInt("area_edit_translucency", useTranslucency ? 1 : 0);
       Navigation.findNavController(view).navigate(R.id.action_edit_area, bundle);
     });
 
@@ -158,8 +144,7 @@ public class AreaPreviewFragment extends Fragment {
                       image, editArea.getPosition(), editArea.getRotation(), anchorNode, session);
                   break;
                 default:
-                  buildShapeRenderable(getContext(),
-                      image, anchorNode, session);
+                  buildShapeRenderable(getContext(), anchorNode);
               }
 
               editButton.setVisibility(View.VISIBLE);
@@ -175,9 +160,8 @@ public class AreaPreviewFragment extends Fragment {
     }
   }
 
-  private void buildShapeRenderable(Context context, AugmentedImage image, AnchorNode imageAnchor, Session session) {
-    MaterialFactory
-        .makeTransparentWithColor(context, TRANSPARENT_COLOR)
+  private void buildShapeRenderable(Context context, AnchorNode imageAnchor) {
+    createMaterial(context)
         .thenAccept(material -> {
           ModelRenderable shape = ShapeFactory.makeCube(editArea.getSize(), Vector3.zero(), material);
           attachRenderable(shape, imageAnchor);
@@ -189,29 +173,31 @@ public class AreaPreviewFragment extends Fragment {
   }
 
   private void buildModelRenderable(Context context, int resourceId,
-                                    AugmentedImage image, Vector3 location,
+                                    AugmentedImage image, Vector3 position,
                                     Quaternion rotation, AnchorNode imageAnchor, Session session) {
     ModelRenderable.builder()
-        // TODO: Load model from external location
+        // TODO: Load model from external position
 
         .setSource(context, resourceId)
         .build()
         .thenAccept(modelRenderable -> {
-          MaterialFactory
-              .makeTransparentWithColor(context, TRANSPARENT_COLOR)
+          createMaterial(context)
               .thenAccept(modelRenderable::setMaterial);
 
-          modelRenderable.setShadowCaster(true);
-
-          Anchor anchor = session.createAnchor(new Pose(
-              new float[]{location.x, location.y, location.z},
-              new float[]{rotation.x, rotation.y, rotation.z, rotation.w}));
+          Pose modelPose = image.getCenterPose();
+          float[] modelTranslation = modelPose.extractTranslation()
+              .transformPoint(new float[]{position.x, position.y, position.z});
+          float[] modelRotation = modelPose.extractRotation().getRotationQuaternion();
+          Anchor anchor = session.createAnchor(
+              new Pose(modelTranslation, new float[]{0f, modelRotation[1], 0f, modelRotation[3]}));
 
           AnchorNode anchorNode = new AnchorNode(anchor);
-          anchorNode.setParent(imageAnchor.getScene());
+          anchorNode.setLocalScale(editArea.getScale());
+          anchorNode.setParent(arFragment.getArSceneView().getScene());
 
-          areaNode = new TransformableNode(arFragment.getTransformationSystem());
+          Node areaNode = new Node();
           areaNode.setRenderable(modelRenderable);
+          areaNode.setLocalRotation(rotation);
           areaNode.setParent(anchorNode);
         })
         .exceptionally(throwable -> {
@@ -220,11 +206,18 @@ public class AreaPreviewFragment extends Fragment {
         });
   }
 
+  private CompletableFuture<Material> createMaterial(Context context) {
+    return useTranslucency ?
+        MaterialFactory.makeTransparentWithColor(context, PREVIEWCOLOR) :
+        MaterialFactory.makeOpaqueWithColor(context, PREVIEWCOLOR);
+  }
+
   private void attachRenderable(Renderable renderable, AnchorNode anchorNode) {
-    areaNode = new TransformableNode(arFragment.getTransformationSystem());
+    Node areaNode = new Node();
     areaNode.setRenderable(renderable);
     areaNode.setLocalPosition(editArea.getPosition());
     areaNode.setLocalRotation(editArea.getRotation());
+    areaNode.setLocalScale(editArea.getScale());
     areaNode.setParent(anchorNode);
   }
 }

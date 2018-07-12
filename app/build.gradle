@@ -69,14 +69,10 @@ sceneform.asset('sampledata/models/big_old_house.obj',
         'sampledata/models/big_old_house.sfa',
         'src/main/res/raw/big_old_house')
 
-
 sceneform.asset('sampledata/models/Office/office_full.obj',
         'default',
         'sampledata/models/Office/office_full.sfa',
         'src/main/res/raw/office_full')
-
-
-
 
 sceneform.asset('sampledata/models/cube.obj',
         'default',

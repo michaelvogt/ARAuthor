@@ -92,16 +92,20 @@ public class AuthorActivity extends AppCompatActivity {
 //                0.648f));
 
     viewModel.addMarker(new Marker(
-            "/Touristar/Markers/office.jpg",
-            "office_sign",
+            "/Touristar/Markers/office_front.jpg",
+            "office_sign_front",
             "五稜郭",
             0.9f,
-            new ArrayList<>(Arrays.asList(
-                "Magistrate Office Building",
-                "Magistrate Office Building Schema",
-                "Magistrate Office Building Explanation",
-                "Magistrate Office Building Map"
-            ))
+            new ArrayList<>(Arrays.asList(0, 1, 2, 3))
+        )
+    );
+
+    viewModel.addMarker(new Marker(
+            "/Touristar/Markers/office_back.jpg",
+            "office_sign_back",
+            "五稜郭",
+            0.9f,
+            new ArrayList<>(Arrays.asList(0, 4, 2, 3))
         )
     );
 
@@ -112,17 +116,19 @@ public class AuthorActivity extends AppCompatActivity {
             R.raw.office_full,
             Vector3.zero(),
             Area.COORDINATE_GLOBAL,
-            new Vector3(0.0f, -3.0f, -1.1f),
-            new Quaternion(new Vector3(0.0f, 0.0f, 0.0f), 0)));
+            new Vector3(0.0f, -0.7f, -1.65f),
+            new Quaternion(new Vector3(0.0f, -0.022f, 0.0f), 1.0f),
+            new Vector3(0.518f, 0.3f, 0.6f)));
 
     viewModel.addArea(
         new Area(Area.TYPE_INTERACTIVEOVERLAY,
             "Magistrate Office Building Schema",
-            R.drawable.office_schema,
+            R.drawable.office_schema_front,
             new Vector3(0.415f, .0001f, 0.54f),
             Area.COORDINATE_LOCAL,
             new Vector3(0.2025f, 0, 0.285f),
-            new Quaternion((float) (Math.PI / 2), 0f, 0f, 1f)));
+            new Quaternion((float) (Math.PI / 2), 0f, 0f, 1f),
+            Vector3.one()));
 
     viewModel.addArea(
         new Area(Area.TYPE_FLATOVERLAY,
@@ -131,7 +137,8 @@ public class AuthorActivity extends AppCompatActivity {
             new Vector3(0.42f, 0.0001f, 0.24f),
             Area.COORDINATE_LOCAL,
             new Vector3(-0.22f, 0, -0.10f),
-            new Quaternion((float) (Math.PI / 2), 0f, 0f, 1f)));
+            new Quaternion((float) (Math.PI / 2), 0f, 0f, 1f),
+            Vector3.one()));
 
     viewModel.addArea(
         new Area(Area.TYPE_FLATOVERLAY,
@@ -140,7 +147,19 @@ public class AuthorActivity extends AppCompatActivity {
             new Vector3(0.247f, .001f, 0.247f),
             Area.COORDINATE_LOCAL,
             new Vector3(-0.2125f, 0f, 0.1565f),
-            new Quaternion(0f, 0f, 0f, 0f)));
+            new Quaternion(0f, 0f, 0f, 0f),
+            Vector3.one()));
+
+    viewModel.addArea(
+        new Area(Area.TYPE_INTERACTIVEOVERLAY,
+            "Magistrate Office Building Schema",
+            R.drawable.office_schema_back,
+            new Vector3(0.415f, .0001f, 0.54f),
+            Area.COORDINATE_LOCAL,
+            new Vector3(0.2025f, 0, 0.285f),
+            new Quaternion((float) (Math.PI / 2), 0f, 0f, 1f),
+            Vector3.one()));
+
   }
 
   @Override

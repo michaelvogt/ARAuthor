@@ -32,14 +32,57 @@ import eu.michaelvogt.ar.author.data.AuthorViewModel;
 
 public class AreasListAdapter extends RecyclerView.Adapter<AreasListAdapter.ViewHolder> {
   private final AuthorViewModel viewModel;
+  private int markerId;
   private OnItemClickListener listener;
 
-  public interface OnItemClickListener {
-    void onItemClicked(int position);
+  // Provide a suitable constructor (depends on the kind of dataset)
+  public AreasListAdapter(AuthorViewModel viewModel, int MarkerId) {
+    this.viewModel = viewModel;
+    markerId = MarkerId;
+  }
+
+  // Create new views (invoked by the layout manager)
+  @NonNull
+  @Override
+  public AreasListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    View v = LayoutInflater.from(parent.getContext())
+        .inflate(R.layout.card_area, parent, false);
+    return new ViewHolder(v);
+  }
+
+  @Override
+  public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    Area item = viewModel.getArea(viewModel.getMarker(markerId).getAreaId(position));
+    holder.areaName.setText(item.getTitle());
+
+    int typeResource = R.drawable.ic_launcher;
+
+    switch (item.getObjectType()) {
+      case Area.TYPE_3DOBJECT:
+        typeResource = Area.ICON_3DOBJECT;
+        break;
+      case Area.TYPE_FLATOVERLAY:
+        typeResource = Area.ICON_FLATOVERLAY;
+        break;
+      case Area.TYPE_INTERACTIVEOVERLAY:
+        typeResource = Area.ICON_INTERACTIVEOVERLAY;
+        break;
+    }
+
+    holder.areaImage.setImageResource(typeResource);
+  }
+
+  @Override
+  public int getItemCount() {
+    return viewModel.getMarker(markerId).getAreaIds().size();
   }
 
   public void setOnItemClickListener(OnItemClickListener listener) {
     this.listener = listener;
+  }
+
+  public interface OnItemClickListener {
+    void onItemClicked(int position);
   }
 
   class ViewHolder extends RecyclerView.ViewHolder {
@@ -62,46 +105,5 @@ public class AreasListAdapter extends RecyclerView.Adapter<AreasListAdapter.View
         }
       });
     }
-  }
-
-  // Provide a suitable constructor (depends on the kind of dataset)
-  public AreasListAdapter(AuthorViewModel viewModel) {
-    this.viewModel = viewModel;
-  }
-
-  // Create new views (invoked by the layout manager)
-  @NonNull
-  @Override
-  public AreasListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-    View v = LayoutInflater.from(parent.getContext())
-        .inflate(R.layout.card_area, parent, false);
-    return new ViewHolder(v);
-  }
-
-  @Override
-  public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-    Area item = viewModel.getArea(position);
-    holder.areaName.setText(item.getTitle());
-
-    int typeResource = R.drawable.ic_launcher;
-
-    switch (item.getObjectType()) {
-      case Area.TYPE_3DOBJECT:
-        typeResource = Area.ICON_3DOBJECT;
-        break;
-      case Area.TYPE_FLATOVERLAY:
-        typeResource = Area.ICON_FLATOVERLAY;
-        break;
-      case Area.TYPE_INTERACTIVEOVERLAY:
-        typeResource = Area.ICON_INTERACTIVEOVERLAY;
-        break;
-    }
-
-    holder.areaImage.setImageResource(typeResource);
-  }
-
-  @Override
-  public int getItemCount() {
-    return viewModel.getAreaSize();
   }
 }

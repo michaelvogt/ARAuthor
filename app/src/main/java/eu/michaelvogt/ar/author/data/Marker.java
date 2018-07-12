@@ -50,13 +50,13 @@ public class Marker {
   private float widthInM = -1;
 
   @Ignore
-  private ArrayList<String> areaIds;
+  private ArrayList<Integer> areaIds;
 
   public Marker() {
     this("", "", "", .03f, new ArrayList<>());
   }
 
-  public Marker(String imagePath, String title, String location, float widthInM, ArrayList<String> areas) {
+  public Marker(String imagePath, String title, String location, float widthInM, ArrayList<Integer> areas) {
     this.imagePath = imagePath;
     this.title = title;
     this.location = location;
@@ -127,15 +127,15 @@ public class Marker {
     this.widthInM = widthInM;
   }
 
-  public ArrayList<String> getAreaIds() {
+  public ArrayList<Integer> getAreaIds() {
     return areaIds;
   }
 
-  public String getAreaId(int index) {
+  public int getAreaId(int index) {
     return areaIds.get(index);
   }
 
-  public void setAreaIds(ArrayList<String> areaIds) {
+  public void setAreaIds(ArrayList<Integer> areaIds) {
     this.areaIds = areaIds;
   }
 }
