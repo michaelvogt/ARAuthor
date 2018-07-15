@@ -47,6 +47,10 @@ public class AuthorViewModel extends AndroidViewModel {
     return markers.get(index);
   }
 
+  public Optional<Marker> getMarker(String name) {
+    return markers.stream().filter(marker -> marker.getTitle().equals(name)).findFirst();
+  }
+
   public void setMarker(int index, Marker marker) {
     markers.set(index, marker);
   }

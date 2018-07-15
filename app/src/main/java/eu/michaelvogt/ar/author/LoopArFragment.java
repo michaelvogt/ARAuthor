@@ -37,22 +37,6 @@ import eu.michaelvogt.ar.author.utils.ImageUtils;
 public class LoopArFragment extends ArFragment {
     private static  final String TAG = LoopArFragment.class.getSimpleName();
 
-    FrameListener listener = null;
-
-    public interface FrameListener {
-        void onFrame(FrameTime frameTime, Frame frame);
-    }
-
-    @Override
-    public void onUpdate(FrameTime frameTime) {
-        super.onUpdate(frameTime);
-
-        Frame arFrame = getArSceneView().getArFrame();
-        if (listener != null) {
-            listener.onFrame(frameTime, arFrame);
-        }
-    }
-
     @Override
     protected Config getSessionConfiguration(Session session) {
         AuthorViewModel viewModel = ViewModelProviders.of(getActivity()).get(AuthorViewModel.class);
@@ -85,6 +69,4 @@ public class LoopArFragment extends ArFragment {
 
         return config;
     }
-
-    public void setOnFrameListener(FrameListener listener) { this.listener = listener; }
 }

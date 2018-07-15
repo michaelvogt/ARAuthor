@@ -36,14 +36,14 @@ import eu.michaelvogt.ar.author.R;
               childColumns = "marker_id")
 })
 public class Area {
-  public static final int TYPE_3DOBJECT = 0;
-  public static final int TYPE_FLATOVERLAY = 1;
+  public static final int TYPE_3DOBJECTONIMAGE = 0;
+  public static final int TYPE_3DOBJECTONPLANE = 1;
+  public static final int TYPE_FLATOVERLAY = 2;
   public static final int TYPE_INTERACTIVEOVERLAY = 3;
   public static final int TYPE_INTERACTIVEPANEL = 4;
 
   public static final int COORDINATE_LOCAL = -1;
   public static final int COORDINATE_GLOBAL = -2;
-
 
   public static final int ICON_3DOBJECT = R.drawable.ic_account_balance_black_24dp;
   public static final int ICON_FLATOVERLAY = R.drawable.ic_collections_black_24dp;

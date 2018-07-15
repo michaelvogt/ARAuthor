@@ -74,7 +74,7 @@ sceneform.asset('sampledata/models/Office/office_full.obj',
         'sampledata/models/Office/office_full.sfa',
         'src/main/res/raw/office_full')
 
-sceneform.asset('sampledata/models/cube.obj',
+sceneform.asset('sampledata/models/scene.gltf',
         'default',
-        'sampledata/models/cube.sfa',
-        'src/main/res/raw/cube')
+        'sampledata/models/scene.sfa',
+        'src/main/res/raw/scene')

@@ -32,11 +32,11 @@ import android.view.ViewGroup;
 import com.google.ar.core.Anchor;
 import com.google.ar.core.AugmentedImage;
 import com.google.ar.core.Frame;
+import com.google.ar.core.Plane;
 import com.google.ar.core.Pose;
 import com.google.ar.core.Session;
 import com.google.ar.core.TrackingState;
 import com.google.ar.sceneform.AnchorNode;
-import com.google.ar.sceneform.ArSceneView;
 import com.google.ar.sceneform.FrameTime;
 import com.google.ar.sceneform.Node;
 import com.google.ar.sceneform.math.Quaternion;
@@ -47,9 +47,10 @@ import com.google.ar.sceneform.rendering.MaterialFactory;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.rendering.Renderable;
 import com.google.ar.sceneform.rendering.ShapeFactory;
-import com.google.ar.sceneform.ux.TransformableNode;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import androidx.navigation.Navigation;
@@ -59,7 +60,10 @@ import eu.michaelvogt.ar.author.data.Marker;
 
 public class AreaPreviewFragment extends Fragment {
   private static final String TAG = AreaPreviewFragment.class.getSimpleName();
-  private final Color PREVIEWCOLOR = new Color(0.7f, 0.45f, 0.15f, 0.5f);
+
+  private static final Color PREVIEWCOLOR = new Color(0.7f, 0.45f, 0.15f, 0.5f);
+  private static final Color NOPLANECOLOR = new Color(1.0f, 0.0f, 0.0f, 1f);
+  private static final Color PLANECOLOR = new Color(0.0f, 1.0f, 0.0f, 1f);
 
   private int areaIndex;
   private Marker editMarker;
@@ -69,6 +73,9 @@ public class AreaPreviewFragment extends Fragment {
   private AugmentedImage augmentedImage;
   private View editButton;
   private boolean useTranslucency;
+
+  private List<ModelPoseOnPlaneListener> modelPoseOnPlaneListeners = new ArrayList<>();
+  private Node statusMarkerNode;
 
   public AreaPreviewFragment() {
   }
@@ -117,13 +124,19 @@ public class AreaPreviewFragment extends Fragment {
     arFragment.onUpdate(frameTime);
 
     Frame frame = arFragment.getArSceneView().getArFrame();
-
     if (frame == null || frame.getCamera().getTrackingState() != TrackingState.TRACKING) {
       return;
     }
 
-    Collection<AugmentedImage> updatedArImages = frame.getUpdatedTrackables(AugmentedImage.class);
+    if (modelPoseOnPlaneListeners.size() != 0) {
+      for (ModelPoseOnPlaneListener listener : modelPoseOnPlaneListeners) {
+        if (listener.onPlane()) {
+          modelPoseOnPlaneListeners.remove(listener);
+        }
+      };
+    }
 
+    Collection<AugmentedImage> updatedArImages = frame.getUpdatedTrackables(AugmentedImage.class);
     for (AugmentedImage image : updatedArImages) {
       if (image.getName().equals(editMarker.getTitle())) {
         switch (image.getTrackingState()) {
@@ -133,18 +146,15 @@ public class AreaPreviewFragment extends Fragment {
               AnchorNode anchorNode = new AnchorNode(anchor);
               anchorNode.setParent(arFragment.getArSceneView().getScene());
 
-              Vector3 size = editArea.getSize();
-              Vector3 location = editArea.getPosition();
-
               Session session = arFragment.getArSceneView().getSession();
 
               switch (editArea.getObjectType()) {
-                case Area.TYPE_3DOBJECT:
-                  buildModelRenderable(getContext(), editArea.getResource(),
-                      image, editArea.getPosition(), editArea.getRotation(), anchorNode, session);
+                case Area.TYPE_3DOBJECTONPLANE:
+                  attachPlaneStatusRenderable(getContext(),
+                      image, editArea.getPosition(), editArea.getRotation(), session);
                   break;
                 default:
-                  buildShapeRenderable(getContext(), anchorNode);
+                  attachShapeRenderable(getContext(), anchorNode);
               }
 
               editButton.setVisibility(View.VISIBLE);
@@ -160,8 +170,8 @@ public class AreaPreviewFragment extends Fragment {
     }
   }
 
-  private void buildShapeRenderable(Context context, AnchorNode imageAnchor) {
-    createMaterial(context)
+  private void attachShapeRenderable(Context context, AnchorNode imageAnchor) {
+    createMaterial(context, PREVIEWCOLOR, useTranslucency)
         .thenAccept(material -> {
           ModelRenderable shape = ShapeFactory.makeCube(editArea.getSize(), Vector3.zero(), material);
           attachRenderable(shape, imageAnchor);
@@ -172,28 +182,22 @@ public class AreaPreviewFragment extends Fragment {
         });
   }
 
-  private void buildModelRenderable(Context context, int resourceId,
-                                    AugmentedImage image, Vector3 position,
-                                    Quaternion rotation, AnchorNode imageAnchor, Session session) {
+  private void attachModelRenderable(Context context, AnchorNode anchorNode, Quaternion rotation) {
+    if (statusMarkerNode != null) {
+      anchorNode.removeChild(statusMarkerNode);
+      statusMarkerNode = null;
+    }
+
     ModelRenderable.builder()
         // TODO: Load model from external position
 
-        .setSource(context, resourceId)
+        .setSource(context, editArea.getResource())
         .build()
         .thenAccept(modelRenderable -> {
-          createMaterial(context)
+          createMaterial(context, PREVIEWCOLOR, useTranslucency)
               .thenAccept(modelRenderable::setMaterial);
 
-          Pose modelPose = image.getCenterPose();
-          float[] modelTranslation = modelPose.extractTranslation()
-              .transformPoint(new float[]{position.x, position.y, position.z});
-          float[] modelRotation = modelPose.extractRotation().getRotationQuaternion();
-          Anchor anchor = session.createAnchor(
-              new Pose(modelTranslation, new float[]{0f, modelRotation[1], 0f, modelRotation[3]}));
-
-          AnchorNode anchorNode = new AnchorNode(anchor);
           anchorNode.setLocalScale(editArea.getScale());
-          anchorNode.setParent(arFragment.getArSceneView().getScene());
 
           Node areaNode = new Node();
           areaNode.setRenderable(modelRenderable);
@@ -206,10 +210,52 @@ public class AreaPreviewFragment extends Fragment {
         });
   }
 
-  private CompletableFuture<Material> createMaterial(Context context) {
-    return useTranslucency ?
-        MaterialFactory.makeTransparentWithColor(context, PREVIEWCOLOR) :
-        MaterialFactory.makeOpaqueWithColor(context, PREVIEWCOLOR);
+  private void attachPlaneStatusRenderable(Context context, AugmentedImage image, Vector3 position,
+                                           Quaternion rotation, Session session) {
+
+    createMaterial(context, NOPLANECOLOR, false)
+        .thenAccept(material -> {
+          Pose centerPose = image.getCenterPose();
+          float[] mTranslation = centerPose.extractTranslation()
+              .transformPoint(new float[]{position.x, position.y, position.z});
+          float[] mRotation = centerPose.extractRotation().getRotationQuaternion();
+          Pose modelPose = new Pose(mTranslation, new float[]{0f, mRotation[1], 0f, mRotation[3]});
+
+          ModelRenderable shape = ShapeFactory.makeSphere(
+              0.05f, new Vector3(modelPose.tx(), modelPose.ty(), modelPose.tz()), material);
+
+          Anchor anchor = session.createAnchor(modelPose);
+
+          AnchorNode anchorNode = new AnchorNode(anchor);
+          anchorNode.setParent(arFragment.getArSceneView().getScene());
+
+          statusMarkerNode = new Node();
+          statusMarkerNode.setRenderable(shape);
+          statusMarkerNode.setParent(anchorNode);
+
+          modelPoseOnPlaneListeners.add(() -> {
+            Collection<Plane> planes =
+                arFragment.getArSceneView().getSession().getAllTrackables(Plane.class);
+            for(Plane plane : planes) {
+              if (plane.isPoseInExtents(modelPose)) {
+                attachModelRenderable(context, anchorNode, rotation);
+                return true;
+              }
+            }
+            return false;
+          });
+        })
+        .exceptionally(throwable -> {
+          Log.e(TAG, "Unable to build Model plane status object.", throwable);
+          return null;
+        });
+  }
+
+  private CompletableFuture<Material> createMaterial(
+      Context context, Color color, boolean isTranslucent) {
+    return isTranslucent ?
+        MaterialFactory.makeTransparentWithColor(context, color) :
+        MaterialFactory.makeOpaqueWithColor(context, color);
   }
 
   private void attachRenderable(Renderable renderable, AnchorNode anchorNode) {
@@ -219,5 +265,9 @@ public class AreaPreviewFragment extends Fragment {
     areaNode.setLocalRotation(editArea.getRotation());
     areaNode.setLocalScale(editArea.getScale());
     areaNode.setParent(anchorNode);
+  }
+
+  private interface ModelPoseOnPlaneListener {
+    boolean onPlane();
   }
 }
