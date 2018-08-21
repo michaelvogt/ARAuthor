@@ -81,7 +81,7 @@ public class EditFragment extends Fragment {
     markerImage = view.findViewById(R.id.image_marker);
     if (editMarker.hasImage()) {
       markerImage.setImageBitmap(ImageUtils.decodeSampledBitmapFromImagePath(
-          editMarker.getImagePath(), 300, 300));
+          editMarker.getMarkerImagePath(), 300, 300));
     }
 
     TabAdapter tabAdapter = new TabAdapter(getChildFragmentManager(), editMarker);

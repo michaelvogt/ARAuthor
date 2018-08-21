@@ -1,0 +1,17 @@
+# Wavefront material library
+# Tue Aug 03 08:00:16 1999
+# Created with Viewpoint Interchange www.viewpoint.com
+
+newmtl mon_wing
+  Ka 0 0 0
+  Kd 0 0 0
+  Ks 0 0 0
+  illum 2
+  map_Kd monarch.png
+
+newmtl mon_body
+  Ka 0 0 0
+  Kd 0 0 0
+  Ks 0 0 0
+  illum 2
+  map_Kd monarch.png

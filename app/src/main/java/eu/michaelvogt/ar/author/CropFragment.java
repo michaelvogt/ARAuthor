@@ -53,7 +53,7 @@ public class CropFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         viewModel = ViewModelProviders.of(getActivity()).get(AuthorViewModel.class);
-        imagePath = viewModel.getCropMarker().getImagePath();
+        imagePath = viewModel.getCropMarker().getMarkerImagePath();
 
         Bitmap bitmap = BitmapFactory.decodeFile(FileUtils.getFullPuplicFolderPath(imagePath));
 

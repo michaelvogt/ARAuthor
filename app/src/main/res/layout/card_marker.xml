@@ -19,14 +19,15 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
 
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/marker_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="3dp"
     android:layout_marginBottom="3dp"
     card_view:cardBackgroundColor="@android:color/background_light"
-    card_view:cardCornerRadius="@dimen/cardview_default_radius"
-    card_view:cardElevation="@dimen/cardview_default_elevation"
+    card_view:cardCornerRadius="2dp"
+    card_view:cardElevation="2dp"
     card_view:cardUseCompatPadding="false">
 
     <android.support.constraint.ConstraintLayout
@@ -41,6 +42,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:contentDescription="@string/marker_image_desc"
+            android:scaleType="centerCrop"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toTopOf="parent"
@@ -51,7 +53,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:fontFamily="serif"
             android:textAlignment="center"
             android:textAppearance="@android:style/TextAppearance.Material.Title"
@@ -62,13 +65,14 @@
             card_view:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/marker_location"
+            android:id="@+id/marker_info"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:textAppearance="@android:style/TextAppearance.Material.Subhead"
+            android:text="TextView"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintStart_toEndOf="@+id/marker_image"

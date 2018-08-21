@@ -268,6 +268,7 @@
             android:id="@+id/area_edit_scale_header"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:text="Size"
             android:textStyle="bold"
@@ -357,17 +358,22 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/areaedit_ys_edit" />
 
-        <android.support.design.widget.FloatingActionButton
+        <Button
             android:id="@+id/areaedit_save"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:clickable="true"
             android:focusable="true"
             android:src="@android:drawable/ic_menu_save"
+            android:text="Save"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/areaedit_zs_edit" />
 
     </android.support.constraint.ConstraintLayout>
 

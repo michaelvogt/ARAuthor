@@ -62,7 +62,7 @@ public class AreasListAdapter extends RecyclerView.Adapter<AreasListAdapter.View
       case Area.TYPE_3DOBJECTONIMAGE:
         typeResource = Area.ICON_3DOBJECT;
         break;
-      case Area.TYPE_FLATOVERLAY:
+      case Area.TYPE_VIEWONIMAGE:
         typeResource = Area.ICON_FLATOVERLAY;
         break;
       case Area.TYPE_INTERACTIVEOVERLAY:
@@ -75,7 +75,7 @@ public class AreasListAdapter extends RecyclerView.Adapter<AreasListAdapter.View
 
   @Override
   public int getItemCount() {
-    return viewModel.getMarker(markerId).getAreaIds().size();
+    return markerId == -1 ? 0 : viewModel.getMarker(markerId).getAreaIds().size();
   }
 
   public void setOnItemClickListener(OnItemClickListener listener) {

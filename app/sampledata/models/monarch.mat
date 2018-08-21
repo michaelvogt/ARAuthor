@@ -1,0 +1,30 @@
+material {
+    name: "Custom material",
+    parameters: [
+        {
+            type: "sampler2d",
+            name: "texture"
+        }, {
+            type: "float",
+            name: "alphaFactor"
+        }, {
+            type: "float4",
+            name: "backColor"
+        }
+    ],
+    requires: [
+        "position",
+        "uv0"
+    ],
+    shadingModel: "unlit",
+}
+
+fragment {
+    void material(inout MaterialInputs material) {
+        prepareMaterial(material);
+
+        //material.baseColor = materialParams.backColor;
+        material.baseColor = texture(materialParams_texture, getUV0());
+        material.baseColor.a = materialParams.alphaFactor;
+    }
+}

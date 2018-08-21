@@ -47,8 +47,12 @@ public class AuthorViewModel extends AndroidViewModel {
     return markers.get(index);
   }
 
-  public Optional<Marker> getMarker(String name) {
+  public Optional<Marker> getMarkerFromString(String name) {
     return markers.stream().filter(marker -> marker.getTitle().equals(name)).findFirst();
+  }
+
+  public Optional<Marker> getMarkerFromUid(int id) {
+    return markers.stream().filter(marker -> marker.getUid() == id).findFirst();
   }
 
   public void setMarker(int index, Marker marker) {
@@ -80,7 +84,7 @@ public class AuthorViewModel extends AndroidViewModel {
   }
 
   public Area getArea(int index) {
-    return areas.get(index) ;
+    return areas.get(index);
   }
 
   public Optional<Area> getArea(String areaId) {

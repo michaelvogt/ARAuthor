@@ -22,7 +22,6 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.constraint.Constraints;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,33 +35,26 @@ import com.google.ar.core.TrackingState;
 import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.FrameTime;
 import com.google.ar.sceneform.Node;
-import com.google.ar.sceneform.math.Quaternion;
-import com.google.ar.sceneform.math.Vector3;
-import com.google.ar.sceneform.rendering.ModelRenderable;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
 
 import androidx.navigation.Navigation;
+import eu.michaelvogt.ar.author.data.Area;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
-import eu.michaelvogt.ar.author.locations.goryoukaku.Office;
-import eu.michaelvogt.ar.author.locations.iwamiginzan.Hidakaya;
-import eu.michaelvogt.ar.author.locations.iwamiginzan.Kumagaike;
+import eu.michaelvogt.ar.author.data.Marker;
+import eu.michaelvogt.ar.author.utils.AreaBuilder;
 
 public class MarkerPreviewFragment extends Fragment {
+  private static final String TAG = MarkerPreviewFragment.class.getSimpleName();
+
   private LoopArFragment arFragment;
-
-  private Node butterfly;
-  private ModelRenderable butterflyRenderable;
-
-  private boolean hidakainfoDone;
-  private boolean kumagaikeinfoDone;
-  private boolean butterflyDone;
-  private boolean officeinfoDone;
-
   private AuthorViewModel viewModel;
-  private List<ModelPoseOnPlaneListener> modelPoseOnPlaneListeners = new ArrayList<>();
+
+  private Map<String, Node> handledImages = new HashMap<>();
 
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -78,20 +70,11 @@ public class MarkerPreviewFragment extends Fragment {
     arFragment.getPlaneDiscoveryController().hide();
     arFragment.getPlaneDiscoveryController().setInstructionView(null);
 
-    ModelRenderable.builder()
-        .setSource(getContext(), R.raw.monarch)
-        .build()
-        .thenAccept(renderable -> butterflyRenderable = renderable)
-        .exceptionally(throwable -> {
-          Log.e(Constraints.TAG, "Unable to load butterfly Renderable.", throwable);
-          return null;
-        });
-
     view.findViewById(R.id.listmarker_fab).setOnClickListener(
         Navigation.createNavigateOnClickListener(R.id.listFragment)
     );
 
-    arFragment.getArSceneView().getScene().setOnUpdateListener(this::onUpdateFrame);
+    arFragment.getArSceneView().getScene().addOnUpdateListener(this::onUpdateFrame);
   }
 
   private void onUpdateFrame(FrameTime frameTime) {
@@ -101,82 +84,64 @@ public class MarkerPreviewFragment extends Fragment {
     Collection<AugmentedImage> updatedAugmentedImages =
         frame.getUpdatedTrackables(AugmentedImage.class);
 
-    if (modelPoseOnPlaneListeners.size() != 0) {
-      for( ModelPoseOnPlaneListener listener : modelPoseOnPlaneListeners) {
-        if (listener.onPlane()) {
-          modelPoseOnPlaneListeners.remove(listener);
-        }
-      };
-    }
+//    if (modelPoseOnPlaneListeners.size() != 0) {
+//      for (ModelPoseOnPlaneListener listener : modelPoseOnPlaneListeners) {
+//        if (listener.onPlane()) {
+//          modelPoseOnPlaneListeners.remove(listener);
+//        }
+//      }
+//    }
 
     for (AugmentedImage image : updatedAugmentedImages) {
-      if (image.getTrackingState() == TrackingState.TRACKING) {
+      TrackingState trackingState = arFragment.getArSceneView().getArFrame().getCamera().getTrackingState();
+      if (trackingState == TrackingState.TRACKING && !handledImages.containsKey(image.getName())) {
+        handledImages.put(image.getName(), null);
+
         Anchor anchor = image.createAnchor(image.getCenterPose());
         AnchorNode anchorNode = new AnchorNode(anchor);
-        anchorNode.setSmoothed(false);
         anchorNode.setParent(arFragment.getArSceneView().getScene());
 
-        switch (image.getName()) {
-          case Hidakaya.SIGN:
-            if (!hidakainfoDone) {
-              hidakainfoDone = true;
-              Hidakaya.displayInfoScene(getContext(), anchorNode, image);
-            }
-            break;
-          case Kumagaike.SIGN:
-            if (!kumagaikeinfoDone) {
-              kumagaikeinfoDone = true;
-              Kumagaike.displayInfoScene(getContext(), anchorNode, image);
-            }
-            break;
-          case Office.SIGN_FRONT:
-            if (!officeinfoDone) {
-              officeinfoDone = true;
-              new Office().displayInfoScene(getContext(), viewModel, arFragment, anchorNode, image,
-                  arFragment.getArSceneView().getSession(), listener -> modelPoseOnPlaneListeners.add(listener));
-            }
-            break;
-          case Office.SIGN_BACK:
-            if (!officeinfoDone) {
-              officeinfoDone = true;
-              new Office().displayInfoScene(getContext(), viewModel, arFragment, anchorNode, image,
-                  arFragment.getArSceneView().getSession(), listener -> modelPoseOnPlaneListeners.add(listener));
-            }
-            break;
-          default:
-            if (!butterflyDone) {
-              butterflyDone = true;
-              makeButterfly(anchor, image);
-            }
-            break;
+        Marker marker = viewModel.getMarkerFromUid(Integer.parseInt(image.getName())).get();
+
+        if (marker.isShowBackground()) {
+          buildArea(anchorNode, Area.getBackgroundArea(marker, marker.getBackgroundImagePath()),
+              (node) -> {
+                // TODO: Texure hardcoded in monarch.sfa. Set to backgroundimage from marker
+                buildAreas(node, marker.getAreaIds(), image);
+              });
+        } else {
+          buildAreas(anchorNode, marker.getAreaIds(), image);
         }
+      } else if (image.getTrackingState() == TrackingState.STOPPED) {
+        handledImages = new HashMap<>();
       }
     }
   }
 
-  private void makeButterfly(Anchor anchor, AugmentedImage image) {
-    if (this.butterfly != null)
-      return;
-
-    AnchorNode anchorNode = new AnchorNode(anchor);
-    anchorNode.setParent(arFragment.getArSceneView().getScene());
-
-    // Create the transformable butterfly and add it to the anchor.
-    Node butterfly = new Node();
-    butterfly.setRenderable(butterflyRenderable);
-    butterfly.setLocalPosition(new Vector3(-image.getExtentX(), 0, -image.getExtentZ()));
-    butterfly.setLocalRotation(new Quaternion(new Vector3(0, 1, 0), 180));
-
-    butterfly.setParent(anchorNode);
-
-    this.butterfly = butterfly;
+  private void buildAreas(Node anchorNode, List<Integer> areaIds, AugmentedImage image) {
+    if (areaIds.size() != 0) {
+      for (int areaId : areaIds) {
+        buildArea(anchorNode, viewModel.getArea(areaId), null);
+      }
+    } else {
+      // Build a default area for demo purposes
+      buildArea(anchorNode, Area.getDefaultArea(image), null);
+    }
   }
 
-  public interface ModelPoseOnPlaneListener {
-    boolean onPlane();
-  }
+  private void buildArea(Node anchorNode, Area area, Consumer<Node> fn) {
+    AreaBuilder.builder(getContext(), area)
+        .build()
+        .thenAccept(node -> {
+          anchorNode.addChild(node);
 
-  public interface SetModelPoseOnPlaneListener {
-    void setPlaneListener( ModelPoseOnPlaneListener listener);
+          if (fn != null) {
+            fn.accept(node);
+          }
+        })
+        .exceptionally(throwable -> {
+          Log.e(TAG, "Unable to build Area: " + area.getTitle(), throwable);
+          return null;
+        });
   }
 }

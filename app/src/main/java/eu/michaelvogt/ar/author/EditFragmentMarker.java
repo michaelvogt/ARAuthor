@@ -31,6 +31,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.io.File;
@@ -53,6 +54,7 @@ public class EditFragmentMarker extends Fragment {
   private TextView editLocation;
   private TextView editTitle;
   private TextView editWidth;
+  private CheckBox editShowBackground;
 
   private Marker editMarker;
   private AuthorViewModel viewModel;
@@ -95,6 +97,11 @@ public class EditFragmentMarker extends Fragment {
       }
     });
 
+    editShowBackground = view.findViewById(R.id.edit_show_background);
+    editShowBackground.setChecked(editMarker.isShowBackground());
+    editShowBackground.setOnCheckedChangeListener(
+        (buttonView, isChecked) -> editMarker.setShowBackground(isChecked));
+
     view.findViewById(R.id.button_capture).setOnClickListener(this::handleCapture);
     view.findViewById(R.id.button_import).setOnClickListener(view13 -> handleImport());
     view.findViewById(R.id.button_edit).setOnClickListener(v -> handleCrop(view));
@@ -104,7 +111,7 @@ public class EditFragmentMarker extends Fragment {
   public void onActivityResult(int requestCode, int resultCode, Intent data) {
     if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
       markerHandler.updateMarker(ImageUtils.decodeSampledBitmapFromImagePath(
-          editMarker.getImagePath(), 100, 100));
+          editMarker.getMarkerImagePath(), 100, 100));
     } else if (requestCode == REQUEST_PICK_IMAGE && resultCode == RESULT_OK) {
       Uri selectedImage = data.getData();
       String[] filePathColumn = {MediaStore.Images.Media.DATA};
@@ -133,7 +140,7 @@ public class EditFragmentMarker extends Fragment {
         markerHandler.updateMarker(ImageUtils.decodeSampledBitmapFromImagePath(
             photoPath, 100, 100));
 
-        editMarker.setImagePath(photoPath);
+        editMarker.setMarkerImagePath(photoPath);
       }
     }
   }
@@ -192,7 +199,7 @@ public class EditFragmentMarker extends Fragment {
     File storageDir = FileUtils.getFullPuplicFolderFile(path);
     File image = File.createTempFile(imageFileName, ".jpg", storageDir);
 
-    editMarker.setImagePath(path + image.getName());
+    editMarker.setMarkerImagePath(path + image.getName());
     return image;
   }
 

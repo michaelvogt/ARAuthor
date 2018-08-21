@@ -20,6 +20,7 @@ package eu.michaelvogt.ar.author.locations.goryoukaku;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.MotionEvent;
 
 import com.google.ar.core.Anchor;
 import com.google.ar.core.AugmentedImage;
@@ -68,41 +69,52 @@ public class Office {
   private AuthorViewModel viewModel;
   private MarkerPreviewFragment.SetModelPoseOnPlaneListener setOnPlaneListener;
 
+  private boolean isLanguageToggled = false;
+
   public void displayInfoScene(Context context, AuthorViewModel viewModel, ArFragment arFragment,
                                AnchorNode anchorNode, AugmentedImage arImage, Session session,
                                MarkerPreviewFragment.SetModelPoseOnPlaneListener setOnPlaneListener) {
     this.viewModel = viewModel;
     this.setOnPlaneListener = setOnPlaneListener;
 
-    Area backgroundArea = new Area(
-        Area.TYPE_FLATOVERLAY,
-        "Magistrates Office Background",
-        R.drawable.background,
-        new Vector3(0.9f, 0.001f, 0.6f),
-        Area.COORDINATE_LOCAL,
-        Vector3.zero(),
-        new Quaternion(),
-        Vector3.one());
+    // TODO: Provide Marker or markerId from marker preview
+    if (viewModel.getMarker(3).isShowBackground()) {
+      Area backgroundArea = new Area(
+          Area.TYPE_VIEWONIMAGE,
+          "Magistrates Office Background",
+          R.drawable.background,
+          new Vector3(0.9f, 0.001f, 0.6f),
+          Area.COORDINATE_LOCAL,
+          Vector3.zero(),
+          new Quaternion(),
+          Vector3.one());
 
-    CompletableFuture<Texture> textureFuture = Texture.builder()
-        .setSource(context, backgroundArea.getResource())
-        .setUsage(Texture.Usage.DATA)
-        .build()
-        .exceptionally(throwable -> {
-          Log.e(TAG, "Unable to create texture.", throwable);
-          return null;
-        });
+      CompletableFuture<Texture> textureFuture = Texture.builder()
+          .setSource(context, backgroundArea.getResource())
+          .setUsage(Texture.Usage.DATA)
+          .build()
+          .exceptionally(throwable -> {
+            Log.e(TAG, "Unable to create texture.", throwable);
+            return null;
+          });
 
-    textureFuture.thenAccept(texture -> MaterialFactory.makeTransparentWithTexture(context, texture)
-        .thenAccept(material -> {
-              Node backgroundNode = attachNode(anchorNode, getTextureRenderable(material, backgroundArea), backgroundArea);
+      textureFuture.thenAccept(texture -> MaterialFactory.makeTransparentWithTexture(context, texture)
+          .thenAccept(material -> {
+                Node backgroundNode = attachNode(anchorNode, getTextureRenderable(material, backgroundArea), backgroundArea);
+                attachAreas(context, viewModel, arFragment, anchorNode, arImage, session, backgroundNode);
+              }
+          ));
+    } else {
+      attachAreas(context, viewModel, arFragment,
+          anchorNode, arImage, session, anchorNode);
+    }
+  }
 
-              attachInfoPanel(context, viewModel, arFragment, anchorNode, arImage, session);
-              attachInteractiveSchema(context, backgroundNode, arImage);
-              attachTexturedObject(context, backgroundNode, viewModel.getArea(2));
-              attachTexturedObject(context, backgroundNode, viewModel.getArea(3));
-            }
-        ));
+  private void attachAreas(Context context, AuthorViewModel viewModel, ArFragment arFragment, AnchorNode anchorNode, AugmentedImage arImage, Session session, Node backgroundNode) {
+    attachInfoPanel(context, viewModel, arFragment, anchorNode, arImage, session);
+    attachInteractiveSchema(context, backgroundNode, arImage);
+    attachTexturedObject(context, backgroundNode, viewModel.getArea(3));
+    attachTexturedLanguageToggleObject(context, backgroundNode, viewModel.getArea(2));
   }
 
   private void attachInfoPanel(Context context, AuthorViewModel viewModel, ArFragment arFragment,
@@ -134,18 +146,46 @@ public class Office {
   }
 
   private void attachTexturedObject(Context context, Node anchorNode, Area area) {
-    CompletableFuture<Texture> textureFuture = Texture.builder()
-        .setSource(context, area.getResource())
-        .setUsage(Texture.Usage.DATA)
+    getTextureFuture(context, area.getResource())
+        .thenAccept(texture -> MaterialFactory.makeOpaqueWithTexture(context, texture)
+            .thenAccept(material -> attachNode(anchorNode, getTextureRenderable(material, area), area)));
+  }
+
+  private void attachTexturedLanguageToggleObject(Context context, Node anchorNode, Area area) {
+    getTextureFuture(context, area.getResource()).
+        thenAccept(texture -> MaterialFactory.makeOpaqueWithTexture(context, texture)
+            .thenAccept(material -> {
+              Renderable renderable = getTextureRenderable(material, area);
+              Node node = attachNode(anchorNode, renderable, area);
+              node.setOnTapListener((hitTestResult, motionEvent) -> {
+                if (motionEvent.getActionMasked() == MotionEvent.ACTION_UP) {
+                  isLanguageToggled = !isLanguageToggled;
+                  Texture.builder()
+                      .setSource(context, isLanguageToggled
+                          ? R.drawable.magistrates_office_en : R.drawable.magistrates_office_jp)
+                      .build()
+                      .thenAccept(toggleTexture -> {
+                        renderable.getMaterial().setTexture(MaterialFactory.MATERIAL_TEXTURE, toggleTexture);
+                      })
+                      .exceptionally(throwable -> {
+                        Log.e(TAG, "Unable to create texture.", throwable);
+                        return null;
+                      });
+                }
+              });
+            }));
+  }
+
+  private CompletableFuture<Texture> getTextureFuture(Context context, int resource) {
+    return Texture.builder()
+        .setSource(context, resource)
         .build()
         .exceptionally(throwable -> {
           Log.e(TAG, "Unable to create texture.", throwable);
           return null;
         });
-
-    textureFuture.thenAccept(texture -> MaterialFactory.makeOpaqueWithTexture(context, texture)
-        .thenAccept(material -> attachNode(anchorNode, getTextureRenderable(material, area), area)));
   }
+
 
   private void attachInteractiveSchema(Context context, Node anchorNode, AugmentedImage arImage) {
     new InteractiveImageRenderable()

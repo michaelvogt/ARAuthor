@@ -43,7 +43,7 @@
         android:layout_marginBottom="@dimen/fab_margin"
         android:focusable="auto"
         android:src="@drawable/ic_edit_black_24dp"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

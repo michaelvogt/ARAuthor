@@ -11,7 +11,7 @@ import eu.michaelvogt.ar.author.R;
 public class InfoPanel {
   public CompletableFuture<ViewRenderable> build(Context context) {
     return ViewRenderable.builder()
-        .setView(context, R.layout.user_panel)
+        .setView(context, R.layout.panel_interactive)
         .build();
   }
 }

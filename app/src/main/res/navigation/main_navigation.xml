@@ -14,8 +14,7 @@
             app:destination="@id/listFragment" />
         <argument
             android:name="edit_index"
-            android:defaultValue="-1"
-            app:type="integer" />
+            android:defaultValue="-1" />
         <action
             android:id="@+id/action_crop_marker_image"
             app:destination="@id/cropFragment" />
@@ -73,18 +72,18 @@
         <argument
             android:name="marker_id"
             android:defaultValue="-1"
-            app:type="integer" />
+             />
         <argument
             android:name="area_id"
             android:defaultValue="-1"
-            app:type="integer" />
+             />
         <action
             android:id="@+id/action_edit_area"
             app:destination="@id/areaEditFragment" />
         <argument
             android:name="area_edit_translucency"
             android:defaultValue="1"
-            app:type="integer" />
+             />
     </fragment>
     <fragment
         android:id="@+id/areaEditFragment"
@@ -97,14 +96,14 @@
         <argument
             android:name="area_id"
             android:defaultValue="-1"
-            app:type="integer" />
+             />
         <argument
             android:name="area_edit_translucency"
             android:defaultValue="1"
-            app:type="integer" />
+             />
         <argument
             android:name="marker_id"
             android:defaultValue="-1"
-            app:type="integer" />
+             />
     </fragment>
 </navigation>

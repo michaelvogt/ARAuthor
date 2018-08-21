@@ -56,7 +56,6 @@ public class EditFragmentAreas extends Fragment implements AreasListAdapter.OnIt
     super.onViewCreated(view, savedInstanceState);
 
     this.view = view;
-
     viewModel = ViewModelProviders.of(getActivity()).get(AuthorViewModel.class);
 
     RecyclerView mRecyclerView = view.findViewById(R.id.areas_list);
@@ -64,7 +63,7 @@ public class EditFragmentAreas extends Fragment implements AreasListAdapter.OnIt
     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
     mRecyclerView.setLayoutManager(mLayoutManager);
 
-    AreasListAdapter mAdapter = new AreasListAdapter(viewModel,markerId);
+    AreasListAdapter mAdapter = new AreasListAdapter(viewModel, markerId);
     mAdapter.setOnItemClickListener(this);
 
     mRecyclerView.setAdapter(mAdapter);

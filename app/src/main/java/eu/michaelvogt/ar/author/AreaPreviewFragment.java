@@ -71,7 +71,6 @@ public class AreaPreviewFragment extends Fragment {
 
   private LoopArFragment arFragment;
   private AugmentedImage augmentedImage;
-  private View editButton;
   private boolean useTranslucency;
 
   private List<ModelPoseOnPlaneListener> modelPoseOnPlaneListeners = new ArrayList<>();
@@ -108,7 +107,7 @@ public class AreaPreviewFragment extends Fragment {
 
     // TODO: Currently all markers are imported. Restrict to the currently edited marker
 
-    editButton = view.findViewById(R.id.area_edit);
+    View editButton = view.findViewById(R.id.area_edit);
     editButton.setOnClickListener(event -> {
       Bundle bundle = new Bundle();
       bundle.putInt("marker_id", markerId);
@@ -117,7 +116,7 @@ public class AreaPreviewFragment extends Fragment {
       Navigation.findNavController(view).navigate(R.id.action_edit_area, bundle);
     });
 
-    arFragment.getArSceneView().getScene().setOnUpdateListener(this::onUpdateFrame);
+    arFragment.getArSceneView().getScene().addOnUpdateListener(this::onUpdateFrame);
   }
 
   private void onUpdateFrame(FrameTime frameTime) {
@@ -157,7 +156,6 @@ public class AreaPreviewFragment extends Fragment {
                   attachShapeRenderable(getContext(), anchorNode);
               }
 
-              editButton.setVisibility(View.VISIBLE);
               augmentedImage = image;
             }
             break;

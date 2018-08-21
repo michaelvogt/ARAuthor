@@ -25,6 +25,7 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import com.google.ar.core.AugmentedImage;
 import com.google.ar.sceneform.math.Quaternion;
 import com.google.ar.sceneform.math.Vector3;
 
@@ -32,15 +33,18 @@ import eu.michaelvogt.ar.author.R;
 
 @Entity(foreignKeys = {
     @ForeignKey(entity = Marker.class,
-              parentColumns = "uid",
-              childColumns = "marker_id")
+        parentColumns = "uid",
+        childColumns = "marker_id")
 })
 public class Area {
-  public static final int TYPE_3DOBJECTONIMAGE = 0;
-  public static final int TYPE_3DOBJECTONPLANE = 1;
-  public static final int TYPE_FLATOVERLAY = 2;
-  public static final int TYPE_INTERACTIVEOVERLAY = 3;
-  public static final int TYPE_INTERACTIVEPANEL = 4;
+  public static final int TYPE_DEFAULT = 0;
+  public static final int TYPE_3DOBJECTONIMAGE = 1;
+  public static final int TYPE_3DOBJECTONPLANE = 2;
+  public static final int TYPE_VIEWONIMAGE = 3;
+  public static final int TYPE_INTERACTIVEOVERLAY = 4;
+  public static final int TYPE_INTERACTIVEPANEL = 5;
+  public static final int TYPE_INTERNATIONALTEXT = 6;
+  public static final int TYPE_TEXTUREDPLANE = 7;
 
   public static final int COORDINATE_LOCAL = -1;
   public static final int COORDINATE_GLOBAL = -2;
@@ -70,6 +74,9 @@ public class Area {
   @ColumnInfo(name = "resource")
   private int resource;
 
+  @ColumnInfo(name = "ext_resourcepath")
+  private String extResourcePath;
+
   @Ignore
   @ColumnInfo(name = "size")
   private Vector3 size;
@@ -86,17 +93,17 @@ public class Area {
   private int markerId;
 
   public Area() {
-    this(0, "", 0, Vector3.zero(), COORDINATE_LOCAL, Vector3.zero(), Quaternion.identity(), Vector3.one());
+    this(0, "", 0, "", Vector3.zero(), COORDINATE_LOCAL, Vector3.zero(), Quaternion.identity(), Vector3.one());
   }
 
-  public Area(int typeResource, String title, int resource, Vector3 size, int coordType, Vector3 location, Quaternion rotation, Vector3 scale) {
+  public Area(int typeResource, String title, int resource, String extResourcePath, Vector3 size, int coordType, Vector3 location, Quaternion rotation, Vector3 scale) {
     this.objectType = typeResource;
     this.title = title;
     this.size = size;
     this.resource = resource;
     this.position = location;
     this.rotation = rotation;
-    this.scale  = scale;
+    this.scale = scale;
   }
 
   public Area(Area area) {
@@ -104,6 +111,7 @@ public class Area {
     this.title = area.getTitle();
     this.size = area.getSize();
     this.resource = area.getResource();
+    this.extResourcePath = area.getExtResourcePath();
     this.coordType = area.getCoordType();
     this.position = area.getPosition();
     this.rotation = area.getRotation();
@@ -188,5 +196,24 @@ public class Area {
 
   public void setResource(int resource) {
     this.resource = resource;
+  }
+
+  public String getExtResourcePath() {
+    return extResourcePath;
+  }
+
+  public void setExtResourcePath(String extResourcePath) {
+    this.extResourcePath = extResourcePath;
+  }
+
+  public static Area getDefaultArea(AugmentedImage image) {
+    return new Area(TYPE_DEFAULT, "Default", R.raw.monarch, "", null,
+        COORDINATE_LOCAL, new Vector3(-image.getExtentX(), 0, -image.getExtentZ()),
+        new Quaternion(new Vector3(0, 1, 0), 180), null);
+  }
+
+  public static Area getBackgroundArea(Marker marker, @NonNull String path) {
+    return new Area(TYPE_TEXTUREDPLANE, "Background", 0, path, marker.getSize(),
+        COORDINATE_LOCAL, Vector3.zero(), new Quaternion(Vector3.zero(), 0), null);
   }
 }

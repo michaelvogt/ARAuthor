@@ -24,24 +24,41 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import com.google.ar.sceneform.math.Vector3;
+
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 @Entity
 public class Marker {
+  @Ignore
+  private Random random = new Random();
+
   public static final int MIN_SIZE = 300;
 
   @PrimaryKey(autoGenerate = true)
   @NonNull
-  private int uid;
+  // TODO: Let room define an id
+  private Integer uid = random.nextInt();
 
   @ColumnInfo(name = "thumb_path")
   private String thumbPath;
 
   @ColumnInfo(name = "image_path")
-  private String imagePath;
+  private String markerImagePath;
+
+  @ColumnInfo(name = "backgroundimage_path")
+  private String backgroundImagePath;
 
   @ColumnInfo(name = "title")
   private String title;
+
+  @ColumnInfo(name = "intro")
+  private String intro;
+
+  @Ignore
+  private boolean isTitle = false;
 
   @ColumnInfo(name = "location")
   private String location;
@@ -49,29 +66,53 @@ public class Marker {
   @ColumnInfo(name = "width_in_m")
   private float widthInM = -1;
 
+  //@ColumnInfo(name = "size")
   @Ignore
-  private ArrayList<Integer> areaIds;
+  private Vector3 size;
+
+  @ColumnInfo(name = "show_background")
+  private boolean showBackground;
+
+  @Ignore
+  private List<Integer> areaIds;
 
   public Marker() {
-    this("", "", "", .03f, new ArrayList<>());
+    this("", "", "", "",
+        "", .03f, Vector3.zero(), true, new ArrayList<>());
   }
 
-  public Marker(String imagePath, String title, String location, float widthInM, ArrayList<Integer> areas) {
-    this.imagePath = imagePath;
+  public Marker(String markerImagePath, String backgroundImagePath, String title, String intro, String location,
+                float widthInM, Vector3 size, boolean showBackground, List<Integer> areas) {
+    this.markerImagePath = markerImagePath;
     this.title = title;
+    this.intro = intro;
     this.location = location;
     this.widthInM = widthInM;
+    this.size = size;
+    this.backgroundImagePath = backgroundImagePath;
+    this.showBackground = showBackground;
     this.thumbPath = "";
     this.areaIds = areas;
   }
 
   public Marker(Marker marker) {
-    this.imagePath = marker.getImagePath();
+    this.markerImagePath = marker.getMarkerImagePath();
     this.title = marker.getTitle();
+    this.isTitle = marker.isTitle();
+    this.intro = marker.getIntro();
     this.location = marker.getLocation();
     this.widthInM = marker.getWidthInM();
-    this.thumbPath = "";
+    this.size = marker.getSize();
+    this.backgroundImagePath = marker.getBackgroundImagePath();
+    this.showBackground = marker.isShowBackground();
+    this.thumbPath = marker.getThumbPath();
     this.areaIds = marker.getAreaIds();
+  }
+
+  // TODO: Hack - Replace with Location object
+  public Marker(String title) {
+    this.title = title;
+    this.isTitle = true;
   }
 
   @NonNull
@@ -91,24 +132,32 @@ public class Marker {
     return thumbPath;
   }
 
-  public String getImagePath() {
-    return imagePath;
+  public String getMarkerImagePath() {
+    return markerImagePath;
   }
 
   public String getTitle() {
     return title;
   }
 
+  public String getIntro() {
+    return intro;
+  }
+
   public String getLocation() {
     return location;
   }
 
-  public void setImagePath(String imagePath) {
-    this.imagePath = imagePath;
+  public void setMarkerImagePath(String markerImagePath) {
+    this.markerImagePath = markerImagePath;
   }
 
   public void setTitle(String title) {
     this.title = title;
+  }
+
+  public void setIntro(String intro) {
+    this.intro = intro;
   }
 
   public void setLocation(String location) {
@@ -116,7 +165,7 @@ public class Marker {
   }
 
   public boolean hasImage() {
-    return !imagePath.isEmpty();
+    return !markerImagePath.isEmpty();
   }
 
   public float getWidthInM() {
@@ -127,12 +176,40 @@ public class Marker {
     this.widthInM = widthInM;
   }
 
-  public ArrayList<Integer> getAreaIds() {
+  public Vector3 getSize() {
+    return size;
+  }
+
+  public void setSize(Vector3 size) {
+    this.size = size;
+  }
+
+  public String getBackgroundImagePath() {
+    return backgroundImagePath;
+  }
+
+  public void setBackgroundImagePath(String backgroundImagePath) {
+    this.backgroundImagePath = backgroundImagePath;
+  }
+
+  public boolean isShowBackground() {
+    return showBackground;
+  }
+
+  public void setShowBackground(boolean showBackground) {
+    this.showBackground = showBackground;
+  }
+
+  public List<Integer> getAreaIds() {
     return areaIds;
   }
 
   public int getAreaId(int index) {
     return areaIds.get(index);
+  }
+
+  public boolean isTitle() {
+    return isTitle;
   }
 
   public void setAreaIds(ArrayList<Integer> areaIds) {
