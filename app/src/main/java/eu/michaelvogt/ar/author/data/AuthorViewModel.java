@@ -24,10 +24,14 @@ import android.arch.lifecycle.AndroidViewModel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+import eu.michaelvogt.ar.author.utils.Event;
 
 public class AuthorViewModel extends AndroidViewModel {
   private final List<Marker> markers = new ArrayList<>();
   private final List<Area> areas = new ArrayList<>();
+  private final List<Event> events = new ArrayList<>();
 
   private Marker cropMarker = null;
 
@@ -93,5 +97,13 @@ public class AuthorViewModel extends AndroidViewModel {
 
   public int getAreaSize() {
     return areas.size();
+  }
+
+  public void addEvent(Event event) {
+    events.add(event);
+  }
+
+  public List<Event> getEvents(int key) {
+    return events.stream().filter(event -> event.getKey() == key).collect(Collectors.toList());
   }
 }

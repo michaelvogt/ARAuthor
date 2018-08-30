@@ -1,0 +1,24 @@
+material {
+    "name" : "View",
+    "defines" : [
+      "baseColor"
+    ],
+    "parameters" : [
+
+    ],
+    "requires" : [
+        "position",
+        "color",
+        "uv0"
+    ],
+    "shadingModel" : "lit",
+    "blending" : "opaque",
+    "doubleSided" : false
+}
+
+fragment {
+    void material(inout MaterialInputs material) {
+         prepareMaterial(material);
+        material.baseColor = vec4(1.0, 1.0, 0.0, 1.0);
+    }
+}

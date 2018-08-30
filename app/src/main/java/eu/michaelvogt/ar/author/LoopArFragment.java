@@ -41,18 +41,21 @@ public class LoopArFragment extends ArFragment {
     AugmentedImageDatabase imagedb = new AugmentedImageDatabase(session);
 
     Bitmap bitmap;
+    String location = "";
     for (Marker marker : viewModel.markerIterable()) {
       try {
-        if (!marker.isTitle()) {
+        if (marker.isTitle()) {
+          location = marker.getTitle();
+        } else {
           bitmap = ImageUtils.decodeSampledBitmapFromImagePath(
               marker.getMarkerImagePath(), Marker.MIN_SIZE, Marker.MIN_SIZE);
           if (bitmap != null) {
             int index = marker.getWidthInM() <= 0
                 ? imagedb.addImage(String.valueOf(marker.getUid()), bitmap)
                 : imagedb.addImage(String.valueOf(marker.getUid()), bitmap, marker.getWidthInM());
-            Log.d(TAG, "marker " + marker.getTitle() + "(" + index + ")" + " imported");
+            Log.d(TAG, "marker " + location + " - " + marker.getTitle() + "(" + index + ")" + " imported");
           } else {
-            Log.d(TAG, "marker " + marker.getTitle() + " NOT imported");
+            Log.d(TAG, "marker " + location + " - " + marker.getTitle() + " NOT imported");
             Snackbar.make(getView(), "marker " + marker.getTitle() + " NOT imported",
                 Snackbar.LENGTH_SHORT).show();
           }

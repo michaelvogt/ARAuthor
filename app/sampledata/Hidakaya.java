@@ -46,7 +46,7 @@ public class Hidakaya {
 
             CompletableFuture<Texture> textureFuture = Texture.builder()
                 .setSource(context, R.drawable.hidakabreads)
-                .setUsage(Texture.Usage.DATA)
+                .setUsage(Texture.Usage.COLOR)
                 .build()
                 .exceptionally(throwable -> {
                   Log.e(TAG, "Unable to create texture.", throwable);

@@ -32,7 +32,6 @@ import com.google.ar.core.Anchor;
 import com.google.ar.core.AugmentedImage;
 import com.google.ar.core.Frame;
 import com.google.ar.core.TrackingState;
-import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.FrameTime;
 import com.google.ar.sceneform.Node;
 
@@ -46,7 +45,8 @@ import androidx.navigation.Navigation;
 import eu.michaelvogt.ar.author.data.Area;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
 import eu.michaelvogt.ar.author.data.Marker;
-import eu.michaelvogt.ar.author.utils.AreaBuilder;
+import eu.michaelvogt.ar.author.nodes.EventAnchorNode;
+import eu.michaelvogt.ar.author.utils.AreaNodeBuilder;
 
 public class MarkerPreviewFragment extends Fragment {
   private static final String TAG = MarkerPreviewFragment.class.getSimpleName();
@@ -98,7 +98,7 @@ public class MarkerPreviewFragment extends Fragment {
         handledImages.put(image.getName(), null);
 
         Anchor anchor = image.createAnchor(image.getCenterPose());
-        AnchorNode anchorNode = new AnchorNode(anchor);
+        EventAnchorNode anchorNode = new EventAnchorNode(anchor);
         anchorNode.setParent(arFragment.getArSceneView().getScene());
 
         Marker marker = viewModel.getMarkerFromUid(Integer.parseInt(image.getName())).get();
@@ -106,7 +106,6 @@ public class MarkerPreviewFragment extends Fragment {
         if (marker.isShowBackground()) {
           buildArea(anchorNode, Area.getBackgroundArea(marker, marker.getBackgroundImagePath()),
               (node) -> {
-                // TODO: Texure hardcoded in monarch.sfa. Set to backgroundimage from marker
                 buildAreas(node, marker.getAreaIds(), image);
               });
         } else {
@@ -119,7 +118,7 @@ public class MarkerPreviewFragment extends Fragment {
   }
 
   private void buildAreas(Node anchorNode, List<Integer> areaIds, AugmentedImage image) {
-    if (areaIds.size() != 0) {
+    if (areaIds.size() > 0) {
       for (int areaId : areaIds) {
         buildArea(anchorNode, viewModel.getArea(areaId), null);
       }
@@ -130,14 +129,16 @@ public class MarkerPreviewFragment extends Fragment {
   }
 
   private void buildArea(Node anchorNode, Area area, Consumer<Node> fn) {
-    AreaBuilder.builder(getContext(), area)
+    AreaNodeBuilder.builder(getContext(), viewModel, area)
         .build()
         .thenAccept(node -> {
-          anchorNode.addChild(node);
+          node.setParent(anchorNode);
 
           if (fn != null) {
             fn.accept(node);
           }
+
+          Log.i(TAG, "Area successfully created " + area.getTitle());
         })
         .exceptionally(throwable -> {
           Log.e(TAG, "Unable to build Area: " + area.getTitle(), throwable);

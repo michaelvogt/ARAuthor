@@ -1,0 +1,36 @@
+material {
+    "name" : "View",
+    "defines" : [
+      "baseColor"
+    ],
+    "parameters" : [
+      {
+        type: "float",
+        name: "fadeInWidth"
+      }, {
+        type: "float",
+        name: "fadeOutWidth"
+      }
+    ],
+    "requires" : [
+        "position",
+        "color",
+        "uv0"
+    ],
+    "shadingModel" : "unlit",
+    "blending" : "transparent",
+    "doubleSided" : true
+}
+
+vertex {
+    void materialVertex(inout MaterialVertexInputs material) {
+        material.worldPosition.y += sin(getPosition().x * getTime());
+    }
+}
+
+fragment {
+    void material(inout MaterialInputs material) {
+         prepareMaterial(material);
+        material.baseColor = vec4(1.0, 1.0, mix(.5, .1, sin(getTime())), 1.0);
+    }
+}

@@ -91,7 +91,7 @@ public class Office {
 
       CompletableFuture<Texture> textureFuture = Texture.builder()
           .setSource(context, backgroundArea.getResource())
-          .setUsage(Texture.Usage.DATA)
+          .setUsage(Texture.Usage.COLOR)
           .build()
           .exceptionally(throwable -> {
             Log.e(TAG, "Unable to create texture.", throwable);

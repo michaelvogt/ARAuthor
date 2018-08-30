@@ -24,12 +24,17 @@ import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
+import android.widget.TextView;
 
 import com.google.ar.core.AugmentedImage;
 import com.google.ar.sceneform.math.Quaternion;
 import com.google.ar.sceneform.math.Vector3;
+import com.google.ar.sceneform.rendering.Material;
+import com.google.ar.sceneform.rendering.Renderable;
 
 import eu.michaelvogt.ar.author.R;
+import eu.michaelvogt.ar.author.utils.Detail;
+import eu.michaelvogt.ar.author.utils.Event;
 
 @Entity(foreignKeys = {
     @ForeignKey(entity = Marker.class,
@@ -40,11 +45,11 @@ public class Area {
   public static final int TYPE_DEFAULT = 0;
   public static final int TYPE_3DOBJECTONIMAGE = 1;
   public static final int TYPE_3DOBJECTONPLANE = 2;
-  public static final int TYPE_VIEWONIMAGE = 3;
+  public static final int TYPE_SLIDESONIMAGE = 3;
   public static final int TYPE_INTERACTIVEOVERLAY = 4;
   public static final int TYPE_INTERACTIVEPANEL = 5;
-  public static final int TYPE_INTERNATIONALTEXT = 6;
-  public static final int TYPE_TEXTUREDPLANE = 7;
+  public static final int TYPE_TEXTONIMAGE = 6;
+  public static final int TYPE_IMAGEONIMAGE = 8;
 
   public static final int COORDINATE_LOCAL = -1;
   public static final int COORDINATE_GLOBAL = -2;
@@ -74,8 +79,9 @@ public class Area {
   @ColumnInfo(name = "resource")
   private int resource;
 
-  @ColumnInfo(name = "ext_resourcepath")
-  private String extResourcePath;
+  @Ignore
+  @ColumnInfo(name = "detail")
+  private Detail detail;
 
   @Ignore
   @ColumnInfo(name = "size")
@@ -93,14 +99,18 @@ public class Area {
   private int markerId;
 
   public Area() {
-    this(0, "", 0, "", Vector3.zero(), COORDINATE_LOCAL, Vector3.zero(), Quaternion.identity(), Vector3.one());
+    this(0, "", 0, Detail.builder(), Vector3.zero(), COORDINATE_LOCAL,
+        Vector3.zero(), Quaternion.identity(), Vector3.one());
   }
 
-  public Area(int typeResource, String title, int resource, String extResourcePath, Vector3 size, int coordType, Vector3 location, Quaternion rotation, Vector3 scale) {
+  public Area(int typeResource, String title, int resource, Detail detail, Vector3 size,
+              int coordType, Vector3 location, Quaternion rotation, Vector3 scale) {
     this.objectType = typeResource;
     this.title = title;
     this.size = size;
+    this.coordType = coordType;
     this.resource = resource;
+    this.detail = detail;
     this.position = location;
     this.rotation = rotation;
     this.scale = scale;
@@ -111,7 +121,7 @@ public class Area {
     this.title = area.getTitle();
     this.size = area.getSize();
     this.resource = area.getResource();
-    this.extResourcePath = area.getExtResourcePath();
+    this.detail = area.getDetails();
     this.coordType = area.getCoordType();
     this.position = area.getPosition();
     this.rotation = area.getRotation();
@@ -198,22 +208,56 @@ public class Area {
     this.resource = resource;
   }
 
-  public String getExtResourcePath() {
-    return extResourcePath;
+  private Detail getDetails() {
+    return detail;
   }
 
-  public void setExtResourcePath(String extResourcePath) {
-    this.extResourcePath = extResourcePath;
+  public Object getDetail(int key, Object orDefault) {
+      return detail.getDetail(key, orDefault);
+  }
+
+  public String getDetailString(int key, Object orDefault) {
+    return (String) getDetail(key, orDefault);
+  }
+
+  public int getDetailResource(int key, Object orDefault) {
+    return (int) getDetail(key, orDefault);
+  }
+
+  public float getDetailFloat(int key, Object orDefault) {
+    return (float) getDetail(key, orDefault);
+  }
+
+  public void setDetail(Detail detail) {
+    this.detail = detail;
+  }
+
+  public boolean hasDetail(@NonNull int key) {
+    return detail.hasDetail(key);
+  }
+
+  public void applyDetail(Material material) {
+    detail.apply(material);
+  }
+
+  public void applyDetail(TextView textView) {
+    detail.apply(textView);
+  }
+
+  public void applyDetail(Renderable renderable) {
+    detail.apply(renderable);
   }
 
   public static Area getDefaultArea(AugmentedImage image) {
-    return new Area(TYPE_DEFAULT, "Default", R.raw.monarch, "", null,
-        COORDINATE_LOCAL, new Vector3(-image.getExtentX(), 0, -image.getExtentZ()),
-        new Quaternion(new Vector3(0, 1, 0), 180), null);
+    return new Area(TYPE_DEFAULT, "Default", R.raw.default_model, Detail.builder(), null,
+        COORDINATE_LOCAL, new Vector3(-image.getExtentX() / 2, 0f, -image.getExtentZ() / 2),
+        new Quaternion(new Vector3(0f, 1f, 0f), 180), Vector3.one());
   }
 
   public static Area getBackgroundArea(Marker marker, @NonNull String path) {
-    return new Area(TYPE_TEXTUREDPLANE, "Background", 0, path, marker.getSize(),
-        COORDINATE_LOCAL, Vector3.zero(), new Quaternion(Vector3.zero(), 0), null);
+    Detail detail = Detail.builder().setImagePath(path);
+
+    return new Area(TYPE_IMAGEONIMAGE, "Background", 0, detail, marker.getSize(),
+        COORDINATE_LOCAL, Vector3.zero(), new Quaternion(Vector3.zero(), 0), Vector3.one());
   }
 }

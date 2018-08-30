@@ -1,0 +1,37 @@
+material {
+    name: "Custom material",
+    parameters: [
+        {
+            type: "sampler2d",
+            name: "texture"
+        }, {
+            type: "float",
+            name: "fadeLeftWidth"
+        }, {
+            type: "float",
+            name: "fadeRightWidth"
+        }
+    ],
+    requires: [
+        "position",
+        "uv0"
+    ],
+    shadingModel: "unlit",
+    blending : "transparent",
+}
+
+fragment {
+    void material(inout MaterialInputs material) {
+        prepareMaterial(material);
+
+        vec2 uv = getUV0();
+
+        material.baseColor = texture(materialParams_texture, uv);
+        material.baseColor.a *=
+          materialParams.fadeLeftWidth > 0.0 && uv.x < materialParams.fadeLeftWidth
+            ? (uv.x / materialParams.fadeLeftWidth)
+          : materialParams.fadeRightWidth > 0.0 && (1.0 - uv.x) < materialParams.fadeRightWidth
+            ? ((1.0 - uv.x) / materialParams.fadeRightWidth)
+          : 1.0;
+        }
+}

@@ -18,5 +18,28 @@
 
 package eu.michaelvogt.ar.author.data;
 
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
+
 public class Location {
+  @PrimaryKey(autoGenerate = true)
+  @NonNull
+  private int uid;
+
+  private String name;
+
+
+
+  public Location() {
+  }
+
+  public int getUid() {
+    return uid;
+  }
+
+  public void setUid(int uid) {
+    this.uid = uid;
+  }
+
+
 }

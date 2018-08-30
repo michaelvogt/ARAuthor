@@ -1,4 +1,4 @@
-<!--
+/*
     ARTester - AR for tourists by tourists
     Copyright (C) 2018  Michael Vogt
 
@@ -14,11 +14,14 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
--->
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+*/
 
-    android:id="@+id/text_international"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@android:color/transparent">
-</TextView>
+package eu.michaelvogt.ar.author.data;
+
+public class Language {
+  private String region;
+
+  private String locale;
+
+  private String icon;
+}

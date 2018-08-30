@@ -21,6 +21,7 @@ package eu.michaelvogt.ar.author;
 import android.Manifest;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -36,6 +37,7 @@ import java.util.Arrays;
 import eu.michaelvogt.ar.author.data.Area;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
 import eu.michaelvogt.ar.author.data.Marker;
+import eu.michaelvogt.ar.author.utils.Detail;
 
 public class AuthorActivity extends AppCompatActivity {
 
@@ -164,14 +166,14 @@ public class AuthorActivity extends AppCompatActivity {
     viewModel.addMarker(new Marker("宗岡家"));
     viewModel.addMarker(new Marker(
         "/Touristar/Markers/P_20180804_175049_vHDR_On.jpg",
-        "boardbackground.jpg",
+        "/Touristar/iwamiginzan/muneokake/boardbackground.png",
         "看板",
         "",
         "宗岡家",
         0.435f,
         new Vector3(0.945f, 0.005f, 0.632f),
         true,
-        Arrays.asList(0)));
+        Arrays.asList(0, 1, 2, 3)));
 
 
     viewModel.addMarker(new Marker("金森家"));
@@ -324,14 +326,55 @@ public class AuthorActivity extends AppCompatActivity {
 //            new ArrayList<>(Arrays.asList(0, 4, 2, 3))));
 
 
-    viewModel.addArea(new Area(Area.TYPE_VIEWONIMAGE,
-        "Muneoka Slides",
-        R.layout.slider,
-        "",
-        Vector3.zero(),
+    viewModel.addArea(new Area(Area.TYPE_IMAGEONIMAGE,
+        "Muneoka Background Image",
+        R.layout.view_image,
+        Detail.builder()
+            .setImagePath("Touristar/iwamiginzan/muneokake/infoboard/images/IMG_20180609_115300.png")
+            .setFade(Detail.FADE_RIGHT_WIDTH, 0.4f)
+            .setAllowZoom(true),
+        new Vector3(0.415f, 0.572f, 0.01f),
         Area.COORDINATE_LOCAL,
-        new Vector3(0f, 0.01f, 0f),
-        new Quaternion(new Vector3(-1f, 0.0f, 0.0f), 90.0f),
+        new Vector3(-0.236f, 0.01f, 0.0f),
+        new Quaternion(new Vector3(-1.0f, 0.0f, 0.0f), 90.0f),
+        Vector3.one()));
+
+    viewModel.addArea(new Area(Area.TYPE_TEXTONIMAGE,
+        "Muneoka Background Intro",
+        R.layout.view_text,
+        Detail.builder()
+            .setTextPath("Touristar/iwamiginzan/muneokake/infoboard/texts/infoboardtxt.html")
+            .setBackgroundColor(Color.argb(0, 0, 0, 0))
+            .setTextSize(12f),
+        new Vector3(0.445f, 0.572f, 0.01f),
+        Area.COORDINATE_LOCAL,
+        new Vector3(0.106f, 0.01f, 0.32f),
+        new Quaternion(new Vector3(-1.0f, 0.0f, 0.0f), 90.0f),
+        Vector3.one()));
+
+    viewModel.addArea(new Area(Area.TYPE_IMAGEONIMAGE,
+        "Muneoka Language Selector",
+        // TODO: Remove and hardcode in Node
+        R.layout.view_image,
+        Detail.builder()
+            .setImageResource(R.drawable.ic_language_selector)
+            .isCastingShadow(true),
+        new Vector3(0.0445f, 0.0572f, 0.01f),
+        Area.COORDINATE_LOCAL,
+        new Vector3(0.475f, 0.01f, 0.205f),
+        new Quaternion(new Vector3(-1.0f, 0.0f, 0.0f), 90.0f),
+        Vector3.one()));
+
+    viewModel.addArea(new Area(Area.TYPE_IMAGEONIMAGE,
+        "Main Content Grabber",
+        R.layout.view_image,
+        Detail.builder()
+            .setImageResource(R.drawable.if_tiny_arrows_diagonal_out_1_252127)
+            .isCastingShadow(true),
+        new Vector3(0.0445f, 0.0572f, 0.01f),
+        Area.COORDINATE_LOCAL,
+        new Vector3(0.475f, 0.01f, 0.275f),
+        new Quaternion(new Vector3(-1.0f, 0.0f, 0.0f), 90.0f),
         Vector3.one()));
 
 //    viewModel.addArea(new Area(Area.TYPE_3DOBJECTONPLANE,
@@ -352,7 +395,7 @@ public class AuthorActivity extends AppCompatActivity {
 //        new Quaternion(-1f, 0f, 0f, 1.0f),
 //        Vector3.one()));
 //
-//    viewModel.addArea(new Area(Area.TYPE_VIEWONIMAGE,
+//    viewModel.addArea(new Area(Area.TYPE_SLIDESONIMAGE,
 //        "Magistrate Office Building Explanation",
 //        R.drawable.magistrates_office_jp,
 //        new Vector3(0.42f, 0.0001f, 0.24f),
@@ -361,7 +404,7 @@ public class AuthorActivity extends AppCompatActivity {
 //        new Quaternion(0f, 0f, 0f, 1f),
 //        Vector3.one()));
 //
-//    viewModel.addArea(new Area(Area.TYPE_VIEWONIMAGE,
+//    viewModel.addArea(new Area(Area.TYPE_SLIDESONIMAGE,
 //        "Magistrate Office Building Map",
 //        R.drawable.goryoukaku_map,
 //        new Vector3(0.247f, .001f, 0.247f),
