@@ -23,8 +23,7 @@ import android.view.MotionEvent;
 import com.google.ar.core.Anchor;
 import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.HitTestResult;
-
-import java.util.Map;
+import com.google.ar.sceneform.Node;
 
 public class EventAnchorNode extends AnchorNode {
   private static final String TAG = EventAnchorNode.class.getSimpleName();
@@ -35,9 +34,23 @@ public class EventAnchorNode extends AnchorNode {
 
   @Override
   public boolean onTouchEvent(HitTestResult hitTestResult, MotionEvent motionEvent) {
+    Node node = hitTestResult.getNode();
+    if (node instanceof EventSender && ((EventSender) node).mayHandleEvent()) {
+      EventSender eventNode = (EventSender) node;
 
+      int eventType = eventNode.getEventType();
+      String eventDetail = eventNode.getEventDetail(eventType);
+      getChildren().forEach(child -> traverseChild(child, eventType, eventDetail, motionEvent));
+    }
+    return true;
+  }
 
+  private void traverseChild(Node child, int eventType, String eventDetail, MotionEvent motionEvent) {
+    if (child instanceof EventHandler) {
+      ((EventHandler) child).handleEvent(eventType, eventDetail, motionEvent);
+    }
 
-    return false;
+    child.getChildren().forEach(childChild ->
+        traverseChild(childChild, eventType, eventDetail, motionEvent));
   }
 }

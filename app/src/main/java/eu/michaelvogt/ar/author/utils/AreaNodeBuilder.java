@@ -29,7 +29,6 @@ import java.util.concurrent.CompletionStage;
 
 import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.Area;
-import eu.michaelvogt.ar.author.data.AuthorViewModel;
 import eu.michaelvogt.ar.author.nodes.ImageNode;
 import eu.michaelvogt.ar.author.nodes.TextNode;
 import eu.michaelvogt.ar.author.nodes.ViewNode;
@@ -41,17 +40,15 @@ public class AreaNodeBuilder {
   public static final int SLIDE_MATERIAL_TEMP = R.raw.slide;
 
   private final Context context;
-  private AuthorViewModel viewModel;
   private final Area area;
 
-  private AreaNodeBuilder(Context context, AuthorViewModel viewModel, Area area) {
+  private AreaNodeBuilder(Context context, Area area) {
     this.context = context;
-    this.viewModel = viewModel;
     this.area = area;
   }
 
-  public static AreaNodeBuilder builder(Context context, AuthorViewModel viewModel, Area area) {
-    return new AreaNodeBuilder(context, viewModel, area);
+  public static AreaNodeBuilder builder(Context context, Area area) {
+    return new AreaNodeBuilder(context, area);
   }
 
   public CompletionStage<Node> build() {
@@ -68,7 +65,7 @@ public class AreaNodeBuilder {
       case Area.TYPE_INTERACTIVEPANEL:
         return null;
       case Area.TYPE_TEXTONIMAGE:
-        return TextNode.builder(context, viewModel, area).build();
+        return TextNode.builder(context, area).build();
       case Area.TYPE_IMAGEONIMAGE:
         return ImageNode.builder(context, area).build();
       default:

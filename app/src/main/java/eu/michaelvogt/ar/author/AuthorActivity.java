@@ -36,6 +36,7 @@ import java.util.Arrays;
 
 import eu.michaelvogt.ar.author.data.Area;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
+import eu.michaelvogt.ar.author.data.Event;
 import eu.michaelvogt.ar.author.data.Marker;
 import eu.michaelvogt.ar.author.utils.Detail;
 
@@ -331,7 +332,7 @@ public class AuthorActivity extends AppCompatActivity {
         R.layout.view_image,
         Detail.builder()
             .setImagePath("Touristar/iwamiginzan/muneokake/infoboard/images/IMG_20180609_115300.png")
-            .setFade(Detail.FADE_RIGHT_WIDTH, 0.4f)
+            .setFade(Detail.KEY_FADE_RIGHT_WIDTH, 0.4f)
             .setAllowZoom(true),
         new Vector3(0.415f, 0.572f, 0.01f),
         Area.COORDINATE_LOCAL,
@@ -358,6 +359,8 @@ public class AuthorActivity extends AppCompatActivity {
         R.layout.view_image,
         Detail.builder()
             .setImageResource(R.drawable.ic_language_selector)
+            // TODO: Display language options with this button, and set the language with these buttons instead
+            .setHandlesEvent(Event.EVENT_SWITCHLANGUAGE, Detail.LANGUAGE_EN)
             .isCastingShadow(true),
         new Vector3(0.0445f, 0.0572f, 0.01f),
         Area.COORDINATE_LOCAL,

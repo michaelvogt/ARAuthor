@@ -39,7 +39,7 @@ import eu.michaelvogt.ar.author.utils.AreaNodeBuilder;
 import eu.michaelvogt.ar.author.utils.Detail;
 import eu.michaelvogt.ar.author.utils.FileUtils;
 
-public class ImageNode extends Node {
+public class ImageNode extends Node implements EventSender {
   private static final String TAG = ImageNode.class.getSimpleName();
 
   private Context context;
@@ -62,21 +62,21 @@ public class ImageNode extends Node {
     CompletableFuture<Node> future = new CompletableFuture<>();
     CompletableFuture<Texture> futureTexture;
 
-    if (area.hasDetail(Detail.IMAGEPATH)) {
+    if (area.hasDetail(Detail.KEY_IMAGEPATH)) {
       String textureFilePath = FileUtils.getFullPuplicFolderPath(
-          area.getDetailString(Detail.IMAGEPATH, "Touristar/default/images/"));
+          area.getDetailString(Detail.KEY_IMAGEPATH, "Touristar/default/images/"));
 
       futureTexture = Texture.builder()
           .setSource(BitmapFactory.decodeFile(textureFilePath))
           .setUsage(Texture.Usage.COLOR)
           .build().exceptionally(throwable -> {
             Log.d(TAG, "Could not load texture image: " +
-                area.getDetail(Detail.IMAGEPATH, "Touristar/default/images/"), throwable);
+                area.getDetail(Detail.KEY_IMAGEPATH, "Touristar/default/images/"), throwable);
             return null;
           });
 
-    } else if (area.hasDetail(Detail.IMAGERESOURCE)) {
-      int textureResource = area.getDetailResource(Detail.IMAGERESOURCE, R.drawable.ic_launcher);
+    } else if (area.hasDetail(Detail.KEY_IMAGERESOURCE)) {
+      int textureResource = area.getDetailResource(Detail.KEY_IMAGERESOURCE, R.drawable.ic_launcher);
 
       futureTexture = Texture.builder()
           .setSource(context, textureResource)
@@ -84,7 +84,7 @@ public class ImageNode extends Node {
           .build()
           .exceptionally(throwable -> {
             Log.d(TAG, "Could not load texture resource: " +
-                area.getDetail(Detail.IMAGERESOURCE, R.drawable.ic_launcher), throwable);
+                area.getDetail(Detail.KEY_IMAGERESOURCE, R.drawable.ic_launcher), throwable);
             return null;
           });
 
@@ -116,5 +116,20 @@ public class ImageNode extends Node {
         }));
 
     return future;
+  }
+
+  @Override
+  public boolean mayHandleEvent() {
+    return area.hasDetail(Detail.KEY_HANDLESEVENT);
+  }
+
+  @Override
+  public int getEventType() {
+    return area.getDetailInt(Detail.KEY_HANDLESEVENT);
+  }
+
+  @Override
+  public String getEventDetail(int eventType) {
+    return area.getDetailString(Detail.KEY_EVENTDETAIL, Detail.LANGUAGE_EN);
   }
 }

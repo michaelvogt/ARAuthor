@@ -24,16 +24,15 @@ import android.arch.lifecycle.AndroidViewModel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
-import eu.michaelvogt.ar.author.utils.Event;
 
 public class AuthorViewModel extends AndroidViewModel {
   private final List<Marker> markers = new ArrayList<>();
   private final List<Area> areas = new ArrayList<>();
-  private final List<Event> events = new ArrayList<>();
 
   private Marker cropMarker = null;
+
+  // TODO: Set to current system language or english when not available
+  private String currentLanguage = "_jp_";
 
   public AuthorViewModel(Application application) {
     super(application);
@@ -99,11 +98,11 @@ public class AuthorViewModel extends AndroidViewModel {
     return areas.size();
   }
 
-  public void addEvent(Event event) {
-    events.add(event);
+  public String getCurrentLanguage() {
+    return currentLanguage;
   }
 
-  public List<Event> getEvents(int key) {
-    return events.stream().filter(event -> event.getKey() == key).collect(Collectors.toList());
+  public void setCurrentLanguage(String currentLanguage) {
+    this.currentLanguage = currentLanguage;
   }
 }

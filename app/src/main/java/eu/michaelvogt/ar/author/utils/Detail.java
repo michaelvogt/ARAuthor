@@ -30,22 +30,28 @@ import java.util.Map;
 import java.util.function.Function;
 
 public class Detail {
-  public static final int IMAGERESOURCE = 14;
-  public static final int IMAGEPATH = 0;
-  public static final int IMAGEFOLDERPATH = 1;
-  public static final int TEXTCONTENT = 2;
-  public static final int MARKUPCONTENT = 3;
-  public static final int TEXTPATH = 4;
-  public static final int SLIDESFOLDERPATH = 5;
-  public static final int FADE_LEFT_WIDTH = 6;
-  public static final int FADE_RIGHT_WIDTH = 7;
-  public static final int FADE_TOP_WIDTH = 8;
-  public static final int FADE_BOTTOM_WIDTH = 9;
-  public static final int BACKGROUNDCOLOR = 10;
-  public static final int TEXTCOLOR = 11;
-  public static final int TEXTSIZE = 12;
-  public static final int ALLOWZOOM = 13;
-  public static final int ISCASTINGSHADOW = 15;
+  public static final int KEY_IMAGERESOURCE = 14;
+  public static final int KEY_IMAGEPATH = 0;
+  public static final int KEY_IMAGEFOLDERPATH = 1;
+  public static final int KEY_TEXTCONTENT = 2;
+  public static final int KEY_MARKUPCONTENT = 3;
+  public static final int KEY_TEXTPATH = 4;
+  public static final int KEY_SLIDESFOLDERPATH = 5;
+  public static final int KEY_FADE_LEFT_WIDTH = 6;
+  public static final int KEY_FADE_RIGHT_WIDTH = 7;
+  public static final int KEY_FADE_TOP_WIDTH = 8;
+  public static final int KEY_FADE_BOTTOM_WIDTH = 9;
+  public static final int KEY_BACKGROUNDCOLOR = 10;
+  public static final int KEY_TEXTCOLOR = 11;
+  public static final int KEY_TEXTSIZE = 12;
+  public static final int KEY_ALLOWZOOM = 13;
+  public static final int KEY_ISCASTINGSHADOW = 15;
+  public static final int KEY_HANDLESEVENT = 16;
+  public static final int KEY_EVENTDETAIL = 17;
+
+  public static final String LANGUAGE_EN = "_en_";
+  public static final String LANGUAGE_JP = "_jp_";
+  public static final String LANGUAGE_DE = "_de_";
 
   private static final String MATERIAL_FADELEFTWIDTH = "fadeLeftWidth";
   private static final String MATERIAL_FADERIGHTWIDTH = "fadeRightWidth";
@@ -64,21 +70,21 @@ public class Detail {
 
   public void apply(Material material) {
     material.setFloat(MATERIAL_FADELEFTWIDTH, 0f);
-    material.setFloat(MATERIAL_FADERIGHTWIDTH, value.apply(FADE_RIGHT_WIDTH));
+    material.setFloat(MATERIAL_FADERIGHTWIDTH, value.apply(KEY_FADE_RIGHT_WIDTH));
   }
 
   public void apply(TextView textView) {
-    textView.setTextSize((Float) details.getOrDefault(TEXTSIZE, 12));
+    textView.setTextSize((Float) details.getOrDefault(KEY_TEXTSIZE, 12));
     textView.setBackgroundColor((Integer)
-        details.getOrDefault(BACKGROUNDCOLOR, Color.argb(255, 255, 255, 255)));
+        details.getOrDefault(KEY_BACKGROUNDCOLOR, Color.argb(255, 255, 255, 255)));
   }
 
   public void apply(Renderable renderable) {
-    renderable.setShadowCaster((Boolean) details.getOrDefault(ISCASTINGSHADOW, false));
+    renderable.setShadowCaster((Boolean) details.getOrDefault(KEY_ISCASTINGSHADOW, false));
   }
 
   public Detail setImageResource(int resourceId) {
-    details.put(IMAGERESOURCE, resourceId);
+    details.put(KEY_IMAGERESOURCE, resourceId);
     return this;
   }
 
@@ -86,7 +92,7 @@ public class Detail {
     if (!path.endsWith("jpg") && !path.endsWith(".png"))
       throw new AssertionError("Only .png and .jpg files are supported");
 
-    details.put(IMAGEPATH, path);
+    details.put(KEY_IMAGEPATH, path);
     return this;
   }
 
@@ -94,7 +100,7 @@ public class Detail {
     if (path.endsWith("jpg") || path.endsWith(".png"))
       throw new AssertionError("Provide the path to a folder that contains images");
 
-    details.put(IMAGEFOLDERPATH, path);
+    details.put(KEY_IMAGEFOLDERPATH, path);
     return this;
   }
 
@@ -102,34 +108,34 @@ public class Detail {
     if (text.length() <= 0)
       throw new AssertionError("Empty text is not supported");
 
-    details.put(TEXTCONTENT, text);
+    details.put(KEY_TEXTCONTENT, text);
     return this;
   }
 
   public Detail setTextPath(@NonNull String path) {
     if (!path.endsWith(".txt") && !path.endsWith(".html")) throw new AssertionError();
 
-    details.put(TEXTPATH, path);
+    details.put(KEY_TEXTPATH, path);
     return this;
   }
 
   public Detail setBackgroundColor(int color) {
-    details.put(BACKGROUNDCOLOR, color);
+    details.put(KEY_BACKGROUNDCOLOR, color);
     return this;
   }
 
   public Detail setTextColor(int color) {
-    details.put(TEXTCOLOR, color);
+    details.put(KEY_TEXTCOLOR, color);
     return this;
   }
 
   public Detail setTextSize(float size) {
-    details.put(TEXTSIZE, size);
+    details.put(KEY_TEXTSIZE, size);
     return this;
   }
 
   public Detail isCastingShadow(boolean isCasting) {
-    details.put(ISCASTINGSHADOW, isCasting);
+    details.put(KEY_ISCASTINGSHADOW, isCasting);
     return this;
   }
 
@@ -139,14 +145,25 @@ public class Detail {
   }
 
   public Detail setAllowZoom(boolean allow) {
-    details.put(ALLOWZOOM, allow);
+    details.put(KEY_ALLOWZOOM, allow);
+    return this;
+  }
+
+  public Detail setHandlesEvent(int eventType, String languageDetail) {
+    details.put(KEY_HANDLESEVENT, eventType);
+    details.put(KEY_EVENTDETAIL, languageDetail);
     return this;
   }
 
   public Object getDetail(int key, Object orDefault) {
-    // TODO: Prepare the defaults, remove the assertions and use the defaults
+    // TODO: Prepare general defaults, remove the assertions and use these defaults
     if (!details.containsKey(key)) throw new AssertionError();
     return details.getOrDefault(key, orDefault);
+  }
+
+  public Object getDetail(int key) {
+    if (!details.containsKey(key)) throw new AssertionError();
+    return details.get(key);
   }
 
   public boolean hasDetail(int key) {

@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: com.lyft:scissors-1.1.1">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/scissors-1.1.1.aar/07fbbec06910fbd445ac4c4ca3f9a8dd/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/scissors-1.1.1.aar/07fbbec06910fbd445ac4c4ca3f9a8dd/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/scissors-1.1.1.aar/4c8dcff37d381b2ea87fba14b2c394ba/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/scissors-1.1.1.aar/4c8dcff37d381b2ea87fba14b2c394ba/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

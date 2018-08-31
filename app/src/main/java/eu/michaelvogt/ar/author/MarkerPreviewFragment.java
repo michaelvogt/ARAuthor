@@ -129,7 +129,7 @@ public class MarkerPreviewFragment extends Fragment {
   }
 
   private void buildArea(Node anchorNode, Area area, Consumer<Node> fn) {
-    AreaNodeBuilder.builder(getContext(), viewModel, area)
+    AreaNodeBuilder.builder(getActivity(), area)
         .build()
         .thenAccept(node -> {
           node.setParent(anchorNode);

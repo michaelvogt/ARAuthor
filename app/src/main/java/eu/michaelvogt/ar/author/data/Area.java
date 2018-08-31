@@ -34,7 +34,6 @@ import com.google.ar.sceneform.rendering.Renderable;
 
 import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.utils.Detail;
-import eu.michaelvogt.ar.author.utils.Event;
 
 @Entity(foreignKeys = {
     @ForeignKey(entity = Marker.class,
@@ -216,6 +215,14 @@ public class Area {
       return detail.getDetail(key, orDefault);
   }
 
+  public Object getDetail(int key) {
+      return detail.getDetail(key);
+  }
+
+  public String getDetailString(int key) {
+    return (String) getDetail(key);
+  }
+
   public String getDetailString(int key, Object orDefault) {
     return (String) getDetail(key, orDefault);
   }
@@ -226,6 +233,14 @@ public class Area {
 
   public float getDetailFloat(int key, Object orDefault) {
     return (float) getDetail(key, orDefault);
+  }
+
+  public int getDetailInt(int key) {
+    return (int) getDetail(key);
+  }
+
+  public int getDetailInt(int key, Object orDefault) {
+    return (int) getDetail(key, orDefault);
   }
 
   public void setDetail(Detail detail) {

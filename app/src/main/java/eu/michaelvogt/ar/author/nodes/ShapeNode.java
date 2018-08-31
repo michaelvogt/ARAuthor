@@ -40,7 +40,7 @@ public class ShapeNode extends Node {
   public CompletionStage<Node> build() {
     CompletableFuture<Node> future = new CompletableFuture<>();
     String textureFilePath = FileUtils.getFullPuplicFolderPath(
-        area.getDetailString(Detail.IMAGEPATH, "Touristar/default/images/"));
+        area.getDetailString(Detail.KEY_IMAGEPATH, "Touristar/default/images/"));
 
     Texture.builder()
         .setSource(BitmapFactory.decodeFile(textureFilePath))
@@ -64,7 +64,7 @@ public class ShapeNode extends Node {
             }))
         .exceptionally(throwable -> {
           Log.d(TAG, "Could not load texture " +
-              area.getDetail(Detail.IMAGEPATH, "Touristar/default/images/"), throwable);
+              area.getDetail(Detail.KEY_IMAGEPATH, "Touristar/default/images/"), throwable);
           return null;
         });
 

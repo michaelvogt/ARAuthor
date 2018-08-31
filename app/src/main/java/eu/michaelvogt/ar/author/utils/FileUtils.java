@@ -54,12 +54,16 @@ public class FileUtils {
     StringBuilder builder = new StringBuilder();
     try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
       String line;
-      while ((line = br.readLine())!=null){
+      while ((line = br.readLine()) != null) {
         builder.append(line);
       }
     }
 
     return builder.toString();
+  }
+
+  public static String readTextFile(String filePath, String language) throws IOException {
+    return readTextFile(internationalizePath(filePath, language));
   }
 
   public static void copyFile(File sourceFile, File destFile) throws IOException {
@@ -110,5 +114,10 @@ public class FileUtils {
     } catch (IOException e) {
       e.printStackTrace();
     }
+  }
+
+  private static String internationalizePath(String filePath, String language) {
+    int insertPoint = filePath.lastIndexOf(".");
+    return filePath.substring(0, insertPoint) + language + filePath.substring(insertPoint);
   }
 }

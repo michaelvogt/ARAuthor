@@ -2,8 +2,10 @@ package eu.michaelvogt.ar.author.nodes;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.support.v4.app.FragmentActivity;
 import android.text.Html;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.widget.TextView;
 
 import com.google.ar.sceneform.Node;
@@ -16,19 +18,20 @@ import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.Area;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
 import eu.michaelvogt.ar.author.utils.Detail;
-import eu.michaelvogt.ar.author.utils.Event;
 import eu.michaelvogt.ar.author.utils.FileUtils;
 
-public class TextNode extends Node {
+/**
+ * AnchorNode that distributes events fired from one of its children implementing EventSender
+ * to all of its children implementing the Interface EventHandler.
+ */
+public class TextNode extends Node implements EventHandler {
   private static final String TAG = TextNode.class.getSimpleName();
 
   private Context context;
-  private AuthorViewModel viewModel;
   private Area area;
 
-  private TextNode(Context context, AuthorViewModel viewModel, Area area) {
+  private TextNode(Context context, Area area) {
     this.context = context;
-    this.viewModel = viewModel;
     this.area = area;
 
     setLocalPosition(area.getPosition());
@@ -36,8 +39,8 @@ public class TextNode extends Node {
     setLocalScale(area.getScale());
   }
 
-  public static TextNode builder(Context context, AuthorViewModel viewModel, Area area) {
-    return new TextNode(context, viewModel, area);
+  public static TextNode builder(Context context, Area area) {
+    return new TextNode(context, area);
   }
 
 
@@ -52,34 +55,9 @@ public class TextNode extends Node {
           renderable.setShadowCaster(false);
           setRenderable(renderable);
 
-          TextView textView = renderable.getView().findViewById(R.id.view_text);
-          area.applyDetail(textView);
-
-          if (area.hasDetail(Detail.TEXTPATH)) {
-            String content = null;
-            try {
-              content = FileUtils.readTextFile(area.getDetailString(Detail.TEXTPATH, "Touristar/default/images/"));
-            } catch (Exception e) {
-              future.completeExceptionally(e);
-            }
-
-            textView.setText(Html.fromHtml(content, Html.FROM_HTML_SEPARATOR_LINE_BREAK_HEADING));
-          } else if (area.hasDetail(Detail.TEXTCONTENT)) {
-            textView.setText(area.getDetailString(Detail.TEXTCONTENT, "Touristar/default/text/default.txt"));
-          } else if (area.hasDetail(Detail.MARKUPCONTENT)) {
-//          String encoded = null;
-//          try {
-//            String content = FileUtils.readTextFile(area.getDetailString(Detail.TEXTPATH));
-//            encoded = Base64.encodeToString(content.getBytes(), Base64.NO_PADDING);
-//          }catch (Exception e){
-//            future.completeExceptionally(e);
-//          }
-//          WebView webView = renderable.getView().findViewById(R.id.view_web);
-//          webView.loadData(encoded, "text/html", "base64");
-          }
-
-          viewModel.addEvent(new Event(Event.SWITCHLANGUAGE, "en"));
-
+          AuthorViewModel viewModel = ViewModelProviders.of(
+              (FragmentActivity) context).get(AuthorViewModel.class);
+          displayText(renderable, viewModel.getCurrentLanguage());
 
           Log.i(TAG, "TextNode successfully created");
           future.complete(this);
@@ -91,5 +69,44 @@ public class TextNode extends Node {
 
     Log.i(TAG, "TextNode successfully created");
     return future;
+  }
+
+  private void displayText(ViewRenderable renderable, String language) {
+    TextView textView = renderable.getView().findViewById(R.id.view_text);
+    area.applyDetail(textView);
+
+    if (area.hasDetail(Detail.KEY_TEXTPATH)) {
+      String content = null;
+      String filePath = area.getDetailString(Detail.KEY_TEXTPATH);
+
+      try {
+        content = FileUtils.readTextFile(filePath, language);
+      } catch (Exception exception) {
+        throw new RuntimeException("Couldn't load textfile " + filePath, exception);
+      }
+
+      textView.setText(Html.fromHtml(content, Html.FROM_HTML_SEPARATOR_LINE_BREAK_HEADING));
+    } else if (area.hasDetail(Detail.KEY_TEXTCONTENT)) {
+      // TODO: make translatable by providing a map with translations
+      textView.setText(area.getDetailString(Detail.KEY_TEXTCONTENT));
+    } else if (area.hasDetail(Detail.KEY_MARKUPCONTENT)) {
+//          String encoded = null;
+//          try {
+//            String content = FileUtils.readTextFile(area.getDetailString(Detail.TEXTPATH));
+//            encoded = Base64.encodeToString(content.getBytes(), Base64.NO_PADDING);
+//          }catch (Exception e){
+//            future.completeExceptionally(e);
+//          }
+//          WebView webView = renderable.getView().findViewById(R.id.view_web);
+//          webView.loadData(encoded, "text/html", "base64");
+    }
+
+  }
+
+
+  @Override
+  public void handleEvent(int eventType, String language, MotionEvent motionEvent) {
+    displayText((ViewRenderable) getRenderable(), language);
+    Log.i(TAG, "handler ");
   }
 }

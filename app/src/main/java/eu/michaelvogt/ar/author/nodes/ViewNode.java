@@ -98,7 +98,7 @@ public class ViewNode extends Node {
 
                 Slider slider = renderable.getView().findViewById(R.id.slider);
                 String puplicFolderPath = FileUtils.getFullPuplicFolderPath((String)
-                    area.getDetail(Detail.IMAGEFOLDERPATH, "Touristar/default/images/"));
+                    area.getDetail(Detail.KEY_IMAGEFOLDERPATH, "Touristar/default/images/"));
                 slider.setImages(FileUtils.getFilepathsOfFolder(puplicFolderPath));
                 // slider.startTimer(3000);
 
