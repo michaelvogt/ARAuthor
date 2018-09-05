@@ -16,6 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 -->
 <paths>
+    <external-path name="marker_images" path="/Touristar/" />
     <external-path name="marker_images" path="/Touristar/Markers/" />
     <external-path name="hidaka_data" path="/Touristar/Hidaka/" />
     <external-path name="hidaka_data" path="/Touristar/iwamiginzan/muneokake/infoboard/images/" />

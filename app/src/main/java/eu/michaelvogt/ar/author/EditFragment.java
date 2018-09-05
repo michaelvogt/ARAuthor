@@ -99,6 +99,16 @@ public class EditFragment extends Fragment {
     });
 
     view.findViewById(R.id.button_save).setOnClickListener(this::handleSave);
+    view.findViewById(R.id.fab_ar).setOnClickListener(this::handleAr);
+  }
+
+  private void handleAr(View view) {
+    Bundle bundle = new Bundle();
+    bundle.putInt("drop_marker_id", editIndex);
+    bundle.putString("plane_finding_mode", "VERTICAL");
+    bundle.putInt("discovery_controller", 1);
+    bundle.putInt("marker_id", editIndex);
+    Navigation.findNavController(view).navigate(R.id.action_marker_preview, bundle);
   }
 
   private void handleSave(View view) {

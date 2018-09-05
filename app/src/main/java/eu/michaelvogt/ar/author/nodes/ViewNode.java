@@ -49,6 +49,7 @@ public class ViewNode extends Node {
     setLocalPosition(area.getPosition());
     setLocalRotation(area.getRotation());
     setLocalScale(area.getScale());
+    setName(area.getTitle());
   }
 
   public static ViewNode builder(Context context, Area area) {

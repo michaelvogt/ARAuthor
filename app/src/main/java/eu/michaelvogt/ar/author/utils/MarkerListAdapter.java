@@ -28,6 +28,7 @@ import android.widget.TextView;
 
 import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
+import eu.michaelvogt.ar.author.data.Location;
 import eu.michaelvogt.ar.author.data.Marker;
 
 public class MarkerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -35,19 +36,18 @@ public class MarkerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
   private final static int TYPE_ITEM = 1;
 
   private final AuthorViewModel viewModel;
-  private OnItemClickListener listener;
+  private Location location;
 
-  public interface OnItemClickListener {
-    void onItemClicked(int position);
-  }
+  private ItemClickListener listener;
 
-  public void setOnItemClickListener(OnItemClickListener listener) {
+  public void setItemClickListener(ItemClickListener listener) {
     this.listener = listener;
   }
 
   // Provide a suitable constructor (depends on the kind of dataset)
-  public MarkerListAdapter(AuthorViewModel viewModel) {
+  public MarkerListAdapter(AuthorViewModel viewModel, int locationId) {
     this.viewModel = viewModel;
+    this.location = viewModel.getLocation(locationId);
   }
 
   // Create new views (invoked by the layout manager)
@@ -67,7 +67,7 @@ public class MarkerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
   @Override
   public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-    Marker item = viewModel.getMarker(position);
+    Marker item = viewModel.getMarker(location.getMarkerId(position));
 
     if (holder instanceof HeaderHolder) {
       HeaderHolder headerHolder = (HeaderHolder) holder;
@@ -83,12 +83,12 @@ public class MarkerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
   @Override
   public int getItemViewType(int position) {
-    return viewModel.getMarker(position).isTitle() ? TYPE_HEADER : TYPE_ITEM;
+    return viewModel.getMarker(location.getMarkerId(position)).isTitle() ? TYPE_HEADER : TYPE_ITEM;
   }
 
   @Override
   public int getItemCount() {
-    return viewModel.getMarkerSize();
+    return location.getMarkerSize();
   }
 
   class MarkerHolder extends RecyclerView.ViewHolder {
@@ -100,8 +100,8 @@ public class MarkerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     MarkerHolder(View view) {
       super(view);
 
-      markerImageView = view.findViewById(R.id.marker_image);
-      nameView = view.findViewById(R.id.marker_title);
+      markerImageView = view.findViewById(R.id.location_image);
+      nameView = view.findViewById(R.id.location_title);
       infoView = view.findViewById(R.id.marker_info);
 
       view.setOnClickListener(view1 -> {

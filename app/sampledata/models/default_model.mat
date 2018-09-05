@@ -3,7 +3,13 @@ material {
     parameters: [
         {
             type: "sampler2d",
-            name: "texture"
+            name: "primary"
+        }, {
+            type: "sampler2d",
+            name: "secondary"
+        }, {
+            type: "float",
+            name: "crossFade"
         }, {
             type: "float",
             name: "fadeLeftWidth"
@@ -25,13 +31,19 @@ fragment {
         prepareMaterial(material);
 
         vec2 uv = getUV0();
+        float crossFade = materialParams.crossFade;
 
-        material.baseColor = texture(materialParams_texture, uv);
+        vec4 tex1 = texture(materialParams_primary, uv);
+        vec4 tex2 = crossFade == 1.0 ? vec4(1.0) : texture(materialParams_secondary, uv);
+        material.baseColor = ((tex1 * crossFade) + (tex2 * (1.0 - crossFade)));
+
         material.baseColor.a *=
           materialParams.fadeLeftWidth > 0.0 && uv.x < materialParams.fadeLeftWidth
             ? (uv.x / materialParams.fadeLeftWidth)
           : materialParams.fadeRightWidth > 0.0 && (1.0 - uv.x) < materialParams.fadeRightWidth
             ? ((1.0 - uv.x) / materialParams.fadeRightWidth)
           : 1.0;
-        }
+
+        // material.baseColor.a *= crossFade;
+      }
 }

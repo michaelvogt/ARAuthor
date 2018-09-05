@@ -73,7 +73,7 @@ public class IntroFragment extends Fragment {
         }
 
         view.findViewById(R.id.start_authoring_btn).setOnClickListener(
-                Navigation.createNavigateOnClickListener(R.id.action_list_markers)
+                Navigation.createNavigateOnClickListener(R.id.action_locationlist)
         );
     }
 

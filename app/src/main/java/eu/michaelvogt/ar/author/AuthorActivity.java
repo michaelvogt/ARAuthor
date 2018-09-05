@@ -37,6 +37,7 @@ import java.util.Arrays;
 import eu.michaelvogt.ar.author.data.Area;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
 import eu.michaelvogt.ar.author.data.Event;
+import eu.michaelvogt.ar.author.data.Location;
 import eu.michaelvogt.ar.author.data.Marker;
 import eu.michaelvogt.ar.author.utils.Detail;
 
@@ -55,6 +56,18 @@ public class AuthorActivity extends AppCompatActivity {
   }
 
   private void initViewModel() {
+    viewModel.addLocation(new Location(
+        "石見銀山",
+        "Touristar/iwamiginzan/images/igk_machinami.jpg",
+        "Touristar/iwamiginzan/intro.html",
+        Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28)));
+
+    viewModel.addLocation(new Location(
+        "Hakodate",
+        "Touristar/hakodate/images/goryokakumainhall.jpg",
+        "Touristar/hakodate/intro.html",
+        Arrays.asList(29, 30)));
+
     viewModel.addMarker(new Marker("城上神社"));
     viewModel.addMarker(new Marker(
         "/Touristar/Markers/IMG_20180522_105701.jpg",
@@ -274,6 +287,19 @@ public class AuthorActivity extends AppCompatActivity {
         false,
         new ArrayList<>()));
 
+    viewModel.addMarker(new Marker("箱館"));
+    viewModel.addMarker(new Marker(
+        "/Touristar/Markers/office_front.jpg",
+        "",
+        "奉行菅",
+        "",
+        "五稜郭",
+        0.9f,
+        new Vector3(),
+        true,
+        new ArrayList<>()));
+
+
 //    viewModel.addMarker(new Marker(
 //        "/Touristar/Markers/IMG_20180419_100912.jpg",
 //        "hidakaya_sign",
@@ -311,14 +337,6 @@ public class AuthorActivity extends AppCompatActivity {
 //                0.648f));
 //
 //    viewModel.addMarker(new Marker(
-//            "/Touristar/Markers/office_front.jpg",
-//            "office_sign_front",
-//            "五稜郭",
-//            0.9f,
-//            true,
-//            new ArrayList<>(Arrays.asList(0, 1, 2, 3))));
-//
-//    viewModel.addMarker(new Marker(
 //            "/Touristar/Markers/office_back.jpg",
 //            "office_sign_back",
 //            "五稜郭",
@@ -332,8 +350,11 @@ public class AuthorActivity extends AppCompatActivity {
         R.layout.view_image,
         Detail.builder()
             .setImagePath("Touristar/iwamiginzan/muneokake/infoboard/images/IMG_20180609_115300.png")
+            .setSecondaryImagePath("Touristar/iwamiginzan/muneokake/infoboard/images/IMG_20180826_112846.png")
+            .setZoomInState(new Vector3(0.415f, 0.572f, 0.01f), new Vector3(-0.236f, 0.01f, 0.0f))
             .setFade(Detail.KEY_FADE_RIGHT_WIDTH, 0.4f)
-            .setAllowZoom(true),
+            .setAllowZoom(true)
+            .setHandlesEvent(Event.EVENT_ZOOMSLIDES, null),
         new Vector3(0.415f, 0.572f, 0.01f),
         Area.COORDINATE_LOCAL,
         new Vector3(-0.236f, 0.01f, 0.0f),
@@ -345,9 +366,10 @@ public class AuthorActivity extends AppCompatActivity {
         R.layout.view_text,
         Detail.builder()
             .setTextPath("Touristar/iwamiginzan/muneokake/infoboard/texts/infoboardtxt.html")
+            .setHtmlPath("Touristar/iwamiginzan/muneokake/infoboard/texts/infoboard.html")
             .setBackgroundColor(Color.argb(0, 0, 0, 0))
             .setTextSize(12f),
-        new Vector3(0.445f, 0.572f, 0.01f),
+        new Vector3(0.445f, 0.572f, 0.2f),
         Area.COORDINATE_LOCAL,
         new Vector3(0.106f, 0.01f, 0.32f),
         new Quaternion(new Vector3(-1.0f, 0.0f, 0.0f), 90.0f),
@@ -373,6 +395,7 @@ public class AuthorActivity extends AppCompatActivity {
         R.layout.view_image,
         Detail.builder()
             .setImageResource(R.drawable.if_tiny_arrows_diagonal_out_1_252127)
+            .setHandlesEvent(Event.EVENT_GRABCONTENT, null)
             .isCastingShadow(true),
         new Vector3(0.0445f, 0.0572f, 0.01f),
         Area.COORDINATE_LOCAL,

@@ -48,6 +48,10 @@ public class FileUtils {
     return getFullPuplicFolderFile(path).getAbsolutePath();
   }
 
+  public static String getFullPuplicFolderLocalUrl(String path) {
+    return "file://" + getFullPuplicFolderFile(path).getAbsolutePath();
+  }
+
   public static String readTextFile(String path) throws IOException {
     File filePath = FileUtils.getFullPuplicFolderFile(path);
 

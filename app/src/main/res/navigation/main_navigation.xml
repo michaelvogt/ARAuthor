@@ -18,108 +18,181 @@
 <navigation xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/introFragment">
+    app:startDestination="@id/intro">
 
     <fragment
-        android:id="@+id/editFragment"
-        android:name="eu.michaelvogt.ar.author.EditFragment"
-        android:label="fragment_capture"
-        tools:layout="@layout/fragment_editmarker" >
-        <action
-            android:id="@+id/action_list_markers"
-            app:destination="@id/listFragment" />
-        <argument
-            android:name="edit_index"
-            android:defaultValue="-1" />
-        <action
-            android:id="@+id/action_crop_marker_image"
-            app:destination="@id/cropFragment" />
-        <action
-            android:id="@+id/action_edit_area_placement"
-            app:destination="@id/areaPreviewFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/markerpreviewFragment"
-        android:name="eu.michaelvogt.ar.author.MarkerPreviewFragment"
+        android:id="@+id/imagePreviewFragment"
+        android:name="eu.michaelvogt.ar.author.ImagePreviewFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_markerpreview" >
+        tools:layout="@layout/fragment_imagepreview" >
         <action
             android:id="@+id/action_previewFragment_to_listFragment"
-            app:destination="@id/listFragment" />
+            app:destination="@id/markerlistFragment" />
+        <argument
+            android:name="drop_marker_id"
+            android:defaultValue="0" />
+        <argument
+            android:name="plane_finding_mode"
+            android:defaultValue="HORIZONTAL_AND_VERTICAL" />
+        <argument
+            android:name="update_mode"
+            android:defaultValue="LATEST_CAMERA_IMAGE" />
+        <argument
+            android:name="discovery_controller"
+            android:defaultValue="0" />
+        <argument
+            android:name="focus_mode"
+            android:defaultValue="AUTO" />
+        <argument
+            android:name="light_estimation"
+            android:defaultValue="AMBIENT_INTENSITY" />
     </fragment>
     <fragment
-        android:id="@+id/listFragment"
+        android:id="@+id/markerlistFragment"
         android:name="eu.michaelvogt.ar.author.MarkerListFragment"
         android:label="fragment_list"
         tools:layout="@layout/fragment_markerlist" >
         <action
             android:id="@+id/action_edit_marker"
-            app:destination="@id/editFragment" />
+            app:destination="@+id/edit" />
         <action
             android:id="@+id/action_test_markers"
-            app:destination="@id/markerpreviewFragment" />
+            app:destination="@id/imagePreviewFragment" />
+        <argument
+            android:name="location_id"
+            android:defaultValue="0" />
     </fragment>
-    <fragment
-        android:id="@+id/introFragment"
-        android:name="eu.michaelvogt.ar.author.IntroFragment"
-        android:label="fragment_intro"
-        tools:layout="@layout/fragment_intro" >
-        <action
-            android:id="@+id/action_list_markers"
-            app:destination="@id/listFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/cropFragment"
-        android:name="eu.michaelvogt.ar.author.CropFragment"
-        android:label="fragment_crop"
-        tools:layout="@layout/fragment_crop" >
-        <action
-            android:id="@+id/action_edit_marker"
-            app:destination="@id/editFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/areaPreviewFragment"
-        android:name="eu.michaelvogt.ar.author.AreaPreviewFragment"
-        android:label="fragment_area"
-        tools:layout="@layout/fragment_areapreview" >
-        <action
-            android:id="@+id/action_edit_marker"
-            app:destination="@id/editFragment" />
-        <argument
-            android:name="marker_id"
-            android:defaultValue="-1"
-             />
-        <argument
-            android:name="area_id"
-            android:defaultValue="-1"
-             />
-        <action
-            android:id="@+id/action_edit_area"
-            app:destination="@id/areaEditFragment" />
-        <argument
-            android:name="area_edit_translucency"
-            android:defaultValue="1"
-             />
-    </fragment>
-    <fragment
-        android:id="@+id/areaEditFragment"
-        android:name="eu.michaelvogt.ar.author.AreaEditFragment"
-        android:label="fragment_area_edit"
-        tools:layout="@layout/fragment_area_edit" >
-        <action
-            android:id="@+id/action_edit_area_placement"
-            app:destination="@id/areaPreviewFragment" />
-        <argument
-            android:name="area_id"
-            android:defaultValue="-1"
-             />
-        <argument
-            android:name="area_edit_translucency"
-            android:defaultValue="1"
-             />
-        <argument
-            android:name="marker_id"
-            android:defaultValue="-1"
-             />
-    </fragment>
+    <navigation android:id="@+id/edit"
+        app:startDestination="@id/editFragment">
+        <fragment
+            android:id="@+id/editFragment"
+            android:name="eu.michaelvogt.ar.author.EditFragment"
+            android:label="fragment_capture"
+            tools:layout="@layout/fragment_editmarker">
+            <action
+                android:id="@+id/action_list_markers"
+                app:destination="@id/markerlistFragment" />
+            <argument
+                android:name="edit_index"
+                android:defaultValue="-1" />
+            <action
+                android:id="@+id/action_crop_marker_image"
+                app:destination="@id/cropFragment" />
+            <action
+                android:id="@+id/action_edit_area_placement"
+                app:destination="@id/areaPreviewFragment" />
+            <action
+                android:id="@+id/action_marker_preview"
+                app:destination="@id/markerPreviewFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/areaEditFragment"
+            android:name="eu.michaelvogt.ar.author.AreaEditFragment"
+            android:label="fragment_area_edit"
+            tools:layout="@layout/fragment_area_edit">
+            <action
+                android:id="@+id/action_edit_area_placement"
+                app:destination="@id/areaPreviewFragment" />
+            <argument
+                android:name="area_id"
+                android:defaultValue="-1" />
+            <argument
+                android:name="area_edit_translucency"
+                android:defaultValue="1" />
+            <argument
+                android:name="marker_id"
+                android:defaultValue="-1" />
+        </fragment>
+        <fragment
+            android:id="@+id/areaPreviewFragment"
+            android:name="eu.michaelvogt.ar.author.AreaPreviewFragment"
+            android:label="fragment_area"
+            tools:layout="@layout/fragment_areapreview">
+            <action
+                android:id="@+id/action_edit_marker"
+                app:destination="@id/editFragment" />
+            <argument
+                android:name="marker_id"
+                android:defaultValue="-1" />
+            <argument
+                android:name="area_id"
+                android:defaultValue="-1" />
+            <action
+                android:id="@+id/action_edit_area"
+                app:destination="@id/areaEditFragment" />
+            <argument
+                android:name="area_edit_translucency"
+                android:defaultValue="1" />
+        </fragment>
+        <fragment
+            android:id="@+id/cropFragment"
+            android:name="eu.michaelvogt.ar.author.CropFragment"
+            android:label="fragment_crop"
+            tools:layout="@layout/fragment_crop">
+            <action
+                android:id="@+id/action_edit_marker"
+                app:destination="@id/editFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/markerPreviewFragment"
+            android:name="eu.michaelvogt.ar.author.MarkerPreviewFragment"
+            android:label="fragment_markerpreview"
+            tools:layout="@layout/fragment_markerpreview">
+            <action
+                android:id="@+id/action_edit_marker"
+                app:destination="@id/editFragment" />
+            <argument
+                android:name="drop_marker_id"
+                android:defaultValue="0" />
+            <argument
+                android:name="plane_finding_mode"
+                android:defaultValue="HORIZONTAL_AND_VERTICAL" />
+            <argument
+                android:name="update_mode"
+                android:defaultValue="LATEST_CAMERA_IMAGE" />
+            <argument
+                android:name="discovery_controller"
+                android:defaultValue="0" />
+            <argument
+                android:name="focus_mode"
+                android:defaultValue="AUTO" />
+            <argument
+                android:name="light_estimation"
+                android:defaultValue="AMBIENT_INTENSITY" />
+        </fragment>
+    </navigation>
+    <navigation
+        android:id="@+id/intro"
+        app:startDestination="@id/introFragment">
+        <fragment
+            android:id="@+id/introFragment"
+            android:name="eu.michaelvogt.ar.author.IntroFragment"
+            android:label="fragment_intro"
+            tools:layout="@layout/fragment_intro">
+            <action
+                android:id="@+id/action_locationlist"
+                app:destination="@id/locationlistFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/locationlistFragment"
+            android:name="eu.michaelvogt.ar.author.LocationlistFragment"
+            android:label="fragment_locationlist"
+            tools:layout="@layout/fragment_locationlist">
+            <action
+                android:id="@+id/action_location_intro"
+                app:destination="@+id/locationIntro" />
+        </fragment>
+        <fragment
+            android:id="@+id/locationIntro"
+            android:name="eu.michaelvogt.ar.author.LocationIntroFragment"
+            android:label="fragment_location_intro"
+            tools:layout="@layout/fragment_locationintro">
+            <action
+                android:id="@+id/action_preview_markers"
+                app:destination="@+id/imagePreviewFragment" />
+            <argument
+                android:name="location_id"
+                android:defaultValue="0" />
+        </fragment>
+    </navigation>
 </navigation>

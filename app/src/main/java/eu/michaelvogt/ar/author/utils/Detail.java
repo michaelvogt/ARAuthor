@@ -22,6 +22,7 @@ import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.widget.TextView;
 
+import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.Material;
 import com.google.ar.sceneform.rendering.Renderable;
 
@@ -30,7 +31,6 @@ import java.util.Map;
 import java.util.function.Function;
 
 public class Detail {
-  public static final int KEY_IMAGERESOURCE = 14;
   public static final int KEY_IMAGEPATH = 0;
   public static final int KEY_IMAGEFOLDERPATH = 1;
   public static final int KEY_TEXTCONTENT = 2;
@@ -45,9 +45,15 @@ public class Detail {
   public static final int KEY_TEXTCOLOR = 11;
   public static final int KEY_TEXTSIZE = 12;
   public static final int KEY_ALLOWZOOM = 13;
+  public static final int KEY_IMAGERESOURCE = 14;
   public static final int KEY_ISCASTINGSHADOW = 15;
   public static final int KEY_HANDLESEVENT = 16;
   public static final int KEY_EVENTDETAIL = 17;
+  public static final int KEY_HTMLPATH = 18;
+  public static final int KEY_ZOOMINSIZE = 19;
+  public static final int KEY_ZOOMINPOSITION = 20;
+  public static final int SECONDARYTEXTURE = 21;
+  public static final int KEY_SECONDARYIMAGEPATH = 22;
 
   public static final String LANGUAGE_EN = "_en_";
   public static final String LANGUAGE_JP = "_jp_";
@@ -96,6 +102,15 @@ public class Detail {
     return this;
   }
 
+  public Detail setSecondaryImagePath(@NonNull String path) {
+    if (!path.endsWith("jpg") && !path.endsWith(".png"))
+      throw new AssertionError("Only .png and .jpg files are supported");
+
+    details.put(KEY_SECONDARYIMAGEPATH, path);
+    return this;
+  }
+
+
   public Detail setImageFolderPath(@NonNull String path) {
     if (path.endsWith("jpg") || path.endsWith(".png"))
       throw new AssertionError("Provide the path to a folder that contains images");
@@ -113,9 +128,16 @@ public class Detail {
   }
 
   public Detail setTextPath(@NonNull String path) {
-    if (!path.endsWith(".txt") && !path.endsWith(".html")) throw new AssertionError();
+    if (!path.endsWith(".txt") && !path.endsWith(".html")) throw new AssertionError(".txt or .html file expected");
 
     details.put(KEY_TEXTPATH, path);
+    return this;
+  }
+
+  public Detail setHtmlPath(@NonNull String path) {
+    if (!path.endsWith(".html")) throw new AssertionError(".html file expected");
+
+    details.put(KEY_HTMLPATH, path);
     return this;
   }
 
@@ -149,9 +171,15 @@ public class Detail {
     return this;
   }
 
-  public Detail setHandlesEvent(int eventType, String languageDetail) {
+  public Detail setHandlesEvent(int eventType, String eventDetail) {
     details.put(KEY_HANDLESEVENT, eventType);
-    details.put(KEY_EVENTDETAIL, languageDetail);
+    details.put(KEY_EVENTDETAIL, eventDetail);
+    return this;
+  }
+
+  public Detail setZoomInState(Vector3 size, Vector3 position) {
+    details.put(KEY_ZOOMINSIZE, size);
+    details.put(KEY_ZOOMINPOSITION, position);
     return this;
   }
 

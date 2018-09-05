@@ -33,53 +33,55 @@ import java.util.Objects;
 
 import androidx.navigation.Navigation;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
+import eu.michaelvogt.ar.author.utils.ItemClickListener;
 import eu.michaelvogt.ar.author.utils.MarkerListAdapter;
 
+public class MarkerListFragment extends Fragment implements ItemClickListener {
+  private View view;
 
-public class MarkerListFragment extends Fragment implements MarkerListAdapter.OnItemClickListener {
-    private View view;
-
-    public MarkerListFragment() {/* Required empty public constructor*/}
+  public MarkerListFragment() {/* Required empty public constructor*/}
 
   @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_markerlist, container, false);
-    }
+  public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                           Bundle savedInstanceState) {
+    // Inflate the layout for this fragment
+    return inflater.inflate(R.layout.fragment_markerlist, container, false);
+  }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+  @Override
+  public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
 
-        this.view = view;
+    this.view = view;
 
-        RecyclerView mRecyclerView = view.findViewById(R.id.marker_list);
-        mRecyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
+    AuthorViewModel viewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(AuthorViewModel.class);
+    int locationId = getArguments().getInt("location_id");
 
-        MarkerListAdapter mAdapter = new MarkerListAdapter(
-                ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(AuthorViewModel.class));
-        mAdapter.setOnItemClickListener(this);
+    RecyclerView mRecyclerView = view.findViewById(R.id.marker_list);
+    mRecyclerView.setHasFixedSize(true);
+    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+    mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mRecyclerView.setAdapter(mAdapter);
+    MarkerListAdapter mAdapter = new MarkerListAdapter(viewModel, locationId);
+    mAdapter.setItemClickListener(this);
 
-        view.findViewById(R.id.editmarker_fab).setOnClickListener(
-                Navigation.createNavigateOnClickListener(R.id.editFragment)
-        );
+    mRecyclerView.setAdapter(mAdapter);
+
+    view.findViewById(R.id.editmarker_fab).setOnClickListener(
+        Navigation.createNavigateOnClickListener(R.id.action_edit_marker)
+    );
 
 //        view.findViewById(R.id.button_importmarkers).setOnClickListener();
 
-        view.findViewById(R.id.button_testmarkers).setOnClickListener(
-                Navigation.createNavigateOnClickListener(R.id.action_test_markers)
-        );
-    }
+    view.findViewById(R.id.button_testmarkers).setOnClickListener(
+        Navigation.createNavigateOnClickListener(R.id.action_test_markers)
+    );
+  }
 
   @Override
-    public void onItemClicked(int position) {
-        Bundle bundle = new Bundle();
-        bundle.putInt("edit_index", position);
-        Navigation.findNavController(view).navigate(R.id.action_edit_marker, bundle);
-    }
+  public void onItemClicked(int position) {
+    Bundle bundle = new Bundle();
+    bundle.putInt("edit_index", position);
+    Navigation.findNavController(view).navigate(R.id.action_edit_marker, bundle);
+  }
 }

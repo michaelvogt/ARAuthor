@@ -35,40 +35,54 @@ import eu.michaelvogt.ar.author.utils.ImageUtils;
 public class LoopArFragment extends ArFragment {
   private static final String TAG = LoopArFragment.class.getSimpleName();
 
+  boolean hasMarker;
+  String planeFindingMode;
+  String updateMode;
+  String focusMode;
+  String lightEstimation;
+
+
   @Override
   protected Config getSessionConfiguration(Session session) {
     AuthorViewModel viewModel = ViewModelProviders.of(getActivity()).get(AuthorViewModel.class);
     AugmentedImageDatabase imagedb = new AugmentedImageDatabase(session);
 
-    Bitmap bitmap;
-    String location = "";
-    for (Marker marker : viewModel.markerIterable()) {
-      try {
-        if (marker.isTitle()) {
-          location = marker.getTitle();
-        } else {
-          bitmap = ImageUtils.decodeSampledBitmapFromImagePath(
-              marker.getMarkerImagePath(), Marker.MIN_SIZE, Marker.MIN_SIZE);
-          if (bitmap != null) {
-            int index = marker.getWidthInM() <= 0
-                ? imagedb.addImage(String.valueOf(marker.getUid()), bitmap)
-                : imagedb.addImage(String.valueOf(marker.getUid()), bitmap, marker.getWidthInM());
-            Log.d(TAG, "marker " + location + " - " + marker.getTitle() + "(" + index + ")" + " imported");
+    if (!hasMarker) {
+      Bitmap bitmap;
+      String location = "";
+      for (Marker marker : viewModel.markerIterable()) {
+        try {
+          if (marker.isTitle()) {
+            location = marker.getTitle();
           } else {
-            Log.d(TAG, "marker " + location + " - " + marker.getTitle() + " NOT imported");
-            Snackbar.make(getView(), "marker " + marker.getTitle() + " NOT imported",
-                Snackbar.LENGTH_SHORT).show();
+            bitmap = ImageUtils.decodeSampledBitmapFromImagePath(
+                marker.getMarkerImagePath(), Marker.MIN_SIZE, Marker.MIN_SIZE);
+            if (bitmap != null) {
+              int index = marker.getWidthInM() <= 0
+                  ? imagedb.addImage(String.valueOf(marker.getUid()), bitmap)
+                  : imagedb.addImage(String.valueOf(marker.getUid()), bitmap, marker.getWidthInM());
+              Log.d(TAG, "marker " + location + " - " + marker.getTitle() + "(" + index + ")" + " imported");
+            } else {
+              Log.d(TAG, "marker " + location + " - " + marker.getTitle() + " NOT imported");
+              Snackbar.make(getView(), "marker " + marker.getTitle() + " NOT imported",
+                  Snackbar.LENGTH_SHORT).show();
+            }
           }
+        } catch (Throwable ex) {
+          Log.e(TAG, "Something bad happened", ex);
+          Snackbar.make(getView(), "Exception: " + ex.getMessage(),
+              Snackbar.LENGTH_SHORT).show();
         }
-      } catch (Throwable ex) {
-        Log.e(TAG, "Something bad happened", ex);
-        Snackbar.make(getView(), "Exception: " + ex.getMessage(),
-            Snackbar.LENGTH_SHORT).show();
       }
     }
 
     Config config = new Config(session);
     config.setAugmentedImageDatabase(imagedb);
+
+    config.setUpdateMode(Config.UpdateMode.valueOf(updateMode));
+    config.setPlaneFindingMode(Config.PlaneFindingMode.valueOf(planeFindingMode));
+    config.setFocusMode(Config.FocusMode.valueOf(focusMode));
+    config.setLightEstimationMode(Config.LightEstimationMode.valueOf(lightEstimation));
 
     return config;
   }

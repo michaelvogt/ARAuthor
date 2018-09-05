@@ -34,7 +34,7 @@
         android:layout_height="116dp">
 
         <ImageView
-            android:id="@+id/marker_image"
+            android:id="@+id/location_image"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginStart="8dp"
@@ -48,7 +48,7 @@
             card_view:srcCompat="@android:drawable/picture_frame" />
 
         <TextView
-            android:id="@+id/marker_title"
+            android:id="@+id/location_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -60,7 +60,7 @@
             android:textSize="24sp"
             android:textStyle="bold"
             card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintStart_toEndOf="@+id/marker_image"
+            card_view:layout_constraintStart_toEndOf="@+id/location_image"
             card_view:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -74,8 +74,8 @@
             android:text="TextView"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintStart_toEndOf="@+id/marker_image"
-            card_view:layout_constraintTop_toBottomOf="@+id/marker_title" />
+            card_view:layout_constraintStart_toEndOf="@+id/location_image"
+            card_view:layout_constraintTop_toBottomOf="@+id/location_title" />
 
     </android.support.constraint.ConstraintLayout>
 

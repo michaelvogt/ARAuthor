@@ -1,0 +1,72 @@
+<!--
+    ARTester - AR for tourists by tourists
+    Copyright (C) 2018  Michael Vogt
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+-->
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:id="@+id/marker_card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="3dp"
+    android:layout_marginBottom="3dp"
+    card_view:cardBackgroundColor="@android:color/background_light"
+    card_view:cardCornerRadius="2dp"
+    card_view:cardElevation="2dp"
+    card_view:cardUseCompatPadding="false">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/location_image"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:contentDescription="@string/marker_image_desc"
+            android:scaleType="centerCrop"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/location_title"
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/white_transparent"
+            android:fontFamily="serif"
+            android:gravity="center_vertical|start"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:textAlignment="center"
+            android:textAppearance="@android:style/TextAppearance.Material.Title"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            card_view:layout_constraintEnd_toEndOf="@+id/location_image"
+            card_view:layout_constraintHorizontal_bias="0.0"
+            card_view:layout_constraintStart_toStartOf="@+id/location_image"
+            card_view:layout_constraintTop_toTopOf="@+id/location_image"
+            tools:text="石見銀山" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v7.widget.CardView>

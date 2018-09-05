@@ -22,7 +22,7 @@ import android.view.MotionEvent;
 
 import com.google.ar.sceneform.Node;
 
-interface EventHandler {
+public interface EventHandler {
   /**
    * Node wants to handle a certain event
    * <p>

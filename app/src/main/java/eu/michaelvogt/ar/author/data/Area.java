@@ -26,7 +26,6 @@ import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 import android.widget.TextView;
 
-import com.google.ar.core.AugmentedImage;
 import com.google.ar.sceneform.math.Quaternion;
 import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.Material;
@@ -243,6 +242,10 @@ public class Area {
     return (int) getDetail(key, orDefault);
   }
 
+  public Vector3 getDetailVector3(int key) {
+    return (Vector3) getDetail(key);
+  }
+
   public void setDetail(Detail detail) {
     this.detail = detail;
   }
@@ -263,9 +266,9 @@ public class Area {
     detail.apply(renderable);
   }
 
-  public static Area getDefaultArea(AugmentedImage image) {
+  public static Area getDefaultArea(float backgroundHeight, float backgroundWidth) {
     return new Area(TYPE_DEFAULT, "Default", R.raw.default_model, Detail.builder(), null,
-        COORDINATE_LOCAL, new Vector3(-image.getExtentX() / 2, 0f, -image.getExtentZ() / 2),
+        COORDINATE_LOCAL, new Vector3(-backgroundWidth / 2, 0f, -backgroundHeight / 2),
         new Quaternion(new Vector3(0f, 1f, 0f), 180), Vector3.one());
   }
 
@@ -273,6 +276,6 @@ public class Area {
     Detail detail = Detail.builder().setImagePath(path);
 
     return new Area(TYPE_IMAGEONIMAGE, "Background", 0, detail, marker.getSize(),
-        COORDINATE_LOCAL, Vector3.zero(), new Quaternion(Vector3.zero(), 0), Vector3.one());
+        COORDINATE_LOCAL, Vector3.zero(), new Quaternion(Vector3.zero(), 0), Vector3.one().scaled(3f));
   }
 }

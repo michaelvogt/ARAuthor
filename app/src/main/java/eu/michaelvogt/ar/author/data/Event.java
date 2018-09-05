@@ -23,9 +23,10 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class Event {
-  public static final int EVENT_SWITCHLANGUAGE = 0;
-  public static final int GRABCONTENT = 1;
-  public static final int NOEVENT = 2;
+  public static final int NOEVENT = 0;
+  public static final int EVENT_SWITCHLANGUAGE = 1;
+  public static final int EVENT_GRABCONTENT = 2;
+  public static final int EVENT_ZOOMSLIDES = 3;
 
   private List<Consumer<String>> handlers = new ArrayList<>();
 

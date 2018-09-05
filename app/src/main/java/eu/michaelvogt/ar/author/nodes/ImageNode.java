@@ -18,6 +18,9 @@
 
 package eu.michaelvogt.ar.author.nodes;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -45,6 +48,8 @@ public class ImageNode extends Node implements EventSender {
   private Context context;
   private final Area area;
 
+  private boolean isFadeIn = true;
+
   private ImageNode(Context context, Area area) {
     this.context = context;
     this.area = area;
@@ -52,6 +57,7 @@ public class ImageNode extends Node implements EventSender {
     setLocalPosition(area.getPosition());
     setLocalRotation(area.getRotation());
     setLocalScale(area.getScale());
+    setName(area.getTitle());
   }
 
   public static ImageNode builder(Context context, Area area) {
@@ -69,9 +75,10 @@ public class ImageNode extends Node implements EventSender {
       futureTexture = Texture.builder()
           .setSource(BitmapFactory.decodeFile(textureFilePath))
           .setUsage(Texture.Usage.COLOR)
-          .build().exceptionally(throwable -> {
+          .build()
+          .exceptionally(throwable -> {
             Log.d(TAG, "Could not load texture image: " +
-                area.getDetail(Detail.KEY_IMAGEPATH, "Touristar/default/images/"), throwable);
+                area.getDetail(Detail.KEY_IMAGEPATH), throwable);
             return null;
           });
 
@@ -84,7 +91,7 @@ public class ImageNode extends Node implements EventSender {
           .build()
           .exceptionally(throwable -> {
             Log.d(TAG, "Could not load texture resource: " +
-                area.getDetail(Detail.KEY_IMAGERESOURCE, R.drawable.ic_launcher), throwable);
+                area.getDetail(Detail.KEY_IMAGERESOURCE), throwable);
             return null;
           });
 
@@ -99,8 +106,10 @@ public class ImageNode extends Node implements EventSender {
         .thenAccept(temp -> {
           // TODO: Hack - fix when custom material can be created #196
           Material material = temp.getMaterial();
-          material.setTexture("texture", texture);
+          material.setTexture("primary", texture);
           area.applyDetail(material);
+
+          setupFadeAnimation(material);
 
           Renderable renderable = ShapeFactory.makeCube(area.getSize(), Vector3.zero(), material);
           area.applyDetail(renderable);
@@ -118,6 +127,41 @@ public class ImageNode extends Node implements EventSender {
     return future;
   }
 
+  private void setupFadeAnimation(Material material) {
+    if (area.hasDetail(Detail.KEY_SECONDARYIMAGEPATH)) {
+      String textureFilePath = FileUtils.getFullPuplicFolderPath(
+          area.getDetailString(Detail.KEY_SECONDARYIMAGEPATH, "Touristar/default/images/"));
+
+      Texture.builder()
+          .setSource(BitmapFactory.decodeFile(textureFilePath))
+          .setUsage(Texture.Usage.COLOR)
+          .build()
+          .thenAccept(texture -> {
+            material.setTexture("secondary", texture);
+
+            ValueAnimator fadeIn = ValueAnimator.ofFloat(0f, 1f).setDuration(500);
+            fadeIn.setStartDelay(5000);
+            fadeIn.addUpdateListener(animator -> material.setFloat("crossFade",
+                isFadeIn ? 1 - animator.getAnimatedFraction() : animator.getAnimatedFraction()));
+            fadeIn.addListener(new AnimatorListenerAdapter() {
+              @Override
+              public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                isFadeIn = !isFadeIn;
+                animation.start();
+              }
+            });
+
+            fadeIn.start();
+          })
+          .exceptionally(throwable -> {
+            Log.d(TAG, "Could not load texture path: " +
+                area.getDetail(Detail.KEY_IMAGEPATH), throwable);
+            return null;
+          });
+    }
+  }
+
   @Override
   public boolean mayHandleEvent() {
     return area.hasDetail(Detail.KEY_HANDLESEVENT);
@@ -130,6 +174,6 @@ public class ImageNode extends Node implements EventSender {
 
   @Override
   public String getEventDetail(int eventType) {
-    return area.getDetailString(Detail.KEY_EVENTDETAIL, Detail.LANGUAGE_EN);
+    return area.getDetailString(Detail.KEY_EVENTDETAIL);
   }
 }

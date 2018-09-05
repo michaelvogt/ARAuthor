@@ -21,16 +21,24 @@ package eu.michaelvogt.ar.author.data;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import java.util.List;
+
 public class Location {
   @PrimaryKey(autoGenerate = true)
   @NonNull
   private int uid;
 
   private String name;
+  private String thumbPath;
+  private List<Integer> markers;
+  private String introHtmlPath;
 
 
-
-  public Location() {
+  public Location(String name, String thumbPath, String introHtmlPath, List<Integer> markers) {
+    this.name = name;
+    this.thumbPath = thumbPath;
+    this.markers = markers;
+    this.introHtmlPath = introHtmlPath;
   }
 
   public int getUid() {
@@ -41,5 +49,27 @@ public class Location {
     this.uid = uid;
   }
 
+  public String getName() {
+    return name;
+  }
 
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getThumbPath() {
+    return thumbPath;
+  }
+
+  public int getMarkerId(int position) {
+    return markers.get(position);
+  }
+
+  public int getMarkerSize() {
+    return markers.size();
+  }
+
+  public String getIntroHtmlPath() {
+    return introHtmlPath;
+  }
 }

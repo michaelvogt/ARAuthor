@@ -29,15 +29,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.ar.sceneform.math.Quaternion;
-
-import java.util.Objects;
-
 import androidx.navigation.Navigation;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
-import eu.michaelvogt.ar.author.utils.AreasListAdapter;
+import eu.michaelvogt.ar.author.utils.AreaListAdapter;
+import eu.michaelvogt.ar.author.utils.ItemClickListener;
 
-public class EditFragmentAreas extends Fragment implements AreasListAdapter.OnItemClickListener {
+public class EditFragmentAreas extends Fragment implements ItemClickListener {
   private View view;
 
   private AuthorViewModel viewModel;
@@ -63,8 +60,8 @@ public class EditFragmentAreas extends Fragment implements AreasListAdapter.OnIt
     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
     mRecyclerView.setLayoutManager(mLayoutManager);
 
-    AreasListAdapter mAdapter = new AreasListAdapter(viewModel, markerId);
-    mAdapter.setOnItemClickListener(this);
+    AreaListAdapter mAdapter = new AreaListAdapter(viewModel, markerId);
+    mAdapter.setItemClickListener(this);
 
     mRecyclerView.setAdapter(mAdapter);
   }

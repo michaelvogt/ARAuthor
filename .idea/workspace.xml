@@ -13,9 +13,26 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="59dbdf08-f2cd-443b-bc3b-eed328ab0fe3" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/EventHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/EventSender.java" afterDir="false" />
+    <list default="true" id="59dbdf08-f2cd-443b-bc3b-eed328ab0fe3" name="Default" comment="Add interactivity to ImageView">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/ImagePreviewFragment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/LocationIntroFragment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/LocationlistFragment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/PreviewFragment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/AuthorViewModel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/AuthorAnchorNode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/SliderNode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/ItemClickListener.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/LocationListAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/SceneViewCallback.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/cancel_297783.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_ar_icon.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/card_location.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_imagepreview.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_locationintro.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_locationlist.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/values/font_certs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/values/preloaded_fonts.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/fileContent/fileContent.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/fileContent/fileContent.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.lock" afterDir="false" />
@@ -28,45 +45,46 @@
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__android_android_27.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_core_runtime_1_1_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_core_runtime_1_1_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_extensions_1_1_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_extensions_1_1_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_livedata_1_1_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_livedata_1_1_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_livedata_core_1_1_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_livedata_core_1_1_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_runtime_1_1_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_runtime_1_1_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_viewmodel_1_1_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_viewmodel_1_1_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_animated_vector_drawable_27_1_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_appcompat_v7_27_1_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_cardview_v7_27_1_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_design_27_1_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_recyclerview_v7_27_1_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_support_annotations_27_1_1_jar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_support_compat_27_1_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_support_core_ui_27_1_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_support_core_utils_27_1_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_support_fragment_27_1_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_support_media_compat_27_1_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_support_v4_27_1_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_support_vector_drawable_27_1_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_android_support_transition_27_1_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_lyft_scissors_1_1_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_lyft_scissors_1_1_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_annotations_13_0_jar.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_stdlib_1_2_41_jar.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/sampledata/models/default_model.mat" beforeDir="false" afterPath="$PROJECT_DIR$/app/sampledata/models/default_model.mat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/AuthorActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/AuthorActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/EditFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/EditFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/EditFragmentAreas.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/EditFragmentAreas.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/IntroFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/IntroFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/LoopArFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/LoopArFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/MarkerListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/MarkerListFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/MarkerPreviewFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/MarkerPreviewFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Area.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Area.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/AuthorViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/AuthorViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/EventAnchorNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/EventAnchorNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/AuthorViewModel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Event.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Event.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Location.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Location.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/EventAnchorNode.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/EventHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/EventHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/ImageNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/ImageNode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/ShapeNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/ShapeNode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/TextNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/TextNode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/ViewNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/ViewNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/AreaNodeBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/AreaNodeBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/AreasListAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/AreaListAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/Detail.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/Detail.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/Event.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Event.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/FileUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/FileUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/MarkerListAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/MarkerListAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/card_marker.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/card_marker.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_editmarker.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_editmarker.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_intro.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_intro.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_markerpreview.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_markerpreview.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/view_image.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/view_image.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/view_slider.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/view_slider.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/view_text.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/view_text.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/navigation/main_navigation.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/navigation/main_navigation.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/raw/default_model.sfb" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/raw/default_model.sfb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/raw/flag.sfb" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/raw/flag.sfb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/raw/slide.sfb" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/raw/slide.sfb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/xml/file_paths.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/xml/file_paths.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -89,11 +107,60 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="FileUtils.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/FileUtils.java">
+      <file leaf-file-name="PreviewFragment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/PreviewFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="333">
-              <caret line="120" column="90" selection-start-line="120" selection-start-column="11" selection-end-line="120" selection-end-column="90" />
+            <state relative-caret-position="283">
+              <caret line="76" column="59" selection-start-line="76" selection-start-column="59" selection-end-line="76" selection-end-column="59" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AuthorAnchorNode.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/AuthorAnchorNode.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="391">
+              <caret line="100" column="34" selection-start-line="100" selection-start-column="34" selection-end-line="100" selection-end-column="34" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="view_slide.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/view_slide.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state />
+          </provider>
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="view_slider.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/view_slider.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="714">
+              <caret line="43" column="30" selection-start-line="43" selection-start-column="30" selection-end-line="43" selection-end-column="30" />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Slider.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/Slider.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="66">
+              <caret line="20" column="7" selection-start-line="20" selection-start-column="7" selection-end-line="20" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/build.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="396">
+              <caret line="63" column="76" selection-start-line="63" selection-start-column="76" selection-end-line="63" selection-end-column="76" />
             </state>
           </provider>
         </entry>
@@ -101,60 +168,42 @@
       <file leaf-file-name="TextNode.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/TextNode.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="282">
-              <caret line="82" column="59" selection-start-line="82" selection-start-column="59" selection-end-line="82" selection-end-column="59" />
-              <folding>
-                <element signature="e#1045#1046#0" expanded="true" />
-                <element signature="e#1089#1090#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="306">
+              <caret line="74" column="36" selection-start-line="72" selection-start-column="10" selection-end-line="74" selection-end-column="36" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RenderableInstance.class" pinned="false" current-in-tab="false">
-        <entry file="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/rendering-1.4.0.aar/21962281d3acd17957d05c0712621a4f/jars/classes.jar!/com/google/ar/sceneform/rendering/RenderableInstance.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="48" selection-start-line="48" selection-end-line="48" />
-              <folding>
-                <element signature="e#1981#1982#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Node.class" pinned="false" current-in-tab="false">
-        <entry file="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/core-1.4.0.aar/0f8b0a4796e38e30cf2275a304658790/jars/classes.jar!/com/google/ar/sceneform/Node.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="152">
-              <caret line="367" column="37" selection-start-line="367" selection-start-column="37" selection-end-line="367" selection-end-column="37" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MarkerPreviewFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/MarkerPreviewFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="66" selection-start-line="66" selection-end-line="67" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EventAnchorNode.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/EventAnchorNode.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="45" column="3" selection-start-line="45" selection-start-column="3" selection-end-line="45" selection-end-column="3" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AuthorActivity.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="AuthorActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/AuthorActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-4817">
-              <caret line="53" selection-start-line="53" selection-end-line="53" />
+            <state relative-caret-position="204">
+              <caret line="197" column="76" selection-start-line="197" selection-start-column="9" selection-end-line="197" selection-end-column="76" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SliderNode.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/SliderNode.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="782">
+              <caret line="64" column="47" selection-start-line="64" selection-start-column="47" selection-end-line="64" selection-end-column="47" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Area.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Area.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="391">
+              <caret line="278" column="99" selection-start-line="278" selection-start-column="99" selection-end-line="278" selection-end-column="99" />
+              <folding>
+                <element signature="e#6630#6631#0" expanded="true" />
+                <element signature="e#6664#6665#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -166,26 +215,13 @@
       <list>
         <option value="resourceFile" />
         <option value="layoutResourceFile" />
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>boardbackground</find>
-      <find>succe</find>
-      <find>2131623948</find>
-      <find>successf</find>
-      <find>Could not create model</find>
-      <find>success</find>
-      <find>fadeinwidth</find>
-      <find>gl_FragColor</find>
-      <find>japanese</find>
-      <find>details.get</find>
-      <find>res</find>
-      <find>usage.data</find>
-      <find>future.completeExceptionally</find>
       <find>String TAG</find>
       <find>tap</find>
       <find>touched</find>
@@ -202,7 +238,20 @@
       <find>textnode</find>
       <find>detail</find>
       <find>handler</find>
-      <find>handler</find>
+      <find>inflated</find>
+      <find>valueanimator</find>
+      <find>getstring</find>
+      <find>getdetailstring</find>
+      <find>size</find>
+      <find>imagepath</find>
+      <find>texture&quot;</find>
+      <find>OnItemClickListener</find>
+      <find>marker</find>
+      <find>super</find>
+      <find>MarkerPreviewFragment</find>
+      <find>has_marker</find>
+      <find>KEY_ALLOWZOOM</find>
+      <find>getup</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -360,6 +409,11 @@
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="preDebugAndroidTestBuild" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Compiles the releaseUnitTest kotlin." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="compileReleaseUnitTestKotlin" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
@@ -589,6 +643,11 @@
                 <option name="name" value="compileAsset-src_47main_47res_47raw_47slide" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Compiles the debugAndroidTest kotlin." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="compileDebugAndroidTestKotlin" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
                 <option name="description" value="Installs the Debug build." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="installDebug" />
@@ -690,6 +749,11 @@
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="transformDexArchiveWithExternalLibsDexMergerForDebug" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Compiles the release kotlin." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="compileReleaseKotlin" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Assembles all Release builds." />
@@ -822,6 +886,11 @@
                 <option name="name" value="buildDebugPreBundle" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Compiles the debug kotlin." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="compileDebugKotlin" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="packageDebugUniversalApk" />
               </ExternalTaskPojo>
@@ -927,6 +996,11 @@
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="checkReleaseClasspath" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Compiles the debugUnitTest kotlin." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="compileDebugUnitTestKotlin" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
@@ -1257,6 +1331,11 @@
                 <option name="name" value="preDebugAndroidTestBuild" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Compiles the releaseUnitTest kotlin." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="compileReleaseUnitTestKotlin" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
                 <option name="name" value="processDebugAndroidTestJavaRes" />
               </ExternalTaskPojo>
@@ -1484,6 +1563,11 @@
                 <option name="name" value="compileAsset-src_47main_47res_47raw_47slide" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Compiles the debugAndroidTest kotlin." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="compileDebugAndroidTestKotlin" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
                 <option name="description" value="Installs the Debug build." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
                 <option name="name" value="installDebug" />
@@ -1585,6 +1669,11 @@
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
                 <option name="name" value="transformDexArchiveWithExternalLibsDexMergerForDebug" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Compiles the release kotlin." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="compileReleaseKotlin" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Assembles all Release builds." />
@@ -1712,6 +1801,11 @@
                 <option name="name" value="buildDebugPreBundle" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Compiles the debug kotlin." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="compileDebugKotlin" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
                 <option name="name" value="packageDebugUniversalApk" />
               </ExternalTaskPojo>
@@ -1817,6 +1911,11 @@
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
                 <option name="name" value="checkReleaseClasspath" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Compiles the debugUnitTest kotlin." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="compileDebugUnitTestKotlin" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
@@ -2043,6 +2142,8 @@
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/gradle/3.2.0-rc02/1e63c243eab0b5d32585e0bdfa33d089302cffa0/gradle-3.2.0-rc02-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/gradle/3.2.0-rc02/9f426179fe036a54b1c76134bebd27c7ce8a1e92/gradle-3.2.0-rc02.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.ar.sceneform/plugin/1.4.0/510f4abef4a9612367f3797cd838ab2f04f893cd/plugin-1.4.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin/1.2.61/49e02dbf8e63e9c0e07227f42ac4434562d36849/kotlin-gradle-plugin-1.2.61-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin/1.2.61/6a08413ee8ac77a7eda563b757661401f940ec49/kotlin-gradle-plugin-1.2.61.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder/3.2.0-rc02/2befc99e6e4262c5839f1ec4852c25573d9cf481/builder-3.2.0-rc02-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder/3.2.0-rc02/7d3dbebe2e4f1c7d1297c3b0a80308ebb0fe2102/builder-3.2.0-rc02.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.analytics-library/shared/26.2.0-rc02/f24d31658524f354716a3b9d43262b53566376e8/shared-26.2.0-rc02-sources.jar" />
@@ -2074,6 +2175,20 @@
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/bundletool/0.5.0/ffd6077d13937213b860c0022174ece60000eabc/bundletool-0.5.0.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build.jetifier/jetifier-core/1.0.0-alpha10/9eb7027c383061de12f93aae7a22cbeb97832d2a/jetifier-core-1.0.0-alpha10.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build.jetifier/jetifier-processor/1.0.0-alpha10/6d494a04e0af27ecd4ec7a35c93759dd9c7443bc/jetifier-processor-1.0.0-alpha10.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin-api/1.2.61/77a9484a91b965bdab66b1ddd284a26bf60dcc64/kotlin-gradle-plugin-api-1.2.61-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin-api/1.2.61/e5cd4bae31ef34853235337ea8779badfb59952c/kotlin-gradle-plugin-api-1.2.61.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.2.61/5146b44c50f5e853d6d77150089b6281d72fe736/kotlin-stdlib-1.2.61-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.2.61/5bc44acc4b3f0d19166ae3e50454b41e8ff29335/kotlin-stdlib-1.2.61.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-embeddable/1.2.61/957a542317a109a91740dbfd7985c6d53b805a48/kotlin-compiler-embeddable-1.2.61-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-embeddable/1.2.61/8f4812486d21943cea3f170d53537e628f7eef8c/kotlin-compiler-embeddable-1.2.61.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-annotation-processing-gradle/1.2.61/e7182f6ecdfd4e7958febeaec366ab1cd8520397/kotlin-annotation-processing-gradle-1.2.61-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-annotation-processing-gradle/1.2.61/57f9bb657e120efe72b86b58781636770606019a/kotlin-annotation-processing-gradle-1.2.61.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-android-extensions/1.2.61/8a930fa2df4db285b4f87fa6a88501207d348dd5/kotlin-android-extensions-1.2.61-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-android-extensions/1.2.61/564710f8171991001cba1c828c3331d833d9d28b/kotlin-android-extensions-1.2.61.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-runner/1.2.61/ec21751c51d00a1765bc2d56f56b37dc42f013ab/kotlin-compiler-runner-1.2.61-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-runner/1.2.61/51d4f6b89c6db2ec32a81bd19d087e91f5b01e5b/kotlin-compiler-runner-1.2.61.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.2.61/3791515d7539f39f1cc3298aa2fa685496e03a9d/kotlin-reflect-1.2.61-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.2.61/6fd5bcfc9ffc446dd147ea006bee7ef5f0ad8ca4/kotlin-reflect-1.2.61.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder-model/3.2.0-rc02/1f3251e8796c9c98c2032d74c3d908073f8d7344/builder-model-3.2.0-rc02-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder-model/3.2.0-rc02/a553e3f290375512e5410b7810fa3426eea3013/builder-model-3.2.0-rc02.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder-test-api/3.2.0-rc02/542997e8ab93f3da7b7c454b01b3376f5f4279a7/builder-test-api-3.2.0-rc02-sources.jar" />
@@ -2118,8 +2233,6 @@
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpcore/4.4.5/e7501a1b34325abb00d17dde96150604a0658b54/httpcore-4.4.5.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient/4.5.2/b9f9e3e5255b6ddc3bf21be05428c7a60d00e042/httpclient-4.5.2-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient/4.5.2/733db77aa8d9b2d68015189df76ab06304406e50/httpclient-4.5.2.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.2.0/7fb1210ceec26e7e5195894fa83e9e67ea4d2ba/kotlin-reflect-1.2.0-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.2.0/4bbda3b5425aa38a9f6960468a29c5ef3e8a28c9/kotlin-reflect-1.2.0.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.databinding/databinding-common/3.2.0-rc02/63b317afeb3ec1c691d2115d49d1dfb54c62b2e9/databinding-common-3.2.0-rc02-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.databinding/databinding-common/3.2.0-rc02/4e1fc5265cb25451f0de672d6abf3c0c666ef3cc/databinding-common-3.2.0-rc02.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.databinding/baseLibrary/3.2.0-rc02/6aca27e33bc3090054ed4a436dea6e6d4e858996/baseLibrary-3.2.0-rc02-sources.jar" />
@@ -2147,8 +2260,12 @@
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.protobuf/protobuf-java-util/3.4.0/96aba8ab71c16018c6adf66771ce15c6491bc0fe/protobuf-java-util-3.4.0.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jdom/jdom2/2.0.6/3dcf8ba7582eeac3b67ed5155ee3659e16c8dadc/jdom2-2.0.6-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jdom/jdom2/2.0.6/6f14738ec2e9dd0011e343717fa624a10f8aab64/jdom2-2.0.6.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.2.20/9ab74271f4694e32e8b2ee645a96ac9bcaf0bc32/kotlin-stdlib-1.2.20-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.2.20/1ce9e25c74aade0aa039cce459f2906a8c8ffc8e/kotlin-stdlib-1.2.20.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-script-runtime/1.2.61/2b238c25391b625f82be36cdcb5338fc6e893544/kotlin-script-runtime-1.2.61-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-script-runtime/1.2.61/75e4bfc103b71324be6fc862ce806d5399508a14/kotlin-script-runtime-1.2.61.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-build-common/1.2.61/aa3622272b4bd1d65c02702fa27033e8cc85a4c1/kotlin-build-common-1.2.61-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-build-common/1.2.61/6a2122077527c3e6a1c6c173e85c71eaa91f66fa/kotlin-build-common-1.2.61.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-daemon-client/1.2.61/d21b0b9d9dc54a2bfd47b9bc45c4aeb172a2008c/kotlin-daemon-client-1.2.61-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-daemon-client/1.2.61/fbc88762858fcf7a70cecf55f711e83910d01ede/kotlin-daemon-client-1.2.61.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.layoutlib/layoutlib-api/26.2.0-rc02/f80b0bc08aceeb48932922403ba886f20b9fd8d9/layoutlib-api-26.2.0-rc02-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.layoutlib/layoutlib-api/26.2.0-rc02/b477a47492c13dde9c75d34b4d17024bfa8b8716/layoutlib-api-26.2.0-rc02.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools/dvlib/26.2.0-rc02/f0fbb3daee87d561f0e48f0079352e284099deb2/dvlib-26.2.0-rc02-sources.jar" />
@@ -2192,6 +2309,8 @@
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.glassfish.jaxb/txw2/2.2.11/2df047d8c187a62f2177bf6013f1f9786cdfc8a2/txw2-2.2.11.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.sun.istack/istack-commons-runtime/2.21/5d42dda44aa68ff87756e93ae0042cd66d2daa78/istack-commons-runtime-2.21-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.sun.istack/istack-commons-runtime/2.21/c969d8f15c467f0ef7d7b04889afbe7b5d48e22f/istack-commons-runtime-2.21.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.2.61/bb8aafdddb6c895ba1a9646eddabdb844eb544fb/kotlin-stdlib-common-1.2.61-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.2.61/772de03e12d932f489e41aef997d26c20a4ebee6/kotlin-stdlib-common-1.2.61.jar" />
                           </list>
                         </option>
                         <option name="path" value="$PROJECT_DIR$" />
@@ -2206,6 +2325,8 @@
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/gradle/3.2.0-rc02/1e63c243eab0b5d32585e0bdfa33d089302cffa0/gradle-3.2.0-rc02-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/gradle/3.2.0-rc02/9f426179fe036a54b1c76134bebd27c7ce8a1e92/gradle-3.2.0-rc02.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.ar.sceneform/plugin/1.4.0/510f4abef4a9612367f3797cd838ab2f04f893cd/plugin-1.4.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin/1.2.61/49e02dbf8e63e9c0e07227f42ac4434562d36849/kotlin-gradle-plugin-1.2.61-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin/1.2.61/6a08413ee8ac77a7eda563b757661401f940ec49/kotlin-gradle-plugin-1.2.61.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder/3.2.0-rc02/2befc99e6e4262c5839f1ec4852c25573d9cf481/builder-3.2.0-rc02-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder/3.2.0-rc02/7d3dbebe2e4f1c7d1297c3b0a80308ebb0fe2102/builder-3.2.0-rc02.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.analytics-library/shared/26.2.0-rc02/f24d31658524f354716a3b9d43262b53566376e8/shared-26.2.0-rc02-sources.jar" />
@@ -2237,6 +2358,20 @@
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/bundletool/0.5.0/ffd6077d13937213b860c0022174ece60000eabc/bundletool-0.5.0.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build.jetifier/jetifier-core/1.0.0-alpha10/9eb7027c383061de12f93aae7a22cbeb97832d2a/jetifier-core-1.0.0-alpha10.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build.jetifier/jetifier-processor/1.0.0-alpha10/6d494a04e0af27ecd4ec7a35c93759dd9c7443bc/jetifier-processor-1.0.0-alpha10.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin-api/1.2.61/77a9484a91b965bdab66b1ddd284a26bf60dcc64/kotlin-gradle-plugin-api-1.2.61-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-gradle-plugin-api/1.2.61/e5cd4bae31ef34853235337ea8779badfb59952c/kotlin-gradle-plugin-api-1.2.61.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.2.61/5146b44c50f5e853d6d77150089b6281d72fe736/kotlin-stdlib-1.2.61-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.2.61/5bc44acc4b3f0d19166ae3e50454b41e8ff29335/kotlin-stdlib-1.2.61.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-embeddable/1.2.61/957a542317a109a91740dbfd7985c6d53b805a48/kotlin-compiler-embeddable-1.2.61-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-embeddable/1.2.61/8f4812486d21943cea3f170d53537e628f7eef8c/kotlin-compiler-embeddable-1.2.61.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-annotation-processing-gradle/1.2.61/e7182f6ecdfd4e7958febeaec366ab1cd8520397/kotlin-annotation-processing-gradle-1.2.61-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-annotation-processing-gradle/1.2.61/57f9bb657e120efe72b86b58781636770606019a/kotlin-annotation-processing-gradle-1.2.61.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-android-extensions/1.2.61/8a930fa2df4db285b4f87fa6a88501207d348dd5/kotlin-android-extensions-1.2.61-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-android-extensions/1.2.61/564710f8171991001cba1c828c3331d833d9d28b/kotlin-android-extensions-1.2.61.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-runner/1.2.61/ec21751c51d00a1765bc2d56f56b37dc42f013ab/kotlin-compiler-runner-1.2.61-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-compiler-runner/1.2.61/51d4f6b89c6db2ec32a81bd19d087e91f5b01e5b/kotlin-compiler-runner-1.2.61.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.2.61/3791515d7539f39f1cc3298aa2fa685496e03a9d/kotlin-reflect-1.2.61-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.2.61/6fd5bcfc9ffc446dd147ea006bee7ef5f0ad8ca4/kotlin-reflect-1.2.61.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder-model/3.2.0-rc02/1f3251e8796c9c98c2032d74c3d908073f8d7344/builder-model-3.2.0-rc02-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder-model/3.2.0-rc02/a553e3f290375512e5410b7810fa3426eea3013/builder-model-3.2.0-rc02.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder-test-api/3.2.0-rc02/542997e8ab93f3da7b7c454b01b3376f5f4279a7/builder-test-api-3.2.0-rc02-sources.jar" />
@@ -2281,8 +2416,6 @@
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpcore/4.4.5/e7501a1b34325abb00d17dde96150604a0658b54/httpcore-4.4.5.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient/4.5.2/b9f9e3e5255b6ddc3bf21be05428c7a60d00e042/httpclient-4.5.2-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient/4.5.2/733db77aa8d9b2d68015189df76ab06304406e50/httpclient-4.5.2.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.2.0/7fb1210ceec26e7e5195894fa83e9e67ea4d2ba/kotlin-reflect-1.2.0-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.2.0/4bbda3b5425aa38a9f6960468a29c5ef3e8a28c9/kotlin-reflect-1.2.0.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.databinding/databinding-common/3.2.0-rc02/63b317afeb3ec1c691d2115d49d1dfb54c62b2e9/databinding-common-3.2.0-rc02-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.databinding/databinding-common/3.2.0-rc02/4e1fc5265cb25451f0de672d6abf3c0c666ef3cc/databinding-common-3.2.0-rc02.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.databinding/baseLibrary/3.2.0-rc02/6aca27e33bc3090054ed4a436dea6e6d4e858996/baseLibrary-3.2.0-rc02-sources.jar" />
@@ -2310,8 +2443,12 @@
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.protobuf/protobuf-java-util/3.4.0/96aba8ab71c16018c6adf66771ce15c6491bc0fe/protobuf-java-util-3.4.0.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jdom/jdom2/2.0.6/3dcf8ba7582eeac3b67ed5155ee3659e16c8dadc/jdom2-2.0.6-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jdom/jdom2/2.0.6/6f14738ec2e9dd0011e343717fa624a10f8aab64/jdom2-2.0.6.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.2.20/9ab74271f4694e32e8b2ee645a96ac9bcaf0bc32/kotlin-stdlib-1.2.20-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.2.20/1ce9e25c74aade0aa039cce459f2906a8c8ffc8e/kotlin-stdlib-1.2.20.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-script-runtime/1.2.61/2b238c25391b625f82be36cdcb5338fc6e893544/kotlin-script-runtime-1.2.61-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-script-runtime/1.2.61/75e4bfc103b71324be6fc862ce806d5399508a14/kotlin-script-runtime-1.2.61.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-build-common/1.2.61/aa3622272b4bd1d65c02702fa27033e8cc85a4c1/kotlin-build-common-1.2.61-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-build-common/1.2.61/6a2122077527c3e6a1c6c173e85c71eaa91f66fa/kotlin-build-common-1.2.61.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-daemon-client/1.2.61/d21b0b9d9dc54a2bfd47b9bc45c4aeb172a2008c/kotlin-daemon-client-1.2.61-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-daemon-client/1.2.61/fbc88762858fcf7a70cecf55f711e83910d01ede/kotlin-daemon-client-1.2.61.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.layoutlib/layoutlib-api/26.2.0-rc02/f80b0bc08aceeb48932922403ba886f20b9fd8d9/layoutlib-api-26.2.0-rc02-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.layoutlib/layoutlib-api/26.2.0-rc02/b477a47492c13dde9c75d34b4d17024bfa8b8716/layoutlib-api-26.2.0-rc02.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools/dvlib/26.2.0-rc02/f0fbb3daee87d561f0e48f0079352e284099deb2/dvlib-26.2.0-rc02-sources.jar" />
@@ -2355,6 +2492,8 @@
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.glassfish.jaxb/txw2/2.2.11/2df047d8c187a62f2177bf6013f1f9786cdfc8a2/txw2-2.2.11.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.sun.istack/istack-commons-runtime/2.21/5d42dda44aa68ff87756e93ae0042cd66d2daa78/istack-commons-runtime-2.21-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.sun.istack/istack-commons-runtime/2.21/c969d8f15c467f0ef7d7b04889afbe7b5d48e22f/istack-commons-runtime-2.21.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.2.61/bb8aafdddb6c895ba1a9646eddabdb844eb544fb/kotlin-stdlib-common-1.2.61-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.2.61/772de03e12d932f489e41aef997d26c20a4ebee6/kotlin-stdlib-common-1.2.61.jar" />
                           </list>
                         </option>
                         <option name="path" value="$PROJECT_DIR$/app" />
@@ -2529,71 +2668,83 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/res/xml/backgradient.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/xml/back_gradient.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/back_gradient.xml" />
-        <option value="$PROJECT_DIR$/app/sampledata/models/monarch.mat" />
-        <option value="$PROJECT_DIR$/app/sampledata/models/monarch.sfa" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/ViewOnImage.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/slide.xml" />
-        <option value="$PROJECT_DIR$/app/sampledata/models/slides.obj" />
-        <option value="$PROJECT_DIR$/app/sampledata/models/slides.mat" />
-        <option value="$PROJECT_DIR$/app/sampledata/models/slides.sfa" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/web_view.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/image.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/Animation.java" />
-        <option value="$PROJECT_DIR$/app/sampledata/models/default_model.mat" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/PanoramaView.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/PanoramaView.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/view_panorama.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/view_slide.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/SliderAdapter.java" />
-        <option value="$PROJECT_DIR$/app/sampledata/models/flag.mat" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/Slider.java" />
-        <option value="$PROJECT_DIR$/app/sampledata/models/button.mat" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/TextureNode.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/view_text.xml" />
-        <option value="$PROJECT_DIR$/app/sampledata/Kumagaike.java" />
-        <option value="$PROJECT_DIR$/app/sampledata/Office.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/LoopArFragment.java" />
-        <option value="$PROJECT_DIR$/app/build.gradle" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/AreaBuilder.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/Event.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Event.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/AreaNodeBuilder.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/EventNode.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/EventHandler.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/EventSender.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/MarkerPreviewFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/AuthorViewModel.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/ViewNode.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/ShapeNode.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/AuthorActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/EventSender.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/EventHandler.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/SceneViewCallback.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/Detail.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Area.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/ImageNode.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/EventAnchorNode.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/TextNode.java" />
+        <option value="$PROJECT_DIR$/app/sampledata/models/monarch.sfa" />
+        <option value="$PROJECT_DIR$/app/sampledata/models/default_model.mat" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/view_image.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/LocationFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_location.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/IntroFragment.java" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/AuthorViewModel.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/ItemClickListener.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/EditFragmentAreas.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/AreaListAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/AuthorViewModel.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_locationlist.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/LocationListAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_intro.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/MarkerListAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/card_location.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/LocationIntro.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/LocationlistFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Location.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/FileUtils.java" />
-        <option value="$USER_HOME$/Documents/AndroidStudio/DeviceExplorer/google-pixel_2-FA79Y1A03859/sdcard/Touristar/iwamiginzan/muneokake/infoboard/texts/infoboardtxt_en_.html" />
-        <option value="$USER_HOME$/Documents/AndroidStudio/DeviceExplorer/google-pixel_2-FA79Y1A03859/sdcard/Touristar/iwamiginzan/muneokake/infoboard/texts/infoboardtxt_jp_.html" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_locationintro.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/xml/file_paths.xml" />
+        <option value="$USER_HOME$/data/Touristar/iwamiginzan/omori_edo_map.html" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/LocationIntroFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_editmarker.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/EnumHandler.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/google/ar/core/EnumHandler.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/LoopArFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_imagepreview.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_markerpreview.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/EditFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/navigation/main_navigation.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/MarkerListFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/ImagePreviewFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/MarkerPreviewFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/ImageNode.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Event.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/AuthorActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/TextNode.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/ShapeNode.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/PreviewFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/SliderNode.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/AuthorAnchorNode.java" />
+        <option value="$PROJECT_DIR$/app/build.gradle" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/Slider.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Area.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/view_slider.xml" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="358" />
-    <option name="y" value="-2" />
-    <option name="width" value="1942" />
-    <option name="height" value="2092" />
+    <option name="x" value="-14" />
+    <option name="y" value="-14" />
+    <option name="width" value="3866" />
+    <option name="height" value="2106" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="artester" type="b2602c69:ProjectViewProjectNode" />
+              <item name="artester" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="AndroidView">
         <subPane>
@@ -2615,70 +2766,43 @@
             </path>
             <path>
               <item name="artester" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="author" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="nodes" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="artester" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-            </path>
-            <path>
-              <item name="artester" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-              <item name="drawable" type="ddeffd01:AndroidResFolderTypeNode" />
-            </path>
-            <path>
-              <item name="artester" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-              <item name="layout" type="ddeffd01:AndroidResFolderTypeNode" />
-            </path>
-            <path>
-              <item name="artester" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-              <item name="raw" type="ddeffd01:AndroidResFolderTypeNode" />
-            </path>
-            <path>
-              <item name="artester" type="1abcf292:AndroidViewProjectNode" />
               <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="ProjectPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="android.sdk.path" value="C:/Android/Sdk" />
-    <property name="device.picker.selection" value="H5AKCV004050ZYN" />
+    <property name="device.picker.selection" value="CVH7N15B11003415" />
     <property name="extract.method.default.visibility" value="private" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res/drawable" />
-    <property name="last_opened_file_path" value="$USER_HOME$/data/Touristar/iwamiginzan/muneokake/infoboard/texts/infoboardtxt_jp_.html" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../sceneform-android-sdk/hellosceneform" />
     <property name="oudtdated.runtime.suppressed.plugin.version" value="1.2.51-release-Studio3.2-1" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Michael Vogt\git\artester\app\sampledata" />
-      <recent name="C:\Users\Michael Vogt\git\artester\app\sampledata\models\Big_Old_House" />
-      <recent name="C:\Users\Michael Vogt\git\artester\app\src\main\res\drawable" />
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="eu.michaelvogt.ar.author" />
+      <recent name="eu.michaelvogt.ar.author.utils" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="eu.michaelvogt.ar.author.data" />
     </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="eu.michaelvogt.ar.author.utils" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Michael Vogt\git\artester\app\src\main\res\layout" />
       <recent name="C:\Users\Michael Vogt\git\artester\app\src\main\res\drawable" />
       <recent name="C:\Users\Michael Vogt\git\artester\app\sampledata\models" />
+    </key>
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="eu.michaelvogt.ar.author.nodes" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Michael Vogt\git\artester\app\sampledata" />
+      <recent name="C:\Users\Michael Vogt\git\artester\app\sampledata\models\Big_Old_House" />
+      <recent name="C:\Users\Michael Vogt\git\artester\app\src\main\res\drawable" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -2847,11 +2971,18 @@
       <option name="project" value="LOCAL" />
       <updated>1535636893717</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Add interactivity to ImageView">
+      <created>1535724396591</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1535724396591</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-6" y="-6" width="1933" height="1053" extended-state="6" />
+    <frame x="-6" y="-6" width="1933" height="1053" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="Android Profiler" order="12" />
@@ -2863,14 +2994,13 @@
       <window_info id="Designer" order="2" />
       <window_info anchor="bottom" auto_hide="true" id="Build" order="7" weight="0.32963374" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="right" id="Device File Explorer" order="5" side_tool="true" visible="true" weight="0.32924226" />
+      <window_info anchor="right" id="Device File Explorer" order="5" side_tool="true" weight="0.32924226" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4073252" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Messages" />
+      <window_info anchor="bottom" id="Messages" order="13" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info id="Image Layers" order="3" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
-      <window_info anchor="right" x="0" y="0" width="433" height="853" id="Documentation" side_tool="true" weight="0.32977587" />
       <window_info anchor="right" id="Preview" order="4" />
       <window_info anchor="bottom" auto_hide="true" id="Run" order="2" weight="0.33407325" />
       <window_info anchor="bottom" id="Version Control" order="10" />
@@ -2882,71 +3012,50 @@
       <window_info anchor="right" id="Theme Preview" order="8" />
       <window_info id="Favorites" order="4" side_tool="true" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" x="0" y="0" width="433" height="853" id="Documentation" order="10" side_tool="true" weight="0.20490928" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
-    <layout-to-restore>
-      <window_info anchor="bottom" auto_hide="true" id="Build" order="7" weight="0.32963374" />
-      <window_info id="Designer" order="2" />
-      <window_info id="Build Variants" order="7" side_tool="true" />
-      <window_info anchor="bottom" auto_hide="true" id="Run" order="2" weight="0.33407325" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Android Profiler" order="12" />
-      <window_info id="Favorites" order="4" side_tool="true" />
-      <window_info id="Captures" order="5" weight="0.25" />
-      <window_info id="Capture Tool" order="6" />
-      <window_info anchor="right" id="Capture Analysis" order="3" />
-      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
-      <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" weight="0.32963374" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Device File Explorer" order="5" side_tool="true" weight="0.32924226" />
-      <window_info anchor="bottom" id="Logcat" order="9" />
-      <window_info anchor="right" id="Viewer" order="9" side_tool="true" weight="0.30256137" />
-      <window_info anchor="bottom" id="Version Control" order="10" />
-      <window_info anchor="bottom" id="Terminal" order="11" />
-      <window_info anchor="right" id="Gradle" order="6" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15795091" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info id="Image Layers" order="3" />
-      <window_info anchor="right" id="Palette&#9;" order="7" />
-      <window_info anchor="right" id="Theme Preview" order="8" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="right" id="Preview" order="4" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32963374" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4073252" />
-    </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Remove hardcoded functions, images&#10;Create scenes from data" />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove hardcoded functions, images&#10;Create scenes from data" />
+    <MESSAGE value="Add interactivity to ImageView" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add interactivity to ImageView" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/FileUtils.java</url>
-          <line>120</line>
-          <properties />
-          <option name="timeStamp" value="60" />
-        </line-breakpoint>
-      </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="61" />
+      <option name="time" value="91" />
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
+    <expressions id="watch">
+      <expression>
+        <expression-string>((ImageNode)currentChild).name</expression-string>
+        <language-id>JAVA</language-id>
+        <custom-info>eu.michaelvogt.ar.author.nodes.ImageNode</custom-info>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
     <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>getArguments().getInt(&quot;marker_id&quot;)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>getArguments().getInt(&quot;discovery_controller&quot;)</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>filePath.substring(0, insertPoint) + language + filePath.substring(insertPoint)</expression-string>
         <language-id>JAVA</language-id>
@@ -2982,428 +3091,386 @@
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
-      <expression>
-        <expression-string>bitmap.hasAlpha()</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>bitmap.isPremultiplied()</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/rendering-1.4.0.aar/21962281d3acd17957d05c0712621a4f/jars/classes.jar!/com/google/ar/sceneform/rendering/Material.class">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/AreaEditFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="32" column="13" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
+        <state relative-caret-position="221">
+          <caret line="72" selection-start-line="72" selection-end-line="73" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/sampledata/models/slide.mat">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/LocationListAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="30" column="27" selection-start-line="30" selection-start-column="8" selection-end-line="30" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/sampledata/models/default_model.mat">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="32" column="55" selection-start-line="32" selection-start-column="55" selection-end-line="32" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/view_slide.xml">
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="17" column="11" selection-start-line="17" selection-start-column="11" selection-end-line="17" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/SliderAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="62" selection-start-line="62" selection-end-line="62" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/raw/slide.sfb">
-      <provider selected="true" editor-type-id="SceneformSFB">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/sampledata/models/flag.obj">
-      <provider selected="true" editor-type-id="text-editor">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/raw/flag.sfb">
-      <provider selected="true" editor-type-id="SceneformSFB">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/sampledata/models/flag.mat">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="35" column="1" lean-forward="true" selection-start-line="35" selection-start-column="1" selection-end-line="35" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/Slider.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="283">
-          <caret line="52" column="19" selection-start-line="52" selection-start-column="19" selection-end-line="52" selection-end-column="19" />
+        <state relative-caret-position="-170">
+          <caret line="29" column="39" selection-start-line="29" selection-start-column="39" selection-end-line="29" selection-end-column="39" />
           <folding>
-            <element signature="e#1920#2023#0" expanded="true" />
-            <element signature="e#2022#2023#0" expanded="true" />
+            <element signature="e#651#652#0" expanded="true" />
+            <element signature="e#687#688#0" expanded="true" />
+            <element signature="e#1194#1195#0" expanded="true" />
+            <element signature="e#1212#1213#0" expanded="true" />
+            <element signature="e#1500#1501#0" expanded="true" />
+            <element signature="e#1534#1535#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/assets/button.sfb">
-      <provider selected="true" editor-type-id="SceneformSFB">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/raw/button.sfb">
-      <provider selected="true" editor-type-id="SceneformSFB">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/sampledata/models/button.mat">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="25" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Android/sdk/platforms/android-28/android.jar!/java/lang/Integer.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="10" column="19" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/expand.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_language_selector.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/view_text.xml">
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="21" column="41" selection-start-line="21" selection-start-column="41" selection-end-line="21" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Android/sdk/platforms/android-28/android.jar!/android/os/Environment.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="44" column="52" selection-start-line="44" selection-start-column="52" selection-end-line="44" selection-end-column="52" />
-          <folding>
-            <element signature="e#1718#1719#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/sampledata/Kumagaike.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="291">
-          <caret line="43" column="45" selection-start-line="43" selection-start-column="45" selection-end-line="43" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/sampledata/Office.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="291">
-          <caret line="93" column="39" selection-start-line="93" selection-start-column="39" selection-end-line="93" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/LoopArFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="37" selection-start-line="37" selection-end-line="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/core-1.4.0.aar/0f8b0a4796e38e30cf2275a304658790/jars/classes.jar!/com/google/ar/sceneform/AnchorNode.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="26" column="9" selection-start-line="26" selection-start-column="9" selection-end-line="26" selection-end-column="9" />
-          <folding>
-            <element signature="e#754#755#0" expanded="true" />
-            <element signature="e#784#785#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="56" selection-start-line="56" selection-end-line="56" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/MarkerListAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="32" column="13" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
+        <state relative-caret-position="493">
+          <caret line="85" column="61" selection-start-line="85" selection-start-column="61" selection-end-line="85" selection-end-column="61" />
+          <folding>
+            <element signature="e#3038#3039#0" expanded="true" />
+            <element signature="e#3080#3081#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/Android/sdk/platforms/android-28/android.jar!/java/util/stream/Collectors.class">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/card_location.xml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/IntroFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="34" column="45" selection-start-line="34" selection-start-column="45" selection-end-line="34" selection-end-column="45" />
+        <state>
+          <caret selection-end-line="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_locationlist.xml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="663">
+          <caret line="39" column="45" selection-start-line="39" selection-start-column="45" selection-end-line="39" selection-end-column="45" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Location.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="283">
+          <caret line="36" column="92" selection-start-line="36" selection-start-column="92" selection-end-line="36" selection-end-column="92" />
           <folding>
-            <element signature="e#1033#1034#0" expanded="true" />
-            <element signature="e#1078#1079#0" expanded="true" />
+            <element signature="e#1620#1621#0" expanded="true" />
+            <element signature="e#1651#1652#0" expanded="true" />
+            <element signature="e#1783#1784#0" expanded="true" />
+            <element signature="e#1812#1813#0" expanded="true" />
           </folding>
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/FileUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="50" column="47" selection-start-line="50" selection-start-column="47" selection-end-line="50" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/LocationlistFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="663">
+          <caret line="72" column="36" selection-start-line="72" selection-start-column="36" selection-end-line="72" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Documents/AndroidStudio/DeviceExplorer/google-pixel_2-FA79Y1A03859/sdcard/Touristar/hakodate/intro.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="7" lean-forward="true" selection-start-line="15" selection-start-column="7" selection-end-line="15" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_locationintro.xml">
+      <provider editor-type-id="text-editor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="jar://C:/Android/sdk/platforms/android-28/android.jar!/android/webkit/WebViewClient.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="41" column="17" selection-start-line="41" selection-start-column="17" selection-end-line="41" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Documents/AndroidStudio/DeviceExplorer/google-pixel_2-FA79Y1A03859/sdcard/Touristar/iwamiginzan/styles/main.css" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/file_paths.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="56" selection-start-line="18" selection-start-column="56" selection-end-line="18" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Documents/AndroidStudio/DeviceExplorer/google-pixel_2-FA79Y1A03859/sdcard/Touristar/iwamiginzan/intro.html" />
+    <entry file="file://$USER_HOME$/Documents/AndroidStudio/DeviceExplorer/google-pixel_2-FA79Y1A03859/sdcard/Touristar/iwamiginzan/omori_edo_map.html" />
+    <entry file="file://$USER_HOME$/data/Touristar/iwamiginzan/omori_edo_map.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="22" lean-forward="true" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/LocationIntroFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="404">
+          <caret line="70" column="39" selection-start-line="70" selection-start-column="39" selection-end-line="70" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/google/ar/core/EnumHandler.java" />
+    <entry file="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/core-1.4.0.aar/a50e95a97593a31945166ea021ee31c9/jars/classes.jar!/com/google/ar/core/Config.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3281">
+          <caret line="202" column="12" selection-start-line="202" selection-start-column="4" selection-end-line="202" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/support-fragment-28.0.0-rc01.aar/0f98d9d86210d6f53003488f391170a8/jars/classes.jar!/android/support/v4/app/Fragment.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="291">
+          <caret line="671" column="14" selection-start-line="671" selection-start-column="14" selection-end-line="671" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_editmarker.xml">
+      <provider editor-type-id="text-editor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_imagepreview.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="29" column="62" selection-end-line="80" selection-end-column="46" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_markerpreview.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="25" column="26" selection-start-line="25" selection-start-column="26" selection-end-line="25" selection-end-column="26" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/LoopArFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="77" selection-start-line="77" selection-end-line="77" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Marker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="629">
+          <caret line="90" column="17" selection-start-line="90" selection-start-column="17" selection-end-line="90" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/EditFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="387">
+          <caret line="115" column="38" selection-start-line="115" selection-start-column="38" selection-end-line="115" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/MarkerListFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="455">
+          <caret line="70" column="72" selection-start-line="70" selection-start-column="72" selection-end-line="70" selection-end-column="72" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/ImagePreviewFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="88" column="17" selection-start-line="88" selection-start-column="17" selection-end-line="88" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/navigation/main_navigation.xml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="33" selection-start-line="33" selection-end-line="33" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Event.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="27" column="8" selection-start-line="27" selection-start-column="8" selection-end-line="27" selection-end-column="8" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1239#1240#0" expanded="true" />
-            <element signature="e#1262#1263#0" expanded="true" />
-            <element signature="e#1056#1057#0" expanded="true" />
-            <element signature="e#1077#1078#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Android/sdk/platforms/android-28/android.jar!/android/view/MotionEvent.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="291">
-          <caret line="178" column="13" selection-start-line="178" selection-start-column="13" selection-end-line="178" selection-end-column="13" />
-          <folding>
-            <element signature="e#6963#6964#0" expanded="true" />
-            <element signature="e#7008#7009#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/EventHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="30" selection-start-line="24" selection-end-line="30" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/EventSender.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="32" selection-start-line="22" selection-end-line="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/AreaNodeBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="57" column="21" selection-start-line="57" selection-start-column="21" selection-end-line="57" selection-end-column="21" />
+        <state relative-caret-position="170">
+          <caret line="28" column="46" selection-start-line="28" selection-start-column="46" selection-end-line="28" selection-end-column="46" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/ViewNode.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="542">
-          <caret line="100" column="46" selection-start-line="100" selection-start-column="46" selection-end-line="100" selection-end-column="46" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state>
+          <caret selection-end-line="17" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/ShapeNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="337">
-          <caret line="29" selection-start-line="29" selection-end-line="29" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/EventHandler.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="18" selection-start-line="18" selection-end-line="18" />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/InteractiveImageRenderable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="28" column="13" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/InfoPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="28" column="13" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/EventSender.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="283">
-          <caret line="44" column="9" selection-start-line="44" selection-start-column="9" selection-end-line="44" selection-end-column="9" />
+        <state relative-caret-position="68">
+          <caret line="20" column="17" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Area.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/EventHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="222" column="33" selection-start-line="222" selection-start-column="33" selection-end-line="222" selection-end-column="33" />
-          <folding>
-            <element signature="e#5491#5492#0" expanded="true" />
-            <element signature="e#5542#5543#0" expanded="true" />
-            <element signature="e#5598#5599#0" expanded="true" />
-            <element signature="e#5649#5650#0" expanded="true" />
-            <element signature="e#5665#5666#0" expanded="true" />
-            <element signature="e#5716#5717#0" expanded="true" />
-            <element signature="e#5930#5931#0" expanded="true" />
-            <element signature="e#5980#5981#0" expanded="true" />
-            <element signature="e#6038#6039#0" expanded="true" />
-            <element signature="e#6086#6087#0" expanded="true" />
-            <element signature="e#5994#5995#0" expanded="true" />
-            <element signature="e#6032#6033#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/Detail.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="152" column="32" selection-start-line="152" selection-start-column="16" selection-end-line="152" selection-end-column="32" />
+        <state relative-caret-position="102">
+          <caret line="24" column="17" selection-start-line="24" selection-start-column="17" selection-end-line="24" selection-end-column="17" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/ImageNode.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="132" column="75" selection-start-line="132" selection-start-column="75" selection-end-line="132" selection-end-column="75" />
-          <folding>
-            <element signature="e#4461#4462#0" expanded="true" />
-            <element signature="e#4493#4494#0" expanded="true" />
-            <element signature="e#4511#4512#0" expanded="true" />
-            <element signature="e#4554#4555#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="510">
+          <caret line="125" selection-start-line="121" selection-end-line="125" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/Detail.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="291">
+          <caret line="87" column="14" selection-start-line="87" selection-start-column="14" selection-end-line="87" selection-end-column="14" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/MarkerPreviewFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="66" selection-start-line="66" selection-end-line="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/Android/sdk/platforms/android-28/android.jar!/android/webkit/WebView.class">
-      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
-          <caret line="44" column="13" selection-start-line="44" selection-start-column="13" selection-end-line="44" selection-end-column="13" />
+          <caret line="38" column="50" selection-start-line="38" selection-start-column="50" selection-end-line="38" selection-end-column="50" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/AuthorViewModel.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/AreaNodeBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-289">
-          <caret line="34" column="42" lean-forward="true" selection-start-line="34" selection-start-column="42" selection-end-line="34" selection-end-column="42" />
-          <folding>
-            <element signature="e#2671#2672#0" expanded="true" />
-            <element signature="e#2703#2704#0" expanded="true" />
-            <element signature="e#2763#2764#0" expanded="true" />
-            <element signature="e#2811#2812#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="-102">
+          <caret line="35" column="13" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/EventAnchorNode.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/PreviewFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="45" column="3" selection-start-line="45" selection-start-column="3" selection-end-line="45" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/rendering-1.4.0.aar/21962281d3acd17957d05c0712621a4f/jars/classes.jar!/com/google/ar/sceneform/rendering/RenderableInstance.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="48" selection-start-line="48" selection-end-line="48" />
-          <folding>
-            <element signature="e#1981#1982#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/core-1.4.0.aar/0f8b0a4796e38e30cf2275a304658790/jars/classes.jar!/com/google/ar/sceneform/Node.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="367" column="37" selection-start-line="367" selection-start-column="37" selection-end-line="367" selection-end-column="37" />
+        <state relative-caret-position="283">
+          <caret line="76" column="59" selection-start-line="76" selection-start-column="59" selection-end-line="76" selection-end-column="59" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/TextNode.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="82" column="59" selection-start-line="82" selection-start-column="59" selection-end-line="82" selection-end-column="59" />
-          <folding>
-            <element signature="e#1045#1046#0" expanded="true" />
-            <element signature="e#1089#1090#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="306">
+          <caret line="74" column="36" selection-start-line="72" selection-start-column="10" selection-end-line="74" selection-end-column="36" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Documents/AndroidStudio/DeviceExplorer/google-pixel_2-FA79Y1A03859/sdcard/Touristar/iwamiginzan/muneokake/infoboard/texts/infoboard.html">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/view_slide.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state />
       </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Documents/AndroidStudio/DeviceExplorer/google-pixel_2-FA79Y1A03859/sdcard/Touristar/iwamiginzan/muneokake/infoboard/texts/infoboard_en.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" lean-forward="true" selection-end-line="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Documents/AndroidStudio/DeviceExplorer/google-pixel_2-FA79Y1A03859/sdcard/Touristar/iwamiginzan/muneokake/infoboard/texts/infoboardtxt.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="8" lean-forward="true" selection-end-line="5" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Documents/AndroidStudio/DeviceExplorer/google-pixel_2-FA79Y1A03859/sdcard/Touristar/iwamiginzan/muneokake/infoboard/texts/infoboardtxt_en_.html">
-      <provider selected="true" editor-type-id="text-editor">
+      <provider editor-type-id="android-designer2">
         <state />
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Documents/AndroidStudio/DeviceExplorer/google-pixel_2-FA79Y1A03859/sdcard/Touristar/iwamiginzan/muneokake/infoboard/texts/infoboardtxt_jp_.html">
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/FileUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="333">
-          <caret line="120" column="90" selection-start-line="120" selection-start-column="11" selection-end-line="120" selection-end-column="90" />
+        <state relative-caret-position="396">
+          <caret line="63" column="76" selection-start-line="63" selection-start-column="76" selection-end-line="63" selection-end-column="76" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/AuthorActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4817">
-          <caret line="53" selection-start-line="53" selection-end-line="53" />
+        <state relative-caret-position="204">
+          <caret line="197" column="76" selection-start-line="197" selection-start-column="9" selection-end-line="197" selection-end-column="76" />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/Slider.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="66">
+          <caret line="20" column="7" selection-start-line="20" selection-start-column="7" selection-end-line="20" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/SliderNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="782">
+          <caret line="64" column="47" selection-start-line="64" selection-start-column="47" selection-end-line="64" selection-end-column="47" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/AuthorAnchorNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="100" column="34" selection-start-line="100" selection-start-column="34" selection-end-line="100" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Area.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="278" column="99" selection-start-line="278" selection-start-column="99" selection-end-line="278" selection-end-column="99" />
+          <folding>
+            <element signature="e#6630#6631#0" expanded="true" />
+            <element signature="e#6664#6665#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/view_slider.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="714">
+          <caret line="43" column="30" selection-start-line="43" selection-start-column="30" selection-end-line="43" selection-end-column="30" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
   </component>
