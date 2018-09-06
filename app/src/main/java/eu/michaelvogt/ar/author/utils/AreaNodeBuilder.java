@@ -30,6 +30,7 @@ import java.util.concurrent.CompletionStage;
 import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.Area;
 import eu.michaelvogt.ar.author.nodes.ImageNode;
+import eu.michaelvogt.ar.author.nodes.SliderNode;
 import eu.michaelvogt.ar.author.nodes.TextNode;
 import eu.michaelvogt.ar.author.nodes.ViewNode;
 
@@ -59,7 +60,7 @@ public class AreaNodeBuilder {
       case Area.TYPE_3DOBJECTONPLANE:
         return null;
       case Area.TYPE_SLIDESONIMAGE:
-        return ViewNode.builder(context, area).build();
+        return SliderNode.builder(context, area).build();
       case Area.TYPE_INTERACTIVEOVERLAY:
         return null;
       case Area.TYPE_INTERACTIVEPANEL:

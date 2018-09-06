@@ -32,7 +32,7 @@ public interface EventHandler {
    * @param eventType   int event type that was fired
    * @param motionEvent MotionEvent of the fired event
    */
-  void handleEvent(int eventType, String eventDetail, MotionEvent motionEvent);
+  void handleEvent(int eventType, Object eventDetail, MotionEvent motionEvent);
 
   Iterable<Node> getChildren();
 }

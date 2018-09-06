@@ -75,9 +75,11 @@
             <argument
                 android:name="edit_index"
                 android:defaultValue="-1" />
+<!--
             <action
                 android:id="@+id/action_crop_marker_image"
                 app:destination="@id/cropFragment" />
+-->
             <action
                 android:id="@+id/action_edit_area_placement"
                 app:destination="@id/areaPreviewFragment" />
@@ -124,6 +126,7 @@
                 android:name="area_edit_translucency"
                 android:defaultValue="1" />
         </fragment>
+<!--
         <fragment
             android:id="@+id/cropFragment"
             android:name="eu.michaelvogt.ar.author.CropFragment"
@@ -133,6 +136,7 @@
                 android:id="@+id/action_edit_marker"
                 app:destination="@id/editFragment" />
         </fragment>
+-->
         <fragment
             android:id="@+id/markerPreviewFragment"
             android:name="eu.michaelvogt.ar.author.MarkerPreviewFragment"

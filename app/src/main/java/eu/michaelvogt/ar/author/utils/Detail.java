@@ -26,9 +26,12 @@ import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.Material;
 import com.google.ar.sceneform.rendering.Renderable;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+
+import eu.michaelvogt.ar.author.data.EventDetail;
 
 public class Detail {
   public static final int KEY_IMAGEPATH = 0;
@@ -47,13 +50,15 @@ public class Detail {
   public static final int KEY_ALLOWZOOM = 13;
   public static final int KEY_IMAGERESOURCE = 14;
   public static final int KEY_ISCASTINGSHADOW = 15;
-  public static final int KEY_HANDLESEVENT = 16;
-  public static final int KEY_EVENTDETAIL = 17;
   public static final int KEY_HTMLPATH = 18;
   public static final int KEY_ZOOMINSIZE = 19;
   public static final int KEY_ZOOMINPOSITION = 20;
   public static final int SECONDARYTEXTURE = 21;
   public static final int KEY_SECONDARYIMAGEPATH = 22;
+  public static final int KEY_TITLE = 23;
+  public static final int KEY_RESOURCE = 24;
+  public static final int KEY_LANGUAGE = 25;
+  public static final Integer KEY_SCALEVALUES = 26;
 
   public static final String LANGUAGE_EN = "_en_";
   public static final String LANGUAGE_JP = "_jp_";
@@ -63,11 +68,13 @@ public class Detail {
   private static final String MATERIAL_FADERIGHTWIDTH = "fadeRightWidth";
 
   private Map<Integer, Object> details;
+  private Map<Integer, EventDetail> events;
 
   private Function<Integer, Float> value = key -> (float) details.getOrDefault(key, 0.0f);
 
   private Detail() {
     details = new HashMap<>();
+    events = new HashMap<>();
   }
 
   public static Detail builder() {
@@ -171,9 +178,8 @@ public class Detail {
     return this;
   }
 
-  public Detail setHandlesEvent(int eventType, String eventDetail) {
-    details.put(KEY_HANDLESEVENT, eventType);
-    details.put(KEY_EVENTDETAIL, eventDetail);
+  public Detail addSendsEvent(int eventType, EventDetail eventDetail) {
+    events.put(eventType, eventDetail);
     return this;
   }
 
@@ -196,5 +202,13 @@ public class Detail {
 
   public boolean hasDetail(int key) {
     return details.containsKey(key);
+  }
+
+  public boolean hasEvents() {
+    return events.size() > 0;
+  }
+
+  public Map<Integer, EventDetail> getEvents() {
+    return Collections.unmodifiableMap(events);
   }
 }

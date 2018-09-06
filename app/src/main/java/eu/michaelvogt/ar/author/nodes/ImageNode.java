@@ -33,11 +33,13 @@ import com.google.ar.sceneform.rendering.Renderable;
 import com.google.ar.sceneform.rendering.ShapeFactory;
 import com.google.ar.sceneform.rendering.Texture;
 
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
 import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.Area;
+import eu.michaelvogt.ar.author.data.EventDetail;
 import eu.michaelvogt.ar.author.utils.AreaNodeBuilder;
 import eu.michaelvogt.ar.author.utils.Detail;
 import eu.michaelvogt.ar.author.utils.FileUtils;
@@ -163,17 +165,7 @@ public class ImageNode extends Node implements EventSender {
   }
 
   @Override
-  public boolean mayHandleEvent() {
-    return area.hasDetail(Detail.KEY_HANDLESEVENT);
-  }
-
-  @Override
-  public int getEventType() {
-    return area.getDetailInt(Detail.KEY_HANDLESEVENT);
-  }
-
-  @Override
-  public String getEventDetail(int eventType) {
-    return area.getDetailString(Detail.KEY_EVENTDETAIL);
+  public Map<Integer, EventDetail> getEventTypes() {
+    return area.getDetailEvents();
   }
 }

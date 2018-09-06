@@ -18,29 +18,18 @@
 
 package eu.michaelvogt.ar.author.nodes;
 
-public interface EventSender {
+import java.util.Map;
 
-  /**
-   * Responds if the Node is handling Events at all
-   *
-   * @return boolean true when handling events, false otherwise
-   */
-  boolean mayHandleEvent();
+import eu.michaelvogt.ar.author.data.EventDetail;
+
+public interface EventSender {
 
   /**
    * Touch event was received at the AnchorNode from this Node
    * <p>
-   * Define here which event type should be distributed to the child Nodes of this AnchorNode.
+   * Define here which event types should be distributed to the child Nodes of this AnchorNode.
    *
-   * @return int  type constant as defined in Event
+   * @return List<Integer>  type constant as defined in Event
    */
-  int getEventType();
-
-  /**
-   * Returns the event detail that was provided when creating this Node.
-   *
-   * @param eventType int The event type the Detail is needed for
-   * @return String the provided Detail
-   */
-  String getEventDetail(int eventType);
+  Map<Integer, EventDetail> getEventTypes();
 }

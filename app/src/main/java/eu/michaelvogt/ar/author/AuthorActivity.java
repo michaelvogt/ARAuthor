@@ -37,6 +37,7 @@ import java.util.Arrays;
 import eu.michaelvogt.ar.author.data.Area;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
 import eu.michaelvogt.ar.author.data.Event;
+import eu.michaelvogt.ar.author.data.EventDetail;
 import eu.michaelvogt.ar.author.data.Location;
 import eu.michaelvogt.ar.author.data.Marker;
 import eu.michaelvogt.ar.author.utils.Detail;
@@ -187,7 +188,7 @@ public class AuthorActivity extends AppCompatActivity {
         0.435f,
         new Vector3(0.945f, 0.005f, 0.632f),
         true,
-        Arrays.asList(0, 1, 2, 3)));
+        Arrays.asList(0, 1, 2, 3, 4)));
 
 
     viewModel.addMarker(new Marker("金森家"));
@@ -351,10 +352,15 @@ public class AuthorActivity extends AppCompatActivity {
         Detail.builder()
             .setImagePath("Touristar/iwamiginzan/muneokake/infoboard/images/IMG_20180609_115300.png")
             .setSecondaryImagePath("Touristar/iwamiginzan/muneokake/infoboard/images/IMG_20180826_112846.png")
-            .setZoomInState(new Vector3(0.415f, 0.572f, 0.01f), new Vector3(-0.236f, 0.01f, 0.0f))
             .setFade(Detail.KEY_FADE_RIGHT_WIDTH, 0.4f)
             .setAllowZoom(true)
-            .setHandlesEvent(Event.EVENT_ZOOMSLIDES, null),
+            .addSendsEvent(Event.EVENT_ZOOM, EventDetail.builder()
+                .setResource(R.layout.view_slider)
+                .setTitle("Muneoka Background Image")
+                .setImageFolderPath("Touristar/iwamiginzan/muneokake/infoboard/images/slides")
+                .setZoomInSize(new Vector3(0.895f, 0.582f, 0.005f))
+                .setZoomInPosition(new Vector3(0.0f, 0.01f, 0.29f))
+            ),
         new Vector3(0.415f, 0.572f, 0.01f),
         Area.COORDINATE_LOCAL,
         new Vector3(-0.236f, 0.01f, 0.0f),
@@ -382,11 +388,12 @@ public class AuthorActivity extends AppCompatActivity {
         Detail.builder()
             .setImageResource(R.drawable.ic_language_selector)
             // TODO: Display language options with this button, and set the language with these buttons instead
-            .setHandlesEvent(Event.EVENT_SWITCHLANGUAGE, Detail.LANGUAGE_EN)
+            .addSendsEvent(Event.EVENT_SWITCHLANGUAGE, EventDetail.builder()
+                .setLanguage(Detail.LANGUAGE_EN))
             .isCastingShadow(true),
-        new Vector3(0.0445f, 0.0572f, 0.01f),
+        new Vector3(0.08f, 0.1f, 0.01f),
         Area.COORDINATE_LOCAL,
-        new Vector3(0.475f, 0.01f, 0.205f),
+        new Vector3(0.475f, 0.01f, 0.155f),
         new Quaternion(new Vector3(-1.0f, 0.0f, 0.0f), 90.0f),
         Vector3.one()));
 
@@ -395,11 +402,25 @@ public class AuthorActivity extends AppCompatActivity {
         R.layout.view_image,
         Detail.builder()
             .setImageResource(R.drawable.if_tiny_arrows_diagonal_out_1_252127)
-            .setHandlesEvent(Event.EVENT_GRABCONTENT, null)
+            .addSendsEvent(Event.EVENT_GRABCONTENT, null)
             .isCastingShadow(true),
-        new Vector3(0.0445f, 0.0572f, 0.01f),
+        new Vector3(0.08f, 0.1f, 0.01f),
         Area.COORDINATE_LOCAL,
         new Vector3(0.475f, 0.01f, 0.275f),
+        new Quaternion(new Vector3(-1.0f, 0.0f, 0.0f), 90.0f),
+        Vector3.one()));
+
+    viewModel.addArea(new Area(Area.TYPE_IMAGEONIMAGE,
+        "Background Scaler",
+        R.layout.view_image,
+        Detail.builder()
+            .setImageResource(R.drawable.if_tiny_arrows_diagonal_in_1_252129)
+            .addSendsEvent(Event.EVENT_SCALE, EventDetail.builder()
+                .setScaleValues(Arrays.asList(0.5, 1, 3)))
+            .isCastingShadow(true),
+        new Vector3(0.08f, 0.1f, 0.01f),
+        Area.COORDINATE_LOCAL,
+        new Vector3(0.475f, 0.01f, 0.035f),
         new Quaternion(new Vector3(-1.0f, 0.0f, 0.0f), 90.0f),
         Vector3.one()));
 

@@ -159,7 +159,7 @@ public class EditFragmentMarker extends Fragment {
 
   private void handleCrop(View view) {
     viewModel.setCropMarker(editMarker);
-    Navigation.findNavController(view).navigate(R.id.action_crop_marker_image);
+//    Navigation.findNavController(view).navigate(R.id.action_crop_marker_image);
   }
 
   private void handleImport() {

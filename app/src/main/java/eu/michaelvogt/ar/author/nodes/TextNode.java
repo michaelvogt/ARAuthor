@@ -35,6 +35,7 @@ import java.util.concurrent.CompletionStage;
 import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.Area;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
+import eu.michaelvogt.ar.author.data.Event;
 import eu.michaelvogt.ar.author.utils.Detail;
 import eu.michaelvogt.ar.author.utils.FileUtils;
 
@@ -95,7 +96,7 @@ public class TextNode extends Node implements EventHandler {
     area.applyDetail(textView);
 
     if (area.hasDetail(Detail.KEY_TEXTPATH)) {
-      String content = null;
+      String content;
       String filePath = area.getDetailString(Detail.KEY_TEXTPATH);
 
       try {
@@ -118,14 +119,15 @@ public class TextNode extends Node implements EventHandler {
 //          }
 //          WebView webView = renderable.getView().findViewById(R.id.view_web);
 //          webView.loadData(encoded, "text/html", "base64");
+      Log.i(TAG, "");
     }
 
   }
 
-
   @Override
-  public void handleEvent(int eventType, String language, MotionEvent motionEvent) {
-    displayText((ViewRenderable) getRenderable(), language);
-    Log.i(TAG, "handler ");
+  public void handleEvent(int eventType, Object language, MotionEvent motionEvent) {
+    if (eventType == Event.EVENT_GRABCONTENT) {
+      displayText((ViewRenderable) getRenderable(), (String) language);
+    }
   }
 }

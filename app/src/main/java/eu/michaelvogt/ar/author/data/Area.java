@@ -31,6 +31,8 @@ import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.Material;
 import com.google.ar.sceneform.rendering.Renderable;
 
+import java.util.Map;
+
 import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.utils.Detail;
 
@@ -102,14 +104,14 @@ public class Area {
   }
 
   public Area(int typeResource, String title, int resource, Detail detail, Vector3 size,
-              int coordType, Vector3 location, Quaternion rotation, Vector3 scale) {
+              int coordType, Vector3 position, Quaternion rotation, Vector3 scale) {
     this.objectType = typeResource;
     this.title = title;
     this.size = size;
     this.coordType = coordType;
     this.resource = resource;
     this.detail = detail;
-    this.position = location;
+    this.position = position;
     this.rotation = rotation;
     this.scale = scale;
   }
@@ -206,6 +208,7 @@ public class Area {
     this.resource = resource;
   }
 
+
   private Detail getDetails() {
     return detail;
   }
@@ -266,6 +269,14 @@ public class Area {
     detail.apply(renderable);
   }
 
+  public boolean hasDetailEvent() {
+    return detail.hasEvents();
+  }
+
+  public Map<Integer, EventDetail> getDetailEvents() {
+    return detail.getEvents();
+  }
+
   public static Area getDefaultArea(float backgroundHeight, float backgroundWidth) {
     return new Area(TYPE_DEFAULT, "Default", R.raw.default_model, Detail.builder(), null,
         COORDINATE_LOCAL, new Vector3(-backgroundWidth / 2, 0f, -backgroundHeight / 2),
@@ -276,6 +287,6 @@ public class Area {
     Detail detail = Detail.builder().setImagePath(path);
 
     return new Area(TYPE_IMAGEONIMAGE, "Background", 0, detail, marker.getSize(),
-        COORDINATE_LOCAL, Vector3.zero(), new Quaternion(Vector3.zero(), 0), Vector3.one().scaled(3f));
+        COORDINATE_LOCAL, Vector3.zero(), new Quaternion(Vector3.zero(), 0), Vector3.one());
   }
 }

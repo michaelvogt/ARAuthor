@@ -29,6 +29,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import eu.michaelvogt.ar.author.R;
@@ -55,9 +57,11 @@ public class SliderAdapter extends PagerAdapter {
     View slide = inflater.inflate(R.layout.view_slide, container, false);
 
     ImageView imageView = slide.findViewById(R.id.slide_image);
-    Bitmap bitmap = BitmapFactory.decodeFile(images.get(position));
-    imageView.setImageBitmap(bitmap);
     container.addView(slide, 0);
+
+    Glide.with(container)
+        .load(images.get(position))
+        .into(imageView);
 
     Log.i(TAG, "Slide successfully created: " + images.get(position));
 

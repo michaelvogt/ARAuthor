@@ -20,6 +20,7 @@ package eu.michaelvogt.ar.author.nodes;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
 import android.widget.ViewSwitcher;
 
 import com.google.ar.sceneform.Node;
@@ -31,6 +32,9 @@ import java.util.concurrent.CompletionStage;
 
 import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.Area;
+import eu.michaelvogt.ar.author.utils.Detail;
+import eu.michaelvogt.ar.author.utils.FileUtils;
+import eu.michaelvogt.ar.author.utils.Slider;
 
 public class SliderNode extends Node {
   private static final String TAG = SliderNode.class.getSimpleName();
@@ -64,8 +68,13 @@ public class SliderNode extends Node {
         .thenAccept(renderable -> {
           renderable.setSizer(view -> area.getSize());
           setRenderable(renderable);
-
           area.applyDetail(renderable);
+
+          Slider slider = renderable.getView().findViewById(R.id.slider);
+          String puplicFolderPath = FileUtils.getFullPuplicFolderPath((String)
+              area.getDetail(Detail.KEY_IMAGEFOLDERPATH));
+          slider.setImages(FileUtils.getFilepathsOfFolder(puplicFolderPath));
+          // TODO:
 
           Log.i(TAG, "ImageNode successfully created");
           future.complete(this);

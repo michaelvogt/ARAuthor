@@ -26,7 +26,8 @@ public class Event {
   public static final int NOEVENT = 0;
   public static final int EVENT_SWITCHLANGUAGE = 1;
   public static final int EVENT_GRABCONTENT = 2;
-  public static final int EVENT_ZOOMSLIDES = 3;
+  public static final int EVENT_ZOOM = 3;
+  public static final int EVENT_SCALE = 4;
 
   private List<Consumer<String>> handlers = new ArrayList<>();
 
