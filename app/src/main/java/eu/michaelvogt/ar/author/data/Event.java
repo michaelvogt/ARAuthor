@@ -28,6 +28,8 @@ public class Event {
   public static final int EVENT_GRABCONTENT = 2;
   public static final int EVENT_ZOOM = 3;
   public static final int EVENT_SCALE = 4;
+  public static final int EVENT_HIDECONTENT = 5;
+  public static final int EVENT_SETMAINCONTENT = 6;
 
   private List<Consumer<String>> handlers = new ArrayList<>();
 

@@ -46,6 +46,7 @@
             android:name=".AuthorActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="AR Author"
+            android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

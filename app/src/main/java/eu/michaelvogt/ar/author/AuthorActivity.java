@@ -36,11 +36,11 @@ import java.util.Arrays;
 
 import eu.michaelvogt.ar.author.data.Area;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
+import eu.michaelvogt.ar.author.data.Detail;
 import eu.michaelvogt.ar.author.data.Event;
 import eu.michaelvogt.ar.author.data.EventDetail;
 import eu.michaelvogt.ar.author.data.Location;
 import eu.michaelvogt.ar.author.data.Marker;
-import eu.michaelvogt.ar.author.utils.Detail;
 
 public class AuthorActivity extends AppCompatActivity {
 
@@ -79,7 +79,7 @@ public class AuthorActivity extends AppCompatActivity {
         0.6f,
         new Vector3(1.4f, 0.005f, 0.715f),
         false,
-        new ArrayList<>()));
+        new ArrayList<Integer>()));
 
     viewModel.addMarker(new Marker(
         "/Touristar/Markers/P_20180806_132544_vHDR_On.jpg",
@@ -347,6 +347,7 @@ public class AuthorActivity extends AppCompatActivity {
 
 
     viewModel.addArea(new Area(Area.TYPE_IMAGEONIMAGE,
+        Area.TYPE_CONTENT,
         "Muneoka Background Image",
         R.layout.view_image,
         Detail.builder()
@@ -354,13 +355,9 @@ public class AuthorActivity extends AppCompatActivity {
             .setSecondaryImagePath("Touristar/iwamiginzan/muneokake/infoboard/images/IMG_20180826_112846.png")
             .setFade(Detail.KEY_FADE_RIGHT_WIDTH, 0.4f)
             .setAllowZoom(true)
-            .addSendsEvent(Event.EVENT_ZOOM, EventDetail.builder()
-                .setResource(R.layout.view_slider)
-                .setTitle("Muneoka Background Image")
-                .setImageFolderPath("Touristar/iwamiginzan/muneokake/infoboard/images/slides")
-                .setZoomInSize(new Vector3(0.895f, 0.582f, 0.005f))
-                .setZoomInPosition(new Vector3(0.0f, 0.01f, 0.29f))
-            ),
+            .addSendsEvent(Event.EVENT_HIDECONTENT, null)
+            .addSendsEvent(Event.EVENT_ZOOM, EventDetail.builder().setTitle("Muneoka Slide Area"))
+            .addSendsEvent(Event.EVENT_SETMAINCONTENT, EventDetail.builder().setTitle("Muneoka Slide Area")),
         new Vector3(0.415f, 0.572f, 0.01f),
         Area.COORDINATE_LOCAL,
         new Vector3(-0.236f, 0.01f, 0.0f),
@@ -368,6 +365,7 @@ public class AuthorActivity extends AppCompatActivity {
         Vector3.one()));
 
     viewModel.addArea(new Area(Area.TYPE_TEXTONIMAGE,
+        Area.TYPE_CONTENT,
         "Muneoka Background Intro",
         R.layout.view_text,
         Detail.builder()
@@ -382,6 +380,7 @@ public class AuthorActivity extends AppCompatActivity {
         Vector3.one()));
 
     viewModel.addArea(new Area(Area.TYPE_IMAGEONIMAGE,
+        Area.TYPE_UI,
         "Muneoka Language Selector",
         // TODO: Remove and hardcode in Node
         R.layout.view_image,
@@ -398,6 +397,7 @@ public class AuthorActivity extends AppCompatActivity {
         Vector3.one()));
 
     viewModel.addArea(new Area(Area.TYPE_IMAGEONIMAGE,
+        Area.TYPE_UI,
         "Main Content Grabber",
         R.layout.view_image,
         Detail.builder()
@@ -411,16 +411,28 @@ public class AuthorActivity extends AppCompatActivity {
         Vector3.one()));
 
     viewModel.addArea(new Area(Area.TYPE_IMAGEONIMAGE,
+        Area.TYPE_UI,
         "Background Scaler",
         R.layout.view_image,
         Detail.builder()
-            .setImageResource(R.drawable.if_tiny_arrows_diagonal_in_1_252129)
+            .setImageResource(R.drawable.ic_linear_scale_black_24dp)
             .addSendsEvent(Event.EVENT_SCALE, EventDetail.builder()
-                .setScaleValues(Arrays.asList(0.5, 1, 3)))
+                .setScaleValues(Arrays.asList(0.5f, 1f, 3f)))
             .isCastingShadow(true),
         new Vector3(0.08f, 0.1f, 0.01f),
         Area.COORDINATE_LOCAL,
         new Vector3(0.475f, 0.01f, 0.035f),
+        new Quaternion(new Vector3(-1.0f, 0.0f, 0.0f), 90.0f),
+        Vector3.one()));
+
+    viewModel.addArea(new Area(Area.TYPE_SLIDESONIMAGE, Area.TYPE_CONTENT,
+        "Muneoka Slide Area",
+        R.layout.view_slider,
+        Detail.builder()
+            .setImageFolderPath("Touristar/iwamiginzan/muneokake/infoboard/images/slides"),
+        new Vector3(0.895f, 0.582f, 0.005f),
+        Area.COORDINATE_LOCAL,
+        new Vector3(0.0f, 0.01f, 0.29f),
         new Quaternion(new Vector3(-1.0f, 0.0f, 0.0f), 90.0f),
         Vector3.one()));
 

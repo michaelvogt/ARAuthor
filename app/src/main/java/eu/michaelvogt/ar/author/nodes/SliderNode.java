@@ -20,8 +20,6 @@ package eu.michaelvogt.ar.author.nodes;
 
 import android.content.Context;
 import android.util.Log;
-import android.view.View;
-import android.widget.ViewSwitcher;
 
 import com.google.ar.sceneform.Node;
 import com.google.ar.sceneform.rendering.Texture;
@@ -32,26 +30,15 @@ import java.util.concurrent.CompletionStage;
 
 import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.Area;
-import eu.michaelvogt.ar.author.utils.Detail;
+import eu.michaelvogt.ar.author.data.Detail;
 import eu.michaelvogt.ar.author.utils.FileUtils;
 import eu.michaelvogt.ar.author.utils.Slider;
 
-public class SliderNode extends Node {
+public class SliderNode extends AreaNode {
   private static final String TAG = SliderNode.class.getSimpleName();
 
-  private Context context;
-  private final Area area;
-
-  private boolean isFadeIn = true;
-
   private SliderNode(Context context, Area area) {
-    this.context = context;
-    this.area = area;
-
-    setLocalPosition(area.getPosition());
-    setLocalRotation(area.getRotation());
-    setLocalScale(area.getScale());
-    setName(area.getTitle());
+    super(context, area);
   }
 
   public static SliderNode builder(Context context, Area area) {

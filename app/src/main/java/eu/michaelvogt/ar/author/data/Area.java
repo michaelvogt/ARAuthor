@@ -34,7 +34,6 @@ import com.google.ar.sceneform.rendering.Renderable;
 import java.util.Map;
 
 import eu.michaelvogt.ar.author.R;
-import eu.michaelvogt.ar.author.utils.Detail;
 
 @Entity(foreignKeys = {
     @ForeignKey(entity = Marker.class,
@@ -51,6 +50,9 @@ public class Area {
   public static final int TYPE_TEXTONIMAGE = 6;
   public static final int TYPE_IMAGEONIMAGE = 8;
 
+  public static final int TYPE_CONTENT = 0;
+  public static final int TYPE_UI = 1;
+
   public static final int COORDINATE_LOCAL = -1;
   public static final int COORDINATE_GLOBAL = -2;
 
@@ -58,6 +60,8 @@ public class Area {
   public static final int ICON_FLATOVERLAY = R.drawable.ic_collections_black_24dp;
   public static final int ICON_INTERACTIVEOVERLAY = R.drawable.ic_gamepad_black_24dp;
   public static final int ICON_INTERACTIVEPANEL = R.drawable.ic_my_location_black_24dp;
+
+  public static final String BACKGROUNDAREATITLE = "background";
 
   @PrimaryKey(autoGenerate = true)
   @NonNull
@@ -68,6 +72,9 @@ public class Area {
 
   @ColumnInfo(name = "object_type")
   private int objectType;
+
+  @ColumnInfo(name = "usage_type")
+  private int usageType;
 
   @ColumnInfo(name = "coord_type")
   private int coordType;
@@ -99,14 +106,15 @@ public class Area {
   private int markerId;
 
   public Area() {
-    this(0, "", 0, Detail.builder(), Vector3.zero(), COORDINATE_LOCAL,
+    this(0, 0, "", 0, Detail.builder(), Vector3.zero(), COORDINATE_LOCAL,
         Vector3.zero(), Quaternion.identity(), Vector3.one());
   }
 
-  public Area(int typeResource, String title, int resource, Detail detail, Vector3 size,
+  public Area(int typeResource, int usageType, String title, int resource, Detail detail, Vector3 size,
               int coordType, Vector3 position, Quaternion rotation, Vector3 scale) {
     this.objectType = typeResource;
     this.title = title;
+    this.usageType = usageType;
     this.size = size;
     this.coordType = coordType;
     this.resource = resource;
@@ -118,6 +126,7 @@ public class Area {
 
   public Area(Area area) {
     this.objectType = area.getObjectType();
+    this.usageType = area.getUsageType();
     this.title = area.getTitle();
     this.size = area.getSize();
     this.resource = area.getResource();
@@ -150,6 +159,14 @@ public class Area {
 
   public void setObjectType(int typeResource) {
     this.objectType = typeResource;
+  }
+
+  public int getUsageType() {
+    return usageType;
+  }
+
+  public void setUsageType(int usageType) {
+    this.usageType = usageType;
   }
 
   public int getCoordType() {
@@ -278,7 +295,7 @@ public class Area {
   }
 
   public static Area getDefaultArea(float backgroundHeight, float backgroundWidth) {
-    return new Area(TYPE_DEFAULT, "Default", R.raw.default_model, Detail.builder(), null,
+    return new Area(TYPE_DEFAULT, TYPE_CONTENT, "Default", R.raw.default_model, Detail.builder(), null,
         COORDINATE_LOCAL, new Vector3(-backgroundWidth / 2, 0f, -backgroundHeight / 2),
         new Quaternion(new Vector3(0f, 1f, 0f), 180), Vector3.one());
   }
@@ -286,7 +303,7 @@ public class Area {
   public static Area getBackgroundArea(Marker marker, @NonNull String path) {
     Detail detail = Detail.builder().setImagePath(path);
 
-    return new Area(TYPE_IMAGEONIMAGE, "Background", 0, detail, marker.getSize(),
+    return new Area(TYPE_IMAGEONIMAGE, TYPE_UI, BACKGROUNDAREATITLE, 0, detail, marker.getSize(),
         COORDINATE_LOCAL, Vector3.zero(), new Quaternion(Vector3.zero(), 0), Vector3.one());
   }
 }

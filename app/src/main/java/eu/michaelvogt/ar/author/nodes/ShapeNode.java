@@ -33,7 +33,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
 import eu.michaelvogt.ar.author.data.Area;
-import eu.michaelvogt.ar.author.utils.Detail;
+import eu.michaelvogt.ar.author.data.Detail;
 import eu.michaelvogt.ar.author.utils.FileUtils;
 
 public class ShapeNode extends Node {

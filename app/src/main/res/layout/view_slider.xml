@@ -35,15 +35,15 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="100dp"
+        android:layout_width="300px"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:background="#8fff"
+        android:background="#9fff"
         android:padding="5dp"
         android:text="江戸時代、石見銀山附御料百五十余村は支配上六組に分けられていた。十八世紀の中頃には、大森には六軒の郷宿が設けられ、公用で出かける村役人"
-        android:textSize="12sp"
+        android:textSize="24px"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

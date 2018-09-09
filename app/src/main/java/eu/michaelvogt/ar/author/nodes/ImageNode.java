@@ -22,7 +22,14 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.google.ar.sceneform.Node;
@@ -39,27 +46,18 @@ import java.util.concurrent.CompletionStage;
 
 import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.Area;
+import eu.michaelvogt.ar.author.data.Detail;
 import eu.michaelvogt.ar.author.data.EventDetail;
 import eu.michaelvogt.ar.author.utils.AreaNodeBuilder;
-import eu.michaelvogt.ar.author.utils.Detail;
 import eu.michaelvogt.ar.author.utils.FileUtils;
 
-public class ImageNode extends Node implements EventSender {
+public class ImageNode extends AreaNode implements EventSender {
   private static final String TAG = ImageNode.class.getSimpleName();
-
-  private Context context;
-  private final Area area;
 
   private boolean isFadeIn = true;
 
   private ImageNode(Context context, Area area) {
-    this.context = context;
-    this.area = area;
-
-    setLocalPosition(area.getPosition());
-    setLocalRotation(area.getRotation());
-    setLocalScale(area.getScale());
-    setName(area.getTitle());
+    super(context, area);
   }
 
   public static ImageNode builder(Context context, Area area) {
@@ -86,9 +84,10 @@ public class ImageNode extends Node implements EventSender {
 
     } else if (area.hasDetail(Detail.KEY_IMAGERESOURCE)) {
       int textureResource = area.getDetailResource(Detail.KEY_IMAGERESOURCE, R.drawable.ic_launcher);
+      Bitmap bitmap = getBitmapFromVectorDrawable(context, textureResource);
 
       futureTexture = Texture.builder()
-          .setSource(context, textureResource)
+          .setSource(bitmap)
           .setUsage(Texture.Usage.COLOR)
           .build()
           .exceptionally(throwable -> {
@@ -167,5 +166,23 @@ public class ImageNode extends Node implements EventSender {
   @Override
   public Map<Integer, EventDetail> getEventTypes() {
     return area.getDetailEvents();
+  }
+
+  private Bitmap getBitmapFromVectorDrawable(Context context, int drawableId) {
+    Drawable drawable = ContextCompat.getDrawable(context, drawableId);
+
+    Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
+        drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+    Canvas canvas = new Canvas(bitmap);
+    canvas.drawColor(Color.WHITE, PorterDuff.Mode.OVERLAY);
+
+    drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+    drawable.draw(canvas);
+
+    return bitmap;
+  }
+
+  private String getURLForResource (int resourceId) {
+    return Uri.parse("android.resource://"+R.class.getPackage().getName()+"/" +resourceId).toString();
   }
 }

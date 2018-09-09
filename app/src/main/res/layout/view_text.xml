@@ -29,6 +29,5 @@
         android:background="@android:color/transparent"
         android:gravity="center"
         android:padding="4sp"
-        android:textColor="@color/primaryTextColor"
-        tools:text="lkdjf slsdjf sdldfjls dflksj" />
+        android:textColor="@color/primaryTextColor" />
 </ScrollView>

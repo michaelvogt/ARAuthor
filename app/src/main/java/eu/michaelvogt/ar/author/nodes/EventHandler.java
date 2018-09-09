@@ -22,6 +22,8 @@ import android.view.MotionEvent;
 
 import com.google.ar.sceneform.Node;
 
+import eu.michaelvogt.ar.author.data.EventDetail;
+
 public interface EventHandler {
   /**
    * Node wants to handle a certain event
@@ -32,7 +34,7 @@ public interface EventHandler {
    * @param eventType   int event type that was fired
    * @param motionEvent MotionEvent of the fired event
    */
-  void handleEvent(int eventType, Object eventDetail, MotionEvent motionEvent);
+  void handleEvent(int eventType, EventDetail eventDetail, MotionEvent motionEvent);
 
   Iterable<Node> getChildren();
 }

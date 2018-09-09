@@ -50,6 +50,10 @@ public class Slider extends ViewPager {
     pager.setAdapter(adapter);
   }
 
+  public List<String> getImages() {
+    return adapter.getImages();
+  }
+
   public void startTimer(int delay) {
     final Handler handler = new Handler();
     final Runnable Update = () -> setCurrentItem(nextItem.apply(getCurrentItem()), true);

@@ -6,8 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import eu.michaelvogt.ar.author.utils.Detail;
-
 public class EventDetail {
   private static final String TAG = EventDetail.class.getSimpleName();
 

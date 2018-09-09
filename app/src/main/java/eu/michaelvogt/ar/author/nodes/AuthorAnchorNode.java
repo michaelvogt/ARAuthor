@@ -18,9 +18,13 @@
 
 package eu.michaelvogt.ar.author.nodes;
 
+import android.annotation.SuppressLint;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.support.constraint.ConstraintLayout;
+import android.support.constraint.ConstraintSet;
 import android.support.v4.app.FragmentActivity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,8 +34,8 @@ import com.google.ar.core.exceptions.CameraNotAvailableException;
 import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.HitTestResult;
 import com.google.ar.sceneform.Node;
-import com.google.ar.sceneform.math.Quaternion;
 import com.google.ar.sceneform.math.Vector3;
+import com.google.ar.sceneform.rendering.Renderable;
 import com.google.ar.sceneform.rendering.ViewRenderable;
 
 import java.util.Map;
@@ -40,10 +44,11 @@ import eu.michaelvogt.ar.author.ImagePreviewFragment;
 import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.Area;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
+import eu.michaelvogt.ar.author.data.Detail;
 import eu.michaelvogt.ar.author.data.Event;
 import eu.michaelvogt.ar.author.data.EventDetail;
 import eu.michaelvogt.ar.author.utils.AreaNodeBuilder;
-import eu.michaelvogt.ar.author.utils.Detail;
+import eu.michaelvogt.ar.author.utils.Slider;
 
 public class AuthorAnchorNode extends AnchorNode {
   private final Context context;
@@ -70,11 +75,17 @@ public class AuthorAnchorNode extends AnchorNode {
         Map<Integer, EventDetail> eventTypes = eventNode.getEventTypes();
         eventTypes.forEach((eventType, eventDetail) -> {
           switch (eventType) {
+            case Event.EVENT_HIDECONTENT:
+              handleHideContent();
+              break;
             case Event.EVENT_GRABCONTENT:
               handleGrabContent();
               break;
+            case Event.EVENT_SETMAINCONTENT:
+              handleSetMainContent(eventDetail);
+              break;
             case Event.EVENT_ZOOM:
-              handleZoomSlides(eventDetail);
+              handleZoom(eventDetail);
               break;
             case Event.EVENT_SCALE:
               handleScale(eventDetail);
@@ -89,45 +100,46 @@ public class AuthorAnchorNode extends AnchorNode {
     return true;
   }
 
+  private void handleSetMainContent(EventDetail eventDetail) {
+    AuthorViewModel viewModel = ViewModelProviders.of((FragmentActivity) context).get(AuthorViewModel.class);
+    viewModel.setCurrentMainContentId(eventDetail.getTitle());
+  }
+
+  private void handleHideContent() {
+    callOnHierarchy(node -> {
+      if (node instanceof AreaNode && ((AreaNode) node).isContentNode()) {
+        ((AreaNode) node).hide();
+      }
+    });
+  }
+
   private void handleScale(EventDetail eventDetail) {
     currentScaleIndex =
         currentScaleIndex + 1 >= eventDetail.getScaleValues().size() ? 0 : ++currentScaleIndex;
 
-    Node background = findInHierarchy(node -> node.getName().equals("Background"));
-    background.setLocalScale(Vector3.one().scaled(currentScaleIndex));
+    Node background = findInHierarchy(node -> node.getName().equals(Area.BACKGROUNDAREATITLE));
+    if (background != null) {
+      Float scale = eventDetail.getScaleValues().get(currentScaleIndex);
+      background.setLocalScale(new Vector3(scale, 1f, scale));
+    } else {
+      // TODO: Handle scale for non background scenes
+    }
   }
 
-  private void handleZoomSlides(EventDetail eventDetail) {
-    // fade out existing content, leave ui objects visible
-    // TODO: fix hardcoded nodes
-    Node image = findInHierarchy(node -> node.getName().equals("Muneoka Background Image"));
-    image.setLocalPosition(image.getUp().negated());
+  private void handleZoom(EventDetail eventDetail) {
+    AuthorViewModel viewModel = ViewModelProviders.of((FragmentActivity) context).get(AuthorViewModel.class);
+    Area zoomedSliderArea = viewModel.getArea(eventDetail.getTitle()).get();
 
-    Node intro = findInHierarchy(node -> node.getName().equals("Muneoka Background Intro"));
-    intro.setLocalPosition(intro.getUp().negated());
-
-    // create slides object
-    // load images
-    // add explanation texts on tap
-    Area zoomedSliderArea = new Area(Area.TYPE_SLIDESONIMAGE,
-        eventDetail.getTitle(),
-        R.layout.view_slider,
-        Detail.builder()
-            .setImageFolderPath(eventDetail.getImageFolderPath()),
-        eventDetail.getZoomInSize(),
-        Area.COORDINATE_LOCAL,
-        eventDetail.getZoomInPosition(),
-        new Quaternion(new Vector3(-1.0f, 0.0f, 0.0f), 90.0f),
-        Vector3.one());
+    Node background = findInHierarchy(node -> node.getName().equals(Area.BACKGROUNDAREATITLE));
 
     AreaNodeBuilder.builder(context, zoomedSliderArea)
         .build()
         .thenAccept(node -> {
-          // attach to anchornode
-          node.setParent(getChildren().get(0));
+          node.setParent(background);
         });
   }
 
+  @SuppressLint("ClickableViewAccessibility")
   private void handleGrabContent() {
     // TODO: display text in WebView instead
     // TODO: add animations
@@ -137,31 +149,36 @@ public class AuthorAnchorNode extends AnchorNode {
 
     ViewGroup grabContainer = containerView.findViewById(R.id.grab_container);
     View fab = containerView.findViewById(R.id.listmarker_fab);
+
     View closeButton = containerView.findViewById(R.id.grab_close);
-    closeButton.setOnTouchListener(new View.OnTouchListener() {
-      @Override
-      public boolean onTouch(View view, MotionEvent motionEvent) {
-        if (motionEvent.getActionMasked() == MotionEvent.ACTION_UP) {
-          try {
-            eventCallback.resume();
-          } catch (CameraNotAvailableException e) {
-            // TODO: get to know how this can happen and handle it appropriately
-            e.printStackTrace();
-          }
-
-          grabContainer.removeView(content);
-          contentParent.addView(content);
-
-          grabContainer.setVisibility(View.GONE);
-          closeButton.setVisibility(View.GONE);
-          fab.setVisibility(View.VISIBLE);
+    closeButton.setOnTouchListener((view, motionEvent) -> {
+      if (motionEvent.getActionMasked() == MotionEvent.ACTION_UP) {
+        try {
+          eventCallback.resume();
+        } catch (CameraNotAvailableException e) {
+          // TODO: get to know how this can happen and handle it appropriately
+          e.printStackTrace();
         }
-        return true;
+
+        grabContainer.setVisibility(View.GONE);
+        closeButton.setVisibility(View.GONE);
+        fab.setVisibility(View.VISIBLE);
       }
+      return true;
     });
 
-    contentParent.removeView(content);
-    grabContainer.addView(content);
+    // TODO: Temporary hack, because of trouble getting the layout for the slides right on the image and grabbed
+    if (content.findViewById(R.id.slider) != null) {
+      Slider slider = content.findViewById(R.id.slider);
+
+      View grabView = LayoutInflater.from(context).inflate(R.layout.view_slider_grab, grabContainer);
+      Slider grabSlider = grabView.findViewById(R.id.slider);
+      grabSlider.setImages(slider.getImages());
+    } else {
+      contentParent.removeView(content);
+      grabContainer.addView(content);
+    }
+
     grabContainer.setVisibility(View.VISIBLE);
     closeButton.setVisibility(View.VISIBLE);
     fab.setVisibility(View.INVISIBLE);
@@ -169,7 +186,7 @@ public class AuthorAnchorNode extends AnchorNode {
     eventCallback.pause();
   }
 
-  private void broadcastEvent(EventSender eventNode, int eventType, Object eventDetail, MotionEvent motionEvent) {
+  private void broadcastEvent(EventSender eventNode, int eventType, EventDetail eventDetail, MotionEvent motionEvent) {
     callOnHierarchy(node -> {
       if (node instanceof EventHandler) {
         ((EventHandler) node).handleEvent(eventType, eventDetail, motionEvent);

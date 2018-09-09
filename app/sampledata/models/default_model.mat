@@ -16,6 +16,12 @@ material {
         }, {
             type: "float",
             name: "fadeRightWidth"
+        }, {
+            type: "float",
+            name: "fadeTopWidth"
+        }, {
+            type: "float",
+            name: "fadeBottomWidth"
         }
     ],
     requires: [
@@ -37,13 +43,9 @@ fragment {
         vec4 tex2 = crossFade == 1.0 ? vec4(1.0) : texture(materialParams_secondary, uv);
         material.baseColor = ((tex1 * crossFade) + (tex2 * (1.0 - crossFade)));
 
-        material.baseColor.a *=
-          materialParams.fadeLeftWidth > 0.0 && uv.x < materialParams.fadeLeftWidth
-            ? (uv.x / materialParams.fadeLeftWidth)
-          : materialParams.fadeRightWidth > 0.0 && (1.0 - uv.x) < materialParams.fadeRightWidth
-            ? ((1.0 - uv.x) / materialParams.fadeRightWidth)
-          : 1.0;
-
-        // material.baseColor.a *= crossFade;
+        material.baseColor.a *= smoothstep(0., materialParams.fadeLeftWidth, uv.x)
+            * smoothstep(1., 1. - max(.0001, materialParams.fadeRightWidth), uv.x)
+            * smoothstep(0., materialParams.fadeBottomWidth, uv.y)
+            * smoothstep(1., 1. - max(.0001, materialParams.fadeTopWidth), uv.y);
       }
 }

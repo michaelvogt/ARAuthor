@@ -14,51 +14,42 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="59dbdf08-f2cd-443b-bc3b-eed328ab0fe3" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/EventDetail.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ic_linear_scale_black_24dp.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/AreaNode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/view_slider_grab.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/fileContent/fileContent.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/fileContent/fileContent.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.6/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/javaCompile/classAnalysis.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.6/javaCompile/jarAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/javaCompile/jarAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/javaCompile/taskHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.6/javaCompile/taskJars.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/javaCompile/taskJars.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.6/taskHistory/taskHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_core_runtime_1_1_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_core_runtime_1_1_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_extensions_1_1_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_extensions_1_1_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_livedata_1_1_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_livedata_1_1_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_livedata_core_1_1_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_livedata_core_1_1_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_runtime_1_1_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_runtime_1_1_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_viewmodel_1_1_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__android_arch_lifecycle_viewmodel_1_1_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_lyft_scissors_1_1_1.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/sampledata/models/default_model.mat" beforeDir="false" afterPath="$PROJECT_DIR$/app/sampledata/models/default_model.mat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/AuthorActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/AuthorActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/CropFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/sampledata/CropFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/EditFragmentMarker.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/EditFragmentMarker.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Area.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Area.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Event.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Event.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/EventDetail.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/EventDetail.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/AuthorAnchorNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/AuthorAnchorNode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/EventHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/EventHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/EventSender.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/EventSender.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/ImageNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/ImageNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/ShapeNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/ShapeNode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/SliderNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/SliderNode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/TextNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/TextNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/AreaNodeBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/AreaNodeBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/Detail.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/Detail.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/ViewNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/ViewNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/Detail.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Detail.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/Slider.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/Slider.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/SliderAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/SliderAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_crop.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/sampledata/fragment_crop.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_imagepreview.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_imagepreview.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_markerpreview.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_markerpreview.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/view_image.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/view_image.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/view_slide.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/view_slide.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/view_slider.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/view_slider.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/navigation/main_navigation.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/navigation/main_navigation.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/view_text.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/view_text.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/raw/default_model.sfb" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/raw/default_model.sfb" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -84,50 +75,89 @@
       <file leaf-file-name="AuthorAnchorNode.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/AuthorAnchorNode.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="173" column="38" selection-start-line="173" selection-start-column="38" selection-end-line="173" selection-end-column="38" />
+            <state relative-caret-position="370">
+              <caret line="176" selection-start-line="176" selection-end-line="176" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Detail.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/Detail.java">
+      <file leaf-file-name="fragment_imagepreview.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_imagepreview.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="181">
-              <caret line="60" column="50" selection-start-line="60" selection-start-column="50" selection-end-line="60" selection-end-column="50" />
+            <state relative-caret-position="850">
+              <caret line="50" column="48" selection-start-line="50" selection-start-column="5" selection-end-line="50" selection-end-column="48" />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Slider.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/Slider.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="37" column="17" selection-start-line="37" selection-start-column="17" selection-end-line="37" selection-end-column="17" />
               <folding>
-                <element signature="e#6362#6363#0" expanded="true" />
-                <element signature="e#6395#6396#0" expanded="true" />
-                <element signature="e#6439#6440#0" expanded="true" />
-                <element signature="e#6475#6476#0" expanded="true" />
+                <element signature="e#1722#1723#0" expanded="true" />
+                <element signature="e#1745#1746#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AuthorActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/AuthorActivity.java">
+      <file leaf-file-name="view_text.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/view_text.xml">
+          <provider editor-type-id="text-editor">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="android-designer2">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="view_slide.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/view_slide.xml">
+          <provider editor-type-id="text-editor">
+            <state relative-caret-position="476">
+              <caret line="28" column="44" selection-start-line="28" selection-start-column="44" selection-end-line="28" selection-end-column="44" />
+            </state>
+          </provider>
+          <provider selected="true" editor-type-id="android-designer2">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SliderAdapter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/SliderAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-136">
-              <caret line="356" column="21" selection-start-line="356" selection-start-column="21" selection-end-line="356" selection-end-column="21" />
+            <state relative-caret-position="531">
+              <caret line="69" selection-start-line="69" selection-end-line="69" />
+              <folding>
+                <element signature="e#2410#2411#0" expanded="true" />
+                <element signature="e#2429#2430#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TextNode.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/TextNode.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="708">
-              <caret line="128" column="44" selection-start-line="128" selection-start-column="44" selection-end-line="128" selection-end-column="44" />
+      <file leaf-file-name="view_slider.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/view_slider.xml">
+          <provider editor-type-id="text-editor">
+            <state relative-caret-position="250">
+              <caret line="27" column="35" selection-end-line="50" selection-end-column="46" />
             </state>
+          </provider>
+          <provider selected="true" editor-type-id="android-designer2">
+            <state />
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EventSender.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/EventSender.java">
+      <file leaf-file-name="AreaNode.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/AreaNode.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="24" column="19" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="19" />
+            <state relative-caret-position="510">
+              <caret line="35" selection-start-line="35" selection-end-line="35" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -135,57 +165,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ImageNode.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/ImageNode.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-408">
-              <caret line="46" column="58" selection-start-line="46" selection-start-column="58" selection-end-line="46" selection-end-column="58" />
+      <file leaf-file-name="view_slider_grab.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/view_slider_grab.xml">
+          <provider editor-type-id="text-editor">
+            <state relative-caret-position="-17">
+              <caret line="14" column="18" selection-start-line="14" selection-start-column="18" selection-end-line="14" selection-end-column="18" />
             </state>
+          </provider>
+          <provider selected="true" editor-type-id="android-designer2">
+            <state />
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EventHandler.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/EventHandler.java">
+      <file leaf-file-name="AuthorActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/AuthorActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="34" column="12" selection-start-line="34" selection-start-column="12" selection-end-line="34" selection-end-column="12" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AreaNodeBuilder.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/AreaNodeBuilder.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="62" column="21" selection-start-line="62" selection-start-column="21" selection-end-line="62" selection-end-column="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Event.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Event.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="29" column="41" selection-start-line="29" selection-start-column="41" selection-end-line="29" selection-end-column="41" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Area.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Area.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="535">
-              <caret line="288" column="50" selection-start-line="288" selection-start-column="40" selection-end-line="288" selection-end-column="50" />
-              <folding>
-                <element signature="e#4874#4875#0" expanded="true" />
-                <element signature="e#4895#4896#0" expanded="true" />
-                <element signature="e#5562#5563#0" expanded="true" />
-                <element signature="e#5602#5603#0" expanded="true" />
-                <element signature="e#6654#6655#0" expanded="true" />
-                <element signature="e#6688#6689#0" expanded="true" />
-                <element signature="e#6811#6812#0" expanded="true" />
-                <element signature="e#6846#6847#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="816">
+              <caret line="358" column="53" selection-start-line="358" selection-start-column="53" selection-end-line="358" selection-end-column="53" />
             </state>
           </provider>
         </entry>
@@ -204,12 +200,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>textnode</find>
-      <find>detail</find>
-      <find>handler</find>
-      <find>inflated</find>
-      <find>valueanimator</find>
-      <find>getstring</find>
       <find>getdetailstring</find>
       <find>size</find>
       <find>imagepath</find>
@@ -234,6 +224,12 @@
       <find>location</find>
       <find>viewm</find>
       <find>implements EventSender</find>
+      <find>decoderesource</find>
+      <find>svg</find>
+      <find>&quot;background&quot;</find>
+      <find>currentMainContentId</find>
+      <find>grab_container</find>
+      <find>unity</find>
     </findStrings>
     <dirStrings>
       <dir>C:\Users\Michael Vogt\git\artester\app\src\main\java</dir>
@@ -2653,16 +2649,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/ItemClickListener.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/EditFragmentAreas.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/AreaListAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/AuthorViewModel.kt" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_locationlist.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/LocationListAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_intro.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/MarkerListAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/card_location.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/LocationIntro.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/LocationlistFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Location.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/FileUtils.java" />
@@ -2673,37 +2659,47 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_editmarker.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/EnumHandler.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/google/ar/core/EnumHandler.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/LoopArFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_imagepreview.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_markerpreview.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/EditFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/MarkerListFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/ImagePreviewFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/MarkerPreviewFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/ShapeNode.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/PreviewFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/Slider.java" />
         <option value="$PROJECT_DIR$/build.gradle" />
-        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/res/navigation/main_navigation.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/EditFragmentMarker.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/SliderAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/AreaNodeBuilder.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/HashMapBuilder.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/view_slider.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/view_slide.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/SliderNode.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Area.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/Detail.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/EventDetail.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Event.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/EventSender.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/AuthorAnchorNode.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/EventHandler.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/EventDetail.java" />
+        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/app/sampledata/models/default_model.mat" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/AreaDao.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Content.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Area.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Marker.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/ViewNode.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/ShapeNode.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/PreviewFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/LoopArFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/ImageNode.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/TextNode.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/SliderNode.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Area.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Event.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/AuthorActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_markerpreview.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/view_image.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_imagepreview.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/view_text.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/view_slide.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/view_slider.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/AreaNode.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/Slider.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/SliderAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/AuthorAnchorNode.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/view_slider_grab.xml" />
       </list>
     </option>
   </component>
@@ -2718,6 +2714,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -2739,50 +2736,7 @@
             <path>
               <item name="artester" type="1abcf292:AndroidViewProjectNode" />
               <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="sampledata" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="artester" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-            </path>
-            <path>
-              <item name="artester" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="author" type="cbb59c9e:AndroidPsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="artester" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="author" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="artester" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="author" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="nodes" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="artester" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="author" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="utils" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="artester" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
               <item name="res" type="d4f16f75:AndroidResFolderNode" />
-            </path>
-            <path>
-              <item name="artester" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-              <item name="drawable" type="ddeffd01:AndroidResFolderTypeNode" />
             </path>
             <path>
               <item name="artester" type="1abcf292:AndroidViewProjectNode" />
@@ -2798,7 +2752,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -2812,25 +2765,25 @@
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
   </component>
   <component name="RecentsManager">
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="eu.michaelvogt.ar.author.nodes" />
-    </key>
-    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="eu.michaelvogt.ar.author.data" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Michael Vogt\git\artester\app\sampledata" />
       <recent name="C:\Users\Michael Vogt\git\artester\app\sampledata\models\Big_Old_House" />
       <recent name="C:\Users\Michael Vogt\git\artester\app\src\main\res\drawable" />
     </key>
-    <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="eu.michaelvogt.ar.author" />
-      <recent name="eu.michaelvogt.ar.author.utils" />
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="eu.michaelvogt.ar.author.data" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Michael Vogt\git\artester\app\src\main\res\layout" />
       <recent name="C:\Users\Michael Vogt\git\artester\app\src\main\res\drawable" />
       <recent name="C:\Users\Michael Vogt\git\artester\app\sampledata\models" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="eu.michaelvogt.ar.author" />
+      <recent name="eu.michaelvogt.ar.author.utils" />
+    </key>
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="eu.michaelvogt.ar.author.nodes" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -3013,45 +2966,53 @@
       <option name="project" value="LOCAL" />
       <updated>1536154216181</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Slider fix&#10;Event handling fix">
+      <created>1536239583391</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1536239583391</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1933" height="1053" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="Android Profiler" order="12" />
-      <window_info id="Build Variants" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" weight="0.32963374" />
-      <window_info anchor="right" id="Viewer" order="9" side_tool="true" weight="0.30256137" />
-      <window_info anchor="bottom" id="Logcat" order="9" />
-      <window_info id="Capture Tool" order="6" />
-      <window_info id="Designer" order="2" />
-      <window_info anchor="bottom" auto_hide="true" id="Build" order="7" weight="0.32852387" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="right" id="Device File Explorer" order="5" side_tool="true" weight="0.32924226" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4073252" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info id="Image Layers" order="3" />
+      <window_info id="Build Variants" order="7" side_tool="true" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
+      <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" weight="0.32963374" />
       <window_info anchor="right" id="Preview" order="4" />
       <window_info anchor="bottom" auto_hide="true" id="Run" order="2" weight="0.33407325" />
       <window_info anchor="bottom" id="Version Control" order="10" />
+      <window_info anchor="right" id="Viewer" order="9" side_tool="true" weight="0.30256137" />
       <window_info anchor="bottom" id="Terminal" order="11" />
+      <window_info anchor="bottom" id="Logcat" order="9" />
       <window_info id="Captures" order="5" weight="0.25" />
+      <window_info id="Capture Tool" order="6" />
+      <window_info id="Designer" order="2" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15795091" />
-      <window_info anchor="bottom" auto_hide="true" id="Find" order="1" weight="0.32963374" />
+      <window_info anchor="bottom" auto_hide="true" id="Build" order="7" weight="0.32852387" />
       <window_info anchor="right" id="Gradle" order="6" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Device File Explorer" order="5" side_tool="true" weight="0.32924226" />
       <window_info anchor="right" id="Theme Preview" order="8" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4073252" />
       <window_info id="Favorites" order="4" side_tool="true" />
       <window_info anchor="bottom" id="Messages" order="13" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
-      <window_info anchor="right" x="0" y="0" width="433" height="853" id="Documentation" order="10" side_tool="true" weight="0.20490928" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" x="0" y="0" width="433" height="853" id="Documentation" order="10" side_tool="true" weight="0.20490928" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" auto_hide="true" id="Find" order="1" weight="0.32963374" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -3061,24 +3022,15 @@
     <MESSAGE value="Remove hardcoded functions, images&#10;Create scenes from data" />
     <MESSAGE value="Add interactivity to ImageView" />
     <MESSAGE value="Classes for Node functionality" />
-    <option name="LAST_COMMIT_MESSAGE" value="Classes for Node functionality" />
+    <MESSAGE value="Slider fix&#10;Event handling fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="Slider fix&#10;Event handling fix" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/SliderNode.java</url>
-          <line>68</line>
-          <properties>
-            <option name="lambda-ordinal" value="0" />
-          </properties>
-          <option name="timeStamp" value="95" />
-        </line-breakpoint>
-      </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="97" />
+      <option name="time" value="106" />
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
@@ -3139,186 +3091,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/LocationlistFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="663">
-          <caret line="72" column="36" selection-start-line="72" selection-start-column="36" selection-end-line="72" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Documents/AndroidStudio/DeviceExplorer/google-pixel_2-FA79Y1A03859/sdcard/Touristar/hakodate/intro.html" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_locationintro.xml">
-      <provider editor-type-id="text-editor">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="jar://C:/Android/sdk/platforms/android-28/android.jar!/android/webkit/WebViewClient.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="41" column="17" selection-start-line="41" selection-start-column="17" selection-end-line="41" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Documents/AndroidStudio/DeviceExplorer/google-pixel_2-FA79Y1A03859/sdcard/Touristar/iwamiginzan/styles/main.css" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/xml/file_paths.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="56" selection-start-line="18" selection-start-column="56" selection-end-line="18" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Documents/AndroidStudio/DeviceExplorer/google-pixel_2-FA79Y1A03859/sdcard/Touristar/iwamiginzan/intro.html" />
-    <entry file="file://$USER_HOME$/Documents/AndroidStudio/DeviceExplorer/google-pixel_2-FA79Y1A03859/sdcard/Touristar/iwamiginzan/omori_edo_map.html" />
-    <entry file="file://$USER_HOME$/data/Touristar/iwamiginzan/omori_edo_map.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="22" lean-forward="true" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/LocationIntroFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="404">
-          <caret line="70" column="39" selection-start-line="70" selection-start-column="39" selection-end-line="70" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/google/ar/core/EnumHandler.java" />
-    <entry file="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/core-1.4.0.aar/a50e95a97593a31945166ea021ee31c9/jars/classes.jar!/com/google/ar/core/Config.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3281">
-          <caret line="202" column="12" selection-start-line="202" selection-start-column="4" selection-end-line="202" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/support-fragment-28.0.0-rc01.aar/0f98d9d86210d6f53003488f391170a8/jars/classes.jar!/android/support/v4/app/Fragment.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="291">
-          <caret line="671" column="14" selection-start-line="671" selection-start-column="14" selection-end-line="671" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_editmarker.xml">
-      <provider editor-type-id="text-editor">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_imagepreview.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="29" column="62" selection-end-line="80" selection-end-column="46" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_markerpreview.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" column="26" selection-start-line="25" selection-start-column="26" selection-end-line="25" selection-end-column="26" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/LoopArFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="77" selection-start-line="77" selection-end-line="77" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Marker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="90" column="17" selection-start-line="90" selection-start-column="17" selection-end-line="90" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/EditFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="387">
-          <caret line="115" column="38" selection-start-line="115" selection-start-column="38" selection-end-line="115" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/MarkerListFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="455">
-          <caret line="70" column="72" selection-start-line="70" selection-start-column="72" selection-end-line="70" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/ImagePreviewFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="88" column="17" selection-start-line="88" selection-start-column="17" selection-end-line="88" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/ShapeNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="18" selection-start-line="18" selection-end-line="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/InteractiveImageRenderable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="28" column="13" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/InfoPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="28" column="13" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/MarkerPreviewFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="38" column="50" selection-start-line="38" selection-start-column="50" selection-end-line="38" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/PreviewFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="283">
-          <caret line="76" column="59" selection-start-line="76" selection-start-column="59" selection-end-line="76" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="4" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="4" />
-          <folding>
-            <element signature="e#0#588#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="77" selection-start-line="12" selection-start-column="77" selection-end-line="12" selection-end-column="77" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-manifest">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/navigation/main_navigation.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="443">
@@ -3336,17 +3108,126 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/HashMapBuilder.java" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/EventSender.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="48" selection-start-line="48" selection-end-line="48" />
+        <state relative-caret-position="102">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/SliderAdapter.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Event.kt" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/EventHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="59" selection-start-line="59" selection-end-line="59" />
+        <state relative-caret-position="340">
+          <caret line="40" selection-start-line="40" selection-end-line="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/EventDetail.kt" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-manifest">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_gamepad_black_24dp.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/if_interface_63_809263.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_slideshow_black_24dp.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/if_tiny_arrows_diagonal_in_1_252129.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_airplay_24px.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_linear_scale_black_24dp.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://C:/Android/sdk/sources/android-28/android/graphics/BitmapFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="39" column="13" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/sampledata/models/monarch.sfa">
+      <provider selected="true" editor-type-id="text-editor">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build/generated/not_namespaced_r_class_sources/debug/processDebugResources/r/android/support/v4/R.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="36" column="30" selection-start-line="36" selection-start-column="30" selection-end-line="36" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/AreaDao.kt" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Content.kt" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Marker.kt" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Area.kt" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Marker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="33" column="13" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Detail.kt" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Detail.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="35" column="13" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/ViewNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="101" column="61" selection-start-line="101" selection-start-column="61" selection-end-line="101" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/ShapeNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="60" selection-start-line="60" selection-end-line="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/PreviewFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="487">
+          <caret line="75" column="85" selection-start-line="75" selection-start-column="85" selection-end-line="75" selection-end-column="85" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/LoopArFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="58" column="77" selection-start-line="58" selection-start-column="77" selection-end-line="58" selection-end-column="77" />
         </state>
       </provider>
     </entry>
@@ -3357,78 +3238,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/HashMapBuilder.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/ImageNode.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="9" selection-start-line="14" selection-start-column="9" selection-end-line="14" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/Slider.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="46" column="18" selection-start-line="46" selection-start-column="18" selection-end-line="46" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/ViewNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="102" column="83" selection-start-line="99" selection-start-column="16" selection-end-line="102" selection-end-column="83" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/view_slider.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" selection-start-line="21" selection-end-line="21" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/view_slide.xml">
-      <provider editor-type-id="text-editor">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/SliderNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="348">
-          <caret line="76" column="18" selection-start-line="76" selection-start-column="18" selection-end-line="76" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/EventDetail.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="714">
-          <caret line="78" column="57" selection-start-line="78" selection-start-column="57" selection-end-line="78" selection-end-column="57" />
+        <state relative-caret-position="85">
+          <caret line="59" column="23" selection-start-line="59" selection-start-column="23" selection-end-line="59" selection-end-column="23" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#401#402#0" expanded="true" />
-            <element signature="e#440#441#0" expanded="true" />
-            <element signature="e#225#226#0" expanded="true" />
-            <element signature="e#258#259#0" expanded="true" />
-            <element signature="e#94#95#0" expanded="true" />
-            <element signature="e#115#116#0" expanded="true" />
-            <element signature="e#307#308#0" expanded="true" />
-            <element signature="e#328#329#0" expanded="true" />
-            <element signature="e#1448#1449#0" expanded="true" />
-            <element signature="e#1476#1477#0" expanded="true" />
-            <element signature="e#1672#1673#0" expanded="true" />
-            <element signature="e#1700#1701#0" expanded="true" />
+            <element signature="e#2214#2215#0" expanded="true" />
+            <element signature="e#2231#2232#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Event.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="29" column="41" selection-start-line="29" selection-start-column="41" selection-end-line="29" selection-end-column="41" />
         </state>
       </provider>
     </entry>
@@ -3439,84 +3256,172 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Area.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/TextNode.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="535">
-          <caret line="288" column="50" selection-start-line="288" selection-start-column="40" selection-end-line="288" selection-end-column="50" />
-          <folding>
-            <element signature="e#4874#4875#0" expanded="true" />
-            <element signature="e#4895#4896#0" expanded="true" />
-            <element signature="e#5562#5563#0" expanded="true" />
-            <element signature="e#5602#5603#0" expanded="true" />
-            <element signature="e#6654#6655#0" expanded="true" />
-            <element signature="e#6688#6689#0" expanded="true" />
-            <element signature="e#6811#6812#0" expanded="true" />
-            <element signature="e#6846#6847#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="255">
+          <caret line="53" column="20" selection-start-line="53" selection-start-column="20" selection-end-line="53" selection-end-column="20" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_linear_scale_black_24dp.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/SliderNode.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="48" column="55" selection-start-line="48" selection-start-column="55" selection-end-line="48" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Area.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="63" column="48" selection-start-line="63" selection-start-column="48" selection-end-line="63" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/Event.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="31" column="50" selection-start-line="31" selection-start-column="50" selection-end-line="31" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/data/AuthorViewModel.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="37" column="28" selection-start-line="37" selection-start-column="8" selection-end-line="37" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/sampledata/models/default_model.mat">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="578">
+          <caret line="48" column="72" selection-start-line="48" selection-start-column="72" selection-end-line="48" selection-end-column="72" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_markerpreview.xml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="59" selection-start-line="59" selection-end-line="59" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/AuthorAnchorNode.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/MarkerPreviewFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="173" column="38" selection-start-line="173" selection-start-column="38" selection-end-line="173" selection-end-column="38" />
+        <state relative-caret-position="102">
+          <caret line="38" column="50" selection-start-line="38" selection-start-column="50" selection-end-line="38" selection-end-column="50" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/EventSender.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/view_image.xml">
+      <provider editor-type-id="text-editor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_imagepreview.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="24" column="19" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="19" />
+        <state relative-caret-position="850">
+          <caret line="50" column="48" selection-start-line="50" selection-start-column="5" selection-end-line="50" selection-end-column="48" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="48" selection-start-line="48" selection-end-line="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/view_text.xml">
+      <provider editor-type-id="text-editor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/AuthorActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="816">
+          <caret line="358" column="53" selection-start-line="358" selection-start-column="53" selection-end-line="358" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/AreaNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="35" selection-start-line="35" selection-end-line="35" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/ImageNode.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/SliderAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-408">
-          <caret line="46" column="58" selection-start-line="46" selection-start-column="58" selection-end-line="46" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/EventHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="34" column="12" selection-start-line="34" selection-start-column="12" selection-end-line="34" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/AuthorActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-136">
-          <caret line="356" column="21" selection-start-line="356" selection-start-column="21" selection-end-line="356" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/TextNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="708">
-          <caret line="128" column="44" selection-start-line="128" selection-start-column="44" selection-end-line="128" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/Detail.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
-          <caret line="60" column="50" selection-start-line="60" selection-start-column="50" selection-end-line="60" selection-end-column="50" />
+        <state relative-caret-position="531">
+          <caret line="69" selection-start-line="69" selection-end-line="69" />
           <folding>
-            <element signature="e#6362#6363#0" expanded="true" />
-            <element signature="e#6395#6396#0" expanded="true" />
-            <element signature="e#6439#6440#0" expanded="true" />
-            <element signature="e#6475#6476#0" expanded="true" />
+            <element signature="e#2410#2411#0" expanded="true" />
+            <element signature="e#2429#2430#0" expanded="true" />
           </folding>
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/utils/Slider.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="37" column="17" selection-start-line="37" selection-start-column="17" selection-end-line="37" selection-end-column="17" />
+          <folding>
+            <element signature="e#1722#1723#0" expanded="true" />
+            <element signature="e#1745#1746#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/view_slide.xml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="28" column="44" selection-start-line="28" selection-start-column="44" selection-end-line="28" selection-end-column="44" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/view_slider.xml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="27" column="35" selection-end-line="50" selection-end-column="46" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/eu/michaelvogt/ar/author/nodes/AuthorAnchorNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="370">
+          <caret line="176" selection-start-line="176" selection-end-line="176" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/view_slider_grab.xml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="-17">
+          <caret line="14" column="18" selection-start-line="14" selection-start-column="18" selection-end-line="14" selection-end-column="18" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
   </component>

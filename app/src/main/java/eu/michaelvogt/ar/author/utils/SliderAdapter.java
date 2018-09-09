@@ -41,7 +41,7 @@ public class SliderAdapter extends PagerAdapter {
   private final List<String> images;
   private final LayoutInflater inflater;
 
-  public SliderAdapter(Context context, List<String> images) {
+  SliderAdapter(Context context, List<String> images) {
     this.images = images;
     inflater = LayoutInflater.from(context);
   }
@@ -76,5 +76,9 @@ public class SliderAdapter extends PagerAdapter {
   @Override
   public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
     return view.equals(object);
+  }
+
+  List<String> getImages() {
+    return images;
   }
 }

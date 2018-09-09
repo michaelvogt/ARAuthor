@@ -36,27 +36,19 @@ import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.Area;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
 import eu.michaelvogt.ar.author.data.Event;
-import eu.michaelvogt.ar.author.utils.Detail;
+import eu.michaelvogt.ar.author.data.Detail;
+import eu.michaelvogt.ar.author.data.EventDetail;
 import eu.michaelvogt.ar.author.utils.FileUtils;
 
 /**
  * AnchorNode that distributes events fired from one of its children implementing EventSender
  * to all of its children implementing the Interface EventHandler.
  */
-public class TextNode extends Node implements EventHandler {
+public class TextNode extends AreaNode implements EventHandler {
   private static final String TAG = TextNode.class.getSimpleName();
 
-  private Context context;
-  private Area area;
-
   private TextNode(Context context, Area area) {
-    this.context = context;
-    this.area = area;
-
-    setLocalPosition(area.getPosition());
-    setLocalRotation(area.getRotation());
-    setLocalScale(area.getScale());
-    setName(area.getTitle());
+    super(context, area);
   }
 
   public static TextNode builder(Context context, Area area) {
@@ -125,9 +117,9 @@ public class TextNode extends Node implements EventHandler {
   }
 
   @Override
-  public void handleEvent(int eventType, Object language, MotionEvent motionEvent) {
-    if (eventType == Event.EVENT_GRABCONTENT) {
-      displayText((ViewRenderable) getRenderable(), (String) language);
+  public void handleEvent(int eventType, EventDetail eventDetail, MotionEvent motionEvent) {
+    if (eventType == Event.EVENT_SWITCHLANGUAGE) {
+      displayText((ViewRenderable) getRenderable(), eventDetail.getLanguage());
     }
   }
 }
