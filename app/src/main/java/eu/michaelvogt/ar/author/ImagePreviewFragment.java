@@ -18,6 +18,7 @@
 
 package eu.michaelvogt.ar.author;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -29,7 +30,6 @@ import com.google.ar.core.Anchor;
 import com.google.ar.core.AugmentedImage;
 import com.google.ar.core.Frame;
 import com.google.ar.core.TrackingState;
-import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.FrameTime;
 
 import java.util.Collection;
@@ -62,6 +62,13 @@ public class ImagePreviewFragment extends PreviewFragment {
     view.findViewById(R.id.listmarker_fab).setOnClickListener(
         Navigation.createNavigateOnClickListener(R.id.markerlistFragment)
     );
+  }
+
+  @Override
+  public void onConfigurationChanged(Configuration newConfig) {
+    super.onConfigurationChanged(newConfig);
+
+    arFragment.changeGrabbedOrientation(newConfig.orientation);
   }
 
   private void onUpdateFrame(FrameTime frameTime) {

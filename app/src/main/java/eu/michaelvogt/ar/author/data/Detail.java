@@ -28,6 +28,7 @@ import com.google.ar.sceneform.rendering.Renderable;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -56,7 +57,8 @@ public class Detail {
   public static final int KEY_TITLE = 23;
   public static final int KEY_RESOURCE = 24;
   public static final int KEY_LANGUAGE = 25;
-  public static final Integer KEY_SCALEVALUES = 26;
+  public static final int KEY_SCALEVALUES = 26;
+  public static final int KEY_IMAGEDESCRIPTIONS = 27;
 
   public static final String LANGUAGE_EN = "_en_";
   public static final String LANGUAGE_JP = "_jp_";
@@ -115,12 +117,19 @@ public class Detail {
     return this;
   }
 
-
   public Detail setImageFolderPath(@NonNull String path) {
     if (path.endsWith("jpg") || path.endsWith(".png"))
       throw new AssertionError("Provide the path to a folder that contains images");
 
     details.put(KEY_IMAGEFOLDERPATH, path);
+    return this;
+  }
+
+  public Detail setImageDescriptions(@NonNull List<String> descriptions) {
+    if (descriptions.isEmpty())
+      throw new AssertionError( "Provide descriptions");
+
+    details.put(KEY_IMAGEDESCRIPTIONS, descriptions);
     return this;
   }
 

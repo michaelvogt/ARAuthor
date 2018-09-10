@@ -24,7 +24,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -33,9 +36,14 @@ import java.util.function.Function;
 import eu.michaelvogt.ar.author.R;
 
 public class Slider extends ViewPager {
+  private static final String TAG = Slider.class.getSimpleName();
+
   private Context context;
 
   private SliderAdapter adapter;
+
+  private List<String> descriptions;
+  private TextView descriptionView;
 
   Function<Integer, Integer> nextItem = currentItem -> (currentItem + 1 >= adapter.getCount()) ? 0 : ++currentItem;
 
@@ -44,14 +52,29 @@ public class Slider extends ViewPager {
     this.context = context;
   }
 
-  public void setImages(List<String> images) {
-    ViewPager pager = findViewById(R.id.slider);
+  public void setImages(List<String> images, List<String> descriptions) {
+    this.descriptions = descriptions;
+    descriptionView = ((ViewGroup) getParent()).findViewById(R.id.slider_text);
+    descriptionView.setText(descriptions.get(0));
+
     adapter = new SliderAdapter(context, images);
+
+    ViewPager pager = findViewById(R.id.slider);
     pager.setAdapter(adapter);
+    pager.addOnPageChangeListener(new SimpleOnPageChangeListener() {
+      @Override
+      public void onPageSelected(int position) {
+        descriptionView.setText(descriptions.get(position));
+      }
+    });
   }
 
   public List<String> getImages() {
     return adapter.getImages();
+  }
+
+  public List<String> getDescriptions() {
+    return Collections.unmodifiableList(descriptions);
   }
 
   public void startTimer(int delay) {

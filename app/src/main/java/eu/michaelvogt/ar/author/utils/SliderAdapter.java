@@ -19,8 +19,6 @@
 package eu.michaelvogt.ar.author.utils;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
@@ -31,6 +29,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.Collections;
 import java.util.List;
 
 import eu.michaelvogt.ar.author.R;
@@ -79,6 +78,6 @@ public class SliderAdapter extends PagerAdapter {
   }
 
   List<String> getImages() {
-    return images;
+    return Collections.unmodifiableList(images);
   }
 }

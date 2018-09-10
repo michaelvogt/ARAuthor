@@ -429,7 +429,8 @@ public class AuthorActivity extends AppCompatActivity {
         "Muneoka Slide Area",
         R.layout.view_slider,
         Detail.builder()
-            .setImageFolderPath("Touristar/iwamiginzan/muneokake/infoboard/images/slides"),
+            .setImageFolderPath("Touristar/iwamiginzan/muneokake/infoboard/images/slides")
+            .setImageDescriptions(Arrays.asList("Slide1", "Slide2", "Slide3", "Slide4")),
         new Vector3(0.895f, 0.582f, 0.005f),
         Area.COORDINATE_LOCAL,
         new Vector3(0.0f, 0.01f, 0.29f),

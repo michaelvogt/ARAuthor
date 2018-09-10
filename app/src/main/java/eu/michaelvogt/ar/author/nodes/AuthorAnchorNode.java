@@ -21,8 +21,8 @@ package eu.michaelvogt.ar.author.nodes;
 import android.annotation.SuppressLint;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.support.constraint.ConstraintLayout;
-import android.support.constraint.ConstraintSet;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -35,24 +35,25 @@ import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.HitTestResult;
 import com.google.ar.sceneform.Node;
 import com.google.ar.sceneform.math.Vector3;
-import com.google.ar.sceneform.rendering.Renderable;
 import com.google.ar.sceneform.rendering.ViewRenderable;
 
+import java.util.List;
 import java.util.Map;
 
 import eu.michaelvogt.ar.author.ImagePreviewFragment;
 import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.Area;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
-import eu.michaelvogt.ar.author.data.Detail;
 import eu.michaelvogt.ar.author.data.Event;
 import eu.michaelvogt.ar.author.data.EventDetail;
 import eu.michaelvogt.ar.author.utils.AreaNodeBuilder;
 import eu.michaelvogt.ar.author.utils.Slider;
+import eu.michaelvogt.ar.author.utils.ToggleSlideTextHandler;
 
 public class AuthorAnchorNode extends AnchorNode {
   private final Context context;
   private final ViewGroup containerView;
+  private ViewGroup grabContainer;
   private final ImagePreviewFragment.EventCallback eventCallback;
 
   private int currentScaleIndex = 1;
@@ -63,6 +64,13 @@ public class AuthorAnchorNode extends AnchorNode {
     this.context = context;
     this.containerView = containerView;
     this.eventCallback = eventCallback;
+  }
+
+  public void changeGrabbedOrientation(int configOrientation) {
+    if (grabContainer != null && grabContainer.findViewById(R.id.slider) != null) {
+      setupSlider(grabContainer, configOrientation == Configuration.ORIENTATION_LANDSCAPE
+          ? R.layout.view_slider_grab_landscape : R.layout.view_slider_grab_portrait);
+    }
   }
 
   @Override
@@ -91,7 +99,7 @@ public class AuthorAnchorNode extends AnchorNode {
               handleScale(eventDetail);
               break;
             default:
-              broadcastEvent(eventNode, eventType, eventDetail, motionEvent);
+              broadcastEvent(eventType, eventDetail, motionEvent);
               break;
           }
         });
@@ -134,9 +142,7 @@ public class AuthorAnchorNode extends AnchorNode {
 
     AreaNodeBuilder.builder(context, zoomedSliderArea)
         .build()
-        .thenAccept(node -> {
-          node.setParent(background);
-        });
+        .thenAccept(node -> node.setParent(background));
   }
 
   @SuppressLint("ClickableViewAccessibility")
@@ -147,13 +153,14 @@ public class AuthorAnchorNode extends AnchorNode {
     View content = getCurrentContentView();
     ViewGroup contentParent = (ViewGroup) content.getParent();
 
-    ViewGroup grabContainer = containerView.findViewById(R.id.grab_container);
+    grabContainer = containerView.findViewById(R.id.grab_container);
     View fab = containerView.findViewById(R.id.listmarker_fab);
 
     View closeButton = containerView.findViewById(R.id.grab_close);
     closeButton.setOnTouchListener((view, motionEvent) -> {
       if (motionEvent.getActionMasked() == MotionEvent.ACTION_UP) {
         try {
+          ((FragmentActivity) context).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
           eventCallback.resume();
         } catch (CameraNotAvailableException e) {
           // TODO: get to know how this can happen and handle it appropriately
@@ -161,19 +168,17 @@ public class AuthorAnchorNode extends AnchorNode {
         }
 
         grabContainer.setVisibility(View.GONE);
+        grabContainer = null;
+
         closeButton.setVisibility(View.GONE);
         fab.setVisibility(View.VISIBLE);
       }
       return true;
     });
 
-    // TODO: Temporary hack, because of trouble getting the layout for the slides right on the image and grabbed
+    // Uses separate layout for the grabbed view of slider (had trouble to reuse the view from the node)
     if (content.findViewById(R.id.slider) != null) {
-      Slider slider = content.findViewById(R.id.slider);
-
-      View grabView = LayoutInflater.from(context).inflate(R.layout.view_slider_grab, grabContainer);
-      Slider grabSlider = grabView.findViewById(R.id.slider);
-      grabSlider.setImages(slider.getImages());
+      setupSlider(content, R.layout.view_slider_grab_portrait);
     } else {
       contentParent.removeView(content);
       grabContainer.addView(content);
@@ -186,7 +191,24 @@ public class AuthorAnchorNode extends AnchorNode {
     eventCallback.pause();
   }
 
-  private void broadcastEvent(EventSender eventNode, int eventType, EventDetail eventDetail, MotionEvent motionEvent) {
+  @SuppressLint("ClickableViewAccessibility")
+  private void setupSlider(View content, int sliderResource) {
+    Slider slider = content.findViewById(R.id.slider);
+    List<String> images = slider.getImages();
+    List<String> descriptions = slider.getDescriptions();
+
+    grabContainer.removeAllViews();
+    View grabView = LayoutInflater.from(context).inflate(sliderResource, grabContainer);
+    Slider grabSlider = grabView.findViewById(R.id.slider);
+    View sliderText = grabView.findViewById(R.id.slider_text);
+
+    grabSlider.setImages(images, descriptions);
+    grabSlider.setOnTouchListener(new ToggleSlideTextHandler(context, sliderText));
+
+    ((FragmentActivity) context).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+  }
+
+  private void broadcastEvent(int eventType, EventDetail eventDetail, MotionEvent motionEvent) {
     callOnHierarchy(node -> {
       if (node instanceof EventHandler) {
         ((EventHandler) node).handleEvent(eventType, eventDetail, motionEvent);

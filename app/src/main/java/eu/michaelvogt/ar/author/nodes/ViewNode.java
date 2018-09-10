@@ -31,8 +31,8 @@ import java.util.concurrent.CompletionStage;
 
 import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.Area;
-import eu.michaelvogt.ar.author.utils.AreaNodeBuilder;
 import eu.michaelvogt.ar.author.data.Detail;
+import eu.michaelvogt.ar.author.utils.AreaNodeBuilder;
 import eu.michaelvogt.ar.author.utils.FileUtils;
 import eu.michaelvogt.ar.author.utils.Slider;
 
@@ -100,7 +100,7 @@ public class ViewNode extends Node {
                 Slider slider = renderable.getView().findViewById(R.id.slider);
                 String puplicFolderPath = FileUtils.getFullPuplicFolderPath((String)
                     area.getDetail(Detail.KEY_IMAGEFOLDERPATH, "Touristar/default/images/"));
-                slider.setImages(FileUtils.getFilepathsOfFolder(puplicFolderPath));
+                // slider.setImages(FileUtils.getFilepathsOfFolder(puplicFolderPath));
                 // slider.startTimer(3000);
 
 

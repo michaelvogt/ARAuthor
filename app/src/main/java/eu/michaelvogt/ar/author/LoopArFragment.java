@@ -30,6 +30,7 @@ import com.google.ar.sceneform.ux.ArFragment;
 
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
 import eu.michaelvogt.ar.author.data.Marker;
+import eu.michaelvogt.ar.author.nodes.AuthorAnchorNode;
 import eu.michaelvogt.ar.author.utils.ImageUtils;
 
 public class LoopArFragment extends ArFragment {
@@ -85,5 +86,13 @@ public class LoopArFragment extends ArFragment {
     config.setLightEstimationMode(Config.LightEstimationMode.valueOf(lightEstimation));
 
     return config;
+  }
+
+  public void changeGrabbedOrientation(int configOrientation) {
+    getArSceneView().getScene().callOnHierarchy(node -> {
+      if (node instanceof AuthorAnchorNode) {
+        ((AuthorAnchorNode) node).changeGrabbedOrientation(configOrientation);
+      }
+    });
   }
 }
