@@ -29,9 +29,12 @@ import android.view.ViewGroup;
 
 import com.google.ar.core.Anchor;
 import com.google.ar.core.exceptions.CameraNotAvailableException;
+import com.google.ar.sceneform.FrameTime;
 import com.google.ar.sceneform.Node;
+import com.google.ar.sceneform.math.Quaternion;
 import com.google.ar.sceneform.math.Vector3;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +43,7 @@ import java.util.function.Consumer;
 import eu.michaelvogt.ar.author.data.Area;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
 import eu.michaelvogt.ar.author.data.Marker;
+import eu.michaelvogt.ar.author.nodes.AreaNode;
 import eu.michaelvogt.ar.author.nodes.AuthorAnchorNode;
 import eu.michaelvogt.ar.author.utils.AreaNodeBuilder;
 import eu.michaelvogt.ar.author.utils.SceneViewCallback;
@@ -52,6 +56,7 @@ public class PreviewFragment extends Fragment {
   protected AuthorViewModel viewModel;
 
   protected Map<String, Node> handledImages = new HashMap<>();
+  protected List<Node> cameraFacingNodes = new ArrayList<>();
 
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -59,11 +64,32 @@ public class PreviewFragment extends Fragment {
     viewModel = ViewModelProviders.of(getActivity()).get(AuthorViewModel.class);
 
     arFragment = (LoopArFragment) getChildFragmentManager().findFragmentById(R.id.ar_fragment);
+    arFragment.getArSceneView().getScene().addOnUpdateListener(this::onUpdateFrame);
 
     arFragment.planeFindingMode = getArguments().getString("plane_finding_mode");
     arFragment.updateMode = getArguments().getString("update_mode");
     arFragment.focusMode = getArguments().getString("focus_mode");
     arFragment.lightEstimation = getArguments().getString("light_estimation");
+  }
+
+  private void onUpdateFrame(FrameTime frameTime) {
+    arFragment.onUpdate(frameTime);
+
+    cameraFacingNodes.forEach(node -> {
+      Vector3 cameraPosition = arFragment.getArSceneView().getScene().getCamera().getWorldPosition();
+      Vector3 cardPosition = node.getWorldPosition();
+      Vector3 direction = Vector3.subtract(cameraPosition, cardPosition);
+      Quaternion lookRotation = Quaternion.lookRotation(direction, Vector3.up());
+      node.setWorldRotation(lookRotation);
+    });
+
+//    if (modelPoseOnPlaneListeners.size() != 0) {
+//      for (ModelPoseOnPlaneListener listener : modelPoseOnPlaneListeners) {
+//        if (listener.onPlane()) {
+//          modelPoseOnPlaneListeners.remove(listener);
+//        }
+//      }
+//    }
   }
 
   protected void buildMarkerScene(Anchor anchor, Marker marker, float backgroundWidth, float backgroundHeight) {
@@ -102,6 +128,10 @@ public class PreviewFragment extends Fragment {
             fn.accept(node);
           }
 
+          if (((AreaNode) node).isCameraFacing()) {
+            cameraFacingNodes.add(node);
+          }
+          
           Log.i(TAG, "Area successfully created " + area.getTitle());
         })
         .exceptionally(throwable -> {

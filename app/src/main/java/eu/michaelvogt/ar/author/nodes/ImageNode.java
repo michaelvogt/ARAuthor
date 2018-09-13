@@ -28,12 +28,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.google.ar.sceneform.Node;
-import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.Material;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.rendering.Renderable;
@@ -62,6 +60,16 @@ public class ImageNode extends AreaNode implements EventSender {
 
   public static ImageNode builder(Context context, Area area) {
     return new ImageNode(context, area);
+  }
+
+  public ImageNode setIsCameraFacing(boolean isCameraFacing) {
+    this.isCameraFacing = isCameraFacing;
+    return this;
+  }
+
+  public ImageNode setRenderPriority(int renderPriority) {
+    this.renderPriority = renderPriority;
+    return this;
   }
 
   public CompletionStage<Node> build() {
@@ -112,8 +120,12 @@ public class ImageNode extends AreaNode implements EventSender {
 
           setupFadeAnimation(material);
 
-          Renderable renderable = ShapeFactory.makeCube(area.getSize(), Vector3.zero(), material);
+          Renderable renderable = ShapeFactory.makeCube(area.getSize(), area.getZeroPoint(), material);
           area.applyDetail(renderable);
+
+          // Needs to be set, bacause Sceneform has a layering problem with transparent objects
+          // https://github.com/google-ar/sceneform-android-sdk/issues/285#issuecomment-420730274
+          renderable.setRenderPriority(renderPriority);
 
           setRenderable(renderable);
 
@@ -171,6 +183,8 @@ public class ImageNode extends AreaNode implements EventSender {
   private Bitmap getBitmapFromVectorDrawable(Context context, int drawableId) {
     Drawable drawable = ContextCompat.getDrawable(context, drawableId);
 
+    assert drawable != null;
+
     Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
         drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
     Canvas canvas = new Canvas(bitmap);
@@ -180,9 +194,5 @@ public class ImageNode extends AreaNode implements EventSender {
     drawable.draw(canvas);
 
     return bitmap;
-  }
-
-  private String getURLForResource (int resourceId) {
-    return Uri.parse("android.resource://"+R.class.getPackage().getName()+"/" +resourceId).toString();
   }
 }

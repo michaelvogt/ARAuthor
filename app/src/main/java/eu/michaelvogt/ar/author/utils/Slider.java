@@ -27,13 +27,13 @@ import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.function.Function;
 
 import eu.michaelvogt.ar.author.R;
+import eu.michaelvogt.ar.author.data.Slide;
 
 public class Slider extends ViewPager {
   private static final String TAG = Slider.class.getSimpleName();
@@ -42,8 +42,10 @@ public class Slider extends ViewPager {
 
   private SliderAdapter adapter;
 
-  private List<String> descriptions;
+  private List<Slide> slides;
   private TextView descriptionView;
+
+  private NodeCallback slideCallback;
 
   Function<Integer, Integer> nextItem = currentItem -> (currentItem + 1 >= adapter.getCount()) ? 0 : ++currentItem;
 
@@ -52,29 +54,27 @@ public class Slider extends ViewPager {
     this.context = context;
   }
 
-  public void setImages(List<String> images, List<String> descriptions) {
-    this.descriptions = descriptions;
-    descriptionView = ((ViewGroup) getParent()).findViewById(R.id.slider_text);
-    descriptionView.setText(descriptions.get(0));
+  public void setSlides(List<Slide> slides, NodeCallback slideCallback) {
+    this.slides = slides;
+    this.slideCallback = slideCallback;
 
-    adapter = new SliderAdapter(context, images);
+    descriptionView = ((ViewGroup) getParent()).findViewById(R.id.slider_text);
+    descriptionView.setText(slides.get(0).getDescription());
+
+    adapter = new SliderAdapter(context, slides, slideCallback);
 
     ViewPager pager = findViewById(R.id.slider);
     pager.setAdapter(adapter);
     pager.addOnPageChangeListener(new SimpleOnPageChangeListener() {
       @Override
       public void onPageSelected(int position) {
-        descriptionView.setText(descriptions.get(position));
+        descriptionView.setText(slides.get(position).getDescription());
       }
     });
   }
 
-  public List<String> getImages() {
-    return adapter.getImages();
-  }
-
-  public List<String> getDescriptions() {
-    return Collections.unmodifiableList(descriptions);
+  public List<Slide> getSlides() {
+    return slides;
   }
 
   public void startTimer(int delay) {

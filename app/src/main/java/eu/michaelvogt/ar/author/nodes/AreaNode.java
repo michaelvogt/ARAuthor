@@ -5,11 +5,16 @@ import android.content.Context;
 import com.google.ar.sceneform.Node;
 
 import eu.michaelvogt.ar.author.data.Area;
-import eu.michaelvogt.ar.author.data.Detail;
 
-abstract class AreaNode extends Node {
+public class AreaNode extends Node {
+  public static final int RENDER_FIRST = 0;
+  public static final int RENDER_LAST = 1;
+
   protected Context context;
   protected final Area area;
+
+  boolean isCameraFacing;
+  int renderPriority = 4;
 
   AreaNode(Context context, Area area) {
     this.context = context;
@@ -22,11 +27,15 @@ abstract class AreaNode extends Node {
   }
 
   public boolean isUiNode() {
-    return area.getUsageType() == Area.TYPE_UI;
+    return area.getUsageType() == Area.KIND_UI;
   }
 
   public boolean isContentNode() {
-    return area.getUsageType() == Area.TYPE_CONTENT;
+    return area.getUsageType() == Area.KIND_CONTENT;
+  }
+
+  public boolean isCameraFacing() {
+    return isCameraFacing;
   }
 
   public void hide() {

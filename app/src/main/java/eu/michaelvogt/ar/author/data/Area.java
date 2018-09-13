@@ -31,6 +31,7 @@ import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.Material;
 import com.google.ar.sceneform.rendering.Renderable;
 
+import java.util.List;
 import java.util.Map;
 
 import eu.michaelvogt.ar.author.R;
@@ -49,9 +50,12 @@ public class Area {
   public static final int TYPE_INTERACTIVEPANEL = 5;
   public static final int TYPE_TEXTONIMAGE = 6;
   public static final int TYPE_IMAGEONIMAGE = 8;
+  public static final int TYPE_ROTATIONBUTTON = 9;
+  public static final int TYPE_BACKGROUNDONIMAGE = 10;
+  public static final int TYPE_COMPARATORONIMAGE = 11;
 
-  public static final int TYPE_CONTENT = 0;
-  public static final int TYPE_UI = 1;
+  public static final int KIND_CONTENT = 0;
+  public static final int KIND_UI = 1;
 
   public static final int COORDINATE_LOCAL = -1;
   public static final int COORDINATE_GLOBAL = -2;
@@ -83,6 +87,10 @@ public class Area {
   @ColumnInfo(name = "position")
   private Vector3 position;
 
+  @Ignore
+  @ColumnInfo(name = "zero_point")
+  private Vector3 zeroPoint;
+
   @ColumnInfo(name = "resource")
   private int resource;
 
@@ -106,19 +114,20 @@ public class Area {
   private int markerId;
 
   public Area() {
-    this(0, 0, "", 0, Detail.builder(), Vector3.zero(), COORDINATE_LOCAL,
-        Vector3.zero(), Quaternion.identity(), Vector3.one());
+    this(0, 0, "", 0, Detail.builder(), Vector3.zero(),
+        Vector3.zero(), COORDINATE_LOCAL, Vector3.zero(), Quaternion.identity(), Vector3.one());
   }
 
-  public Area(int typeResource, int usageType, String title, int resource, Detail detail, Vector3 size,
-              int coordType, Vector3 position, Quaternion rotation, Vector3 scale) {
-    this.objectType = typeResource;
+  public Area(int opjectType, int usageType, String title, int resource, Detail detail, Vector3 zeroPoint,
+              Vector3 size, int coordType, Vector3 position, Quaternion rotation, Vector3 scale) {
+    this.objectType = opjectType;
     this.title = title;
     this.usageType = usageType;
     this.size = size;
     this.coordType = coordType;
     this.resource = resource;
-    this.detail = detail;
+    this.detail = valueOrNew(detail);
+    this.zeroPoint = zeroPoint;
     this.position = position;
     this.rotation = rotation;
     this.scale = scale;
@@ -130,8 +139,9 @@ public class Area {
     this.title = area.getTitle();
     this.size = area.getSize();
     this.resource = area.getResource();
-    this.detail = area.getDetails();
+    this.detail = valueOrNew(area.getDetails());
     this.coordType = area.getCoordType();
+    this.zeroPoint = area.getZeroPoint();
     this.position = area.getPosition();
     this.rotation = area.getRotation();
     this.scale = area.getScale();
@@ -197,6 +207,14 @@ public class Area {
     return size;
   }
 
+  public Vector3 getZeroPoint() {
+    return zeroPoint;
+  }
+
+  public void setZeroPoint(Vector3 zeroPoint) {
+    this.zeroPoint = zeroPoint;
+  }
+
   public void setSize(Vector3 size) {
     this.size = size;
   }
@@ -223,6 +241,10 @@ public class Area {
 
   public void setResource(int resource) {
     this.resource = resource;
+  }
+
+  public List<Slide> getSlides() {
+    return detail.getSlides();
   }
 
 
@@ -267,7 +289,7 @@ public class Area {
   }
 
   public void setDetail(Detail detail) {
-    this.detail = detail;
+    this.detail = valueOrNew(detail);
   }
 
   public boolean hasDetail(@NonNull int key) {
@@ -295,15 +317,19 @@ public class Area {
   }
 
   public static Area getDefaultArea(float backgroundHeight, float backgroundWidth) {
-    return new Area(TYPE_DEFAULT, TYPE_CONTENT, "Default", R.raw.default_model, Detail.builder(), null,
-        COORDINATE_LOCAL, new Vector3(-backgroundWidth / 2, 0f, -backgroundHeight / 2),
+    return new Area(TYPE_DEFAULT, KIND_CONTENT, "Default", R.raw.default_model, Detail.builder(),
+        Vector3.zero(), null, COORDINATE_LOCAL, new Vector3(-backgroundWidth / 2, 0f, -backgroundHeight / 2),
         new Quaternion(new Vector3(0f, 1f, 0f), 180), Vector3.one());
   }
 
   public static Area getBackgroundArea(Marker marker, @NonNull String path) {
     Detail detail = Detail.builder().setImagePath(path);
 
-    return new Area(TYPE_IMAGEONIMAGE, TYPE_UI, BACKGROUNDAREATITLE, 0, detail, marker.getSize(),
-        COORDINATE_LOCAL, Vector3.zero(), new Quaternion(Vector3.zero(), 0), Vector3.one());
+    return new Area(TYPE_BACKGROUNDONIMAGE, KIND_UI, BACKGROUNDAREATITLE, 0, detail, marker.getZeroPoint(), marker.getSize(),
+        COORDINATE_LOCAL, new Vector3(0f, 0.01f, 0f), new Quaternion(Vector3.zero(), 0), Vector3.one());
+  }
+
+  private Detail valueOrNew(Detail detail) {
+    return detail == null ? Detail.builder() : detail;
   }
 }

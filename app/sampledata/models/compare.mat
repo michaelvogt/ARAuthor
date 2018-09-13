@@ -1,0 +1,35 @@
+material {
+    "name" : "View",
+    "defines" : [
+      "baseColor"
+    ],
+    "parameters" : [
+      {
+        "type" : "sampler2d",
+        "name" : "primaryTexture"
+      }, {
+        type: "sampler2d",
+        name: "secondaryTexture"
+      }, {
+        type: "float4",
+        name: "dividerColor"
+      }
+    ],
+    "requires" : [
+        "position",
+        "uv0"
+    ],
+    "shadingModel" : "unlit",
+    "blending" : "transparent",
+    "doubleSided" : true
+}
+
+fragment {
+    void material(inout MaterialInputs material) {
+        prepareMaterial(material);
+
+        vec2 uv = getUV0();
+
+        material.baseColor = texture(materialParams_primaryTexture, uv);
+    }
+}

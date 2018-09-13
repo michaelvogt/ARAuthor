@@ -37,6 +37,7 @@ fragment {
         prepareMaterial(material);
 
         vec2 uv = getUV0();
+
         float crossFade = materialParams.crossFade;
 
         vec4 tex1 = texture(materialParams_primary, uv);

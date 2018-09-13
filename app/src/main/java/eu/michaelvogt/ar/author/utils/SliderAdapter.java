@@ -18,54 +18,118 @@
 
 package eu.michaelvogt.ar.author.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
+import android.support.v7.widget.AppCompatImageButton;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.Collections;
 import java.util.List;
 
 import eu.michaelvogt.ar.author.R;
+import eu.michaelvogt.ar.author.data.Slide;
 
 public class SliderAdapter extends PagerAdapter {
   private static final String TAG = SliderAdapter.class.getSimpleName();
 
-  private final List<String> images;
+  private final List<Slide> slides;
   private final LayoutInflater inflater;
+  private NodeCallback slideCallback;
+  private final Context context;
 
-  SliderAdapter(Context context, List<String> images) {
-    this.images = images;
+  SliderAdapter(Context context, List<Slide> slides, NodeCallback slideCallback) {
+    this.context = context;
+    this.slides = slides;
+    this.slideCallback = slideCallback;
+
     inflater = LayoutInflater.from(context);
   }
 
   @Override
   public int getCount() {
-    return images.size();
+    return slides.size();
   }
 
   @NonNull
   @Override
   public Object instantiateItem(@NonNull ViewGroup container, int position) {
-    View slide = inflater.inflate(R.layout.view_slide, container, false);
+    Object slide;
+
+    int type = slides.get(position).getType();
+
+    if (type == Slide.Companion.getTYPE_IMAGE()) {
+      slide = instantiateImageSlide(container, position);
+    } else if (type == Slide.Companion.getTYPE_VR()) {
+      slide = instantiateVrSlide(container, position);
+    } else if (type == Slide.Companion.getTYPE_COMPARISON()) {
+      slide = instantiateComparisonSlide(container, position);
+    } else {
+      throw new IllegalArgumentException("Unknown slide type " + type);
+    }
+
+    Log.i(TAG, "Slide successfully created: " + slides.get(position).getContentPath());
+
+    return slide;
+  }
+
+  private Object instantiateComparisonSlide(ViewGroup container, int position) {
+    View slide = inflater.inflate(R.layout.view_comparison, container, false);
 
     ImageView imageView = slide.findViewById(R.id.slide_image);
     container.addView(slide, 0);
 
     Glide.with(container)
-        .load(images.get(position))
+        .load(FileUtils.getFullPuplicFolderPath(slides.get(position).getContentPath()))
         .into(imageView);
 
-    Log.i(TAG, "Slide successfully created: " + images.get(position));
+    ImageButton button = slide.findViewById(R.id.button_compare);
+    button.setOnClickListener(view -> {
+      slideCallback.createImageComparatorCover();
+    });
 
     return slide;
   }
+
+  @SuppressLint("ClickableViewAccessibility")
+  private Object instantiateVrSlide(ViewGroup container, int position) {
+    View slide = inflater.inflate(R.layout.view_panorama_image, container, false);
+
+    ImageView imageView = slide.findViewById(R.id.slide_image);
+    container.addView(slide, 0);
+
+    Glide.with(container)
+        .load(FileUtils.getFullPuplicFolderPath(slides.get(position).getContentPath()))
+        .into(imageView);
+
+    AppCompatImageButton button = slide.findViewById(R.id.vr_button);
+    button.setOnTouchListener((view, motionEvent) -> {
+      return true;
+    });
+
+    return slide;
+  }
+
+  private Object instantiateImageSlide(ViewGroup container, int position) {
+    View slide = inflater.inflate(R.layout.view_image, container, false);
+
+    ImageView imageView = slide.findViewById(R.id.slide_image);
+    container.addView(slide, 0);
+
+    Glide.with(container)
+        .load(FileUtils.getFullPuplicFolderPath(slides.get(position).getContentPath()))
+        .into(imageView);
+
+    return slide;
+  }
+
 
   @Override
   public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
@@ -75,9 +139,5 @@ public class SliderAdapter extends PagerAdapter {
   @Override
   public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
     return view.equals(object);
-  }
-
-  List<String> getImages() {
-    return Collections.unmodifiableList(images);
   }
 }

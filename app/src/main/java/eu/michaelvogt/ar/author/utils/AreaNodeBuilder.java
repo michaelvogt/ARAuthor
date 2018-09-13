@@ -21,6 +21,7 @@ package eu.michaelvogt.ar.author.utils;
 import android.content.Context;
 
 import com.google.ar.sceneform.Node;
+import com.google.ar.sceneform.Scene;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.rendering.Renderable;
 
@@ -29,19 +30,23 @@ import java.util.concurrent.CompletionStage;
 
 import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.Area;
+import eu.michaelvogt.ar.author.nodes.AreaNode;
+import eu.michaelvogt.ar.author.nodes.ComparisonNode;
 import eu.michaelvogt.ar.author.nodes.ImageNode;
 import eu.michaelvogt.ar.author.nodes.SliderNode;
 import eu.michaelvogt.ar.author.nodes.TextNode;
-import eu.michaelvogt.ar.author.nodes.ViewNode;
 
 public class AreaNodeBuilder {
   private static final String TAG = AreaNodeBuilder.class.getSimpleName();
+
   // TODO: Remove when Sceneform supports creation of custom materials #196
   public static final int CUSTOM_MATERIAL_TEMP = R.raw.default_model;
   public static final int SLIDE_MATERIAL_TEMP = R.raw.slide;
+  public static final int COMPARISON_MATERIAL_TEMP = R.raw.compare;
 
   private final Context context;
   private final Area area;
+  private Scene scene;
 
   private AreaNodeBuilder(Context context, Area area) {
     this.context = context;
@@ -52,6 +57,11 @@ public class AreaNodeBuilder {
     return new AreaNodeBuilder(context, area);
   }
 
+  public AreaNodeBuilder setScene(Scene scene) {
+    this.scene = scene;
+    return this;
+  }
+
   public CompletionStage<Node> build() {
     switch (area.getObjectType()) {
       case Area.TYPE_DEFAULT:
@@ -59,8 +69,10 @@ public class AreaNodeBuilder {
         return future3dObjectOnImage();
       case Area.TYPE_3DOBJECTONPLANE:
         return null;
+      case Area.TYPE_BACKGROUNDONIMAGE:
+        return ImageNode.builder(context, area).setRenderPriority(AreaNode.RENDER_FIRST).build();
       case Area.TYPE_SLIDESONIMAGE:
-        return SliderNode.builder(context, area).build();
+        return SliderNode.builder(context, area).setScene(scene).build();
       case Area.TYPE_INTERACTIVEOVERLAY:
         return null;
       case Area.TYPE_INTERACTIVEPANEL:
@@ -69,6 +81,10 @@ public class AreaNodeBuilder {
         return TextNode.builder(context, area).build();
       case Area.TYPE_IMAGEONIMAGE:
         return ImageNode.builder(context, area).build();
+      case Area.TYPE_ROTATIONBUTTON:
+        return ImageNode.builder(context, area).setIsCameraFacing(true).build();
+      case Area.TYPE_COMPARATORONIMAGE:
+        return ComparisonNode.builder(context, area).build();
       default:
         throw new IllegalArgumentException("Unknown area object type: " + area.getObjectType());
     }

@@ -46,6 +46,10 @@
         <argument
             android:name="light_estimation"
             android:defaultValue="AMBIENT_INTENSITY" />
+        <action
+            android:id="@+id/action_panorama"
+            app:destination="@id/panoramaFragment"
+            app:popUpTo="@+id/imagePreviewFragment" />
     </fragment>
     <fragment
         android:id="@+id/markerlistFragment"
@@ -199,4 +203,9 @@
                 android:defaultValue="0" />
         </fragment>
     </navigation>
+    <fragment
+        android:id="@+id/panoramaFragment"
+        android:name="eu.michaelvogt.ar.author.PanoramaFragment"
+        android:label="fragment_panorama"
+        tools:layout="@layout/fragment_panorama" />
 </navigation>

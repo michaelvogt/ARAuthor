@@ -1,4 +1,4 @@
-<!--
+/*
     ARTester - AR for tourists by tourists
     Copyright (C) 2018  Michael Vogt
 
@@ -14,17 +14,30 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
--->
+*/
 
-<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+package eu.michaelvogt.ar.author;
 
-    android:id="@+id/slide_image"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:scaleType="fitCenter"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
+public class PanoramaFragment extends Fragment {
+  public PanoramaFragment() {}
+
+  @Override
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    return inflater.inflate(R.layout.fragment_panorama, container, false);
+  }
+
+  @Override
+  public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+
+
+  }
+}

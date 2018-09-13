@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -46,11 +47,14 @@ import eu.michaelvogt.ar.author.data.Area;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
 import eu.michaelvogt.ar.author.data.Event;
 import eu.michaelvogt.ar.author.data.EventDetail;
+import eu.michaelvogt.ar.author.data.Slide;
 import eu.michaelvogt.ar.author.utils.AreaNodeBuilder;
 import eu.michaelvogt.ar.author.utils.Slider;
 import eu.michaelvogt.ar.author.utils.ToggleSlideTextHandler;
 
 public class AuthorAnchorNode extends AnchorNode {
+  private static final String TAG = AuthorAnchorNode.class.getSimpleName();
+
   private final Context context;
   private final ViewGroup containerView;
   private ViewGroup grabContainer;
@@ -75,6 +79,9 @@ public class AuthorAnchorNode extends AnchorNode {
 
   @Override
   public boolean onTouchEvent(HitTestResult hitTestResult, MotionEvent motionEvent) {
+
+    Log.i(TAG, "Touch Event catched from " + hitTestResult.getNode().getName());
+
     if (motionEvent.getActionMasked() == MotionEvent.ACTION_UP) {
       Node node = hitTestResult.getNode();
       if (node instanceof EventSender) {
@@ -141,6 +148,7 @@ public class AuthorAnchorNode extends AnchorNode {
     Node background = findInHierarchy(node -> node.getName().equals(Area.BACKGROUNDAREATITLE));
 
     AreaNodeBuilder.builder(context, zoomedSliderArea)
+        .setScene(getScene())
         .build()
         .thenAccept(node -> node.setParent(background));
   }
@@ -167,6 +175,11 @@ public class AuthorAnchorNode extends AnchorNode {
           e.printStackTrace();
         }
 
+        if (content.findViewById(R.id.slider) == null) {
+          grabContainer.removeView(content);
+          contentParent.addView(content);
+        }
+
         grabContainer.setVisibility(View.GONE);
         grabContainer = null;
 
@@ -176,8 +189,8 @@ public class AuthorAnchorNode extends AnchorNode {
       return true;
     });
 
-    // Uses separate layout for the grabbed view of slider (had trouble to reuse the view from the node)
     if (content.findViewById(R.id.slider) != null) {
+      // Uses separate layout for the grabbed view of slider (had trouble to reuse the view from the node)
       setupSlider(content, R.layout.view_slider_grab_portrait);
     } else {
       contentParent.removeView(content);
@@ -194,15 +207,14 @@ public class AuthorAnchorNode extends AnchorNode {
   @SuppressLint("ClickableViewAccessibility")
   private void setupSlider(View content, int sliderResource) {
     Slider slider = content.findViewById(R.id.slider);
-    List<String> images = slider.getImages();
-    List<String> descriptions = slider.getDescriptions();
+    List<Slide> slides = slider.getSlides();
 
     grabContainer.removeAllViews();
     View grabView = LayoutInflater.from(context).inflate(sliderResource, grabContainer);
     Slider grabSlider = grabView.findViewById(R.id.slider);
     View sliderText = grabView.findViewById(R.id.slider_text);
 
-    grabSlider.setImages(images, descriptions);
+    grabSlider.setSlides(slides, null);
     grabSlider.setOnTouchListener(new ToggleSlideTextHandler(context, sliderText));
 
     ((FragmentActivity) context).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);

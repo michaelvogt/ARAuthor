@@ -26,6 +26,7 @@ import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.Material;
 import com.google.ar.sceneform.rendering.Renderable;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +39,7 @@ public class Detail {
   public static final int KEY_TEXTCONTENT = 2;
   public static final int KEY_MARKUPCONTENT = 3;
   public static final int KEY_TEXTPATH = 4;
-  public static final int KEY_SLIDESFOLDERPATH = 5;
+  public static final int KEY_SLIDES = 5;
   public static final int KEY_FADE_LEFT_WIDTH = 6;
   public static final int KEY_FADE_RIGHT_WIDTH = 7;
   public static final int KEY_FADE_TOP_WIDTH = 8;
@@ -142,7 +143,8 @@ public class Detail {
   }
 
   public Detail setTextPath(@NonNull String path) {
-    if (!path.endsWith(".txt") && !path.endsWith(".html")) throw new AssertionError(".txt or .html file expected");
+    if (!path.endsWith(".txt") && !path.endsWith(".html"))
+      throw new AssertionError(".txt or .html file expected");
 
     details.put(KEY_TEXTPATH, path);
     return this;
@@ -194,6 +196,33 @@ public class Detail {
     details.put(KEY_ZOOMINSIZE, size);
     details.put(KEY_ZOOMINPOSITION, position);
     return this;
+  }
+
+  public Detail addSlide(@NonNull Slide slide) {
+    List<Slide> slides = (List<Slide>) details.get(KEY_SLIDES);
+    if (slides == null) {
+      slides = new ArrayList<>();
+      details.put(KEY_SLIDES, slides);
+    }
+
+    slides.add(slide);
+    return this;
+  }
+
+  public Slide getSlide(int index) {
+    if (details.get(KEY_SLIDES) == null)
+      throw new AssertionError("No Slides available");
+
+    List<Slide> slides = (List<Slide>) details.get(KEY_SLIDES);
+    if (index < 0 || index > slides.size())
+      throw new AssertionError("Slide at index not available: index = " + index);
+
+    return slides.get(index);
+  }
+
+  public List<Slide> getSlides() {
+    return details.get(KEY_SLIDES) == null
+        ? new ArrayList<>() : Collections.unmodifiableList((List<Slide>) details.get(KEY_SLIDES));
   }
 
   public Object getDetail(int key, Object orDefault) {

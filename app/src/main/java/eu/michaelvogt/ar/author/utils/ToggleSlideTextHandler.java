@@ -25,6 +25,8 @@ import android.view.MotionEvent;
 import android.view.View;
 
 public class ToggleSlideTextHandler extends GestureDetector.SimpleOnGestureListener implements View.OnTouchListener {
+  private static final String TAG = ToggleSlideTextHandler.class.getSimpleName();
+
   private GestureDetectorCompat detector;
   private View sliderText;
 

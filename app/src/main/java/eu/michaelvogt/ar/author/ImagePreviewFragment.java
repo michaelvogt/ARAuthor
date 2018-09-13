@@ -18,6 +18,7 @@
 
 package eu.michaelvogt.ar.author;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -33,14 +34,14 @@ import com.google.ar.core.TrackingState;
 import com.google.ar.sceneform.FrameTime;
 
 import java.util.Collection;
-import java.util.HashMap;
 
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import eu.michaelvogt.ar.author.data.AuthorViewModel;
 import eu.michaelvogt.ar.author.data.Marker;
 
 public class ImagePreviewFragment extends PreviewFragment {
   private static final String TAG = ImagePreviewFragment.class.getSimpleName();
-
 
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -62,6 +63,9 @@ public class ImagePreviewFragment extends PreviewFragment {
     view.findViewById(R.id.listmarker_fab).setOnClickListener(
         Navigation.createNavigateOnClickListener(R.id.markerlistFragment)
     );
+
+    AuthorViewModel viewModel = ViewModelProviders.of(getActivity()).get(AuthorViewModel.class);
+    NavController navController = Navigation.findNavController(view);
   }
 
   @Override
@@ -73,14 +77,6 @@ public class ImagePreviewFragment extends PreviewFragment {
 
   private void onUpdateFrame(FrameTime frameTime) {
     arFragment.onUpdate(frameTime);
-
-//    if (modelPoseOnPlaneListeners.size() != 0) {
-//      for (ModelPoseOnPlaneListener listener : modelPoseOnPlaneListeners) {
-//        if (listener.onPlane()) {
-//          modelPoseOnPlaneListeners.remove(listener);
-//        }
-//      }
-//    }
 
     Frame frame = arFragment.getArSceneView().getArFrame();
     Collection<AugmentedImage> updatedAugmentedImages =
@@ -95,7 +91,7 @@ public class ImagePreviewFragment extends PreviewFragment {
 
         buildMarkerScene(anchor, marker, image.getExtentX(), image.getExtentZ());
       } else if (image.getTrackingState() == TrackingState.STOPPED) {
-        handledImages = new HashMap<>();
+        handledImages.remove(image.getName());
       }
     }
   }

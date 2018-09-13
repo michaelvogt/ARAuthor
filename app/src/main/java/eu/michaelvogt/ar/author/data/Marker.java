@@ -66,9 +66,13 @@ public class Marker {
   @ColumnInfo(name = "width_in_m")
   private float widthInM = -1;
 
-  //@ColumnInfo(name = "size")
   @Ignore
+  //@ColumnInfo(name = "size")
   private Vector3 size;
+
+  @Ignore
+  @ColumnInfo(name = "zero_point")
+  private Vector3 zeroPoint;
 
   @ColumnInfo(name = "show_background")
   private boolean showBackground;
@@ -78,16 +82,17 @@ public class Marker {
 
   public Marker() {
     this("", "", "", "",
-        "", .03f, Vector3.zero(), true, new ArrayList<>());
+        "", .0f, Vector3.zero(), Vector3.zero(), true, new ArrayList<>());
   }
 
   public Marker(String markerImagePath, String backgroundImagePath, String title, String intro, String location,
-                float widthInM, Vector3 size, boolean showBackground, List<Integer> areas) {
+                float widthInM, Vector3 zeroPoint, Vector3 size, boolean showBackground, List<Integer> areas) {
     this.markerImagePath = markerImagePath;
     this.title = title;
     this.intro = intro;
     this.location = location;
     this.widthInM = widthInM;
+    this.zeroPoint = zeroPoint;
     this.size = size;
     this.backgroundImagePath = backgroundImagePath;
     this.showBackground = showBackground;
@@ -102,6 +107,7 @@ public class Marker {
     this.intro = marker.getIntro();
     this.location = marker.getLocation();
     this.widthInM = marker.getWidthInM();
+    this.zeroPoint = getZeroPoint();
     this.size = marker.getSize();
     this.backgroundImagePath = marker.getBackgroundImagePath();
     this.showBackground = marker.isShowBackground();
@@ -182,6 +188,14 @@ public class Marker {
 
   public void setSize(Vector3 size) {
     this.size = size;
+  }
+
+  public Vector3 getZeroPoint() {
+    return zeroPoint;
+  }
+
+  public void setZeroPoint(Vector3 zeroPoint) {
+    this.zeroPoint = zeroPoint;
   }
 
   public String getBackgroundImagePath() {

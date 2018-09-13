@@ -20,9 +20,7 @@ package eu.michaelvogt.ar.author.data
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
-
-import java.util.ArrayList
-import java.util.Optional
+import java.util.*
 
 class AuthorViewModel(application: Application) : AndroidViewModel(application) {
     private val markers = ArrayList<Marker>()
@@ -97,6 +95,6 @@ class AuthorViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun getLocationSize(): Int {
-        return locations.size;
+        return locations.size
     }
 }

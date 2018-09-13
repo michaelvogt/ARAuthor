@@ -24,21 +24,22 @@ import android.util.Log;
 import android.view.View;
 
 import com.google.ar.sceneform.Node;
+import com.google.ar.sceneform.Scene;
 import com.google.ar.sceneform.rendering.ViewRenderable;
 
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
 import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.Area;
-import eu.michaelvogt.ar.author.data.Detail;
-import eu.michaelvogt.ar.author.utils.FileUtils;
+import eu.michaelvogt.ar.author.utils.SlideCallback;
 import eu.michaelvogt.ar.author.utils.Slider;
 import eu.michaelvogt.ar.author.utils.ToggleSlideTextHandler;
 
 public class SliderNode extends AreaNode {
   private static final String TAG = SliderNode.class.getSimpleName();
+
+  private Scene scene;
 
   private SliderNode(Context context, Area area) {
     super(context, area);
@@ -63,10 +64,7 @@ public class SliderNode extends AreaNode {
           Slider slider = renderable.getView().findViewById(R.id.slider);
           View sliderText = renderable.getView().findViewById(R.id.slider_text);
 
-          String puplicFolderPath = FileUtils.getFullPuplicFolderPath(
-              area.getDetailString(Detail.KEY_IMAGEFOLDERPATH));
-          List<String> descriptions = (List<String>) area.getDetail(Detail.KEY_IMAGEDESCRIPTIONS);
-          slider.setImages(FileUtils.getFilepathsOfFolder(puplicFolderPath), descriptions);
+          slider.setSlides(area.getSlides(), new SlideCallback(context, area, scene));
           slider.setOnTouchListener(new ToggleSlideTextHandler(context, sliderText));
 
           Log.i(TAG, "ImageNode successfully created");
@@ -78,5 +76,10 @@ public class SliderNode extends AreaNode {
         });
 
     return future;
+  }
+
+  public SliderNode setScene(Scene scene) {
+    this.scene = scene;
+    return this;
   }
 }
