@@ -21,6 +21,7 @@ package eu.michaelvogt.ar.author.nodes;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.util.Log;
+import android.view.MotionEvent;
 
 import com.google.ar.sceneform.Node;
 import com.google.ar.sceneform.rendering.Material;
@@ -52,64 +53,64 @@ public class ComparisonNode extends AreaNode {
   public CompletionStage<Node> build() {
     CompletableFuture<Node> future = new CompletableFuture<>();
 
-    String primaryFullPath = FileUtils.getFullPuplicFolderPath(
-        area.getDetailString(Detail.KEY_IMAGEPATH));
-
-    CompletableFuture<Texture> futurePrimaryTexture = Texture.builder()
-        .setSource(BitmapFactory.decodeFile(primaryFullPath))
-        .setUsage(Texture.Usage.COLOR)
-        .build()
-        .exceptionally(throwable -> {
-          Log.d(TAG, "Could not load primary texture image: " +
-              area.getDetail(Detail.KEY_IMAGEPATH), throwable);
-          future.completeExceptionally(throwable);
-          return null;
-        });
+    CompletableFuture<Texture> futurePrim3Texture = getTextureFuture(future, Detail.KEY_IMAGEPATH);
 
     // TODO: There can be more than 1 secondary images available in the future.
-    String secondaryFullPath = FileUtils
-        .getFullPuplicFolderPath(area.getDetailString(Detail.KEY_SECONDARYIMAGEPATH));
+    CompletableFuture<Texture> futureSecTexture = getTextureFuture(future, Detail.KEY_SECONDARYIMAGEPATH);
 
-    CompletableFuture<Texture> futureSecondaryTexture = Texture.builder()
-        .setSource(BitmapFactory.decodeFile(secondaryFullPath))
+    CompletableFuture.allOf(futurePrim3Texture, futureSecTexture)
+        .thenAccept(aVoid -> ModelRenderable.builder()
+        .setSource(context, AreaNodeBuilder.COMPARISON_MATERIAL_TEMP)
+        .build()
+        .thenAccept(temp -> {
+          // TODO: Hack - fix when custom material can be created #196
+          Material material = temp.getMaterial();
+              // area.applyDetail(material);
+
+          try {
+            material.setTexture("primaryTexture", futurePrim3Texture.get());
+            material.setTexture("secondaryTexture", futureSecTexture.get());
+          } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+          }
+
+          Renderable renderable = ShapeFactory.makeCube(area.getSize(), area.getZeroPoint(), material);
+          area.applyDetail(renderable);
+          setRenderable(renderable);
+
+          setOnTouchListener((hitTestResult, motionEvent) -> {
+            if (motionEvent.getActionMasked() == MotionEvent.ACTION_DOWN || motionEvent.getActionMasked() == MotionEvent.ACTION_MOVE ) {
+              float normalLocation = (float) (Math.max(0.01, hitTestResult.getPoint().x + 0.5));
+              material.setFloat("dividerLocation", normalLocation);
+
+              Log.i(TAG, "ray point x: " + hitTestResult.getPoint().x);
+            }
+            return true;
+          });
+
+          Log.i(TAG, "ComparisonNode successfully created");
+          future.complete(this);
+        })
+        .exceptionally(throwable -> {
+          Log.d(TAG, "Could not create model " + AreaNodeBuilder.COMPARISON_MATERIAL_TEMP, throwable);
+              future.completeExceptionally(throwable);
+          return null;
+        }));
+
+    return future;
+  }
+
+  private CompletableFuture<Texture> getTextureFuture(CompletableFuture<Node> future, int detailPath) {
+    String fullPath = FileUtils.getFullPuplicFolderPath(area.getDetailString(detailPath));
+
+    return Texture.builder()
+        .setSource(BitmapFactory.decodeFile(fullPath))
         .setUsage(Texture.Usage.COLOR)
         .build()
         .exceptionally(throwable -> {
-          Log.d(TAG, "Could not load secondary texture image: " +
-              area.getDetail(Detail.KEY_SECONDARYIMAGEPATH), throwable);
+          Log.d(TAG, "Could not create texture builder for " + area.getDetail(detailPath), throwable);
           future.completeExceptionally(throwable);
           return null;
         });
-
-    CompletableFuture.allOf(futurePrimaryTexture, futureSecondaryTexture)
-        .thenAccept(aVoid -> ModelRenderable.builder()
-            .setSource(context, AreaNodeBuilder.CUSTOM_MATERIAL_TEMP)
-            .build()
-            .thenAccept(temp -> {
-              // TODO: Hack - fix when custom material can be created #196
-              Material material = temp.getMaterial();
-              // area.applyDetail(material);
-
-              try {
-                material.setTexture("primary ", futurePrimaryTexture.get());
-                material.setTexture("secondary", futureSecondaryTexture.get());
-              } catch (ExecutionException | InterruptedException e) {
-                e.printStackTrace();
-              }
-
-              Renderable renderable = ShapeFactory.makeCube(area.getSize(), area.getZeroPoint(), material);
-              area.applyDetail(renderable);
-              setRenderable(renderable);
-
-              Log.i(TAG, "ComparisonNode successfully created");
-              future.complete(this);
-            })
-            .exceptionally(throwable -> {
-              Log.d(TAG, "Could not create model " + AreaNodeBuilder.COMPARISON_MATERIAL_TEMP, throwable);
-              future.completeExceptionally(throwable);
-              return null;
-            }));
-
-    return future;
   }
 }

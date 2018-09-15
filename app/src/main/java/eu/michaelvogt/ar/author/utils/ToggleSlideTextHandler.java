@@ -53,9 +53,4 @@ public class ToggleSlideTextHandler extends GestureDetector.SimpleOnGestureListe
   public boolean onDown(MotionEvent e) {
     return true;
   }
-
-  @Override
-  public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-    return false;
-  }
 }

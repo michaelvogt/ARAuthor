@@ -45,8 +45,6 @@ public class Slider extends ViewPager {
   private List<Slide> slides;
   private TextView descriptionView;
 
-  private NodeCallback slideCallback;
-
   Function<Integer, Integer> nextItem = currentItem -> (currentItem + 1 >= adapter.getCount()) ? 0 : ++currentItem;
 
   public Slider(@NonNull Context context, @Nullable AttributeSet attrs) {
@@ -56,7 +54,6 @@ public class Slider extends ViewPager {
 
   public void setSlides(List<Slide> slides, NodeCallback slideCallback) {
     this.slides = slides;
-    this.slideCallback = slideCallback;
 
     descriptionView = ((ViewGroup) getParent()).findViewById(R.id.slider_text);
     descriptionView.setText(slides.get(0).getDescription());

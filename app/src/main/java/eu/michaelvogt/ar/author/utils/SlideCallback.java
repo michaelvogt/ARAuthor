@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.google.ar.sceneform.Node;
 import com.google.ar.sceneform.Scene;
+import com.google.ar.sceneform.math.Vector3;
 
 import java.util.List;
 
@@ -39,6 +40,7 @@ public class SlideCallback implements NodeCallback {
     comparisionArea.setObjectType(Area.TYPE_COMPARATORONIMAGE);
     comparisionArea.setTitle("Compare old and new");
     comparisionArea.setResource(R.layout.view_comparison);
+    comparisionArea.setPosition(Vector3.add(area.getPosition(), new Vector3(0.0f, 0.0f, -0.29f)));
     comparisionArea.setDetail(Detail.builder()
         .setImagePath(comparisionData.getContentPath())
         .setSecondaryImagePath(comparisionData.getSecondaryPaths().get(0)));

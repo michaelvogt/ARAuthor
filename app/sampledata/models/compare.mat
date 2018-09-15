@@ -13,6 +13,12 @@ material {
       }, {
         type: "float4",
         name: "dividerColor"
+      }, {
+        type: "float",
+        name: "dividerLocation"
+      }, {
+        type: "float",
+        name: "dividerWidth"
       }
     ],
     "requires" : [
@@ -30,6 +36,25 @@ fragment {
 
         vec2 uv = getUV0();
 
-        material.baseColor = texture(materialParams_primaryTexture, uv);
+        if (!gl_FrontFacing) {
+          uv.x = 1.0 - uv.x;
+        }
+
+        float fadeWidth = 0.01;
+        float primeMask = smoothstep(materialParams.dividerLocation + fadeWidth, materialParams.dividerLocation, uv.x);
+        float4 primeTex = texture(materialParams_primaryTexture, uv);
+
+        float secMask = smoothstep(materialParams.dividerLocation - fadeWidth, materialParams.dividerLocation, uv.x);
+        float4 secTex = texture(materialParams_secondaryTexture, uv);
+
+        float dividerLeft = materialParams.dividerLocation - materialParams.dividerWidth;
+        float dividerRight = materialParams.dividerLocation + materialParams.dividerWidth;
+        float dividerMask = step(dividerLeft, uv.x) * (1.0 - step(dividerRight, uv.x));
+
+        //float shadowMask = smoothstep();
+
+        material.baseColor = primeTex;
+        material.baseColor = mix(material.baseColor, secTex, secMask);
+        material.baseColor = mix(material.baseColor, materialParams.dividerColor, dividerMask);
     }
 }

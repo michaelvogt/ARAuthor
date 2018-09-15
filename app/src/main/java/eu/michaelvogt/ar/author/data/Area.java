@@ -326,7 +326,7 @@ public class Area {
     Detail detail = Detail.builder().setImagePath(path);
 
     return new Area(TYPE_BACKGROUNDONIMAGE, KIND_UI, BACKGROUNDAREATITLE, 0, detail, marker.getZeroPoint(), marker.getSize(),
-        COORDINATE_LOCAL, new Vector3(0f, 0.01f, 0f), new Quaternion(Vector3.zero(), 0), Vector3.one());
+        COORDINATE_LOCAL, new Vector3(0f, 0.1f, 0f), new Quaternion(Vector3.zero(), 0), Vector3.one());
   }
 
   private Detail valueOrNew(Detail detail) {

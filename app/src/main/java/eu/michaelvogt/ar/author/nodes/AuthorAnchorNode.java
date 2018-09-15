@@ -79,6 +79,9 @@ public class AuthorAnchorNode extends AnchorNode {
 
   @Override
   public boolean onTouchEvent(HitTestResult hitTestResult, MotionEvent motionEvent) {
+    if (hitTestResult.getNode() == null) {
+      return false;
+    }
 
     Log.i(TAG, "Touch Event catched from " + hitTestResult.getNode().getName());
 
