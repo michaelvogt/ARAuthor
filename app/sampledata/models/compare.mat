@@ -51,8 +51,6 @@ fragment {
         float dividerRight = materialParams.dividerLocation + materialParams.dividerWidth;
         float dividerMask = step(dividerLeft, uv.x) * (1.0 - step(dividerRight, uv.x));
 
-        //float shadowMask = smoothstep();
-
         material.baseColor = primeTex;
         material.baseColor = mix(material.baseColor, secTex, secMask);
         material.baseColor = mix(material.baseColor, materialParams.dividerColor, dividerMask);

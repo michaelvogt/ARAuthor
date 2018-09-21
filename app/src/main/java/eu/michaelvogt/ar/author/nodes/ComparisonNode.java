@@ -24,6 +24,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 
 import com.google.ar.sceneform.Node;
+import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.Material;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.rendering.Renderable;
@@ -80,10 +81,10 @@ public class ComparisonNode extends AreaNode {
 
           setOnTouchListener((hitTestResult, motionEvent) -> {
             if (motionEvent.getActionMasked() == MotionEvent.ACTION_DOWN || motionEvent.getActionMasked() == MotionEvent.ACTION_MOVE ) {
-              float normalLocation = (float) (Math.max(0.01, hitTestResult.getPoint().x + 0.5));
-              material.setFloat("dividerLocation", normalLocation);
+              Vector3 normalLocation = worldToLocalPoint(hitTestResult.getPoint());
+              material.setFloat("dividerLocation", (float) (normalLocation.x + 0.45));
 
-              Log.i(TAG, "ray point x: " + hitTestResult.getPoint().x);
+              Log.i(TAG, "hit point x: " + hitTestResult.getPoint().x + " local point x: " + normalLocation.x);
             }
             return true;
           });
