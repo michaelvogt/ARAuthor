@@ -29,13 +29,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.Objects;
-
 import androidx.navigation.Navigation;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
 import eu.michaelvogt.ar.author.utils.ItemClickListener;
 import eu.michaelvogt.ar.author.utils.LocationListAdapter;
-import eu.michaelvogt.ar.author.utils.MarkerListAdapter;
 
 public class LocationlistFragment extends Fragment implements ItemClickListener {
   private View view;
@@ -43,7 +40,7 @@ public class LocationlistFragment extends Fragment implements ItemClickListener 
   public LocationlistFragment() {/* Required empty public constructor*/}
 
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
+  public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     return inflater.inflate(R.layout.fragment_locationlist, container, false);
   }
@@ -54,17 +51,18 @@ public class LocationlistFragment extends Fragment implements ItemClickListener 
 
     this.view = view;
 
-    RecyclerView mRecyclerView = view.findViewById(R.id.location_list);
-    mRecyclerView.setHasFixedSize(true);
+    RecyclerView recyclerView = view.findViewById(R.id.location_list);
+    recyclerView.setHasFixedSize(true);
     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-    mRecyclerView.setLayoutManager(layoutManager);
+    recyclerView.setLayoutManager(layoutManager);
 
-    LocationListAdapter adapter = new LocationListAdapter(
-        ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(AuthorViewModel.class));
+    LocationListAdapter adapter = new LocationListAdapter(getContext());
     adapter.setItemClickListener(this);
 
-    mRecyclerView.setAdapter(adapter);
+    recyclerView.setAdapter(adapter);
 
+    AuthorViewModel viewModel = ViewModelProviders.of(this).get(AuthorViewModel.class);
+    viewModel.getAllLocations().observe(this, adapter::setLocations);
   }
 
   @Override

@@ -18,6 +18,7 @@
 
 package eu.michaelvogt.ar.author.utils;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -26,17 +27,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
+
 import eu.michaelvogt.ar.author.R;
-import eu.michaelvogt.ar.author.data.AuthorViewModel;
-import eu.michaelvogt.ar.author.data.Location;
 import eu.michaelvogt.ar.author.data.Marker;
 
 public class MarkerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
   private final static int TYPE_HEADER = 0;
   private final static int TYPE_ITEM = 1;
 
-  private final AuthorViewModel viewModel;
-  private Location location;
+  private List<Marker> markers;
+  private LayoutInflater inflater;
 
   private ItemClickListener listener;
 
@@ -44,30 +45,30 @@ public class MarkerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     this.listener = listener;
   }
 
-  // Provide a suitable constructor (depends on the kind of dataset)
-  public MarkerListAdapter(AuthorViewModel viewModel, int locationId) {
-    this.viewModel = viewModel;
-    this.location = viewModel.getLocation(locationId);
+  public MarkerListAdapter(Context context) {
+    inflater = LayoutInflater.from(context);
   }
 
-  // Create new views (invoked by the layout manager)
+  public void setMarkers(List<Marker> markers) {
+    this.markers = markers;
+    notifyDataSetChanged();
+  }
+
   @NonNull
   @Override
   public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
     if (viewType == TYPE_HEADER) {
-      View view = LayoutInflater.from(parent.getContext())
-          .inflate(R.layout.card_header, parent, false);
+      View view = inflater.inflate(R.layout.card_header, parent, false);
       return new HeaderHolder(view);
     } else {
-      View view = LayoutInflater.from(parent.getContext())
-          .inflate(R.layout.card_marker, parent, false);
+      View view = inflater.inflate(R.layout.card_marker, parent, false);
       return new MarkerHolder(view);
     }
   }
 
   @Override
   public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-    Marker item = viewModel.getMarker(location.getMarkerId(position));
+    Marker item = markers.get(position);
 
     if (holder instanceof HeaderHolder) {
       HeaderHolder headerHolder = (HeaderHolder) holder;
@@ -83,12 +84,12 @@ public class MarkerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
   @Override
   public int getItemViewType(int position) {
-    return viewModel.getMarker(location.getMarkerId(position)).isTitle() ? TYPE_HEADER : TYPE_ITEM;
+    return markers.get(position).isTitle() ? TYPE_HEADER : TYPE_ITEM;
   }
 
   @Override
   public int getItemCount() {
-    return location.getMarkerSize();
+    return markers.size();
   }
 
   class MarkerHolder extends RecyclerView.ViewHolder {

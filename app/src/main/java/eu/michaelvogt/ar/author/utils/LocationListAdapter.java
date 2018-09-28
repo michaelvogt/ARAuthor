@@ -1,6 +1,6 @@
 package eu.michaelvogt.ar.author.utils;
 
-import android.graphics.BitmapFactory;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,40 +9,50 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
+
 import eu.michaelvogt.ar.author.R;
-import eu.michaelvogt.ar.author.data.Area;
-import eu.michaelvogt.ar.author.data.AuthorViewModel;
 import eu.michaelvogt.ar.author.data.Location;
 
 public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapter.ViewHolder> {
 
-  private final AuthorViewModel viewModel;
+  private List<Location> locations;
+  private LayoutInflater inflater;
+
   private ItemClickListener listener;
 
-  public LocationListAdapter(AuthorViewModel viewModel) {
-    this.viewModel = viewModel;
+  public LocationListAdapter(Context context) {
+    inflater = LayoutInflater.from(context);
+  }
+
+  public void setLocations(List<Location> locations) {
+    this.locations = locations;
+    notifyDataSetChanged();
   }
 
   @NonNull
   @Override
   public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-    View v = LayoutInflater.from(parent.getContext())
-        .inflate(R.layout.card_location, parent, false);
+    View v = inflater.inflate(R.layout.card_location, parent, false);
     return new ViewHolder(v);
   }
 
   @Override
   public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-    Location item = viewModel.getLocation(position);
+    if (locations == null) {
+      holder.locationName.setText("No location");
+    } else {
+      Location item = locations.get(position);
 
-    holder.locationName.setText(item.getName());
-    holder.locationImage.setImageBitmap(ImageUtils.decodeSampledBitmapFromImagePath(
-        item.getThumbPath(), 500, 200));
+      holder.locationName.setText(item.getName());
+      holder.locationImage.setImageBitmap(ImageUtils.decodeSampledBitmapFromImagePath(
+          item.getThumbPath(), 500, 200));
+    }
   }
 
   @Override
   public int getItemCount() {
-    return viewModel.getLocationSize();
+    return locations == null ? 0 : locations.size();
   }
 
   public void setItemClickListener(ItemClickListener listener) {

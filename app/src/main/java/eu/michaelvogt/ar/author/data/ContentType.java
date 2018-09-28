@@ -18,8 +18,52 @@
 
 package eu.michaelvogt.ar.author.data;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
+
+@Entity
 public class ContentType {
+  @PrimaryKey(autoGenerate = true)
+  @NonNull
+  private Integer uid;
+
+  @ColumnInfo(name = "name")
   private String name;
 
+  @Ignore
+  @ColumnInfo(name = "language")
   private Language language;
+
+  public ContentType(String name) {
+    this.name = name;
+//    this.language = language;
+  }
+
+  @NonNull
+  public Integer getUid() {
+    return uid;
+  }
+
+  public void setUid(@NonNull Integer uid) {
+    this.uid = uid;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public Language getLanguage() {
+    return language;
+  }
+
+  public void setLanguage(Language language) {
+    this.language = language;
+  }
 }

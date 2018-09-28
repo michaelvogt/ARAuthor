@@ -20,6 +20,7 @@ package eu.michaelvogt.ar.author.data;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
@@ -28,19 +29,20 @@ import com.google.ar.sceneform.math.Vector3;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-@Entity
+@Entity(tableName = "markers",
+    foreignKeys = @ForeignKey(entity = Location.class,
+        parentColumns = "u_id",
+        childColumns = "location_id"))
 public class Marker {
-  @Ignore
-  private Random random = new Random();
-
   public static final int MIN_SIZE = 300;
 
   @PrimaryKey(autoGenerate = true)
-  @NonNull
-  // TODO: Let room define an id
-  private Integer uid = random.nextInt();
+  @ColumnInfo(name = "u_id")
+  private int uId;
+
+  @ColumnInfo(name = "location_id")
+  private int locationId;
 
   @ColumnInfo(name = "thumb_path")
   private String thumbPath;
@@ -48,7 +50,7 @@ public class Marker {
   @ColumnInfo(name = "image_path")
   private String markerImagePath;
 
-  @ColumnInfo(name = "backgroundimage_path")
+  @ColumnInfo(name = "background_image_path")
   private String backgroundImagePath;
 
   @ColumnInfo(name = "title")
@@ -67,7 +69,7 @@ public class Marker {
   private float widthInM = -1;
 
   @Ignore
-  //@ColumnInfo(name = "size")
+  @ColumnInfo(name = "size")
   private Vector3 size;
 
   @Ignore
@@ -78,6 +80,7 @@ public class Marker {
   private boolean showBackground;
 
   @Ignore
+  // TODO: add relationship
   private List<Integer> areaIds;
 
   public Marker() {
@@ -85,6 +88,7 @@ public class Marker {
         "", .0f, Vector3.zero(), Vector3.zero(), true, new ArrayList<>());
   }
 
+  // TODO: Delete when database setup is complete
   public Marker(String markerImagePath, String backgroundImagePath, String title, String intro, String location,
                 float widthInM, Vector3 zeroPoint, Vector3 size, boolean showBackground, List<Integer> areas) {
     this.markerImagePath = markerImagePath;
@@ -100,7 +104,22 @@ public class Marker {
     this.areaIds = areas;
   }
 
-  public Marker(Marker marker) {
+  public Marker(String markerImagePath, String backgroundImagePath, String title, String intro, String location,
+                float widthInM, Vector3 zeroPoint, Vector3 size, boolean showBackground) {
+    this.markerImagePath = markerImagePath;
+    this.title = title;
+    this.intro = intro;
+    this.location = location;
+    this.widthInM = widthInM;
+    this.zeroPoint = zeroPoint;
+    this.size = size;
+    this.backgroundImagePath = backgroundImagePath;
+    this.showBackground = showBackground;
+    this.thumbPath = "";
+  }
+
+  @Ignore
+  public Marker(@NonNull Marker marker) {
     this.markerImagePath = marker.getMarkerImagePath();
     this.title = marker.getTitle();
     this.isTitle = marker.isTitle();
@@ -121,13 +140,12 @@ public class Marker {
     this.isTitle = true;
   }
 
-  @NonNull
-  public int getUid() {
-    return uid;
+  public int getUId() {
+    return uId;
   }
 
-  public void setUid(@NonNull int uid) {
-    this.uid = uid;
+  public void setUId(@NonNull Integer uId) {
+    this.uId = uId;
   }
 
   public void setThumbPath(String thumbPath) {
@@ -228,5 +246,17 @@ public class Marker {
 
   public void setAreaIds(ArrayList<Integer> areaIds) {
     this.areaIds = areaIds;
+  }
+
+  public int getLocationId() {
+    return locationId;
+  }
+
+  public void setLocationId(int locationId) {
+    this.locationId = locationId;
+  }
+
+  public void setTitle(boolean title) {
+    isTitle = title;
   }
 }

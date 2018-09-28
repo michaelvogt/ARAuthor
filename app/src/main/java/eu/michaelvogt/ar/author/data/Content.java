@@ -18,10 +18,64 @@
 
 package eu.michaelvogt.ar.author.data;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
+
+@Entity
 public class Content {
+  @PrimaryKey(autoGenerate = true)
+  @NonNull
+  private Integer uid;
+
+  @Ignore
+  @ColumnInfo(name = "type")
   private ContentType type;
 
+  @ColumnInfo(name = "historical_background")
   private String historicalBackground;
 
+  @ColumnInfo(name = "description")
   private String description;
+
+  public Content(String historicalBackground, String description) {
+//    this.type = type;
+    this.historicalBackground = historicalBackground;
+    this.description = description;
+  }
+
+  @NonNull
+  public Integer getUid() {
+    return uid;
+  }
+
+  public void setUid(@NonNull Integer uid) {
+    this.uid = uid;
+  }
+
+  public ContentType getType() {
+    return type;
+  }
+
+  public void setType(ContentType type) {
+    this.type = type;
+  }
+
+  public String getHistoricalBackground() {
+    return historicalBackground;
+  }
+
+  public void setHistoricalBackground(String historicalBackground) {
+    this.historicalBackground = historicalBackground;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
 }

@@ -18,8 +18,29 @@
 
 package eu.michaelvogt.ar.author.data;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
+import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
+
+import java.util.List;
 
 @Dao
 public interface MarkerDao {
+  @Insert(onConflict = OnConflictStrategy.FAIL)
+  public long insert(Marker marker);
+
+  @Update
+  public void update(Marker... markers);
+
+  @Query("SELECT * from markers ORDER BY title ASC")
+  LiveData<List<Marker>> getAll();
+
+  @Query("SELECT * FROM markers WHERE location_id=:locationId")
+  List<Marker> findMarkersForLocation(final int locationId);
+
+  @Query("DELETE FROM markers")
+  void deleteAll();
 }

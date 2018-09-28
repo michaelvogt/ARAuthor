@@ -62,7 +62,9 @@ public class MarkerListFragment extends Fragment implements ItemClickListener {
     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
     mRecyclerView.setLayoutManager(mLayoutManager);
 
-    MarkerListAdapter mAdapter = new MarkerListAdapter(viewModel, locationId);
+    MarkerListAdapter mAdapter = new MarkerListAdapter(getContext());
+    // TODO: get live data wrapped markers
+    mAdapter.setMarkers(viewModel.getLocation(locationId).getMarkers());
     mAdapter.setItemClickListener(this);
 
     mRecyclerView.setAdapter(mAdapter);

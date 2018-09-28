@@ -1,5 +1,3 @@
-package eu.michaelvogt.ar.author.data;
-
 /*
     ARTester - AR for tourists by tourists
     Copyright (C) 2018  Michael Vogt
@@ -17,6 +15,7 @@ package eu.michaelvogt.ar.author.data;
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+package eu.michaelvogt.ar.author.data;
 
 import android.arch.persistence.room.Dao;
 

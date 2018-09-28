@@ -20,7 +20,6 @@ package eu.michaelvogt.ar.author.data;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
@@ -36,11 +35,7 @@ import java.util.Map;
 
 import eu.michaelvogt.ar.author.R;
 
-@Entity(foreignKeys = {
-    @ForeignKey(entity = Marker.class,
-        parentColumns = "uid",
-        childColumns = "marker_id")
-})
+@Entity(tableName = "areas")
 public class Area {
   public static final int TYPE_DEFAULT = 0;
   public static final int TYPE_3DOBJECTONIMAGE = 1;
@@ -69,7 +64,7 @@ public class Area {
 
   @PrimaryKey(autoGenerate = true)
   @NonNull
-  private int uid;
+  private Integer uid;
 
   @ColumnInfo(name = "title")
   private String title;
@@ -147,11 +142,12 @@ public class Area {
     this.scale = area.getScale();
   }
 
-  public int getUid() {
+  @NonNull
+  public Integer getUid() {
     return uid;
   }
 
-  public void setUid(int uid) {
+  public void setUid(@NonNull Integer uid) {
     this.uid = uid;
   }
 

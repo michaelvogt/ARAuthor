@@ -20,12 +20,15 @@ package eu.michaelvogt.ar.author.data
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
+import android.arch.lifecycle.LiveData
 import java.util.*
 
 class AuthorViewModel(application: Application) : AndroidViewModel(application) {
     private val markers = ArrayList<Marker>()
     private val areas = ArrayList<Area>()
     private val locations = ArrayList<Location>()
+
+    private val repository = AppRepository(application)
 
     var cropMarker: Marker? = null
 
@@ -55,7 +58,7 @@ class AuthorViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun getMarkerFromUid(id: Int): Optional<Marker> {
-        return markers.stream().filter { marker -> marker.uid == id }.findFirst()
+        return markers.stream().filter { marker -> marker.getUId() == id }.findFirst()
     }
 
     fun setMarker(index: Int, marker: Marker) {
@@ -96,5 +99,9 @@ class AuthorViewModel(application: Application) : AndroidViewModel(application) 
 
     fun getLocationSize(): Int {
         return locations.size
+    }
+
+    fun getAllLocations(): LiveData<List<Location>> {
+        return repository.getAllLocations()
     }
 }

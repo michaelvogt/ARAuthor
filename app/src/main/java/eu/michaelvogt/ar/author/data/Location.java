@@ -18,35 +18,51 @@
 
 package eu.michaelvogt.ar.author.data;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
-import android.support.annotation.NonNull;
 
 import java.util.List;
 
+@Entity(tableName = "locations")
 public class Location {
   @PrimaryKey(autoGenerate = true)
-  @NonNull
-  private int uid;
+  @ColumnInfo(name = "u_id")
+  private int uId;
 
+  @ColumnInfo(name = "name")
   private String name;
+
+  @ColumnInfo(name = "thumb_path")
   private String thumbPath;
-  private List<Integer> markers;
+
+  @Ignore
+  @ColumnInfo(name = "markers")
+  private List<Marker> markers;
+
+  @ColumnInfo(name = "intro_html_path")
   private String introHtmlPath;
 
-
+  @Ignore
   public Location(String name, String thumbPath, String introHtmlPath, List<Integer> markers) {
     this.name = name;
     this.thumbPath = thumbPath;
-    this.markers = markers;
     this.introHtmlPath = introHtmlPath;
   }
 
-  public int getUid() {
-    return uid;
+  public Location(String name, String thumbPath, String introHtmlPath) {
+    this.name = name;
+    this.thumbPath = thumbPath;
+    this.introHtmlPath = introHtmlPath;
   }
 
-  public void setUid(int uid) {
-    this.uid = uid;
+  public int getUId() {
+    return uId;
+  }
+
+  public void setUId(int uId) {
+    this.uId = uId;
   }
 
   public String getName() {
@@ -61,15 +77,23 @@ public class Location {
     return thumbPath;
   }
 
-  public int getMarkerId(int position) {
-    return markers.get(position);
-  }
-
-  public int getMarkerSize() {
-    return markers.size();
-  }
-
   public String getIntroHtmlPath() {
     return introHtmlPath;
+  }
+
+  public void setThumbPath(String thumbPath) {
+    this.thumbPath = thumbPath;
+  }
+
+  public List<Marker> getMarkers() {
+    return markers;
+  }
+
+  public void setMarkers(List<Marker> markers) {
+    this.markers = markers;
+  }
+
+  public void setIntroHtmlPath(String introHtmlPath) {
+    this.introHtmlPath = introHtmlPath;
   }
 }
