@@ -18,7 +18,6 @@
 
 package eu.michaelvogt.ar.author;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -35,10 +34,7 @@ import com.google.ar.sceneform.FrameTime;
 
 import java.util.Collection;
 
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import eu.michaelvogt.ar.author.data.AuthorViewModel;
-import eu.michaelvogt.ar.author.data.Marker;
 
 public class ImagePreviewFragment extends PreviewFragment {
   private static final String TAG = ImagePreviewFragment.class.getSimpleName();
@@ -63,9 +59,6 @@ public class ImagePreviewFragment extends PreviewFragment {
     view.findViewById(R.id.listmarker_fab).setOnClickListener(
         Navigation.createNavigateOnClickListener(R.id.markerlistFragment)
     );
-
-    AuthorViewModel viewModel = ViewModelProviders.of(getActivity()).get(AuthorViewModel.class);
-    NavController navController = Navigation.findNavController(view);
   }
 
   @Override
@@ -87,9 +80,8 @@ public class ImagePreviewFragment extends PreviewFragment {
       if (trackingState == TrackingState.TRACKING && !handledImages.containsKey(image.getName())) {
         handledImages.put(image.getName(), null);
         Anchor anchor = image.createAnchor(image.getCenterPose());
-        Marker marker = viewModel.getMarkerFromUid(Integer.parseInt(image.getName())).get();
-
-        buildMarkerScene(anchor, marker, image.getExtentX(), image.getExtentZ());
+        viewModel.getMarker(Integer.parseInt(image.getName())).observe(this, marker ->
+            buildMarkerScene(anchor, marker, image.getExtentX(), image.getExtentZ()));
       } else if (image.getTrackingState() == TrackingState.STOPPED) {
         handledImages.remove(image.getName());
       }

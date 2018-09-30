@@ -70,6 +70,8 @@ public class PreviewFragment extends Fragment {
     arFragment.updateMode = getArguments().getString("update_mode");
     arFragment.focusMode = getArguments().getString("focus_mode");
     arFragment.lightEstimation = getArguments().getString("light_estimation");
+
+    arFragment.locationId = getArguments().getInt("location_id");
   }
 
   private void onUpdateFrame(FrameTime frameTime) {

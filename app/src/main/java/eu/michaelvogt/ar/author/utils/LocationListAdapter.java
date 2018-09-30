@@ -81,4 +81,7 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
     }
   }
 
+  public Location getLocation(int position) {
+    return locations.get(position);
+  }
 }

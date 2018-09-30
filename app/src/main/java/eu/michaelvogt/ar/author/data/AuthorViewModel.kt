@@ -24,9 +24,7 @@ import android.arch.lifecycle.LiveData
 import java.util.*
 
 class AuthorViewModel(application: Application) : AndroidViewModel(application) {
-    private val markers = ArrayList<Marker>()
     private val areas = ArrayList<Area>()
-    private val locations = ArrayList<Location>()
 
     private val repository = AppRepository(application)
 
@@ -35,38 +33,23 @@ class AuthorViewModel(application: Application) : AndroidViewModel(application) 
     // TODO: Set to current system language or english when not available
     var currentLanguage = "_jp_"
 
-    // TODO: Area title for now. Should be the Area object id
+    // TODO: Area title for now. Should be the Area row id
     var currentMainContentId = "Muneoka Background Intro"
 
-    val markerSize: Int
-        get() = markers.size
-
     fun addMarker(marker: Marker) {
-        markers.add(marker)
+        repository.insert(marker)
     }
 
-    fun getEditMarker(index: Int): Marker {
-        return Marker(markers[index])
+    fun getMarker(uId: Int): LiveData<Marker>? {
+        return repository.getMarker(uId)
     }
 
-    fun getMarker(index: Int): Marker {
-        return markers[index]
+    fun updateMarker(marker: Marker) {
+        repository.update(marker)
     }
 
-    fun getMarkerFromString(name: String): Optional<Marker> {
-        return markers.stream().filter { marker -> marker.title == name }.findFirst()
-    }
-
-    fun getMarkerFromUid(id: Int): Optional<Marker> {
-        return markers.stream().filter { marker -> marker.getUId() == id }.findFirst()
-    }
-
-    fun setMarker(index: Int, marker: Marker) {
-        markers[index] = marker
-    }
-
-    fun markerIterable(): Iterable<Marker> {
-        return markers
+    fun getMarkersForLocation(locationId: Int, withTitles: Boolean): LiveData<MutableList<Marker>> {
+        return repository.getMarkersForLocation(locationId, withTitles)
     }
 
     fun clearCropMarker() {
@@ -90,15 +73,15 @@ class AuthorViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun addLocation(location: Location) {
-        locations.add(location)
+        repository.insert(location)
     }
 
-    fun getLocation(index: Int): Location {
-        return locations.get(index)
+    fun getLocation(uid: Int): LiveData<Location>? {
+        return repository.getLocation(uid)
     }
 
-    fun getLocationSize(): Int {
-        return locations.size
+    fun getLocationsSize(): Int {
+        return repository.getLocationsSize();
     }
 
     fun getAllLocations(): LiveData<List<Location>> {

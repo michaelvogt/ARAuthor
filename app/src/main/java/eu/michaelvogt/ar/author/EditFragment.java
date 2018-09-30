@@ -55,7 +55,7 @@ public class EditFragment extends Fragment {
   public EditFragment() {/* Required empty public constructor*/}
 
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
+  public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     return inflater.inflate(R.layout.fragment_editmarker, container, false);
   }
@@ -74,10 +74,16 @@ public class EditFragment extends Fragment {
         editMarker = cropMarker;
         viewModel.clearCropMarker();
       }
+      finishSetup(view);
     } else {
-      editMarker = viewModel.getEditMarker(editIndex);
+      viewModel.getMarker(editIndex).observe(this, marker -> {
+        editMarker = new Marker(marker);
+        finishSetup(view);
+      });
     }
+  }
 
+  private void finishSetup(View view) {
     markerImage = view.findViewById(R.id.image_marker);
     if (editMarker.hasImage()) {
       markerImage.setImageBitmap(ImageUtils.decodeSampledBitmapFromImagePath(
@@ -90,16 +96,22 @@ public class EditFragment extends Fragment {
 
     TabLayout tabLayout = view.findViewById(R.id.editmarker_tabs);
     tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-      @Override public void onTabSelected(TabLayout.Tab tab) {
-
+      @Override
+      public void onTabSelected(TabLayout.Tab tab) {
       }
 
-      @Override public void onTabUnselected(TabLayout.Tab tab) { }
-      @Override public void onTabReselected(TabLayout.Tab tab) { }
+      @Override
+      public void onTabUnselected(TabLayout.Tab tab) {
+      }
+
+      @Override
+      public void onTabReselected(TabLayout.Tab tab) {
+      }
     });
 
     view.findViewById(R.id.button_save).setOnClickListener(this::handleSave);
     view.findViewById(R.id.fab_ar).setOnClickListener(this::handleAr);
+
   }
 
   private void handleAr(View view) {
@@ -115,7 +127,7 @@ public class EditFragment extends Fragment {
     if (editIndex == -1) {
       viewModel.addMarker(editMarker);
     } else {
-      viewModel.setMarker(editIndex, editMarker);
+      viewModel.updateMarker(editMarker);
     }
 
     Navigation.findNavController(view).navigate(R.id.action_list_markers);
@@ -169,6 +181,7 @@ public class EditFragment extends Fragment {
 
   public interface UpdateMarkerHandler {
     void updateMarker(Bitmap bitmap);
+
     void updateMarker(int ic_launcher);
   }
 }

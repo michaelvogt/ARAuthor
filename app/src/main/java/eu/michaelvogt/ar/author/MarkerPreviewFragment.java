@@ -70,9 +70,9 @@ public class MarkerPreviewFragment extends PreviewFragment {
         isSceneDropped = true;
 
         Anchor anchor = hitResult.createAnchor();
-        Marker marker = viewModel.getMarker(getArguments().getInt("marker_id"));
-
-        buildMarkerScene(anchor, marker, marker.getSize().x, marker.getSize().z);
+        // TODO: make sure propper db uid is provided
+        viewModel.getMarker(getArguments().getInt("marker_id")).observe(this,
+            marker -> buildMarkerScene(anchor, marker, marker.getSize().x, marker.getSize().z));
       } else if (plane.getTrackingState() == TrackingState.STOPPED) {
         isSceneDropped = false;
       }

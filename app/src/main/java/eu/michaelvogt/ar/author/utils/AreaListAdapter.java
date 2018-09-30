@@ -52,7 +52,8 @@ public class AreaListAdapter extends RecyclerView.Adapter<AreaListAdapter.ViewHo
 
   @Override
   public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-    Area item = viewModel.getArea(viewModel.getMarker(markerId).getAreaId(position));
+    // TODO: Use proper db query
+    Area item = null; //viewModel.getArea(viewModel.getMarker(markerId).getAreaId(position));
     holder.areaName.setText(item.getTitle());
 
     int typeResource = R.drawable.ic_launcher;
@@ -75,7 +76,8 @@ public class AreaListAdapter extends RecyclerView.Adapter<AreaListAdapter.ViewHo
 
   @Override
   public int getItemCount() {
-    return markerId == -1 ? 0 : viewModel.getMarker(markerId).getAreaIds().size();
+    // Get the count from a field var
+    return 0; // markerId == -1 ? 0 : viewModel.getMarker(markerId).getAreaIds().size();
   }
 
   public void setItemClickListener(ItemClickListener listener) {

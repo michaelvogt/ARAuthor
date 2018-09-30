@@ -20,26 +20,20 @@ package eu.michaelvogt.ar.author.data;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Insert;
-import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
-import android.arch.persistence.room.Update;
 
 import java.util.List;
 
 @Dao
-public interface LocationDao {
-  @Insert(onConflict = OnConflictStrategy.FAIL)
-  public long insert(Location location);
-
-  @Insert
-  public void insertAll(Location... locations);
-
-  @Update
-  public void updateAll(Location... locations);
+public interface LocationDao extends BaseDao<Location> {
+  @Query("SELECT * from locations where locations.u_id=:uId")
+  LiveData<Location> get(int uId);
 
   @Query("SELECT * from locations ORDER BY name ASC")
   LiveData<List<Location>> getAll();
+
+  @Query("SELECT COUNT(*) FROM locations")
+  int getSize();
 
   @Query("DELETE FROM locations")
   void deleteAll();

@@ -50,6 +50,9 @@
             android:id="@+id/action_panorama"
             app:destination="@id/panoramaFragment"
             app:popUpTo="@+id/imagePreviewFragment" />
+        <argument
+            android:name="location_id"
+            android:defaultValue="-1" />
     </fragment>
     <fragment
         android:id="@+id/markerlistFragment"
@@ -207,5 +210,9 @@
         android:id="@+id/panoramaFragment"
         android:name="eu.michaelvogt.ar.author.PanoramaFragment"
         android:label="fragment_panorama"
-        tools:layout="@layout/fragment_panorama" />
+        tools:layout="@layout/fragment_panorama" >
+        <action
+            android:id="@+id/action_panoramaFragment_to_imagePreviewFragment"
+            app:destination="@id/imagePreviewFragment" />
+    </fragment>
 </navigation>

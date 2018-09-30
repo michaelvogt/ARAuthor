@@ -59,7 +59,7 @@ public class Marker {
   @ColumnInfo(name = "intro")
   private String intro;
 
-  @Ignore
+  @ColumnInfo(name = "is_title")
   private boolean isTitle = false;
 
   @ColumnInfo(name = "location")
@@ -79,18 +79,13 @@ public class Marker {
   @ColumnInfo(name = "show_background")
   private boolean showBackground;
 
-  @Ignore
-  // TODO: add relationship
-  private List<Integer> areaIds;
-
   public Marker() {
-    this("", "", "", "",
-        "", .0f, Vector3.zero(), Vector3.zero(), true, new ArrayList<>());
+    this("", "", "", "", "", .0f,
+        Vector3.zero(), Vector3.zero(), true, 0, false);
   }
 
-  // TODO: Delete when database setup is complete
   public Marker(String markerImagePath, String backgroundImagePath, String title, String intro, String location,
-                float widthInM, Vector3 zeroPoint, Vector3 size, boolean showBackground, List<Integer> areas) {
+                float widthInM, Vector3 zeroPoint, Vector3 size, boolean showBackground, int locationId, boolean isTitle) {
     this.markerImagePath = markerImagePath;
     this.title = title;
     this.intro = intro;
@@ -100,21 +95,8 @@ public class Marker {
     this.size = size;
     this.backgroundImagePath = backgroundImagePath;
     this.showBackground = showBackground;
-    this.thumbPath = "";
-    this.areaIds = areas;
-  }
-
-  public Marker(String markerImagePath, String backgroundImagePath, String title, String intro, String location,
-                float widthInM, Vector3 zeroPoint, Vector3 size, boolean showBackground) {
-    this.markerImagePath = markerImagePath;
-    this.title = title;
-    this.intro = intro;
-    this.location = location;
-    this.widthInM = widthInM;
-    this.zeroPoint = zeroPoint;
-    this.size = size;
-    this.backgroundImagePath = backgroundImagePath;
-    this.showBackground = showBackground;
+    this.locationId = locationId;
+    this.isTitle = isTitle;
     this.thumbPath = "";
   }
 
@@ -131,13 +113,15 @@ public class Marker {
     this.backgroundImagePath = marker.getBackgroundImagePath();
     this.showBackground = marker.isShowBackground();
     this.thumbPath = marker.getThumbPath();
-    this.areaIds = marker.getAreaIds();
+    this.locationId = marker.getLocationId();
   }
 
   // TODO: Hack - Replace with Location object
-  public Marker(String title) {
+  @Ignore
+  public Marker(String title, int locationId) {
     this.title = title;
     this.isTitle = true;
+    this.locationId = locationId;
   }
 
   public int getUId() {
@@ -233,11 +217,11 @@ public class Marker {
   }
 
   public List<Integer> getAreaIds() {
-    return areaIds;
+    return null;
   }
 
   public int getAreaId(int index) {
-    return areaIds.get(index);
+    return 0;
   }
 
   public boolean isTitle() {
@@ -245,7 +229,6 @@ public class Marker {
   }
 
   public void setAreaIds(ArrayList<Integer> areaIds) {
-    this.areaIds = areaIds;
   }
 
   public int getLocationId() {

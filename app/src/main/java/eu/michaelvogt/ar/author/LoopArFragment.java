@@ -42,6 +42,10 @@ public class LoopArFragment extends ArFragment {
   String focusMode;
   String lightEstimation;
 
+  int locationId;
+
+  Bitmap bitmap;
+  String location = "";
 
   @Override
   protected Config getSessionConfiguration(Session session) {
@@ -49,32 +53,32 @@ public class LoopArFragment extends ArFragment {
     AugmentedImageDatabase imagedb = new AugmentedImageDatabase(session);
 
     if (!hasMarker) {
-      Bitmap bitmap;
-      String location = "";
-      for (Marker marker : viewModel.markerIterable()) {
-        try {
-          if (marker.isTitle()) {
-            location = marker.getTitle();
-          } else {
-            bitmap = ImageUtils.decodeSampledBitmapFromImagePath(
-                marker.getMarkerImagePath(), Marker.MIN_SIZE, Marker.MIN_SIZE);
-            if (bitmap != null) {
-              int index = marker.getWidthInM() <= 0
-                  ? imagedb.addImage(String.valueOf(marker.getUId()), bitmap)
-                  : imagedb.addImage(String.valueOf(marker.getUId()), bitmap, marker.getWidthInM());
-              Log.d(TAG, "marker " + location + " - " + marker.getTitle() + "(" + index + ")" + " imported");
+      viewModel.getMarkersForLocation(locationId, false).observe(this, markers -> {
+        for (Marker marker : markers) {
+          try {
+            if (marker.isTitle()) {
+              location = marker.getTitle();
             } else {
-              Log.d(TAG, "marker " + location + " - " + marker.getTitle() + " NOT imported");
-              Snackbar.make(getView(), "marker " + marker.getTitle() + " NOT imported",
-                  Snackbar.LENGTH_SHORT).show();
+              bitmap = ImageUtils.decodeSampledBitmapFromImagePath(
+                  marker.getMarkerImagePath(), Marker.MIN_SIZE, Marker.MIN_SIZE);
+              if (bitmap != null) {
+                int index = marker.getWidthInM() <= 0
+                    ? imagedb.addImage(String.valueOf(marker.getUId()), bitmap)
+                    : imagedb.addImage(String.valueOf(marker.getUId()), bitmap, marker.getWidthInM());
+                Log.d(TAG, "marker " + location + " - " + marker.getTitle() + "(" + index + ")" + " imported");
+              } else {
+                Log.d(TAG, "marker " + location + " - " + marker.getTitle() + " NOT imported");
+                Snackbar.make(getView(), "marker " + marker.getTitle() + " NOT imported",
+                    Snackbar.LENGTH_SHORT).show();
+              }
             }
+          } catch (Throwable ex) {
+            Log.e(TAG, "Something bad happened", ex);
+            Snackbar.make(getView(), "Exception: " + ex.getMessage(),
+                Snackbar.LENGTH_SHORT).show();
           }
-        } catch (Throwable ex) {
-          Log.e(TAG, "Something bad happened", ex);
-          Snackbar.make(getView(), "Exception: " + ex.getMessage(),
-              Snackbar.LENGTH_SHORT).show();
         }
-      }
+      });
     }
 
     Config config = new Config(session);

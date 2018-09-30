@@ -93,11 +93,14 @@ public class AreaPreviewFragment extends Fragment {
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     AuthorViewModel viewModel = ViewModelProviders.of(getActivity()).get(AuthorViewModel.class);
+    // TODO: Make sure propper db uid is provided
     int markerId = getArguments().getInt("marker_id");
-    editMarker = viewModel.getMarker(markerId);
+    viewModel.getMarker(markerId).observe(this, marker -> {
+      editMarker = marker;
 
-    areaIndex = getArguments().getInt("area_id");
-    editArea = viewModel.getArea(editMarker.getAreaId(areaIndex));
+      areaIndex = getArguments().getInt("area_id");
+      editArea = viewModel.getArea(editMarker.getAreaId(areaIndex));
+    });
 
     arFragment = (LoopArFragment) getChildFragmentManager().findFragmentById(R.id.ux_fragment);
     arFragment.getPlaneDiscoveryController().hide();
@@ -137,7 +140,7 @@ public class AreaPreviewFragment extends Fragment {
 
     Collection<AugmentedImage> updatedArImages = frame.getUpdatedTrackables(AugmentedImage.class);
     for (AugmentedImage image : updatedArImages) {
-      if (image.getName().equals(editMarker.getTitle())) {
+      if (editMarker != null && image.getName().equals(editMarker.getTitle())) {
         switch (image.getTrackingState()) {
           case TRACKING:
             if (augmentedImage == null) {

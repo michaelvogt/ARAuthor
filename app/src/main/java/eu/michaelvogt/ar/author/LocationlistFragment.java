@@ -31,11 +31,13 @@ import android.view.ViewGroup;
 
 import androidx.navigation.Navigation;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
+import eu.michaelvogt.ar.author.data.Location;
 import eu.michaelvogt.ar.author.utils.ItemClickListener;
 import eu.michaelvogt.ar.author.utils.LocationListAdapter;
 
 public class LocationlistFragment extends Fragment implements ItemClickListener {
   private View view;
+  private LocationListAdapter adapter;
 
   public LocationlistFragment() {/* Required empty public constructor*/}
 
@@ -56,7 +58,7 @@ public class LocationlistFragment extends Fragment implements ItemClickListener 
     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
     recyclerView.setLayoutManager(layoutManager);
 
-    LocationListAdapter adapter = new LocationListAdapter(getContext());
+    adapter = new LocationListAdapter(getContext());
     adapter.setItemClickListener(this);
 
     recyclerView.setAdapter(adapter);
@@ -67,8 +69,10 @@ public class LocationlistFragment extends Fragment implements ItemClickListener 
 
   @Override
   public void onItemClicked(int position) {
+    Location location = adapter.getLocation(position);
+
     Bundle bundle = new Bundle();
-    bundle.putInt("location_id", position);
+    bundle.putInt("location_id", location.getUId());
     Navigation.findNavController(view).navigate(R.id.action_location_intro, bundle);
   }
 }

@@ -28,8 +28,7 @@ material {
         "position",
         "uv0"
     ],
-    shadingModel: "unlit",
-    blending : "transparent",
+    blending : "fade",
 }
 
 fragment {

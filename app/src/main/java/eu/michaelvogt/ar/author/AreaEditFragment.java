@@ -23,7 +23,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,14 +32,11 @@ import android.widget.Switch;
 import com.google.ar.sceneform.math.Quaternion;
 import com.google.ar.sceneform.math.Vector3;
 
-import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import eu.michaelvogt.ar.author.data.Area;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
-import eu.michaelvogt.ar.author.data.Marker;
 
 public class AreaEditFragment extends Fragment {
-  private AuthorViewModel viewModel;
   private Area editArea;
 
   private Switch useTranslucentSwitch;
@@ -59,7 +55,7 @@ public class AreaEditFragment extends Fragment {
   public AreaEditFragment() {}
 
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
+  public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     // Inflate the layout for this fragment
     return inflater.inflate(R.layout.fragment_area_edit, container, false);
@@ -69,12 +65,13 @@ public class AreaEditFragment extends Fragment {
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
 
-    viewModel = ViewModelProviders.of(getActivity()).get(AuthorViewModel.class);
+    AuthorViewModel viewModel = ViewModelProviders.of(getActivity()).get(AuthorViewModel.class);
     int markerId = getArguments().getInt("marker_id");
-    Marker editMarker = viewModel.getMarker(markerId);
 
-    int areaIndex = getArguments().getInt("area_id");
-    editArea = viewModel.getArea(editMarker.getAreaId(areaIndex));
+    // TODO: Make sure proper db uid is provided
+    int areaId = getArguments().getInt("area_id");
+    // TODO: get area from db
+    // editArea = viewModel.getArea(editMarker.getAreaId(areaId));
 
     useTranslucentSwitch = view.findViewById(R.id.area_edit_display_translucent);
     useTranslucentSwitch.setChecked(getArguments().getInt("area_edit_translucency") == 1);
