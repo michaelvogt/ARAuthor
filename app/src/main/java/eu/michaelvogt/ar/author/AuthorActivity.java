@@ -47,37 +47,7 @@ public class AuthorActivity extends AppCompatActivity {
   }
 
   private void initViewModel() {
-    viewModel.addLocation(new Location(
-        "石見銀山",
-        "Touristar/iwamiginzan/images/igk_machinami.jpg",
-        "Touristar/iwamiginzan/intro.html",
-        Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28)));
-
-    viewModel.addLocation(new Location(
-        "Hakodate",
-        "Touristar/hakodate/images/goryokakumainhall.jpg",
-        "Touristar/hakodate/intro.html",
-        Arrays.asList(29, 30)));
-
  /*
-      viewModel.addArea(new Area(Area.TYPE_IMAGEONIMAGE,
-        Area.KIND_CONTENT,
-        "Muneoka Background Image",
-        R.layout.view_image,
-        Detail.builder()
-            .setImagePath("Touristar/iwamiginzan/muneokake/infoboard/images/IMG_20180609_115300.png")
-            .setSecondaryImagePath("Touristar/iwamiginzan/muneokake/infoboard/images/IMG_20180826_112846.png")
-            .setFade(Detail.KEY_FADE_RIGHT_WIDTH, 0.4f)
-            .setAllowZoom(true)
-            .addSendsEvent(Event.EVENT_HIDECONTENT, null)
-            .addSendsEvent(Event.EVENT_ZOOM, EventDetail.builder().setTitle("Muneoka Slide Area"))
-            .addSendsEvent(Event.EVENT_SETMAINCONTENT, EventDetail.builder().setTitle("Muneoka Slide Area")),
-        Vector3.zero(),
-        new Vector3(0.415f, 0.572f, 0.01f),
-        Area.COORDINATE_LOCAL,
-        new Vector3(-0.236f, 0.01f, 0.0f),
-        new Quaternion(new Vector3(-1.0f, 0.0f, 0.0f), 90.0f),
-        Vector3.one()));
 
     viewModel.addArea(new Area(Area.TYPE_TEXTONIMAGE,
         Area.KIND_CONTENT,
@@ -98,7 +68,7 @@ public class AuthorActivity extends AppCompatActivity {
     viewModel.addArea(new Area(Area.TYPE_ROTATIONBUTTON,
         Area.KIND_UI,
         "Muneoka Language Selector",
-        // TODO: Remove and hardcode in Node
+        // TODO: Remove and hardcode in Node?
         R.layout.view_image,
         Detail.builder()
             .setImageResource(R.drawable.ic_language_selector)

@@ -18,6 +18,7 @@
 
 package eu.michaelvogt.ar.author.utils;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -26,19 +27,24 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
+
 import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.Area;
-import eu.michaelvogt.ar.author.data.AuthorViewModel;
 
 public class AreaListAdapter extends RecyclerView.Adapter<AreaListAdapter.ViewHolder> {
-  private final AuthorViewModel viewModel;
-  private int markerId;
   private ItemClickListener listener;
+  private Context context;
+  private List<Area> areas;
 
   // Provide a suitable constructor (depends on the kind of dataset)
-  public AreaListAdapter(AuthorViewModel viewModel, int MarkerId) {
-    this.viewModel = viewModel;
-    markerId = MarkerId;
+  public AreaListAdapter(Context context) {
+    this.context = context;
+  }
+
+  public void setAreas(List<Area> areas) {
+    this.areas = areas;
+    notifyDataSetChanged();
   }
 
   // Create new views (invoked by the layout manager)
@@ -52,32 +58,32 @@ public class AreaListAdapter extends RecyclerView.Adapter<AreaListAdapter.ViewHo
 
   @Override
   public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-    // TODO: Use proper db query
-    Area item = null; //viewModel.getArea(viewModel.getMarker(markerId).getAreaId(position));
-    holder.areaName.setText(item.getTitle());
+    if (areas != null) {
+      Area area = areas.get(position);
+      holder.areaName.setText(area.getTitle());
 
-    int typeResource = R.drawable.ic_launcher;
+      int typeResource = R.drawable.ic_launcher;
 
-    switch (item.getObjectType()) {
-      case Area.TYPE_3DOBJECTONPLANE:
-      case Area.TYPE_3DOBJECTONIMAGE:
-        typeResource = Area.ICON_3DOBJECT;
-        break;
-      case Area.TYPE_SLIDESONIMAGE:
-        typeResource = Area.ICON_FLATOVERLAY;
-        break;
-      case Area.TYPE_INTERACTIVEOVERLAY:
-        typeResource = Area.ICON_INTERACTIVEOVERLAY;
-        break;
+      switch (area.getObjectType()) {
+        case Area.TYPE_3DOBJECTONPLANE:
+        case Area.TYPE_3DOBJECTONIMAGE:
+          typeResource = Area.ICON_3DOBJECT;
+          break;
+        case Area.TYPE_SLIDESONIMAGE:
+          typeResource = Area.ICON_FLATOVERLAY;
+          break;
+        case Area.TYPE_INTERACTIVEOVERLAY:
+          typeResource = Area.ICON_INTERACTIVEOVERLAY;
+          break;
+      }
+
+      holder.areaImage.setImageResource(typeResource);
     }
-
-    holder.areaImage.setImageResource(typeResource);
   }
 
   @Override
   public int getItemCount() {
-    // Get the count from a field var
-    return 0; // markerId == -1 ? 0 : viewModel.getMarker(markerId).getAreaIds().size();
+    return areas == null ? 0 : areas.size();
   }
 
   public void setItemClickListener(ItemClickListener listener) {

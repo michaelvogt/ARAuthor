@@ -56,9 +56,11 @@ public class ImagePreviewFragment extends PreviewFragment {
 
     arFragment.getArSceneView().getScene().addOnUpdateListener(this::onUpdateFrame);
 
-    view.findViewById(R.id.listmarker_fab).setOnClickListener(
-        Navigation.createNavigateOnClickListener(R.id.markerlistFragment)
-    );
+    view.findViewById(R.id.listmarker_fab).setOnClickListener(v -> {
+      Bundle bundle = new Bundle();
+      bundle.putInt("location_id", getArguments().getInt("location_id"));
+      Navigation.findNavController(view).navigate(R.id.action_list_markers, bundle);
+    });
   }
 
   @Override

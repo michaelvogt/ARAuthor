@@ -19,6 +19,7 @@ package eu.michaelvogt.ar.author.data.utils;
 
 import android.arch.persistence.room.TypeConverter;
 
+import com.google.ar.sceneform.math.Quaternion;
 import com.google.ar.sceneform.math.Vector3;
 
 import java.util.Date;
@@ -27,10 +28,8 @@ public class Converters {
   private static final String DIVIDER = "!!";
 
   @TypeConverter
-  public static Vector3 fromString(String value) {
-    if (value == null) {
-      return null;
-    }
+  public static Vector3 vector3FromString(String value) {
+    if (value == null) return null;
 
     String[] split = value.split(DIVIDER);
     return new Vector3(
@@ -42,6 +41,29 @@ public class Converters {
     return vector3 == null ? null :
         String.valueOf(vector3.x) + DIVIDER + vector3.y + DIVIDER + vector3.z;
   }
+
+
+  @TypeConverter
+  public static Quaternion quaternionFromString(String value) {
+    if (value == null) return null;
+
+    String[] split = value.split(DIVIDER);
+
+    Quaternion result = new Quaternion();
+    result.x = Float.parseFloat(split[0]);
+    result.y = Float.parseFloat(split[1]);
+    result.z = Float.parseFloat(split[2]);
+    result.w = Float.parseFloat(split[3]);
+
+    return result;
+  }
+
+  @TypeConverter
+  public static String quaternionToString(Quaternion quaternion) {
+    return quaternion == null ? null : String.valueOf(
+        quaternion.x + DIVIDER + quaternion.y + DIVIDER + quaternion.z + DIVIDER + quaternion.w);
+  }
+
 
   @TypeConverter
   public static Date fromTimestamp(Long value) {

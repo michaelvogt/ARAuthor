@@ -63,8 +63,8 @@ public class Area {
   public static final String BACKGROUNDAREATITLE = "background";
 
   @PrimaryKey(autoGenerate = true)
-  @NonNull
-  private Integer uid;
+  @ColumnInfo(name = "u_id")
+  private int uid;
 
   @ColumnInfo(name = "title")
   private String title;
@@ -78,11 +78,9 @@ public class Area {
   @ColumnInfo(name = "coord_type")
   private int coordType;
 
-  @Ignore
   @ColumnInfo(name = "position")
   private Vector3 position;
 
-  @Ignore
   @ColumnInfo(name = "zero_point")
   private Vector3 zeroPoint;
 
@@ -93,20 +91,14 @@ public class Area {
   @ColumnInfo(name = "detail")
   private Detail detail;
 
-  @Ignore
   @ColumnInfo(name = "size")
   private Vector3 size;
 
-  @Ignore
   @ColumnInfo(name = "rotation")
   private Quaternion rotation;
 
-  @Ignore
   @ColumnInfo(name = "scale")
   private Vector3 scale;
-
-  @ColumnInfo(name = "marker_id")
-  private int markerId;
 
   public Area() {
     this(0, 0, "", 0, Detail.builder(), Vector3.zero(),
@@ -128,6 +120,7 @@ public class Area {
     this.scale = scale;
   }
 
+  @Ignore
   public Area(Area area) {
     this.objectType = area.getObjectType();
     this.usageType = area.getUsageType();
@@ -149,14 +142,6 @@ public class Area {
 
   public void setUid(@NonNull Integer uid) {
     this.uid = uid;
-  }
-
-  public int getMarkerId() {
-    return markerId;
-  }
-
-  public void setMarkerId(int markerId) {
-    this.markerId = markerId;
   }
 
   public int getObjectType() {

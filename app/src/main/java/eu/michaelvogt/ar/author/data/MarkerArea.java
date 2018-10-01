@@ -18,21 +18,25 @@
 
 package eu.michaelvogt.ar.author.data;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 
 @Entity(tableName = "marker_area",
-    primaryKeys = {"markerId", "areaId"},
+    primaryKeys = {"marker_id", "area_id"},
     foreignKeys = {
         @ForeignKey(entity = Marker.class,
-            parentColumns = "id",
-            childColumns = "markerId"),
+            parentColumns = "u_id",
+            childColumns = "marker_id"),
         @ForeignKey(entity = Area.class,
-            parentColumns = "id",
-            childColumns = "areaId")
+            parentColumns = "u_id",
+            childColumns = "area_id")
     })
 public class MarkerArea {
+  @ColumnInfo(name = "marker_id")
   private int markerId;
+
+  @ColumnInfo(name = "area_id")
   private int areaId;
 
   public MarkerArea(final int markerId, final int areaId) {

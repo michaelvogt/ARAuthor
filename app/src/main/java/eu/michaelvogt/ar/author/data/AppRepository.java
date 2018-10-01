@@ -12,6 +12,9 @@ import java.util.function.Consumer;
 public class AppRepository {
   private LocationDao locationDao;
   private MarkerDao markerDao;
+  private AreaDao areaDao;
+
+  private MarkerAreaDao markerAreaDao;
 
   private LiveData<List<Location>> allLocations;
 
@@ -21,6 +24,20 @@ public class AppRepository {
     allLocations = locationDao.getAll();
 
     markerDao = db.markerDao();
+    areaDao = db.areaDao();
+    markerAreaDao = db.markerAreaDao();
+  }
+
+  public void insert(Location location) {
+    DbTask.execute(() -> locationDao.insert(location));
+  }
+
+  public void insert(Marker marker) {
+    DbTask.execute(() -> markerDao.insert(marker));
+  }
+
+  public void insert(Area area) {
+    DbTask.execute(() -> areaDao.insert(area));
   }
 
   // Location
@@ -36,17 +53,10 @@ public class AppRepository {
     return locationDao.getSize();
   }
 
+
   // Marker
   LiveData<Marker> getMarker(int uId) {
     return markerDao.get(uId);
-  }
-
-  public void insert(Location location) {
-    DbTask.execute(() -> locationDao.insert(location));
-  }
-
-  public void insert(Marker marker) {
-    DbTask.execute(() -> markerDao.insert(marker));
   }
 
   public void update(Location location) {
@@ -64,8 +74,27 @@ public class AppRepository {
 
   @NotNull
   public LiveData<List<Marker>> getMarkersForLocation(int locationId, boolean withTitles) {
-    return markerDao.findMarkersForLocation(locationId, withTitles);
+    if (withTitles) {
+      return markerDao.findMarkersWithTitlesForLocation(locationId);
+    } else {
+      return markerDao.findMarkersWithoutTitlesForLocation(locationId);
+    }
   }
+
+
+  // Area
+  LiveData<Area> getArea(int uId) {
+    return areaDao.get(uId);
+  }
+
+  LiveData<Area> getAreaWithTitle(String title) {
+    return areaDao.findAreaWithTitle(title);
+  }
+
+  public LiveData<List<Area>> getAreasForMarker(int markerId) {
+    return markerAreaDao.getAreasForMarker(markerId);
+  }
+
 
   private static class DbTask<T> extends AsyncTask<Consumer<T>, Void, Void> {
     @Override

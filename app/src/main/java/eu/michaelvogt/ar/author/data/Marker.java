@@ -68,17 +68,16 @@ public class Marker {
   @ColumnInfo(name = "width_in_m")
   private float widthInM = -1;
 
-  @Ignore
   @ColumnInfo(name = "size")
   private Vector3 size;
 
-  @Ignore
   @ColumnInfo(name = "zero_point")
   private Vector3 zeroPoint;
 
   @ColumnInfo(name = "show_background")
   private boolean showBackground;
 
+  @Ignore
   public Marker() {
     this("", "", "", "", "", .0f,
         Vector3.zero(), Vector3.zero(), true, 0, false);

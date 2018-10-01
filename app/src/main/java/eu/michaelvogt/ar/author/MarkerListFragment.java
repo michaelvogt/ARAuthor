@@ -57,17 +57,19 @@ public class MarkerListFragment extends Fragment implements ItemClickListener {
     AuthorViewModel viewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(AuthorViewModel.class);
     int locationId = getArguments().getInt("location_id");
 
-    RecyclerView mRecyclerView = view.findViewById(R.id.marker_list);
-    mRecyclerView.setHasFixedSize(true);
-    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-    mRecyclerView.setLayoutManager(mLayoutManager);
+    RecyclerView recyclerView = view.findViewById(R.id.marker_list);
+    recyclerView.setHasFixedSize(false);
+    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+    recyclerView.setLayoutManager(layoutManager);
 
-    MarkerListAdapter mAdapter = new MarkerListAdapter(getContext());
-    // TODO: get live data wrapped markers
-//    mAdapter.setMarkers(viewModel.getMarkersForLocation(locationId));
-    mAdapter.setItemClickListener(this);
+    MarkerListAdapter adapter = new MarkerListAdapter(getContext());
+    recyclerView.setAdapter(adapter);
 
-    mRecyclerView.setAdapter(mAdapter);
+    viewModel.getMarkersForLocation(locationId, true)
+        .observe(this, markers -> adapter.setMarkers(markers)
+    );
+
+    adapter.setItemClickListener(this);
 
     view.findViewById(R.id.editmarker_fab).setOnClickListener(
         Navigation.createNavigateOnClickListener(R.id.action_edit_marker)
@@ -81,9 +83,9 @@ public class MarkerListFragment extends Fragment implements ItemClickListener {
   }
 
   @Override
-  public void onItemClicked(int position) {
+  public void onItemClicked(int uId) {
     Bundle bundle = new Bundle();
-    bundle.putInt("edit_index", position);
+    bundle.putInt("edit_index", uId);
     Navigation.findNavController(view).navigate(R.id.action_edit_marker, bundle);
   }
 }

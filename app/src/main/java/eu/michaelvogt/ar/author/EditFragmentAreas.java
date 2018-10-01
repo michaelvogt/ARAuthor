@@ -37,7 +37,6 @@ import eu.michaelvogt.ar.author.utils.ItemClickListener;
 public class EditFragmentAreas extends Fragment implements ItemClickListener {
   private View view;
 
-  private AuthorViewModel viewModel;
   private int markerId;
 
   public EditFragmentAreas() {/* Required empty public constructor*/}
@@ -53,17 +52,19 @@ public class EditFragmentAreas extends Fragment implements ItemClickListener {
     super.onViewCreated(view, savedInstanceState);
 
     this.view = view;
-    viewModel = ViewModelProviders.of(getActivity()).get(AuthorViewModel.class);
+    AuthorViewModel viewModel = ViewModelProviders.of(getActivity()).get(AuthorViewModel.class);
 
-    RecyclerView mRecyclerView = view.findViewById(R.id.areas_list);
-    mRecyclerView.setHasFixedSize(true);
+    RecyclerView recyclerView = view.findViewById(R.id.areas_list);
+    recyclerView.setHasFixedSize(true);
     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-    mRecyclerView.setLayoutManager(mLayoutManager);
+    recyclerView.setLayoutManager(mLayoutManager);
 
-    AreaListAdapter mAdapter = new AreaListAdapter(viewModel, markerId);
-    mAdapter.setItemClickListener(this);
+    AreaListAdapter adapter = new AreaListAdapter(getContext());
+    adapter.setItemClickListener(this);
 
-    mRecyclerView.setAdapter(mAdapter);
+    recyclerView.setAdapter(adapter);
+
+    viewModel.getAreasForMarker(markerId).observe(this, adapter::setAreas);
   }
 
   @Override

@@ -18,6 +18,7 @@
 
 package eu.michaelvogt.ar.author.data;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
@@ -25,15 +26,18 @@ import android.arch.persistence.room.Query;
 import java.util.List;
 
 @Dao
-public interface MarkerAreaDao {
+public interface MarkerAreaDao extends BaseDao<MarkerArea> {
   @Insert
-  void insert(MarkerArea markerArea);
+  long insert(MarkerArea markerArea);
 
   @Query("SELECT * FROM markers INNER JOIN marker_area ON " +
-      "markers.u_id=marker_area.markerId WHERE marker_area.areaId=:areaId")
-  List<Location> getMarkersForArea(int areaId);
+      "markers.u_id=marker_area.marker_id WHERE marker_area.area_id=:areaId")
+  LiveData<List<Marker>> getMarkersForArea(int areaId);
 
   @Query("SELECT * FROM areas INNER JOIN marker_area ON " +
-      "areas.uid = marker_area.areaId WHERE marker_area.markerId =:markerId")
-  List<Marker> getAreasForMarker(int markerId);
+      "areas.u_id = marker_area.area_id WHERE marker_area.marker_id =:markerId")
+  LiveData<List<Area>> getAreasForMarker(int markerId);
+
+  @Query("DELETE FROM marker_area")
+  void deleteAll();
 }

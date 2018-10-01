@@ -68,8 +68,11 @@ public class MarkerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
   @Override
   public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-    Marker item = markers.get(position);
+    if (markers == null) {
+      return;
+    }
 
+    Marker item = markers.get(position);
     if (holder instanceof HeaderHolder) {
       HeaderHolder headerHolder = (HeaderHolder) holder;
       headerHolder.titleView.setText(item.getTitle());
@@ -89,7 +92,7 @@ public class MarkerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
   @Override
   public int getItemCount() {
-    return markers.size();
+    return markers == null ? 0 : markers.size();
   }
 
   class MarkerHolder extends RecyclerView.ViewHolder {
@@ -109,7 +112,8 @@ public class MarkerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         if (listener != null) {
           int position = getAdapterPosition();
           if (position != RecyclerView.NO_POSITION) {
-            listener.onItemClicked(position);
+            int uId = markers.get(position).getUId();
+            listener.onItemClicked(uId);
           }
         }
       });

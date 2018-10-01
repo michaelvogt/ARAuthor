@@ -37,18 +37,12 @@ public class Location {
   @ColumnInfo(name = "thumb_path")
   private String thumbPath;
 
-  @Ignore
-  @ColumnInfo(name = "markers")
-  private List<Marker> markers;
-
   @ColumnInfo(name = "intro_html_path")
   private String introHtmlPath;
 
   @Ignore
-  public Location(String name, String thumbPath, String introHtmlPath, List<Integer> markers) {
-    this.name = name;
-    this.thumbPath = thumbPath;
-    this.introHtmlPath = introHtmlPath;
+  public Location() {
+    this("", "", "");
   }
 
   public Location(String name, String thumbPath, String introHtmlPath) {
@@ -83,14 +77,6 @@ public class Location {
 
   public void setThumbPath(String thumbPath) {
     this.thumbPath = thumbPath;
-  }
-
-  public List<Marker> getMarkers() {
-    return markers;
-  }
-
-  public void setMarkers(List<Marker> markers) {
-    this.markers = markers;
   }
 
   public void setIntroHtmlPath(String introHtmlPath) {

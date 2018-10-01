@@ -32,8 +32,11 @@ public interface MarkerDao extends BaseDao<Marker> {
   @Query("SELECT * from markers ORDER BY title ASC")
   LiveData<List<Marker>> getAll();
 
-  @Query("SELECT * FROM markers WHERE location_id=:locationId AND is_title=:withTitles")
-  LiveData<List<Marker>> findMarkersForLocation(final int locationId, boolean withTitles);
+  @Query("SELECT * FROM markers WHERE location_id=:locationId AND is_title=0")
+  LiveData<List<Marker>> findMarkersWithoutTitlesForLocation(final int locationId);
+
+  @Query("SELECT * FROM markers WHERE location_id=:locationId")
+  LiveData<List<Marker>> findMarkersWithTitlesForLocation(final int locationId);
 
   @Query("DELETE FROM markers")
   void deleteAll();

@@ -112,7 +112,7 @@ public class PreviewFragment extends Fragment {
   private void buildAreas(Node anchorNode, List<Integer> areaIds, float backgroundHeight, float backgroundWidth) {
     if (areaIds.size() > 0) {
       for (int areaId : areaIds) {
-        buildArea(anchorNode, viewModel.getArea(areaId), null);
+        viewModel.getArea(areaId).observe(this, area -> buildArea(anchorNode, area, null));
       }
     } else {
       // Build a default area for demo purposes

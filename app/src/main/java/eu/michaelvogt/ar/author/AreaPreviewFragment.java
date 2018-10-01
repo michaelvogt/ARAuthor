@@ -65,7 +65,6 @@ public class AreaPreviewFragment extends Fragment {
   private static final Color NOPLANECOLOR = new Color(1.0f, 0.0f, 0.0f, 1f);
   private static final Color PLANECOLOR = new Color(0.0f, 1.0f, 0.0f, 1f);
 
-  private int areaIndex;
   private Marker editMarker;
   private Area editArea;
 
@@ -95,12 +94,10 @@ public class AreaPreviewFragment extends Fragment {
     AuthorViewModel viewModel = ViewModelProviders.of(getActivity()).get(AuthorViewModel.class);
     // TODO: Make sure propper db uid is provided
     int markerId = getArguments().getInt("marker_id");
-    viewModel.getMarker(markerId).observe(this, marker -> {
-      editMarker = marker;
+    viewModel.getMarker(markerId).observe(this, marker -> editMarker = marker);
 
-      areaIndex = getArguments().getInt("area_id");
-      editArea = viewModel.getArea(editMarker.getAreaId(areaIndex));
-    });
+    int areaId = getArguments().getInt("area_id");
+    viewModel.getArea(areaId).observe(this, area -> editArea = area);
 
     arFragment = (LoopArFragment) getChildFragmentManager().findFragmentById(R.id.ux_fragment);
     arFragment.getPlaneDiscoveryController().hide();
@@ -114,7 +111,7 @@ public class AreaPreviewFragment extends Fragment {
     editButton.setOnClickListener(event -> {
       Bundle bundle = new Bundle();
       bundle.putInt("marker_id", markerId);
-      bundle.putInt("area_id", areaIndex);
+      bundle.putInt("area_id", areaId);
       bundle.putInt("area_edit_translucency", useTranslucency ? 1 : 0);
       Navigation.findNavController(view).navigate(R.id.action_edit_area, bundle);
     });

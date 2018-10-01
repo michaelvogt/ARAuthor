@@ -146,14 +146,14 @@ public class AuthorAnchorNode extends AnchorNode {
 
   private void handleZoom(EventDetail eventDetail) {
     AuthorViewModel viewModel = ViewModelProviders.of((FragmentActivity) context).get(AuthorViewModel.class);
-    Area zoomedSliderArea = viewModel.getArea(eventDetail.getTitle()).get();
+    viewModel.getArea(eventDetail.getTitle()).observe(null, area -> {
+      Node background = findInHierarchy(node -> node.getName().equals(Area.BACKGROUNDAREATITLE));
 
-    Node background = findInHierarchy(node -> node.getName().equals(Area.BACKGROUNDAREATITLE));
-
-    AreaNodeBuilder.builder(context, zoomedSliderArea)
-        .setScene(getScene())
-        .build()
-        .thenAccept(node -> node.setParent(background));
+      AreaNodeBuilder.builder(context, area)
+          .setScene(getScene())
+          .build()
+          .thenAccept(node -> node.setParent(background));
+    });
   }
 
   @SuppressLint("ClickableViewAccessibility")

@@ -18,9 +18,24 @@
 
 package eu.michaelvogt.ar.author.data;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Query;
+
+import java.util.List;
 
 @Dao
-public interface AreaDao {
-  
+public interface AreaDao extends BaseDao<Area> {
+  @Query("SELECT * from areas where areas.u_id=:uId")
+  LiveData<Area> get(int uId);
+
+  @Query("SELECT * from areas where areas.title=:title")
+  LiveData<Area> findAreaWithTitle(String title);
+
+  @Query("SELECT * from areas ORDER BY title ASC")
+  LiveData<List<Area>> getAll();
+
+  @Query("DELETE FROM areas")
+  void deleteAll();
+
 }

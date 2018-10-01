@@ -27,16 +27,22 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
+import com.google.ar.sceneform.math.Quaternion;
 import com.google.ar.sceneform.math.Vector3;
 
+import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.utils.Converters;
 
-@Database(entities = {Location.class, Marker.class}, version = 2)
+@Database(entities = {Location.class, Marker.class, Area.class, MarkerArea.class}, version = 5)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
   public abstract LocationDao locationDao();
 
   public abstract MarkerDao markerDao();
+
+  public abstract AreaDao areaDao();
+
+  public abstract MarkerAreaDao markerAreaDao();
 
   private static AppDatabase INSTANCE;
 
@@ -69,25 +75,32 @@ public abstract class AppDatabase extends RoomDatabase {
 
     private final LocationDao locationDao;
     private final MarkerDao markerDao;
+    private final AreaDao areaDao;
+
+    private final MarkerAreaDao markerAreaDao;
 
     PopulateDbAsync(AppDatabase db) {
       locationDao = db.locationDao();
       markerDao = db.markerDao();
+      areaDao = db.areaDao();
+
+      markerAreaDao = db.markerAreaDao();
     }
 
     @Override
     protected Void doInBackground(final Void... params) {
+      markerAreaDao.deleteAll();
+      areaDao.deleteAll();
       markerDao.deleteAll();
       locationDao.deleteAll();
 
-      int locationId = Math.toIntExact(
-          insertLocation(new Location(
-              "石見銀山",
-              "Touristar/iwamiginzan/images/igk_machinami.jpg",
-              "Touristar/iwamiginzan/intro.html")));
+      int locationId = insertLocation(new Location(
+          "石見銀山",
+          "Touristar/iwamiginzan/images/igk_machinami.jpg",
+          "Touristar/iwamiginzan/intro.html"));
 
       insertMarker(new Marker("城上神社", locationId));
-      insertMarker(new Marker(
+      int markerId = insertMarker(new Marker(
           "/Touristar/Markers/IMG_20180522_105701.jpg",
           "",
           "看板",
@@ -213,11 +226,11 @@ public abstract class AppDatabase extends RoomDatabase {
 
 
       insertMarker(new Marker("宗岡家", locationId));
-      insertMarker(new Marker(
+      markerId = insertMarker(new Marker(
           "/Touristar/Markers/P_20180804_175049_vHDR_On.jpg",
           "/Touristar/iwamiginzan/muneokake/boardbackground.png",
           "看板",
-          "",
+          "宗岡は、戦国時代毛利輝元の「銀山六人衆」として知られ、諸役の徴収方を担いました。江戸時代に入ると、奉行大久保長安に召し抱えられ",
           "宗岡家",
           0.435f,
           Vector3.zero(),
@@ -225,6 +238,27 @@ public abstract class AppDatabase extends RoomDatabase {
           true,
           locationId,
           false));
+
+      int areaId = insertArea(new Area(Area.TYPE_IMAGEONIMAGE,
+          Area.KIND_CONTENT,
+          "Muneoka Background Image",
+          R.layout.view_image,
+          Detail.builder()
+              .setImagePath("Touristar/iwamiginzan/muneokake/infoboard/images/IMG_20180609_115300.png")
+              .setSecondaryImagePath("Touristar/iwamiginzan/muneokake/infoboard/images/IMG_20180826_112846.png")
+              .setFade(Detail.KEY_FADE_RIGHT_WIDTH, 0.4f)
+              .setAllowZoom(true)
+              .addSendsEvent(Event.EVENT_HIDECONTENT, null)
+              .addSendsEvent(Event.EVENT_ZOOM, EventDetail.builder().setTitle("Muneoka Slide Area"))
+              .addSendsEvent(Event.EVENT_SETMAINCONTENT, EventDetail.builder().setTitle("Muneoka Slide Area")),
+          Vector3.zero(),
+          new Vector3(0.415f, 0.572f, 0.01f),
+          Area.COORDINATE_LOCAL,
+          new Vector3(-0.236f, 0.01f, 0.0f),
+          new Quaternion(new Vector3(-1.0f, 0.0f, 0.0f), 90.0f),
+          Vector3.one()));
+
+      insertMarkerArea(markerId, areaId);
 
 
       insertMarker(new Marker("金森家", locationId));
@@ -340,6 +374,12 @@ public abstract class AppDatabase extends RoomDatabase {
           locationId,
           false));
 
+
+      locationId = insertLocation(new Location(
+          "箱館",
+          "Touristar/hakodate/images/goryokakumainhall.jpg",
+          "Touristar/hakodate/intro.html"));
+
       insertMarker(new Marker("箱館", locationId));
       insertMarker(new Marker(
           "/Touristar/Markers/office_front.jpg",
@@ -354,23 +394,23 @@ public abstract class AppDatabase extends RoomDatabase {
           locationId,
           false));
 
-
-      locationId = Math.toIntExact(
-          insertLocation(new Location(
-              "箱館",
-              "Touristar/hakodate/images/goryokakumainhall.jpg",
-              "Touristar/hakodate/intro.html")));
-      // add markers for this location
-
       return null;
     }
 
-    private long insertLocation(Location location) {
-      return locationDao.insert(location);
+    private int insertLocation(Location location) {
+      return Math.toIntExact(locationDao.insert(location));
     }
 
-    private long insertMarker(Marker marker) {
-      return markerDao.insert(marker);
+    private int insertMarker(Marker marker) {
+      return Math.toIntExact(markerDao.insert(marker));
+    }
+
+    private int insertArea(Area area) {
+      return Math.toIntExact(areaDao.insert(area));
+    }
+
+    private void insertMarkerArea(int markerId, int areaId) {
+      Math.toIntExact(markerAreaDao.insert(new MarkerArea(markerId, areaId)));
     }
   }
 }

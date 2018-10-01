@@ -26,7 +26,7 @@
         android:label="fragment_main"
         tools:layout="@layout/fragment_imagepreview" >
         <action
-            android:id="@+id/action_previewFragment_to_listFragment"
+            android:id="@+id/action_list_markers"
             app:destination="@id/markerlistFragment" />
         <argument
             android:name="drop_marker_id"
