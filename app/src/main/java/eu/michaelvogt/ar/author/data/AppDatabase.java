@@ -24,11 +24,14 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
 import com.google.ar.sceneform.math.Quaternion;
 import com.google.ar.sceneform.math.Vector3;
+
+import java.util.Arrays;
 
 import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.utils.Converters;
@@ -113,7 +116,7 @@ public abstract class AppDatabase extends RoomDatabase {
           locationId,
           false));
 
-      insertMarker(new Marker(
+      markerId = insertMarker(new Marker(
           "/Touristar/Markers/P_20180806_132544_vHDR_On.jpg",
           "",
           "鳴き龍",
@@ -126,7 +129,7 @@ public abstract class AppDatabase extends RoomDatabase {
           locationId,
           false));
 
-      insertMarker(new Marker(
+      markerId = insertMarker(new Marker(
           "/Touristar/Markers/IMG_20180522_105416.jpg",
           "",
           "亀石",
@@ -140,7 +143,7 @@ public abstract class AppDatabase extends RoomDatabase {
           false));
 
       insertMarker(new Marker("陣屋", locationId));
-      insertMarker(new Marker(
+      markerId = insertMarker(new Marker(
           "/Touristar/Markers/IMG_20180423_132914.jpg",
           "",
           "中央看板",
@@ -153,7 +156,7 @@ public abstract class AppDatabase extends RoomDatabase {
           locationId,
           false));
 
-      insertMarker(new Marker(
+      markerId = insertMarker(new Marker(
           "/Touristar/Markers/IMG_20180423_132802.jpg",
           "",
           "左側看板",
@@ -166,7 +169,7 @@ public abstract class AppDatabase extends RoomDatabase {
           locationId,
           false));
 
-      insertMarker(new Marker(
+      markerId = insertMarker(new Marker(
           "/Touristar/Markers/P_20180806_135120_vHDR_On.jpg",
           "",
           "奥場",
@@ -181,7 +184,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
 
       insertMarker(new Marker("熊谷家", locationId));
-      insertMarker(new Marker(
+      markerId = insertMarker(new Marker(
           "/Touristar/Markers/IMG_20180522_115942.jpg",
           "",
           "看板",
@@ -196,7 +199,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
 
       insertMarker(new Marker("おかけ", locationId));
-      insertMarker(new Marker(
+      markerId = insertMarker(new Marker(
           "/Touristar/Markers/P_20180801_112411_vHDR_On.jpg",
           "",
           "テンプ",
@@ -211,7 +214,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
 
       insertMarker(new Marker("川島家", locationId));
-      insertMarker(new Marker(
+      markerId = insertMarker(new Marker(
           "/Touristar/Markers/P_20180804_182308_vHDR_On.jpg",
           "",
           "名板",
@@ -239,7 +242,7 @@ public abstract class AppDatabase extends RoomDatabase {
           locationId,
           false));
 
-      int areaId = insertArea(new Area(Area.TYPE_IMAGEONIMAGE,
+      insertAreaForMarker(markerId, new Area(Area.TYPE_IMAGEONIMAGE,
           Area.KIND_CONTENT,
           "Muneoka Background Image",
           R.layout.view_image,
@@ -258,7 +261,97 @@ public abstract class AppDatabase extends RoomDatabase {
           new Quaternion(new Vector3(-1.0f, 0.0f, 0.0f), 90.0f),
           Vector3.one()));
 
-      insertMarkerArea(markerId, areaId);
+      insertAreaForMarker(markerId, new Area(Area.TYPE_TEXTONIMAGE,
+          Area.KIND_CONTENT,
+          "Muneoka Background Intro",
+          R.layout.view_text,
+          Detail.builder()
+              .setTextPath("Touristar/iwamiginzan/muneokake/infoboard/texts/infoboardtxt.html")
+              .setHtmlPath("Touristar/iwamiginzan/muneokake/infoboard/texts/infoboard.html")
+              .setBackgroundColor(Color.argb(0, 0, 0, 0))
+              .setTextSize(12f),
+          Vector3.zero(),
+          new Vector3(0.445f, 0.572f, 0.2f),
+          Area.COORDINATE_LOCAL,
+          new Vector3(0.106f, 0.01f, 0.32f),
+          new Quaternion(new Vector3(-1.0f, 0.0f, 0.0f), 90.0f),
+          Vector3.one()));
+
+      insertAreaForMarker(markerId, new Area(Area.TYPE_ROTATIONBUTTON,
+          Area.KIND_UI,
+          "Muneoka Language Selector",
+          // TODO: Remove and hardcode in Node?
+          R.layout.view_image,
+          Detail.builder()
+              .setImageResource(R.drawable.ic_language_selector)
+              // TODO: Display language options with this button, and set the language with these buttons instead
+              .addSendsEvent(Event.EVENT_SWITCHLANGUAGE, EventDetail.builder()
+                  .setLanguage(Detail.LANGUAGE_EN))
+              .isCastingShadow(true),
+          new Vector3(-.04f, 0.05f, 0.0f),
+          new Vector3(0.08f, 0.1f, 0.01f),
+          Area.COORDINATE_LOCAL,
+          new Vector3(0.475f, 0.01f, 0.155f),
+          new Quaternion(new Vector3(-1.0f, 0.0f, 0.0f), 90.0f),
+          Vector3.one()));
+
+      insertAreaForMarker(markerId, new Area(Area.TYPE_ROTATIONBUTTON,
+          Area.KIND_UI,
+          "Main Content Grabber",
+          R.layout.view_image,
+          Detail.builder()
+              .setImageResource(R.drawable.if_tiny_arrows_diagonal_out_1_252127)
+              .addSendsEvent(Event.EVENT_GRABCONTENT, null)
+              .isCastingShadow(true),
+          new Vector3(-.04f, 0.05f, 0.0f),
+          new Vector3(0.08f, 0.1f, 0.01f),
+          Area.COORDINATE_LOCAL,
+          new Vector3(0.475f, 0.01f, 0.275f),
+          new Quaternion(new Vector3(-1.0f, 0.0f, 0.0f), 90.0f),
+          Vector3.one()));
+
+      insertAreaForMarker(markerId, new Area(Area.TYPE_ROTATIONBUTTON,
+          Area.KIND_UI,
+          "Background Scaler",
+          R.layout.view_image,
+          Detail.builder()
+              .setImageResource(R.drawable.ic_linear_scale_black_24dp)
+              .addSendsEvent(Event.EVENT_SCALE, EventDetail.builder()
+                  .setScaleValues(Arrays.asList(0.5f, 1f, 3f)))
+              .isCastingShadow(true),
+          new Vector3(-.04f, 0.05f, 0.0f),
+          new Vector3(0.08f, 0.1f, 0.01f),
+          Area.COORDINATE_LOCAL,
+          new Vector3(0.475f, 0.01f, 0.035f),
+          new Quaternion(new Vector3(-1.0f, 0.0f, 0.0f), 90.0f),
+          Vector3.one()));
+
+      insertAreaForMarker(markerId, new Area(Area.TYPE_SLIDESONIMAGE, Area.KIND_CONTENT,
+          "Muneoka Slide Area",
+          R.layout.view_slider,
+          Detail.builder()
+              .addSlide(new Slide(Slide.Companion.getTYPE_IMAGE(),
+                  "Touristar/iwamiginzan/muneokake/infoboard/images/igk_000_0682.jpg",
+                  null,
+                  "Image Slide 1"))
+              .addSlide(new Slide(Slide.Companion.getTYPE_IMAGE(),
+                  "Touristar/iwamiginzan/muneokake/infoboard/images/igk_000_0693.jpg",
+                  null,
+                  "Image Slide 2"))
+              .addSlide(new Slide(Slide.Companion.getTYPE_VR(),
+                  "Touristar/iwamiginzan/muneokake/infoboard/images/PANO_20180826_115346.jpg",
+                  null,
+                  "Panorama Slide"))
+              .addSlide(new Slide(Slide.Companion.getTYPE_COMPARISON(),
+                  "Touristar/iwamiginzan/muneokake/infoboard/images/compare_new_color.png",
+                  Arrays.asList("Touristar/iwamiginzan/muneokake/infoboard/images/compare_old_color.png"),
+                  "Old New Comparision")),
+          Vector3.zero(),
+          new Vector3(0.895f, 0.582f, 0.005f),
+          Area.COORDINATE_LOCAL,
+          new Vector3(0.0f, 0.01f, 0.29f),
+          new Quaternion(new Vector3(-1.0f, 0.0f, 0.0f), 90.0f),
+          Vector3.one()));
 
 
       insertMarker(new Marker("金森家", locationId));
@@ -381,7 +474,7 @@ public abstract class AppDatabase extends RoomDatabase {
           "Touristar/hakodate/intro.html"));
 
       insertMarker(new Marker("箱館", locationId));
-      insertMarker(new Marker(
+      markerId= insertMarker(new Marker(
           "/Touristar/Markers/office_front.jpg",
           "",
           "奉行菅",
@@ -394,6 +487,65 @@ public abstract class AppDatabase extends RoomDatabase {
           locationId,
           false));
 
+      insertAreaForMarker(markerId, new Area(Area.TYPE_3DOBJECTONPLANE, Area.KIND_CONTENT,
+          "Magistrate Office Building",
+          R.raw.default_model,
+          Detail.builder().isCastingShadow(true),
+          Vector3.zero(),
+          new Vector3(-0.2f, -0.7f, -1.75f),
+          Area.COORDINATE_GLOBAL,
+          new Vector3(0.5f, 0.3f, 0.545f),
+          new Quaternion(new Vector3(0.0f, -0.01f, 0.0f), 1.0f),
+          Vector3.one()
+          ));
+
+
+//    viewModel.addArea(new Area(Area.TYPE_INTERACTIVEOVERLAY,
+//        "Magistrate Office Building Schema",
+//        R.drawable.office_schema_front,
+//        new Vector3(0.415f, .0001f, 0.54f),
+//        Area.COORDINATE_LOCAL,
+//        new Vector3(0.2025f, 0.1f, 0.285f),
+//        new Quaternion(-1f, 0f, 0f, 1.0f),
+//        Vector3.one()));
+//
+//    viewModel.addArea(new Area(Area.TYPE_SLIDESONIMAGE,
+//        "Magistrate Office Building Explanation",
+//        R.drawable.magistrates_office_jp,
+//        new Vector3(0.42f, 0.0001f, 0.24f),
+//        Area.COORDINATE_LOCAL,
+//        new Vector3(-0.22f, 0.01f, -0.10f),
+//        new Quaternion(0f, 0f, 0f, 1f),
+//        Vector3.one()));
+//
+//    viewModel.addArea(new Area(Area.TYPE_SLIDESONIMAGE,
+//        "Magistrate Office Building Map",
+//        R.drawable.goryoukaku_map,
+//        new Vector3(0.247f, .001f, 0.247f),
+//        Area.COORDINATE_LOCAL,
+//        new Vector3(-0.2125f, 0.01f, 0.1565f),
+//        new Quaternion(0f, 0f, 0f, 1f),
+//        Vector3.one()));
+//
+//    viewModel.addArea(new Area(Area.TYPE_INTERACTIVEOVERLAY,
+//        "Magistrate Office Building Schema",
+//        R.drawable.office_schema_back,
+//        new Vector3(0.415f, .0001f, 0.54f),
+//        Area.COORDINATE_LOCAL,
+//        new Vector3(0.2025f, 0.01f, 0.285f),
+//        new Quaternion((float) -(Math.PI / 2), 0f, 0f, 1f),
+//        Vector3.one()));
+//
+//    viewModel.addArea(new Area(Area.TYPE_INTERACTIVEPANEL,
+//        "Interactive panel",
+//        R.layout.user_panel,
+//        new Vector3(0.24f, 0.001f, 0.60f),
+//        Area.COORDINATE_LOCAL,
+//        new Vector3(0.55f, 0.01f, 0.13f),
+//        new Quaternion((float) -1, 0f, 0f, 1f),
+//        Vector3.one()));
+
+
       return null;
     }
 
@@ -405,12 +557,13 @@ public abstract class AppDatabase extends RoomDatabase {
       return Math.toIntExact(markerDao.insert(marker));
     }
 
-    private int insertArea(Area area) {
-      return Math.toIntExact(areaDao.insert(area));
+    private void insertAreaForMarker(int markerId, Area area) {
+      int areaId = Math.toIntExact(areaDao.insert(area));
+      insertMarkerArea(markerId, areaId);
     }
 
     private void insertMarkerArea(int markerId, int areaId) {
-      Math.toIntExact(markerAreaDao.insert(new MarkerArea(markerId, areaId)));
+      markerAreaDao.insert(new MarkerArea(markerId, areaId));
     }
   }
 }
