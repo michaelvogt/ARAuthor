@@ -18,7 +18,7 @@
 
 package eu.michaelvogt.ar.author.nodes;
 
-import java.util.Map;
+import android.util.SparseArray;
 
 import eu.michaelvogt.ar.author.data.EventDetail;
 
@@ -31,5 +31,5 @@ public interface EventSender {
    *
    * @return List<Integer>  type constant as defined in Event
    */
-  Map<Integer, EventDetail> getEventTypes();
+  SparseArray<EventDetail> getEventDetails();
 }

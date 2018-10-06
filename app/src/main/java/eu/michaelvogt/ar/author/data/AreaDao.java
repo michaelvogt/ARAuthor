@@ -27,7 +27,7 @@ import java.util.List;
 @Dao
 public interface AreaDao extends BaseDao<Area> {
   @Query("SELECT * from areas where areas.u_id=:uId")
-  LiveData<Area> get(int uId);
+  Area get(int uId);
 
   @Query("SELECT * from areas where areas.title=:title")
   LiveData<Area> findAreaWithTitle(String title);

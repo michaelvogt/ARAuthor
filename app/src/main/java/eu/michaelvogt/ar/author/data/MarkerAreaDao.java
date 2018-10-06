@@ -24,6 +24,9 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+
+import eu.michaelvogt.ar.author.data.tuples.ListArea;
 
 @Dao
 public interface MarkerAreaDao extends BaseDao<MarkerArea> {
@@ -36,7 +39,7 @@ public interface MarkerAreaDao extends BaseDao<MarkerArea> {
 
   @Query("SELECT * FROM areas INNER JOIN marker_area ON " +
       "areas.u_id = marker_area.area_id WHERE marker_area.marker_id =:markerId")
-  LiveData<List<Area>> getAreasForMarker(int markerId);
+  List<Area> getAreasForMarker(int markerId);
 
   @Query("DELETE FROM marker_area")
   void deleteAll();

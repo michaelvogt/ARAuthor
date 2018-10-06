@@ -15,6 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+
 package eu.michaelvogt.ar.author.data.utils;
 
 import android.arch.persistence.room.TypeConverter;

@@ -31,6 +31,7 @@ import java.util.List;
 
 import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.Area;
+import eu.michaelvogt.ar.author.data.AreaVisual;
 
 public class AreaListAdapter extends RecyclerView.Adapter<AreaListAdapter.ViewHolder> {
   private ItemClickListener listener;
@@ -65,15 +66,15 @@ public class AreaListAdapter extends RecyclerView.Adapter<AreaListAdapter.ViewHo
       int typeResource = R.drawable.ic_launcher;
 
       switch (area.getObjectType()) {
-        case Area.TYPE_3DOBJECTONPLANE:
-        case Area.TYPE_3DOBJECTONIMAGE:
-          typeResource = Area.ICON_3DOBJECT;
+        case AreaVisual.TYPE_3DOBJECTONPLANE:
+        case AreaVisual.TYPE_3DOBJECTONIMAGE:
+          typeResource = AreaVisual.ICON_3DOBJECT;
           break;
-        case Area.TYPE_SLIDESONIMAGE:
-          typeResource = Area.ICON_FLATOVERLAY;
+        case AreaVisual.TYPE_SLIDESONIMAGE:
+          typeResource = AreaVisual.ICON_FLATOVERLAY;
           break;
-        case Area.TYPE_INTERACTIVEOVERLAY:
-          typeResource = Area.ICON_INTERACTIVEOVERLAY;
+        case AreaVisual.TYPE_INTERACTIVEOVERLAY:
+          typeResource = AreaVisual.ICON_INTERACTIVEOVERLAY;
           break;
       }
 

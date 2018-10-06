@@ -30,22 +30,23 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.util.SparseArray;
 
 import com.google.ar.sceneform.Node;
+import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.Material;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.rendering.Renderable;
 import com.google.ar.sceneform.rendering.ShapeFactory;
 import com.google.ar.sceneform.rendering.Texture;
 
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
 import eu.michaelvogt.ar.author.R;
-import eu.michaelvogt.ar.author.data.Area;
-import eu.michaelvogt.ar.author.data.Detail;
+import eu.michaelvogt.ar.author.data.AreaVisual;
 import eu.michaelvogt.ar.author.data.EventDetail;
+import eu.michaelvogt.ar.author.data.VisualDetail;
 import eu.michaelvogt.ar.author.utils.AreaNodeBuilder;
 import eu.michaelvogt.ar.author.utils.FileUtils;
 
@@ -54,12 +55,12 @@ public class ImageNode extends AreaNode implements EventSender {
 
   private boolean isFadeIn = true;
 
-  private ImageNode(Context context, Area area) {
-    super(context, area);
+  private ImageNode(Context context, AreaVisual areaVisual) {
+    super(context, areaVisual);
   }
 
-  public static ImageNode builder(Context context, Area area) {
-    return new ImageNode(context, area);
+  public static ImageNode builder(Context context, AreaVisual areaVisual) {
+    return new ImageNode(context, areaVisual);
   }
 
   public ImageNode setIsCameraFacing(boolean isCameraFacing) {
@@ -76,9 +77,9 @@ public class ImageNode extends AreaNode implements EventSender {
     CompletableFuture<Node> future = new CompletableFuture<>();
     CompletableFuture<Texture> futureTexture;
 
-    if (area.hasDetail(Detail.KEY_IMAGEPATH)) {
+    if (areaVisual.hasDetail(VisualDetail.KEY_IMAGEPATH)) {
       String textureFilePath = FileUtils.getFullPuplicFolderPath(
-          area.getDetailString(Detail.KEY_IMAGEPATH, "Touristar/default/images/"));
+          (String) areaVisual.getDetail(VisualDetail.KEY_IMAGEPATH, "Touristar/default/images/"));
 
       futureTexture = Texture.builder()
           .setSource(BitmapFactory.decodeFile(textureFilePath))
@@ -86,12 +87,12 @@ public class ImageNode extends AreaNode implements EventSender {
           .build()
           .exceptionally(throwable -> {
             Log.d(TAG, "Could not load texture image: " +
-                area.getDetail(Detail.KEY_IMAGEPATH), throwable);
+                areaVisual.getDetail(VisualDetail.KEY_IMAGEPATH), throwable);
             return null;
           });
 
-    } else if (area.hasDetail(Detail.KEY_IMAGERESOURCE)) {
-      int textureResource = area.getDetailResource(Detail.KEY_IMAGERESOURCE, R.drawable.ic_launcher);
+    } else if (areaVisual.hasDetail(VisualDetail.KEY_IMAGERESOURCE)) {
+      int textureResource = (int) areaVisual.getDetail(VisualDetail.KEY_IMAGERESOURCE, R.drawable.ic_launcher);
       Bitmap bitmap = getBitmapFromVectorDrawable(context, textureResource);
 
       futureTexture = Texture.builder()
@@ -100,12 +101,12 @@ public class ImageNode extends AreaNode implements EventSender {
           .build()
           .exceptionally(throwable -> {
             Log.d(TAG, "Could not load texture resource: " +
-                area.getDetail(Detail.KEY_IMAGERESOURCE), throwable);
+                areaVisual.getDetail(VisualDetail.KEY_IMAGERESOURCE), throwable);
             return null;
           });
 
     } else {
-      throw new IllegalArgumentException("Missing Detail IMAGEPATH or IMAGERESOURCE");
+      throw new IllegalArgumentException("Missing AreaVisual IMAGEPATH or IMAGERESOURCE");
     }
 
     futureTexture.thenAccept(texture -> ModelRenderable.builder()
@@ -116,12 +117,14 @@ public class ImageNode extends AreaNode implements EventSender {
           // TODO: Hack - fix when custom material can be created #196
           Material material = temp.getMaterial();
           material.setTexture("primary", texture);
-          area.applyDetail(material);
+          areaVisual.applyDetail(material);
 
           setupFadeAnimation(material);
 
-          Renderable renderable = ShapeFactory.makeCube(area.getSize(), area.getZeroPoint(), material);
-          area.applyDetail(renderable);
+          Renderable renderable = ShapeFactory.makeCube(
+              (Vector3) areaVisual.getDetail(VisualDetail.KEY_SIZE),
+              (Vector3) areaVisual.getDetail(VisualDetail.KEY_ZEROPOINT), material);
+          areaVisual.applyDetail(renderable);
 
           // Needs to be set, bacause Sceneform has a layering problem with transparent objects
           // https://github.com/google-ar/sceneform-android-sdk/issues/285#issuecomment-420730274
@@ -141,9 +144,9 @@ public class ImageNode extends AreaNode implements EventSender {
   }
 
   private void setupFadeAnimation(Material material) {
-    if (area.hasDetail(Detail.KEY_SECONDARYIMAGEPATH)) {
+    if (areaVisual.hasDetail(VisualDetail.KEY_SECONDARYIMAGEPATH)) {
       String textureFilePath = FileUtils.getFullPuplicFolderPath(
-          area.getDetailString(Detail.KEY_SECONDARYIMAGEPATH, "Touristar/default/images/"));
+          (String) areaVisual.getDetail(VisualDetail.KEY_SECONDARYIMAGEPATH, "Touristar/default/images/"));
 
       Texture.builder()
           .setSource(BitmapFactory.decodeFile(textureFilePath))
@@ -169,15 +172,15 @@ public class ImageNode extends AreaNode implements EventSender {
           })
           .exceptionally(throwable -> {
             Log.d(TAG, "Could not load texture path: " +
-                area.getDetail(Detail.KEY_IMAGEPATH), throwable);
+                areaVisual.getDetail(VisualDetail.KEY_IMAGEPATH), throwable);
             return null;
           });
     }
   }
 
   @Override
-  public Map<Integer, EventDetail> getEventTypes() {
-    return area.getDetailEvents();
+  public SparseArray<EventDetail> getEventDetails() {
+    return areaVisual.getDetailEvents();
   }
 
   private Bitmap getBitmapFromVectorDrawable(Context context, int drawableId) {

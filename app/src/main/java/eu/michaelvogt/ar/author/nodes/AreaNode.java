@@ -3,35 +3,38 @@ package eu.michaelvogt.ar.author.nodes;
 import android.content.Context;
 
 import com.google.ar.sceneform.Node;
+import com.google.ar.sceneform.math.Quaternion;
+import com.google.ar.sceneform.math.Vector3;
 
-import eu.michaelvogt.ar.author.data.Area;
+import eu.michaelvogt.ar.author.data.AreaVisual;
+import eu.michaelvogt.ar.author.data.VisualDetail;
 
 public class AreaNode extends Node {
   public static final int RENDER_FIRST = 0;
   public static final int RENDER_LAST = 1;
 
   protected Context context;
-  protected final Area area;
+  protected final AreaVisual areaVisual;
 
   boolean isCameraFacing;
   int renderPriority = 4;
 
-  AreaNode(Context context, Area area) {
+  AreaNode(Context context, AreaVisual areaVisual) {
     this.context = context;
-    this.area = area;
+    this.areaVisual = areaVisual;
 
-    setLocalPosition(area.getPosition());
-    setLocalRotation(area.getRotation());
-    setLocalScale(area.getScale());
-    setName(area.getTitle());
+    setName(areaVisual.getTitle());
+    setLocalPosition((Vector3) areaVisual.getDetail(VisualDetail.KEY_POSITION));
+    setLocalRotation((Quaternion) areaVisual.getDetail(VisualDetail.KEY_ROTATION));
+    setLocalScale((Vector3) areaVisual.getDetail(VisualDetail.KEY_SCALE));
   }
 
   public boolean isUiNode() {
-    return area.getUsageType() == Area.KIND_UI;
+    return areaVisual.getUsageType() == AreaVisual.KIND_UI;
   }
 
   public boolean isContentNode() {
-    return area.getUsageType() == Area.KIND_CONTENT;
+    return areaVisual.getUsageType() == AreaVisual.KIND_CONTENT;
   }
 
   public boolean isCameraFacing() {

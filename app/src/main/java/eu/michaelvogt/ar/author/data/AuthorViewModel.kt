@@ -21,6 +21,7 @@ package eu.michaelvogt.ar.author.data
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
+import java.util.concurrent.CompletableFuture
 
 class AuthorViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = AppRepository(application)
@@ -59,11 +60,15 @@ class AuthorViewModel(application: Application) : AndroidViewModel(application) 
 
     fun addArea(area: Area) = repository.insert(area)
 
-    fun getArea(uId: Int): LiveData<Area> = repository.getArea(uId)
-
-    fun getArea(title: String): LiveData<Area> = repository.getAreaWithTitle(title)
+    fun getArea(uId: Int): CompletableFuture<Area> = repository.getArea(uId)
 
     fun getAreasForMarker(markerId: Int):
-            LiveData<List<Area>> = repository.getAreasForMarker(markerId)
+            CompletableFuture<List<Area>> = repository.getAreasForMarker(markerId)
 
+
+    fun getAreaVisual(uId: Int):
+            CompletableFuture<AreaVisual> = repository.getAreaVisual(uId)
+
+    fun getAreaVisualsForMarker(uId: Int):
+            CompletableFuture<List<AreaVisual>> = repository.getAreaVisualsForMarker(uId)
 }

@@ -25,6 +25,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -39,13 +40,11 @@ import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.ViewRenderable;
 
 import java.util.List;
-import java.util.Map;
 
 import eu.michaelvogt.ar.author.ImagePreviewFragment;
 import eu.michaelvogt.ar.author.R;
-import eu.michaelvogt.ar.author.data.Area;
+import eu.michaelvogt.ar.author.data.AreaVisual;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
-import eu.michaelvogt.ar.author.data.Event;
 import eu.michaelvogt.ar.author.data.EventDetail;
 import eu.michaelvogt.ar.author.data.Slide;
 import eu.michaelvogt.ar.author.utils.AreaNodeBuilder;
@@ -90,29 +89,30 @@ public class AuthorAnchorNode extends AnchorNode {
       if (node instanceof EventSender) {
         EventSender eventNode = (EventSender) node;
 
-        Map<Integer, EventDetail> eventTypes = eventNode.getEventTypes();
-        eventTypes.forEach((eventType, eventDetail) -> {
-          switch (eventType) {
-            case Event.EVENT_HIDECONTENT:
+        SparseArray<EventDetail> eventDetails = eventNode.getEventDetails();
+        for (int index = 0; index < eventDetails.size(); index++) {
+          EventDetail eventDetail = eventDetails.get(index);
+          switch (eventDetail.getType()) {
+            case EventDetail.EVENT_HIDECONTENT:
               handleHideContent();
               break;
-            case Event.EVENT_GRABCONTENT:
+            case EventDetail.EVENT_GRABCONTENT:
               handleGrabContent();
               break;
-            case Event.EVENT_SETMAINCONTENT:
+            case EventDetail.EVENT_SETMAINCONTENT:
               handleSetMainContent(eventDetail);
               break;
-            case Event.EVENT_ZOOM:
+            case EventDetail.EVENT_ZOOM:
               handleZoom(eventDetail);
               break;
-            case Event.EVENT_SCALE:
+            case EventDetail.EVENT_SCALE:
               handleScale(eventDetail);
               break;
             default:
-              broadcastEvent(eventType, eventDetail, motionEvent);
+              broadcastEvent(eventDetail, motionEvent);
               break;
           }
-        });
+        }
       }
     }
     return true;
@@ -120,7 +120,7 @@ public class AuthorAnchorNode extends AnchorNode {
 
   private void handleSetMainContent(EventDetail eventDetail) {
     AuthorViewModel viewModel = ViewModelProviders.of((FragmentActivity) context).get(AuthorViewModel.class);
-    viewModel.setCurrentMainContentId(eventDetail.getTitle());
+    viewModel.setCurrentMainContentId((String) eventDetail.getValue());
   }
 
   private void handleHideContent() {
@@ -133,11 +133,11 @@ public class AuthorAnchorNode extends AnchorNode {
 
   private void handleScale(EventDetail eventDetail) {
     currentScaleIndex =
-        currentScaleIndex + 1 >= eventDetail.getScaleValues().size() ? 0 : ++currentScaleIndex;
+        currentScaleIndex + 1 >= ((List<Float>) eventDetail.getValue()).size() ? 0 : ++currentScaleIndex;
 
-    Node background = findInHierarchy(node -> node.getName().equals(Area.BACKGROUNDAREATITLE));
+    Node background = findInHierarchy(node -> node.getName().equals(AreaVisual.BACKGROUNDAREATITLE));
     if (background != null) {
-      Float scale = eventDetail.getScaleValues().get(currentScaleIndex);
+      Float scale = ((List<Float>) eventDetail.getValue()).get(currentScaleIndex);
       background.setLocalScale(new Vector3(scale, 1f, scale));
     } else {
       // TODO: Handle scale for non background scenes
@@ -146,10 +146,11 @@ public class AuthorAnchorNode extends AnchorNode {
 
   private void handleZoom(EventDetail eventDetail) {
     AuthorViewModel viewModel = ViewModelProviders.of((FragmentActivity) context).get(AuthorViewModel.class);
-    viewModel.getArea(eventDetail.getTitle()).observe(null, area -> {
-      Node background = findInHierarchy(node -> node.getName().equals(Area.BACKGROUNDAREATITLE));
+    int areaId = (int) eventDetail.getValue();
+    viewModel.getAreaVisual(areaId).thenAccept(areaVisual -> {
+      Node background = findInHierarchy(node -> node.getName().equals(AreaVisual.BACKGROUNDAREATITLE));
 
-      AreaNodeBuilder.builder(context, area)
+      AreaNodeBuilder.builder(context, areaVisual)
           .setScene(getScene())
           .build()
           .thenAccept(node -> node.setParent(background));
@@ -223,10 +224,10 @@ public class AuthorAnchorNode extends AnchorNode {
     ((FragmentActivity) context).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
   }
 
-  private void broadcastEvent(int eventType, EventDetail eventDetail, MotionEvent motionEvent) {
+  private void broadcastEvent(EventDetail eventDetail, MotionEvent motionEvent) {
     callOnHierarchy(node -> {
       if (node instanceof EventHandler) {
-        ((EventHandler) node).handleEvent(eventType, eventDetail, motionEvent);
+        ((EventHandler) node).handleEvent(eventDetail, motionEvent);
       }
     });
   }

@@ -22,6 +22,8 @@ import android.content.Context;
 import android.util.Log;
 
 import com.google.ar.sceneform.Node;
+import com.google.ar.sceneform.math.Quaternion;
+import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.Material;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.rendering.ViewRenderable;
@@ -30,8 +32,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
 import eu.michaelvogt.ar.author.R;
-import eu.michaelvogt.ar.author.data.Area;
-import eu.michaelvogt.ar.author.data.Detail;
+import eu.michaelvogt.ar.author.data.AreaVisual;
+import eu.michaelvogt.ar.author.data.VisualDetail;
 import eu.michaelvogt.ar.author.utils.AreaNodeBuilder;
 import eu.michaelvogt.ar.author.utils.FileUtils;
 import eu.michaelvogt.ar.author.utils.Slider;
@@ -40,20 +42,20 @@ public class ViewNode extends Node {
   private static final String TAG = ViewNode.class.getSimpleName();
 
   private final Context context;
-  private final Area area;
+  private final AreaVisual areaVisual;
 
-  private ViewNode(Context context, Area area) {
+  private ViewNode(Context context, AreaVisual areaVisual) {
     this.context = context;
-    this.area = area;
+    this.areaVisual = areaVisual;
 
-    setLocalPosition(area.getPosition());
-    setLocalRotation(area.getRotation());
-    setLocalScale(area.getScale());
-    setName(area.getTitle());
+    setLocalPosition((Vector3) areaVisual.getDetail(VisualDetail.KEY_POSITION));
+    setLocalRotation((Quaternion) areaVisual.getDetail(VisualDetail.KEY_ROTATION));
+    setLocalScale((Vector3) areaVisual.getDetail(VisualDetail.KEY_SCALE));
+    setName(areaVisual.getTitle());
   }
 
-  public static ViewNode builder(Context context, Area area) {
-    return new ViewNode(context, area);
+  public static ViewNode builder(Context context, AreaVisual areaVisual) {
+    return new ViewNode(context, areaVisual);
   }
 
   public CompletionStage<Node> build() {
@@ -66,21 +68,21 @@ public class ViewNode extends Node {
         .thenAccept(temp -> {
           // TODO: Hack - fix when custom material can be created #196
           Material material = temp.getMaterial();
-          area.applyDetail(material);
+          areaVisual.applyDetail(material);
 
           ViewRenderable.builder()
-              .setView(context, area.getResource())
+              .setView(context, (Integer) areaVisual.getDetail(VisualDetail.KEY_RESOURCE))
               .setSource(context, R.raw.slide)
               .build()
               .thenAccept(renderable -> {
-                renderable.setSizer(view -> area.getSize());
+                renderable.setSizer(view -> (Vector3) areaVisual.getDetail(VisualDetail.KEY_SIZE));
                 setRenderable(renderable);
 
 
 
 //                String encoded = null;
 //                try {
-//                  String content = FileUtils.readTextFile(area.getDetailString(Detail.TEXTPATH));
+//                  String content = FileUtils.readTextFile(areaVisual.getDetailString(AreaVisual.TEXTPATH));
 //                  encoded = Base64.encodeToString(content.getBytes(), Base64.NO_PADDING);
 //                }catch (Exception e){
 //                  future.completeExceptionally(e);
@@ -99,7 +101,7 @@ public class ViewNode extends Node {
 
                 Slider slider = renderable.getView().findViewById(R.id.slider);
                 String puplicFolderPath = FileUtils.getFullPuplicFolderPath((String)
-                    area.getDetail(Detail.KEY_IMAGEFOLDERPATH, "Touristar/default/images/"));
+                    areaVisual.getDetail(VisualDetail.KEY_IMAGEFOLDERPATH, "Touristar/default/images/"));
                 // slider.setSlides(FileUtils.getFilepathsOfFolder(puplicFolderPath));
                 // slider.startTimer(3000);
 

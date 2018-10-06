@@ -7,26 +7,24 @@ import android.util.Log;
 
 import com.google.ar.sceneform.Node;
 import com.google.ar.sceneform.Scene;
-import com.google.ar.sceneform.math.Vector3;
 
 import java.util.List;
 
-import eu.michaelvogt.ar.author.R;
-import eu.michaelvogt.ar.author.data.Area;
+import eu.michaelvogt.ar.author.data.AreaVisual;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
-import eu.michaelvogt.ar.author.data.Detail;
 import eu.michaelvogt.ar.author.data.Slide;
+import eu.michaelvogt.ar.author.data.VisualDetail;
 
 public class SlideCallback implements NodeCallback {
   private static final String TAG = SlideCallback.class.getSimpleName();
 
   private final Context context;
-  private final Area area;
+  private final AreaVisual areaVisual;
   private final Scene scene;
 
-  public SlideCallback(Context context, Area area, Scene scene) {
+  public SlideCallback(Context context, AreaVisual areaVisual, Scene scene) {
     this.context = context;
-    this.area = area;
+    this.areaVisual = areaVisual;
     this.scene = scene;
   }
 
@@ -34,16 +32,17 @@ public class SlideCallback implements NodeCallback {
   public void createImageComparatorCover() {
     AuthorViewModel viewModel = ViewModelProviders.of((FragmentActivity) context).get(AuthorViewModel.class);
 
-    Slide comparisionData = ((List<Slide>) area.getDetail(Detail.KEY_SLIDES)).get(3);
+    Slide comparisionData = ((List<Slide>) areaVisual.getDetail(VisualDetail.KEY_SLIDES)).get(3);
 
-    Area comparisionArea = new Area(this.area);
-    comparisionArea.setObjectType(Area.TYPE_COMPARATORONIMAGE);
-    comparisionArea.setTitle("Compare old and new");
-    comparisionArea.setResource(R.layout.view_comparison);
-    comparisionArea.setPosition(Vector3.add(area.getPosition(), new Vector3(0.0f, 0.0f, -0.29f)));
-    comparisionArea.setDetail(Detail.builder()
-        .setImagePath(comparisionData.getContentPath())
-        .setSecondaryImagePath(comparisionData.getSecondaryPaths().get(0)));
+    AreaVisual comparisionArea = new AreaVisual(this.areaVisual);
+    // TODO: Set details
+//    comparisionArea.setObjectType(AreaVisual.TYPE_COMPARATORONIMAGE);
+//    comparisionArea.setTitle("Compare old and new");
+//    comparisionArea.setResource(R.layout.view_comparison);
+//    comparisionArea.setPosition(Vector3.add(areaVisual.getPosition(), new Vector3(0.0f, 0.0f, -0.29f)));
+//    comparisionArea.setVisual(AreaVisual.builder(-1)
+//        .setImagePath(comparisionData.getContentPath())
+//        .setSecondaryImagePath(comparisionData.getSecondaryPaths().get(0)));
 
     AreaNodeBuilder.builder(context, comparisionArea)
         .build()

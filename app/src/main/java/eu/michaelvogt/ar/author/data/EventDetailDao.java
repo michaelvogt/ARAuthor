@@ -16,25 +16,16 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author.nodes;
+package eu.michaelvogt.ar.author.data;
 
-import android.view.MotionEvent;
+import android.arch.lifecycle.LiveData;
+import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Query;
 
-import com.google.ar.sceneform.Node;
+import java.util.List;
 
-import eu.michaelvogt.ar.author.data.EventDetail;
-
-public interface EventHandler {
-  /**
-   * Node wants to handle a certain event
-   * <p>
-   * AnchorNode has received a touch event, which gets then distributed to all Nodes that
-   * implement this interface.
-   *
-   * @param eventDetail   int context detail for the fired event
-   * @param motionEvent MotionEvent of the fired event
-   */
-  void handleEvent(EventDetail eventDetail, MotionEvent motionEvent);
-
-  Iterable<Node> getChildren();
+@Dao
+public interface EventDetailDao {
+  @Query("SELECT * from event_detail where area_id=:areaId")
+  List<EventDetail> getForArea(int areaId);
 }

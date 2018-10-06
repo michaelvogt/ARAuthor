@@ -35,29 +35,29 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;
 
-import eu.michaelvogt.ar.author.data.Area;
-import eu.michaelvogt.ar.author.data.Detail;
+import eu.michaelvogt.ar.author.data.AreaVisual;
+import eu.michaelvogt.ar.author.data.VisualDetail;
 import eu.michaelvogt.ar.author.utils.AreaNodeBuilder;
 import eu.michaelvogt.ar.author.utils.FileUtils;
 
 public class ComparisonNode extends AreaNode {
   private static final String TAG = ComparisonNode.class.getSimpleName();
 
-  private ComparisonNode(Context context, Area area) {
-    super(context, area);
+  private ComparisonNode(Context context, AreaVisual areaVisual) {
+    super(context, areaVisual);
   }
 
-  public static ComparisonNode builder(Context context, Area area) {
-    return new ComparisonNode(context, area);
+  public static ComparisonNode builder(Context context, AreaVisual areaVisual) {
+    return new ComparisonNode(context, areaVisual);
   }
 
   public CompletionStage<Node> build() {
     CompletableFuture<Node> future = new CompletableFuture<>();
 
-    CompletableFuture<Texture> futurePrim3Texture = getTextureFuture(future, Detail.KEY_IMAGEPATH);
+    CompletableFuture<Texture> futurePrim3Texture = getTextureFuture(future, VisualDetail.KEY_IMAGEPATH);
 
     // TODO: There can be more than 1 secondary images available in the future.
-    CompletableFuture<Texture> futureSecTexture = getTextureFuture(future, Detail.KEY_SECONDARYIMAGEPATH);
+    CompletableFuture<Texture> futureSecTexture = getTextureFuture(future, VisualDetail.KEY_SECONDARYIMAGEPATH);
 
     CompletableFuture.allOf(futurePrim3Texture, futureSecTexture)
         .thenAccept(aVoid -> ModelRenderable.builder()
@@ -75,8 +75,10 @@ public class ComparisonNode extends AreaNode {
             e.printStackTrace();
           }
 
-          Renderable renderable = ShapeFactory.makeCube(area.getSize(), area.getZeroPoint(), material);
-          area.applyDetail(renderable);
+          Renderable renderable = ShapeFactory.makeCube(
+              (Vector3) areaVisual.getDetail(VisualDetail.KEY_SIZE),
+              (Vector3) areaVisual.getDetail(VisualDetail.KEY_ZEROPOINT), material);
+          areaVisual.apply(renderable);
           setRenderable(renderable);
 
           setOnTouchListener((hitTestResult, motionEvent) -> {
@@ -102,14 +104,14 @@ public class ComparisonNode extends AreaNode {
   }
 
   private CompletableFuture<Texture> getTextureFuture(CompletableFuture<Node> future, int detailPath) {
-    String fullPath = FileUtils.getFullPuplicFolderPath(area.getDetailString(detailPath));
+    String fullPath = FileUtils.getFullPuplicFolderPath((String) areaVisual.getDetail(detailPath));
 
     return Texture.builder()
         .setSource(BitmapFactory.decodeFile(fullPath))
         .setUsage(Texture.Usage.COLOR)
         .build()
         .exceptionally(throwable -> {
-          Log.d(TAG, "Could not create texture builder for " + area.getDetail(detailPath), throwable);
+          Log.d(TAG, "Could not create texture builder for " + areaVisual.getDetail(detailPath), throwable);
           future.completeExceptionally(throwable);
           return null;
         });

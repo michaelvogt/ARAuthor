@@ -64,7 +64,7 @@ public class EditFragmentAreas extends Fragment implements ItemClickListener {
 
     recyclerView.setAdapter(adapter);
 
-    viewModel.getAreasForMarker(markerId).observe(this, adapter::setAreas);
+    viewModel.getAreasForMarker(markerId).thenAccept(adapter::setAreas);
   }
 
   @Override

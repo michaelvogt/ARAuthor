@@ -27,9 +27,6 @@ import android.support.annotation.NonNull;
 
 import com.google.ar.sceneform.math.Vector3;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity(tableName = "markers",
     foreignKeys = @ForeignKey(entity = Location.class,
         parentColumns = "u_id",
@@ -215,19 +212,8 @@ public class Marker {
     this.showBackground = showBackground;
   }
 
-  public List<Integer> getAreaIds() {
-    return null;
-  }
-
-  public int getAreaId(int index) {
-    return 0;
-  }
-
   public boolean isTitle() {
     return isTitle;
-  }
-
-  public void setAreaIds(ArrayList<Integer> areaIds) {
   }
 
   public int getLocationId() {

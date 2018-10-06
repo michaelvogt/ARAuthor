@@ -23,21 +23,53 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 
+import com.google.ar.sceneform.math.Quaternion;
+import com.google.ar.sceneform.math.Vector3;
+
 import eu.michaelvogt.ar.author.utils.Converter;
 
-@Entity(tableName = "event_detail",
+@Entity(tableName = "visual_detail",
     foreignKeys = @ForeignKey(entity = Area.class,
         parentColumns = "u_id",
         childColumns = "area_id"))
-public class EventDetail {
-  private static final String TAG = EventDetail.class.getSimpleName();
+public class VisualDetail {
+  private static final String TAG = VisualDetail.class.getSimpleName();
 
-  public static final int EVENT_SWITCHLANGUAGE = 1;
-  public static final int EVENT_GRABCONTENT = 2;
-  public static final int EVENT_ZOOM = 3;
-  public static final int EVENT_SCALE = 4;
-  public static final int EVENT_HIDECONTENT = 5;
-  public static final int EVENT_SETMAINCONTENT = 6;
+  // Default detail
+  public static final int KEY_COORDTYPE = 28;
+  public static final int KEY_POSITION = 29;
+  public static final int KEY_ZEROPOINT = 30;
+  public static final int KEY_ROTATION = 32;
+  public static final int KEY_SIZE = 33;
+  public static final int KEY_SCALE = 34;
+
+  // Optional detail
+  public static final int KEY_IMAGEPATH = 0;
+  public static final int KEY_IMAGEFOLDERPATH = 1;
+  public static final int KEY_TEXTCONTENT = 2;
+  public static final int KEY_MARKUPCONTENT = 3;
+  public static final int KEY_TEXTPATH = 4;
+  public static final int KEY_SLIDES = 5;
+  public static final int KEY_FADE_LEFT_WIDTH = 6;
+  public static final int KEY_FADE_RIGHT_WIDTH = 7;
+  public static final int KEY_FADE_TOP_WIDTH = 8;
+  public static final int KEY_FADE_BOTTOM_WIDTH = 9;
+  public static final int KEY_BACKGROUNDCOLOR = 10;
+  public static final int KEY_TEXTCOLOR = 11;
+  public static final int KEY_TEXTSIZE = 12;
+  public static final int KEY_ALLOWZOOM = 13;
+  public static final int KEY_IMAGERESOURCE = 14;
+  public static final int KEY_ISCASTINGSHADOW = 15;
+  public static final int KEY_HTMLPATH = 18;
+  public static final int KEY_ZOOMINSIZE = 19;
+  public static final int KEY_ZOOMINPOSITION = 20;
+  public static final int SECONDARYTEXTURE = 21;
+  public static final int KEY_SECONDARYIMAGEPATH = 22;
+  public static final int KEY_TITLE = 23;
+  public static final int KEY_RESOURCE = 24;
+  public static final int KEY_LANGUAGE = 25;
+  public static final int KEY_SCALEVALUES = 26;
+  public static final int KEY_IMAGEDESCRIPTIONS = 27;
 
   public static final int TYPE_ALL = 0;
 
@@ -57,11 +89,11 @@ public class EventDetail {
   @ColumnInfo(name = "value")
   public String value;
 
-  public EventDetail() {
-    this(0, 0, 0, null);
+  public VisualDetail() {
+    this(0, 0, 0, 0);
   }
 
-  public EventDetail(int areaId, int type, int target, Object value) {
+  public VisualDetail(int areaId, int type, int target, Object value) {
     this.areaId = areaId;
     this.type = type;
     this.target = target;

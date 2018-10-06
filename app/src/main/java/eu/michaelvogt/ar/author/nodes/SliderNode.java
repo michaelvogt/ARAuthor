@@ -25,13 +25,17 @@ import android.view.View;
 
 import com.google.ar.sceneform.Node;
 import com.google.ar.sceneform.Scene;
+import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.ViewRenderable;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
 import eu.michaelvogt.ar.author.R;
-import eu.michaelvogt.ar.author.data.Area;
+import eu.michaelvogt.ar.author.data.AreaVisual;
+import eu.michaelvogt.ar.author.data.Slide;
+import eu.michaelvogt.ar.author.data.VisualDetail;
 import eu.michaelvogt.ar.author.utils.SlideCallback;
 import eu.michaelvogt.ar.author.utils.Slider;
 import eu.michaelvogt.ar.author.utils.ToggleSlideTextHandler;
@@ -41,11 +45,11 @@ public class SliderNode extends AreaNode {
 
   private Scene scene;
 
-  private SliderNode(Context context, Area area) {
+  private SliderNode(Context context, AreaVisual area) {
     super(context, area);
   }
 
-  public static SliderNode builder(Context context, Area area) {
+  public static SliderNode builder(Context context, AreaVisual area) {
     return new SliderNode(context, area);
   }
 
@@ -57,14 +61,14 @@ public class SliderNode extends AreaNode {
         .setView(context, R.layout.view_slider)
         .build()
         .thenAccept(renderable -> {
-          renderable.setSizer(view -> area.getSize());
+          renderable.setSizer(view -> (Vector3) areaVisual.getDetail(VisualDetail.KEY_SIZE));
           setRenderable(renderable);
-          area.applyDetail(renderable);
+          areaVisual.applyDetail(renderable);
 
           Slider slider = renderable.getView().findViewById(R.id.slider);
           View sliderText = renderable.getView().findViewById(R.id.slider_text);
 
-          slider.setSlides(area.getSlides(), new SlideCallback(context, area, scene));
+          slider.setSlides((List<Slide>) areaVisual.getDetail(VisualDetail.KEY_SLIDES), new SlideCallback(context, areaVisual, scene));
           slider.setOnTouchListener(new ToggleSlideTextHandler(context, sliderText));
 
           Log.i(TAG, "ImageNode successfully created");

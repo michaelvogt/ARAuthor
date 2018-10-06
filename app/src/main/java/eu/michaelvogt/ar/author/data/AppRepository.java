@@ -1,3 +1,21 @@
+/*
+    ARTester - AR for tourists by tourists
+    Copyright (C) 2018  Michael Vogt
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 package eu.michaelvogt.ar.author.data;
 
 import android.app.Application;
@@ -6,7 +24,9 @@ import android.os.AsyncTask;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 public class AppRepository {
@@ -15,6 +35,9 @@ public class AppRepository {
   private AreaDao areaDao;
 
   private MarkerAreaDao markerAreaDao;
+
+  private VisualDetailDao visualDetailDao;
+  private EventDetailDao eventDetailDao;
 
   private LiveData<List<Location>> allLocations;
 
@@ -26,6 +49,9 @@ public class AppRepository {
     markerDao = db.markerDao();
     areaDao = db.areaDao();
     markerAreaDao = db.markerAreaDao();
+
+    visualDetailDao = db.visualDetailDao();
+    eventDetailDao = db.eventDetailDao();
   }
 
   public void insert(Location location) {
@@ -83,16 +109,55 @@ public class AppRepository {
 
 
   // Area
-  LiveData<Area> getArea(int uId) {
-    return areaDao.get(uId);
+  CompletableFuture<Area> getArea(int uId) {
+    return CompletableFuture.supplyAsync(() -> areaDao.get(uId));
   }
 
   LiveData<Area> getAreaWithTitle(String title) {
     return areaDao.findAreaWithTitle(title);
   }
 
-  public LiveData<List<Area>> getAreasForMarker(int markerId) {
-    return markerAreaDao.getAreasForMarker(markerId);
+  public CompletableFuture<List<Area>> getAreasForMarker(int markerId) {
+    return CompletableFuture.supplyAsync(() -> markerAreaDao.getAreasForMarker(markerId));
+  }
+
+  // AreaVisual
+  public CompletableFuture<AreaVisual> getAreaVisual(int areaId) {
+    CompletableFuture<AreaVisual> futureAreaVisual = CompletableFuture.supplyAsync(() -> {
+      CompletableFuture<Area> futureArea = getArea(areaId);
+      CompletableFuture<List<VisualDetail>> futureDetails = getVisualDetailsForArea(areaId);
+      CompletableFuture<List<EventDetail>> futureEvents = getVisualEventsForArea(areaId);
+
+      return new AreaVisual(futureArea.join(), futureDetails.join(), futureEvents.join());
+    });
+
+    return futureAreaVisual;
+  }
+
+  public CompletableFuture<List<AreaVisual>> getAreaVisualsForMarker(int markerId) {
+    List<AreaVisual> areaVisuals = new ArrayList<>();
+    CompletableFuture<List<AreaVisual>> futureAreaVisuals = CompletableFuture.supplyAsync(() -> {
+      getAreasForMarker(markerId).thenAccept(areas -> {
+        areas.forEach(area -> {
+          CompletableFuture<List<VisualDetail>> futureDetails = getVisualDetailsForArea(area.getUid());
+          CompletableFuture<List<EventDetail>> futureEvents = getVisualEventsForArea(area.getUid());
+
+          areaVisuals.add(new AreaVisual(area, futureDetails.join(), futureEvents.join()));
+        });
+      });
+      return areaVisuals;
+    });
+
+    return futureAreaVisuals;
+  }
+
+
+  private CompletableFuture<List<VisualDetail>> getVisualDetailsForArea(int areaId) {
+    return CompletableFuture.supplyAsync(() -> visualDetailDao.getForArea(areaId));
+  }
+
+  private CompletableFuture<List<EventDetail>> getVisualEventsForArea(int areaId) {
+    return CompletableFuture.supplyAsync(() -> eventDetailDao.getForArea(areaId));
   }
 
 

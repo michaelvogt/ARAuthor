@@ -23,6 +23,7 @@ import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import com.google.ar.sceneform.Node;
+import com.google.ar.sceneform.math.Quaternion;
 import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.MaterialFactory;
 import com.google.ar.sceneform.rendering.Renderable;
@@ -32,33 +33,33 @@ import com.google.ar.sceneform.rendering.Texture;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
-import eu.michaelvogt.ar.author.data.Area;
-import eu.michaelvogt.ar.author.data.Detail;
+import eu.michaelvogt.ar.author.data.AreaVisual;
+import eu.michaelvogt.ar.author.data.VisualDetail;
 import eu.michaelvogt.ar.author.utils.FileUtils;
 
 public class ShapeNode extends Node {
   private static final String TAG = ShapeNode.class.getSimpleName();
 
   private Context context;
-  private final Area area;
+  private final AreaVisual areaVisual;
 
-  private ShapeNode(Context context, Area area) {
+  private ShapeNode(Context context, AreaVisual areaVisual) {
     this.context = context;
-    this.area = area;
+    this.areaVisual = areaVisual;
 
-    setLocalPosition(area.getPosition());
-    setLocalRotation(area.getRotation());
-    setLocalScale(area.getScale());
+    setLocalPosition((Vector3) areaVisual.getDetail(VisualDetail.KEY_POSITION));
+    setLocalRotation((Quaternion) areaVisual.getDetail(VisualDetail.KEY_ROTATION));
+    setLocalScale((Vector3) areaVisual.getDetail(VisualDetail.KEY_SCALE));
   }
 
-  public static ShapeNode builder(Context context, Area area) {
+  public static ShapeNode builder(Context context, AreaVisual area) {
     return new ShapeNode(context, area);
   }
 
   public CompletionStage<Node> build() {
     CompletableFuture<Node> future = new CompletableFuture<>();
     String textureFilePath = FileUtils.getFullPuplicFolderPath(
-        area.getDetailString(Detail.KEY_IMAGEPATH, "Touristar/default/images/"));
+        (String) areaVisual.getDetail(VisualDetail.KEY_IMAGEPATH, "Touristar/default/images/"));
 
     Texture.builder()
         .setSource(BitmapFactory.decodeFile(textureFilePath))
@@ -67,9 +68,10 @@ public class ShapeNode extends Node {
         .thenAccept(texture -> MaterialFactory.makeTransparentWithTexture(context, texture)
             // Keep default model as resource
             .thenAccept(material -> {
-              area.applyDetail(material);
+              areaVisual.applyDetail(material);
 
-              Renderable renderable = ShapeFactory.makeCube(area.getSize(), Vector3.zero(), material);
+              Renderable renderable = ShapeFactory.makeCube(
+                  (Vector3) areaVisual.getDetail(VisualDetail.KEY_SIZE), Vector3.zero(), material);
               renderable.setShadowCaster(false);
               setRenderable(renderable);
 
@@ -82,7 +84,7 @@ public class ShapeNode extends Node {
             }))
         .exceptionally(throwable -> {
           Log.d(TAG, "Could not load texture " +
-              area.getDetail(Detail.KEY_IMAGEPATH, "Touristar/default/images/"), throwable);
+              areaVisual.getDetail(VisualDetail.KEY_IMAGEPATH), throwable);
           return null;
         });
 

@@ -16,25 +16,14 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author.nodes;
+package eu.michaelvogt.ar.author.data.tuples;
 
-import android.view.MotionEvent;
+import android.arch.persistence.room.ColumnInfo;
 
-import com.google.ar.sceneform.Node;
+public class ListArea {
+  @ColumnInfo(name = "title")
+  public String title;
 
-import eu.michaelvogt.ar.author.data.EventDetail;
-
-public interface EventHandler {
-  /**
-   * Node wants to handle a certain event
-   * <p>
-   * AnchorNode has received a touch event, which gets then distributed to all Nodes that
-   * implement this interface.
-   *
-   * @param eventDetail   int context detail for the fired event
-   * @param motionEvent MotionEvent of the fired event
-   */
-  void handleEvent(EventDetail eventDetail, MotionEvent motionEvent);
-
-  Iterable<Node> getChildren();
+  @ColumnInfo(name = ("object_type"))
+  public int objectType;
 }

@@ -27,17 +27,17 @@ import android.view.MotionEvent;
 import android.widget.TextView;
 
 import com.google.ar.sceneform.Node;
+import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.ViewRenderable;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
 import eu.michaelvogt.ar.author.R;
-import eu.michaelvogt.ar.author.data.Area;
+import eu.michaelvogt.ar.author.data.AreaVisual;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
-import eu.michaelvogt.ar.author.data.Event;
-import eu.michaelvogt.ar.author.data.Detail;
 import eu.michaelvogt.ar.author.data.EventDetail;
+import eu.michaelvogt.ar.author.data.VisualDetail;
 import eu.michaelvogt.ar.author.utils.FileUtils;
 
 /**
@@ -47,11 +47,11 @@ import eu.michaelvogt.ar.author.utils.FileUtils;
 public class TextNode extends AreaNode implements EventHandler {
   private static final String TAG = TextNode.class.getSimpleName();
 
-  private TextNode(Context context, Area area) {
-    super(context, area);
+  private TextNode(Context context, AreaVisual areaVisual) {
+    super(context, areaVisual);
   }
 
-  public static TextNode builder(Context context, Area area) {
+  public static TextNode builder(Context context, AreaVisual area) {
     return new TextNode(context, area);
   }
 
@@ -60,10 +60,10 @@ public class TextNode extends AreaNode implements EventHandler {
     CompletableFuture<Node> future = new CompletableFuture<>();
 
     ViewRenderable.builder()
-        .setView(context, area.getResource())
+        .setView(context, (Integer) areaVisual.getDetail(VisualDetail.KEY_RESOURCE))
         .build()
         .thenAccept(renderable -> {
-          renderable.setSizer(view -> area.getSize());
+          renderable.setSizer(view -> (Vector3) areaVisual.getDetail(VisualDetail.KEY_SIZE));
           renderable.setShadowCaster(false);
           setRenderable(renderable);
 
@@ -85,11 +85,11 @@ public class TextNode extends AreaNode implements EventHandler {
 
   private void displayText(ViewRenderable renderable, String language) {
     TextView textView = renderable.getView().findViewById(R.id.view_text);
-    area.applyDetail(textView);
+    areaVisual.applyDetail(textView);
 
-    if (area.hasDetail(Detail.KEY_TEXTPATH)) {
+    if (areaVisual.hasDetail(VisualDetail.KEY_TEXTPATH)) {
       String content;
-      String filePath = area.getDetailString(Detail.KEY_TEXTPATH);
+      String filePath = (String) areaVisual.getDetail(VisualDetail.KEY_TEXTPATH);
 
       try {
         content = FileUtils.readTextFile(filePath, language);
@@ -98,13 +98,13 @@ public class TextNode extends AreaNode implements EventHandler {
       }
 
       textView.setText(Html.fromHtml(content, Html.FROM_HTML_SEPARATOR_LINE_BREAK_HEADING));
-    } else if (area.hasDetail(Detail.KEY_TEXTCONTENT)) {
+    } else if (areaVisual.hasDetail(VisualDetail.KEY_TEXTCONTENT)) {
       // TODO: make translatable by providing a map with translations
-      textView.setText(area.getDetailString(Detail.KEY_TEXTCONTENT));
-    } else if (area.hasDetail(Detail.KEY_MARKUPCONTENT)) {
+      textView.setText((String) areaVisual.getDetail(VisualDetail.KEY_TEXTCONTENT));
+    } else if (areaVisual.hasDetail(VisualDetail.KEY_MARKUPCONTENT)) {
 //          String encoded = null;
 //          try {
-//            String content = FileUtils.readTextFile(area.getDetailString(Detail.TEXTPATH));
+//            String content = FileUtils.readTextFile(area.getDetailString(AreaVisual.TEXTPATH));
 //            encoded = Base64.encodeToString(content.getBytes(), Base64.NO_PADDING);
 //          }catch (Exception e){
 //            future.completeExceptionally(e);
@@ -117,9 +117,9 @@ public class TextNode extends AreaNode implements EventHandler {
   }
 
   @Override
-  public void handleEvent(int eventType, EventDetail eventDetail, MotionEvent motionEvent) {
-    if (eventType == Event.EVENT_SWITCHLANGUAGE) {
-      displayText((ViewRenderable) getRenderable(), eventDetail.getLanguage());
+  public void handleEvent(EventDetail eventDetail, MotionEvent motionEvent) {
+    if (eventDetail.getType() == EventDetail.EVENT_SWITCHLANGUAGE) {
+      displayText((ViewRenderable) getRenderable(), (String) eventDetail.getValue());
     }
   }
 }

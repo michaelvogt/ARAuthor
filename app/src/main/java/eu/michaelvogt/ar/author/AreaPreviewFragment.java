@@ -54,9 +54,10 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import androidx.navigation.Navigation;
-import eu.michaelvogt.ar.author.data.Area;
+import eu.michaelvogt.ar.author.data.AreaVisual;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
 import eu.michaelvogt.ar.author.data.Marker;
+import eu.michaelvogt.ar.author.data.VisualDetail;
 
 public class AreaPreviewFragment extends Fragment {
   private static final String TAG = AreaPreviewFragment.class.getSimpleName();
@@ -66,7 +67,7 @@ public class AreaPreviewFragment extends Fragment {
   private static final Color PLANECOLOR = new Color(0.0f, 1.0f, 0.0f, 1f);
 
   private Marker editMarker;
-  private Area editArea;
+  private AreaVisual editArea;
 
   private LoopArFragment arFragment;
   private AugmentedImage augmentedImage;
@@ -97,7 +98,8 @@ public class AreaPreviewFragment extends Fragment {
     viewModel.getMarker(markerId).observe(this, marker -> editMarker = marker);
 
     int areaId = getArguments().getInt("area_id");
-    viewModel.getArea(areaId).observe(this, area -> editArea = area);
+    viewModel.getAreaVisual( areaId)
+        .thenAccept(areaVisual -> editArea = areaVisual);
 
     arFragment = (LoopArFragment) getChildFragmentManager().findFragmentById(R.id.ux_fragment);
     arFragment.getPlaneDiscoveryController().hide();
@@ -132,7 +134,12 @@ public class AreaPreviewFragment extends Fragment {
         if (listener.onPlane()) {
           modelPoseOnPlaneListeners.remove(listener);
         }
-      };
+      }
+      ;
+    }
+
+    if (editArea == null) {
+      return;
     }
 
     Collection<AugmentedImage> updatedArImages = frame.getUpdatedTrackables(AugmentedImage.class);
@@ -148,9 +155,10 @@ public class AreaPreviewFragment extends Fragment {
               Session session = arFragment.getArSceneView().getSession();
 
               switch (editArea.getObjectType()) {
-                case Area.TYPE_3DOBJECTONPLANE:
-                  attachPlaneStatusRenderable(getContext(),
-                      image, editArea.getPosition(), editArea.getRotation(), session);
+                case AreaVisual.TYPE_3DOBJECTONPLANE:
+                  attachPlaneStatusRenderable(getContext(), image,
+                      (Vector3) editArea.getDetail(VisualDetail.KEY_POSITION),
+                      (Quaternion) editArea.getDetail(VisualDetail.KEY_ROTATION), session);
                   break;
                 default:
                   attachShapeRenderable(getContext(), anchorNode);
@@ -171,7 +179,8 @@ public class AreaPreviewFragment extends Fragment {
   private void attachShapeRenderable(Context context, AnchorNode imageAnchor) {
     createMaterial(context, PREVIEWCOLOR, useTranslucency)
         .thenAccept(material -> {
-          ModelRenderable shape = ShapeFactory.makeCube(editArea.getSize(), Vector3.zero(), material);
+          ModelRenderable shape = ShapeFactory.makeCube(
+              (Vector3) editArea.getDetail(VisualDetail.KEY_SIZE), Vector3.zero(), material);
           attachRenderable(shape, imageAnchor);
         })
         .exceptionally(throwable -> {
@@ -189,13 +198,13 @@ public class AreaPreviewFragment extends Fragment {
     ModelRenderable.builder()
         // TODO: Load model from external position
 
-        .setSource(context, editArea.getResource())
+        .setSource(context, (Integer) editArea.getDetail(VisualDetail.KEY_RESOURCE))
         .build()
         .thenAccept(modelRenderable -> {
           createMaterial(context, PREVIEWCOLOR, useTranslucency)
               .thenAccept(modelRenderable::setMaterial);
 
-          anchorNode.setLocalScale(editArea.getScale());
+          anchorNode.setLocalScale((Vector3) editArea.getDetail(VisualDetail.KEY_SCALE));
 
           Node areaNode = new Node();
           areaNode.setRenderable(modelRenderable);
@@ -234,7 +243,7 @@ public class AreaPreviewFragment extends Fragment {
           modelPoseOnPlaneListeners.add(() -> {
             Collection<Plane> planes =
                 arFragment.getArSceneView().getSession().getAllTrackables(Plane.class);
-            for(Plane plane : planes) {
+            for (Plane plane : planes) {
               if (plane.isPoseInExtents(modelPose)) {
                 attachModelRenderable(context, anchorNode, rotation);
                 return true;
@@ -259,9 +268,9 @@ public class AreaPreviewFragment extends Fragment {
   private void attachRenderable(Renderable renderable, AnchorNode anchorNode) {
     Node areaNode = new Node();
     areaNode.setRenderable(renderable);
-    areaNode.setLocalPosition(editArea.getPosition());
-    areaNode.setLocalRotation(editArea.getRotation());
-    areaNode.setLocalScale(editArea.getScale());
+    areaNode.setLocalPosition((Vector3) editArea.getDetail(VisualDetail.KEY_POSITION));
+    areaNode.setLocalRotation((Quaternion) editArea.getDetail(VisualDetail.KEY_ROTATION));
+    areaNode.setLocalScale((Vector3) editArea.getDetail(VisualDetail.KEY_SCALE));
     areaNode.setParent(anchorNode);
   }
 

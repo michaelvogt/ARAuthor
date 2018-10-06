@@ -40,7 +40,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import eu.michaelvogt.ar.author.data.Area;
+import eu.michaelvogt.ar.author.data.AreaVisual;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
 import eu.michaelvogt.ar.author.data.Marker;
 import eu.michaelvogt.ar.author.nodes.AreaNode;
@@ -99,29 +99,29 @@ public class PreviewFragment extends Fragment {
     anchorNode.setParent(arFragment.getArSceneView().getScene());
 
     if (marker.isShowBackground()) {
-      buildArea(anchorNode, Area.getBackgroundArea(marker, marker.getBackgroundImagePath()),
+      buildArea(anchorNode, AreaVisual.getBackgroundArea(marker, marker.getBackgroundImagePath()),
           (node) -> {
-            buildAreas(node, marker.getAreaIds(), backgroundHeight, backgroundWidth);
+            buildAreas(node, marker.getUId(), backgroundHeight, backgroundWidth);
             node.setLookDirection(Vector3.up(), anchorNode.getUp());
           });
     } else {
-      buildAreas(anchorNode, marker.getAreaIds(), backgroundHeight, backgroundWidth);
+      buildAreas(anchorNode, marker.getUId(), backgroundHeight, backgroundWidth);
     }
   }
 
-  private void buildAreas(Node anchorNode, List<Integer> areaIds, float backgroundHeight, float backgroundWidth) {
-    if (areaIds.size() > 0) {
-      for (int areaId : areaIds) {
-        viewModel.getArea(areaId).observe(this, area -> buildArea(anchorNode, area, null));
+  private void buildAreas(Node anchorNode, int markerId, float backgroundHeight, float backgroundWidth) {
+    viewModel.getAreaVisualsForMarker(markerId).thenAccept(areaVisuals -> {
+      if (areaVisuals.size() > 0) {
+        areaVisuals.forEach(areaVisual -> buildArea(anchorNode, areaVisual, null));
+      } else {
+        // Build a default area for demo purposes
+        buildArea(anchorNode, AreaVisual.getDefaultArea(backgroundHeight, backgroundWidth), null);
       }
-    } else {
-      // Build a default area for demo purposes
-      buildArea(anchorNode, Area.getDefaultArea(backgroundHeight, backgroundWidth), null);
-    }
+    });
   }
 
-  private void buildArea(Node anchorNode, Area area, Consumer<Node> fn) {
-    AreaNodeBuilder.builder(getActivity(), area)
+  private void buildArea(Node anchorNode, AreaVisual areaVisual, Consumer<Node> fn) {
+    AreaNodeBuilder.builder(getActivity(), areaVisual)
         .build()
         .thenAccept(node -> {
           node.setParent(anchorNode);
@@ -134,10 +134,10 @@ public class PreviewFragment extends Fragment {
             cameraFacingNodes.add(node);
           }
           
-          Log.i(TAG, "Area successfully created " + area.getTitle());
+          Log.i(TAG, "Area successfully created " + areaVisual.getTitle());
         })
         .exceptionally(throwable -> {
-          Log.e(TAG, "Unable to build Area: " + area.getTitle(), throwable);
+          Log.e(TAG, "Unable to build Area: " + areaVisual.getTitle(), throwable);
           return null;
         });
   }
