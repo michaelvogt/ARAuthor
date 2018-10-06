@@ -21,16 +21,19 @@ package eu.michaelvogt.ar.author.data;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
-import java.util.List;
-
-@Entity(tableName = "locations")
+@Entity(
+    tableName = "locations",
+    indices = @Index(value = {"name"}, unique = true))
 public class Location {
   @PrimaryKey(autoGenerate = true)
   @ColumnInfo(name = "u_id")
   private int uId;
 
+  @NonNull
   @ColumnInfo(name = "name")
   private String name;
 
@@ -45,7 +48,7 @@ public class Location {
     this("", "", "");
   }
 
-  public Location(String name, String thumbPath, String introHtmlPath) {
+  public Location(@NonNull String name, String thumbPath, String introHtmlPath) {
     this.name = name;
     this.thumbPath = thumbPath;
     this.introHtmlPath = introHtmlPath;
@@ -59,11 +62,12 @@ public class Location {
     this.uId = uId;
   }
 
+  @NonNull
   public String getName() {
     return name;
   }
 
-  public void setName(String name) {
+  public void setName(@NonNull String name) {
     this.name = name;
   }
 
@@ -81,5 +85,28 @@ public class Location {
 
   public void setIntroHtmlPath(String introHtmlPath) {
     this.introHtmlPath = introHtmlPath;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    Location location = (Location) o;
+
+//    if (uId != location.uId) return false;
+    if (!name.equals(location.name)) return false;
+    if (thumbPath != null ? !thumbPath.equals(location.thumbPath) : location.thumbPath != null)
+      return false;
+    return introHtmlPath != null ? introHtmlPath.equals(location.introHtmlPath) : location.introHtmlPath == null;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = uId;
+    result = 31 * result + name.hashCode();
+    result = 31 * result + (thumbPath != null ? thumbPath.hashCode() : 0);
+    result = 31 * result + (introHtmlPath != null ? introHtmlPath.hashCode() : 0);
+    return result;
   }
 }

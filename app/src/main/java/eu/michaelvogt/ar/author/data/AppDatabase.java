@@ -33,7 +33,7 @@ import eu.michaelvogt.ar.author.data.utils.DatabaseInitializer;
 @Database(
     entities = {Location.class, Marker.class, Area.class, MarkerArea.class,
         VisualDetail.class, EventDetail.class},
-    version = 6)
+    version = 7)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
   public abstract LocationDao locationDao();

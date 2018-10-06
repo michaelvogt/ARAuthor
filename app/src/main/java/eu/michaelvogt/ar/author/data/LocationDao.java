@@ -26,7 +26,7 @@ import java.util.List;
 
 @Dao
 public interface LocationDao extends BaseDao<Location> {
-  @Query("SELECT * from locations where locations.u_id=:uId")
+  @Query("SELECT * from locations where u_id=:uId")
   LiveData<Location> get(int uId);
 
   @Query("SELECT * from locations ORDER BY name ASC")
@@ -37,4 +37,7 @@ public interface LocationDao extends BaseDao<Location> {
 
   @Query("DELETE FROM locations")
   void deleteAll();
+
+  @Query("Select * from locations where name like :name")
+  Location findLocationByName(String name);
 }
