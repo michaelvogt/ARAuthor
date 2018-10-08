@@ -16,28 +16,27 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author.data;
+package eu.michaelvogt.ar.author.data
 
-import android.arch.lifecycle.LiveData;
-import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Query;
-
-import java.util.List;
+import android.arch.lifecycle.LiveData
+import android.arch.persistence.room.Dao
+import android.arch.persistence.room.Query
 
 @Dao
-public interface LocationDao extends BaseDao<Location> {
-  @Query("SELECT * from locations where u_id=:uId")
-  LiveData<Location> get(int uId);
+interface LocationDao : BaseDao<Location> {
 
-  @Query("SELECT * from locations ORDER BY name ASC")
-  LiveData<List<Location>> getAll();
+    @Query("SELECT * from locations ORDER BY name ASC")
+    fun getAll(): LiveData<List<Location>>
 
-  @Query("SELECT COUNT(*) FROM locations")
-  int getSize();
+    @Query("SELECT COUNT(*) FROM locations")
+    fun getSize(): LiveData<Int>
 
-  @Query("DELETE FROM locations")
-  void deleteAll();
+    @Query("SELECT * from locations where u_id=:uId")
+    fun get(uId: Int): LiveData<Location>
 
-  @Query("Select * from locations where name like :name")
-  Location findLocationByName(String name);
+    @Query("DELETE FROM locations")
+    fun deleteAll()
+
+    @Query("Select * from locations where name like :name")
+    fun findLocationByName(name: String): LiveData<Location>
 }

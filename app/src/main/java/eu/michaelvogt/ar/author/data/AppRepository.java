@@ -75,7 +75,7 @@ public class AppRepository {
     return locationDao.get(uId);
   }
 
-  int getLocationsSize() {
+  public LiveData<Integer> getLocationsSize() {
     return locationDao.getSize();
   }
 
@@ -101,9 +101,9 @@ public class AppRepository {
   @NotNull
   public LiveData<List<Marker>> getMarkersForLocation(int locationId, boolean withTitles) {
     if (withTitles) {
-      return markerDao.findMarkersWithTitlesForLocation(locationId);
+      return markerDao.findMarkersAndTitlesForLocation(locationId);
     } else {
-      return markerDao.findMarkersWithoutTitlesForLocation(locationId);
+      return markerDao.findMarkersOnlyForLocation(locationId);
     }
   }
 

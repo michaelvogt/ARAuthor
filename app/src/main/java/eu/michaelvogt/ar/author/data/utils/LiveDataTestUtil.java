@@ -16,28 +16,31 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author.data;
+package eu.michaelvogt.ar.author.data.utils;
 
 import android.arch.lifecycle.LiveData;
-import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Query;
+import android.arch.lifecycle.Observer;
+import android.support.annotation.Nullable;
 
-import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
-@Dao
-public interface MarkerDao extends BaseDao<Marker> {
-  @Query("SELECT * from markers where markers.u_id=:uId")
-  LiveData<Marker> get(int uId);
+public class LiveDataTestUtil {
 
-  @Query("SELECT * from markers ORDER BY title ASC")
-  LiveData<List<Marker>> getAll();
-
-  @Query("SELECT * FROM markers WHERE location_id=:locationId AND is_title=0")
-  LiveData<List<Marker>> findMarkersWithoutTitlesForLocation(final int locationId);
-
-  @Query("SELECT * FROM markers WHERE location_id=:locationId")
-  LiveData<List<Marker>> findMarkersWithTitlesForLocation(final int locationId);
-
-  @Query("DELETE FROM markers")
-  void deleteAll();
+  public static <T> T getValue(final LiveData<T> liveData) throws InterruptedException {
+    final Object[] data = new Object[1];
+    final CountDownLatch latch = new CountDownLatch(1);
+    Observer<T> observer = new Observer<T>() {
+      @Override
+      public void onChanged(@Nullable T o) {
+        data[0] = o;
+        latch.countDown();
+        liveData.removeObserver(this);
+      }
+    };
+    liveData.observeForever(observer);
+    latch.await(2, TimeUnit.SECONDS);
+    //noinspection unchecked
+    return (T) data[0];
+  }
 }

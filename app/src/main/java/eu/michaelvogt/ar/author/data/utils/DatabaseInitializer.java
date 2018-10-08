@@ -18,10 +18,8 @@
 
 package eu.michaelvogt.ar.author.data.utils;
 
-import com.google.ar.sceneform.math.Quaternion;
 import com.google.ar.sceneform.math.Vector3;
 
-import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.Area;
 import eu.michaelvogt.ar.author.data.AreaDao;
 import eu.michaelvogt.ar.author.data.AreaVisual;
@@ -53,150 +51,140 @@ public class DatabaseInitializer {
   }
 
   public void run() {
-    int locationId = insertLocation(new Location(
+    int locationId = insertLocation(
         "石見銀山",
         "Touristar/iwamiginzan/images/igk_machinami.jpg",
-        "Touristar/iwamiginzan/intro.html"));
+        "Touristar/iwamiginzan/intro.html");
 
-    insertMarker(new Marker("城上神社", locationId));
-    int markerId = insertMarker(new Marker(
+    insertMarkerForLocation(locationId, "城上神社");
+    int markerId = insertMarkerForLocation(locationId,
+        "看板",
         "/Touristar/Markers/IMG_20180522_105701.jpg",
         "",
-        "看板",
         "拝殿正面は一〇、ニニメートル、側面は二、八八メートル。屋根は重曹式の入母屋造り瓦葺きで江戸の亀戸天満宮を天本にしたものと伝えています。",
         "城上神社",
         0.6f,
         Vector3.zero(),
         new Vector3(1.4f, 0.005f, 0.715f),
         false,
-        locationId,
-        false));
+        false);
 
-    markerId = insertMarker(new Marker(
+    markerId = insertMarkerForLocation(locationId,
+        "鳴き龍",
         "/Touristar/Markers/P_20180806_132544_vHDR_On.jpg",
         "",
-        "鳴き龍",
         "",
         "城上神社",
         0f,
         Vector3.zero(),
         Vector3.zero(),
         false,
-        locationId,
-        false));
+        false);
 
-    markerId = insertMarker(new Marker(
+    markerId = insertMarkerForLocation(locationId,
+        "亀石",
         "/Touristar/Markers/IMG_20180522_105416.jpg",
         "",
-        "亀石",
         "その昔延喜年間（一〇〇〇年ぐらい前）城上神社が仁摩町馬路の城上山に有った時、海防の神と崇められ崇敬者から珍しい貝の化石の有る石と海亀の",
         "城上神社",
         0.5f,
         Vector3.zero(),
         new Vector3(1.364f, 0.005f, 0.715f),
         false,
-        locationId,
-        false));
+        false);
 
-    insertMarker(new Marker("陣屋", locationId));
-    markerId = insertMarker(new Marker(
+    insertMarkerForLocation(locationId, "陣屋");
+    markerId = insertMarkerForLocation(locationId,
+        "中央看板",
         "/Touristar/Markers/IMG_20180423_132914.jpg",
         "",
-        "中央看板",
         "陣屋は神社の東側にある本陣屋と銀山川をはさみその南側にある向陣屋によって構成されていた。また、向陣屋側には年貢銀や灰吹銀を保管するため",
         "陣屋",
         0.81f,
         Vector3.zero(),
         new Vector3(1.80f, 0.005f, 0.98f),
         false,
-        locationId,
-        false));
+        false);
 
-    markerId = insertMarker(new Marker(
+    markerId = insertMarkerForLocation(locationId,
+        "左側看板",
         "/Touristar/Markers/IMG_20180423_132802.jpg",
         "",
-        "左側看板",
         "",
         "陣屋",
         0.655f,
         Vector3.zero(),
         new Vector3(1.67f, 0.005f, 0.743f),
         false,
-        locationId,
-        false));
+        false);
 
-    markerId = insertMarker(new Marker(
+    markerId = insertMarkerForLocation(locationId,
+        "奥場",
         "/Touristar/Markers/P_20180806_135120_vHDR_On.jpg",
         "",
-        "奥場",
         "",
         "陣屋",
         0f,
         Vector3.zero(),
         Vector3.zero(),
         false,
-        locationId,
-        false));
+        false);
 
 
-    insertMarker(new Marker("熊谷家", locationId));
-    markerId = insertMarker(new Marker(
+    insertMarkerForLocation(locationId, "熊谷家");
+    markerId = insertMarkerForLocation(locationId,
+        "看板",
         "/Touristar/Markers/IMG_20180522_115942.jpg",
         "",
-        "看板",
         "熊谷家は、文献によると十七世紀に石見銀山の経営に携わり、その後掛屋や郷宿、代官所の御用達を勤めたことが知られている。当主は代々町役人",
         "熊谷家",
         0.32f,
         Vector3.zero(),
         new Vector3(0.6f, 0.005f, 0.4f),
         false,
-        locationId,
-        false));
+        false);
 
 
-    insertMarker(new Marker("おかけ", locationId));
-    markerId = insertMarker(new Marker(
+    insertMarkerForLocation(locationId, "おかけ");
+    markerId = insertMarkerForLocation(locationId,
+        "テンプ",
         "/Touristar/Markers/P_20180801_112411_vHDR_On.jpg",
         "",
-        "テンプ",
         "",
         "おかけ",
         0f,
         Vector3.zero(),
         Vector3.zero(),
         false,
-        locationId,
-        false));
+        false);
 
 
-    insertMarker(new Marker("川島家", locationId));
-    markerId = insertMarker(new Marker(
+    insertMarkerForLocation(locationId, "川島家");
+    markerId = insertMarkerForLocation(locationId,
+        "名板",
         "/Touristar/Markers/P_20180804_182308_vHDR_On.jpg",
         "",
-        "名板",
         "建物は、代官所の銀山方役所に勤務する銀山附役人河島氏の居宿であった。初代三郎右衛門は安芸国（広島県）出身で、慶長十五ねん（一六一〇）",
         "川島家",
         0f,
         Vector3.zero(),
         new Vector3(0.29f, 0.005f, 1.018f),
         false,
-        locationId,
-        false));
+        false);
 
 
-    insertMarker(new Marker("宗岡家", locationId));
-    markerId = insertMarker(new Marker(
+    insertMarkerForLocation(locationId, "宗岡家");
+    markerId = insertMarkerForLocation(locationId,
+        "看板",
         "/Touristar/Markers/P_20180804_175049_vHDR_On.jpg",
         "/Touristar/iwamiginzan/muneokake/boardbackground.png",
-        "看板",
         "宗岡は、戦国時代毛利輝元の「銀山六人衆」として知られ、諸役の徴収方を担いました。江戸時代に入ると、奉行大久保長安に召し抱えられ",
         "宗岡家",
         0.435f,
         Vector3.zero(),
         new Vector3(0.945f, 0.005f, 0.632f),
         true,
-        locationId,
-        false));
+        false);
 
     int areaId = insertAreaForMarker(markerId, new Area(
         AreaVisual.TYPE_IMAGEONIMAGE,
@@ -334,138 +322,130 @@ public class DatabaseInitializer {
 //              "Old New Comparision")),
 
 
-    insertMarker(new Marker("金森家", locationId));
-    insertMarker(new Marker(
+    insertMarkerForLocation(locationId, "金森家");
+    insertMarkerForLocation(locationId,
+        "看板",
         "/Touristar/Markers/P_20180804_175413_vHDR_On.jpg",
         "",
-        "看板",
         "江戸時代、石見銀山附御料百五十余村は支配上六組に分けられていた。十八世紀の中頃には、大森には六軒の郷宿が設けられ、公用で出かける村役人",
         "金森家",
         0.36f,
         Vector3.zero(),
         new Vector3(0.6f, 0.005f, 0.4f),
         false,
-        locationId,
-        false));
+        false);
 
 
-    insertMarker(new Marker("五百羅漢", locationId));
-    insertMarker(new Marker(
+    insertMarkerForLocation(locationId, "五百羅漢");
+    insertMarkerForLocation(locationId,
+        "入り口",
         "/Touristar/Markers/P_20180804_180510_vHDR_On.jpg",
         "",
-        "入り口",
         "",
         "五百羅漢",
         0f,
         Vector3.zero(),
         Vector3.zero(),
         false,
-        locationId,
-        false));
+        false);
 
-    insertMarker(new Marker(
+    insertMarkerForLocation(locationId,
+        "１",
         "/Touristar/Markers/P_20180804_180605_vHDR_On.jpg",
         "",
-        "１",
         "",
         "五百羅漢",
         0f,
         Vector3.zero(),
         Vector3.zero(),
         false,
-        locationId,
-        false));
+        false);
 
-    insertMarker(new Marker(
+    insertMarkerForLocation(locationId,
+        "２",
         "/Touristar/Markers/P_20180804_180654_vHDR_On.jpg",
         "",
-        "２",
         "",
         "五百羅漢",
         0f,
         Vector3.zero(),
         Vector3.zero(),
         false,
-        locationId,
-        false));
+        false);
 
-    insertMarker(new Marker(
+    insertMarkerForLocation(locationId,
+        "３",
         "/Touristar/Markers/P_20180804_180746_vHDR_On.jpg",
         "",
-        "３",
         "",
         "五百羅漢",
         0f,
         Vector3.zero(),
         Vector3.zero(),
         false,
-        locationId,
-        false));
+        false);
 
 
-    insertMarker(new Marker("豊坂神社", locationId));
-    insertMarker(new Marker(
+    insertMarkerForLocation(locationId, "豊坂神社");
+    insertMarkerForLocation(locationId,
+        "看板",
         "/Touristar/Markers/P_20180806_141327_vHDR_On.jpg",
         "",
-        "看板",
         "毛利元就が祭神の、毛利家ゆかりの社である。元就は生前、自分の木像を造り山吹城に安置させたが、元就の孫の毛利輝元が洞春山長安寺を建立し",
         "豊坂神社",
         0.45f,
         Vector3.zero(),
         new Vector3(0.6f, 0.005f, 0.4f),
         false,
-        locationId,
-        false));
+        false);
 
 
-    insertMarker(new Marker("佐毘売神社", locationId));
-    insertMarker(new Marker(
+    insertMarkerForLocation(locationId, "佐毘売神社");
+    insertMarkerForLocation(locationId,
+        "看板",
         "/Touristar/Markers/P_20180806_143800_vHDR_On.jpg",
         "",
-        "看板",
         "この祭神は、鉱山の守り神である金山彦の神で、別なでは、「山神社」といい、鉱末や村人からは「山神さん」と呼ばれ親しまれていました。",
         "佐毘売神社",
         0.535f,
         Vector3.zero(),
         new Vector3(1.02f, 0.005f, 0.685f),
         false,
-        locationId,
-        false));
+        false);
 
 
-    insertMarker(new Marker("谷地区", locationId));
-    insertMarker(new Marker(
+    insertMarkerForLocation(locationId, "谷地区");
+    insertMarkerForLocation(locationId,
+        "看板",
         "/Touristar/Markers/P_20180806_144336_vHDR_On.jpg",
         "",
-        "看板",
+
         "この説明版の左側、少し高くなった場所に鉱山の神である金山彦命を祀る佐毘売山神社があります。参道から佐毘売山神社に向って左側の谷出土谷、",
         "谷地区",
         1.04f,
         Vector3.zero(),
         new Vector3(1.35f, 0.005f, 0.965f),
         false,
-        locationId,
-        false));
+        false);
 
 
-    locationId = insertLocation(new Location(
+    locationId = insertLocation(
         "箱館",
         "Touristar/hakodate/images/goryokakumainhall.jpg",
-        "Touristar/hakodate/intro.html"));
+        "Touristar/hakodate/intro.html");
 
-    insertMarker(new Marker("箱館", locationId));
-    markerId = insertMarker(new Marker(
+    insertMarkerForLocation(locationId, "箱館");
+    markerId = insertMarkerForLocation(locationId,
+        "奉行菅",
         "/Touristar/Markers/office_front.jpg",
         "",
-        "奉行菅",
         "",
         "五稜郭",
         0.9f,
         Vector3.zero(),
         new Vector3(),
         true,
-        locationId,
-        false));
+        false);
 
     insertAreaForMarker(markerId, new Area(
         AreaVisual.TYPE_3DOBJECTONPLANE,
@@ -526,12 +506,20 @@ public class DatabaseInitializer {
 //        Vector3.one()));
   }
 
-  private int insertLocation(Location location) {
-    return Math.toIntExact(locationDao.insert(location));
+  private int insertLocation(String name, String thumbPath, String introHtmlPath) {
+    return Math.toIntExact(locationDao.insert(new Location(name, thumbPath, introHtmlPath)));
   }
 
-  private int insertMarker(Marker marker) {
-    return Math.toIntExact(markerDao.insert(marker));
+  private int insertMarkerForLocation(int locationId, String title) {
+    return Math.toIntExact(markerDao.insert(new Marker(locationId, title)));
+  }
+
+  private int insertMarkerForLocation(int locationId, String title, String markerImagePath,
+                                      String backgroundImagePath, String intro, String location,
+                                      float widthInM, Vector3 zeroPoint, Vector3 size,
+                                      boolean showBackground, boolean isTitle) {
+    return Math.toIntExact(markerDao.insert(new Marker(locationId, title, markerImagePath,
+        backgroundImagePath, intro, location, widthInM, zeroPoint, size, showBackground, isTitle)));
   }
 
   private int insertAreaForMarker(int markerId, Area area) {

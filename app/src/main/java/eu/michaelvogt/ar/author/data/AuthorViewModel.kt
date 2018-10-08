@@ -39,9 +39,9 @@ class AuthorViewModel(application: Application) : AndroidViewModel(application) 
 
     fun getLocation(uid: Int): LiveData<Location> = repository.getLocation(uid)
 
-    fun getLocationsSize(): Int = repository.getLocationsSize()
+    fun getLocationsSize(): LiveData<Int> = repository.locationsSize
 
-    fun getAllLocations(): LiveData<List<Location>> = repository.getAllLocations()
+    fun getAllLocations(): LiveData<List<Location>> = repository.allLocations
 
 
     fun addMarker(marker: Marker) = repository.insert(marker)
