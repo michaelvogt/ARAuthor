@@ -112,7 +112,7 @@ public class MarkerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         if (listener != null) {
           int position = getAdapterPosition();
           if (position != RecyclerView.NO_POSITION) {
-            int uId = markers.get(position).getUId();
+            long uId = markers.get(position).getUId();
             listener.onItemClicked(uId);
           }
         }

@@ -16,26 +16,26 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author.data;
+package eu.michaelvogt.ar.author.data
 
-import android.arch.lifecycle.LiveData;
-import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Delete
+import android.arch.persistence.room.Insert
+import android.arch.persistence.room.OnConflictStrategy
+import android.arch.persistence.room.Update
 
-import java.util.List;
+interface BaseDao<T> {
+    @Insert
+    fun insert(entity: T): Long
 
-@Dao
-public interface AreaDao extends BaseDao<Area> {
-  @Query("SELECT * from areas where areas.u_id=:uId")
-  Area get(int uId);
+    @Insert
+    fun insertAll(vararg entity: T)
 
-  @Query("SELECT * from areas where areas.title=:title")
-  LiveData<Area> findAreaWithTitle(String title);
+    @Update
+    fun update(entity: T)
 
-  @Query("SELECT * from areas ORDER BY title ASC")
-  LiveData<List<Area>> getAll();
+    @Update
+    fun updateAll(vararg entity: T)
 
-  @Query("DELETE FROM areas")
-  void deleteAll();
-
+    @Delete
+    fun delete(entity: T)
 }

@@ -19,5 +19,5 @@
 package eu.michaelvogt.ar.author.utils;
 
 public interface ItemClickListener {
-  void onItemClicked(int position);
+  void onItemClicked(long uId);
 }

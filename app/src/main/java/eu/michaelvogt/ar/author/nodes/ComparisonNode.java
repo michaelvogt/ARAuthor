@@ -36,7 +36,7 @@ import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;
 
 import eu.michaelvogt.ar.author.data.AreaVisual;
-import eu.michaelvogt.ar.author.data.VisualDetail;
+import eu.michaelvogt.ar.author.data.VisualDetailKt;
 import eu.michaelvogt.ar.author.utils.AreaNodeBuilder;
 import eu.michaelvogt.ar.author.utils.FileUtils;
 
@@ -54,10 +54,10 @@ public class ComparisonNode extends AreaNode {
   public CompletionStage<Node> build() {
     CompletableFuture<Node> future = new CompletableFuture<>();
 
-    CompletableFuture<Texture> futurePrim3Texture = getTextureFuture(future, VisualDetail.KEY_IMAGEPATH);
+    CompletableFuture<Texture> futurePrim3Texture = getTextureFuture(future, VisualDetailKt.KEY_IMAGEPATH);
 
     // TODO: There can be more than 1 secondary images available in the future.
-    CompletableFuture<Texture> futureSecTexture = getTextureFuture(future, VisualDetail.KEY_SECONDARYIMAGEPATH);
+    CompletableFuture<Texture> futureSecTexture = getTextureFuture(future, VisualDetailKt.KEY_SECONDARYIMAGEPATH);
 
     CompletableFuture.allOf(futurePrim3Texture, futureSecTexture)
         .thenAccept(aVoid -> ModelRenderable.builder()
@@ -76,8 +76,8 @@ public class ComparisonNode extends AreaNode {
           }
 
           Renderable renderable = ShapeFactory.makeCube(
-              (Vector3) areaVisual.getDetail(VisualDetail.KEY_SIZE),
-              (Vector3) areaVisual.getDetail(VisualDetail.KEY_ZEROPOINT), material);
+              (Vector3) areaVisual.getDetail(VisualDetailKt.KEY_SIZE),
+              (Vector3) areaVisual.getDetail(VisualDetailKt.KEY_ZEROPOINT), material);
           areaVisual.apply(renderable);
           setRenderable(renderable);
 

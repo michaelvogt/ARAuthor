@@ -16,26 +16,16 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author.data;
+package eu.michaelvogt.ar.author.data
 
-import android.arch.persistence.room.Delete;
-import android.arch.persistence.room.Insert;
-import android.arch.persistence.room.OnConflictStrategy;
-import android.arch.persistence.room.Update;
+import android.arch.persistence.room.Dao
+import android.arch.persistence.room.Query
 
-public interface BaseDao<T> {
-  @Insert
-  long insert(T entity);
+@Dao
+interface VisualDetailDao : BaseDao<VisualDetail> {
+    @Query("SELECT * from visual_detail where area_id=:areaId")
+    fun getForArea(areaId: Long): List<VisualDetail>
 
-  @Insert
-  void insertAll(T... entity);
-
-  @Update
-  void update(T entity);
-
-  @Update
-  void updateAll(T... entity);
-
-  @Delete
-  void delete(T entity);
+    @Query("DELETE FROM visual_detail")
+    fun deleteAll()
 }

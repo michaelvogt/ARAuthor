@@ -16,16 +16,16 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author.data;
+package eu.michaelvogt.ar.author.data
 
-import android.arch.lifecycle.LiveData;
-import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Query;
-
-import java.util.List;
+import android.arch.persistence.room.Dao
+import android.arch.persistence.room.Query
 
 @Dao
-public interface EventDetailDao {
-  @Query("SELECT * from event_detail where area_id=:areaId")
-  List<EventDetail> getForArea(int areaId);
+interface EventDetailDao {
+    @Query("SELECT * from event_detail where area_id=:areaId")
+    fun getForArea(areaId: Long): List<EventDetail>
+
+    @Query("DELETE FROM event_detail")
+    fun deleteAll()
 }

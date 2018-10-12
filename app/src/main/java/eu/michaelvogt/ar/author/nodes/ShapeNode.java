@@ -34,7 +34,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
 import eu.michaelvogt.ar.author.data.AreaVisual;
-import eu.michaelvogt.ar.author.data.VisualDetail;
+import eu.michaelvogt.ar.author.data.VisualDetailKt;
 import eu.michaelvogt.ar.author.utils.FileUtils;
 
 public class ShapeNode extends Node {
@@ -47,9 +47,9 @@ public class ShapeNode extends Node {
     this.context = context;
     this.areaVisual = areaVisual;
 
-    setLocalPosition((Vector3) areaVisual.getDetail(VisualDetail.KEY_POSITION));
-    setLocalRotation((Quaternion) areaVisual.getDetail(VisualDetail.KEY_ROTATION));
-    setLocalScale((Vector3) areaVisual.getDetail(VisualDetail.KEY_SCALE));
+    setLocalPosition((Vector3) areaVisual.getDetail(VisualDetailKt.KEY_POSITION));
+    setLocalRotation((Quaternion) areaVisual.getDetail(VisualDetailKt.KEY_ROTATION));
+    setLocalScale((Vector3) areaVisual.getDetail(VisualDetailKt.KEY_SCALE));
   }
 
   public static ShapeNode builder(Context context, AreaVisual area) {
@@ -59,7 +59,7 @@ public class ShapeNode extends Node {
   public CompletionStage<Node> build() {
     CompletableFuture<Node> future = new CompletableFuture<>();
     String textureFilePath = FileUtils.getFullPuplicFolderPath(
-        (String) areaVisual.getDetail(VisualDetail.KEY_IMAGEPATH, "Touristar/default/images/"));
+        (String) areaVisual.getDetail(VisualDetailKt.KEY_IMAGEPATH, "Touristar/default/images/"));
 
     Texture.builder()
         .setSource(BitmapFactory.decodeFile(textureFilePath))
@@ -68,10 +68,10 @@ public class ShapeNode extends Node {
         .thenAccept(texture -> MaterialFactory.makeTransparentWithTexture(context, texture)
             // Keep default model as resource
             .thenAccept(material -> {
-              areaVisual.applyDetail(material);
+              areaVisual.apply(material);
 
               Renderable renderable = ShapeFactory.makeCube(
-                  (Vector3) areaVisual.getDetail(VisualDetail.KEY_SIZE), Vector3.zero(), material);
+                  (Vector3) areaVisual.getDetail(VisualDetailKt.KEY_SIZE), Vector3.zero(), material);
               renderable.setShadowCaster(false);
               setRenderable(renderable);
 
@@ -84,7 +84,7 @@ public class ShapeNode extends Node {
             }))
         .exceptionally(throwable -> {
           Log.d(TAG, "Could not load texture " +
-              areaVisual.getDetail(VisualDetail.KEY_IMAGEPATH), throwable);
+              areaVisual.getDetail(VisualDetailKt.KEY_IMAGEPATH), throwable);
           return null;
         });
 

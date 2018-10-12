@@ -32,7 +32,7 @@ interface LocationDao : BaseDao<Location> {
     fun getSize(): LiveData<Int>
 
     @Query("SELECT * from locations where u_id=:uId")
-    fun get(uId: Int): LiveData<Location>
+    fun get(uId: Long): LiveData<Location>
 
     @Query("DELETE FROM locations")
     fun deleteAll()

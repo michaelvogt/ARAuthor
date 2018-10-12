@@ -43,9 +43,10 @@ import java.util.List;
 
 import eu.michaelvogt.ar.author.ImagePreviewFragment;
 import eu.michaelvogt.ar.author.R;
-import eu.michaelvogt.ar.author.data.AreaVisual;
+import eu.michaelvogt.ar.author.data.AreaVisualKt;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
 import eu.michaelvogt.ar.author.data.EventDetail;
+import eu.michaelvogt.ar.author.data.EventDetailKt;
 import eu.michaelvogt.ar.author.data.Slide;
 import eu.michaelvogt.ar.author.utils.AreaNodeBuilder;
 import eu.michaelvogt.ar.author.utils.Slider;
@@ -93,19 +94,19 @@ public class AuthorAnchorNode extends AnchorNode {
         for (int index = 0; index < eventDetails.size(); index++) {
           EventDetail eventDetail = eventDetails.get(index);
           switch (eventDetail.getType()) {
-            case EventDetail.EVENT_HIDECONTENT:
+            case EventDetailKt.EVENT_HIDECONTENT:
               handleHideContent();
               break;
-            case EventDetail.EVENT_GRABCONTENT:
+            case EventDetailKt.EVENT_GRABCONTENT:
               handleGrabContent();
               break;
-            case EventDetail.EVENT_SETMAINCONTENT:
+            case EventDetailKt.EVENT_SETMAINCONTENT:
               handleSetMainContent(eventDetail);
               break;
-            case EventDetail.EVENT_ZOOM:
+            case EventDetailKt.EVENT_ZOOM:
               handleZoom(eventDetail);
               break;
-            case EventDetail.EVENT_SCALE:
+            case EventDetailKt.EVENT_SCALE:
               handleScale(eventDetail);
               break;
             default:
@@ -120,7 +121,7 @@ public class AuthorAnchorNode extends AnchorNode {
 
   private void handleSetMainContent(EventDetail eventDetail) {
     AuthorViewModel viewModel = ViewModelProviders.of((FragmentActivity) context).get(AuthorViewModel.class);
-    viewModel.setCurrentMainContentId((String) eventDetail.getValue());
+    viewModel.setCurrentMainContentId((String) eventDetail.getAnyValue());
   }
 
   private void handleHideContent() {
@@ -133,11 +134,11 @@ public class AuthorAnchorNode extends AnchorNode {
 
   private void handleScale(EventDetail eventDetail) {
     currentScaleIndex =
-        currentScaleIndex + 1 >= ((List<Float>) eventDetail.getValue()).size() ? 0 : ++currentScaleIndex;
+        currentScaleIndex + 1 >= ((List<Float>) eventDetail.getAnyValue()).size() ? 0 : ++currentScaleIndex;
 
-    Node background = findInHierarchy(node -> node.getName().equals(AreaVisual.BACKGROUNDAREATITLE));
+    Node background = findInHierarchy(node -> node.getName().equals(AreaVisualKt.BACKGROUNDAREATITLE));
     if (background != null) {
-      Float scale = ((List<Float>) eventDetail.getValue()).get(currentScaleIndex);
+      Float scale = ((List<Float>) eventDetail.getAnyValue()).get(currentScaleIndex);
       background.setLocalScale(new Vector3(scale, 1f, scale));
     } else {
       // TODO: Handle scale for non background scenes
@@ -146,9 +147,9 @@ public class AuthorAnchorNode extends AnchorNode {
 
   private void handleZoom(EventDetail eventDetail) {
     AuthorViewModel viewModel = ViewModelProviders.of((FragmentActivity) context).get(AuthorViewModel.class);
-    int areaId = (int) eventDetail.getValue();
+    int areaId = (int) eventDetail.getAnyValue();
     viewModel.getAreaVisual(areaId).thenAccept(areaVisual -> {
-      Node background = findInHierarchy(node -> node.getName().equals(AreaVisual.BACKGROUNDAREATITLE));
+      Node background = findInHierarchy(node -> node.getName().equals(AreaVisualKt.BACKGROUNDAREATITLE));
 
       AreaNodeBuilder.builder(context, areaVisual)
           .setScene(getScene())

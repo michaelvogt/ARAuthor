@@ -40,7 +40,7 @@ import eu.michaelvogt.ar.author.utils.FileUtils;
 public class LocationIntroFragment extends Fragment implements View.OnClickListener {
   private static final String TAG = LocationIntroFragment.class.getSimpleName();
 
-  private int locationId;
+  private long locationId;
 
   public LocationIntroFragment() {/* Required empty public constructor*/}
 
@@ -54,7 +54,7 @@ public class LocationIntroFragment extends Fragment implements View.OnClickListe
     super.onViewCreated(view, savedInstanceState);
 
     AuthorViewModel viewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(AuthorViewModel.class);
-    locationId = getArguments().getInt("location_id");
+    locationId = getArguments().getLong("location_id");
 
     WebView contentView = view.findViewById(R.id.content_info);
     contentView.setWebViewClient(new WebViewClient());
@@ -83,7 +83,7 @@ public class LocationIntroFragment extends Fragment implements View.OnClickListe
   @Override
   public void onClick(View view) {
     Bundle bundle = new Bundle();
-    bundle.putInt("location_id", locationId);
+    bundle.putLong("location_id", locationId);
     Navigation.findNavController(view).navigate(R.id.action_preview_markers, bundle);
   }
 }

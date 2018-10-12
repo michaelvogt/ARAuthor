@@ -20,45 +20,61 @@ package eu.michaelvogt.ar.author.data
 
 import android.support.test.runner.AndroidJUnit4
 import eu.michaelvogt.ar.author.data.utils.LiveDataTestUtil
-import eu.michaelvogt.ar.author.data.utils.TestUtil
-import org.hamcrest.core.IsEqual.equalTo
-import org.junit.Assert.assertThat
+import org.hamcrest.CoreMatchers
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class LocationDaoTest : DaoTest() {
-    private var dao: LocationDao? = null
+class AreaVisualTest : DaoTest() {
+    private var areaDao: AreaDao? = null
+    private var detailDao: VisualDetailDao? = null
+    private var eventDao: EventDetailDao? = null
 
     @Before
     fun setUp() {
-        dao = db!!.locationDao()
+        areaDao = db!!.areaDao()
+        detailDao = db!!.visualDetailDao()
+        eventDao = db!!.eventDetailDao()
     }
 
     @Test
-    fun getAllFromEmptyTable() {
-        val all = LiveDataTestUtil.getValue(dao!!.getAll())
-
-        assertThat(all, equalTo(emptyList()))
+    fun getDetails() {
     }
 
     @Test
-    fun getSize() {
-        dao!!.insertAll(*TestUtil.locations())
-        val size = LiveDataTestUtil.getValue(dao!!.getSize())
+    fun getEvents() {
 
-        assertThat(size, equalTo(TestUtil.locations().size))
     }
 
     @Test
-    fun getByName() {
-        val location1 = TestUtil.location1()
+    fun hasDetail() {
 
-        dao!!.insert(location1)
-        val byName = LiveDataTestUtil.getValue(dao!!.findLocationByName(location1.name))
+    }
 
-        location1.uId = byName.uId
-        assertThat<Location>(byName, equalTo(location1))
+    @Test
+    fun getDetail() {
+
+    }
+
+    @Test
+    fun hasEvent() {
+
+    }
+
+    @Test
+    fun apply() {
+
+    }
+
+    @Test
+    fun getDefaultArea() {
+
+    }
+
+    @Test
+    fun getBackgroundArea() {
+
     }
 }

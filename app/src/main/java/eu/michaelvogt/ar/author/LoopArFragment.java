@@ -42,7 +42,7 @@ public class LoopArFragment extends ArFragment {
   String focusMode;
   String lightEstimation;
 
-  int locationId;
+  long locationId;
 
   Bitmap bitmap;
   String location = "";

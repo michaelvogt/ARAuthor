@@ -33,7 +33,7 @@ import java.util.concurrent.CompletionStage;
 
 import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.AreaVisual;
-import eu.michaelvogt.ar.author.data.VisualDetail;
+import eu.michaelvogt.ar.author.data.VisualDetailKt;
 import eu.michaelvogt.ar.author.utils.AreaNodeBuilder;
 import eu.michaelvogt.ar.author.utils.FileUtils;
 import eu.michaelvogt.ar.author.utils.Slider;
@@ -48,9 +48,9 @@ public class ViewNode extends Node {
     this.context = context;
     this.areaVisual = areaVisual;
 
-    setLocalPosition((Vector3) areaVisual.getDetail(VisualDetail.KEY_POSITION));
-    setLocalRotation((Quaternion) areaVisual.getDetail(VisualDetail.KEY_ROTATION));
-    setLocalScale((Vector3) areaVisual.getDetail(VisualDetail.KEY_SCALE));
+    setLocalPosition((Vector3) areaVisual.getDetail(VisualDetailKt.KEY_POSITION));
+    setLocalRotation((Quaternion) areaVisual.getDetail(VisualDetailKt.KEY_ROTATION));
+    setLocalScale((Vector3) areaVisual.getDetail(VisualDetailKt.KEY_SCALE));
     setName(areaVisual.getTitle());
   }
 
@@ -68,14 +68,14 @@ public class ViewNode extends Node {
         .thenAccept(temp -> {
           // TODO: Hack - fix when custom material can be created #196
           Material material = temp.getMaterial();
-          areaVisual.applyDetail(material);
+          areaVisual.apply(material);
 
           ViewRenderable.builder()
-              .setView(context, (Integer) areaVisual.getDetail(VisualDetail.KEY_RESOURCE))
+              .setView(context, (Integer) areaVisual.getDetail(VisualDetailKt.KEY_RESOURCE))
               .setSource(context, R.raw.slide)
               .build()
               .thenAccept(renderable -> {
-                renderable.setSizer(view -> (Vector3) areaVisual.getDetail(VisualDetail.KEY_SIZE));
+                renderable.setSizer(view -> (Vector3) areaVisual.getDetail(VisualDetailKt.KEY_SIZE));
                 setRenderable(renderable);
 
 
@@ -101,7 +101,7 @@ public class ViewNode extends Node {
 
                 Slider slider = renderable.getView().findViewById(R.id.slider);
                 String puplicFolderPath = FileUtils.getFullPuplicFolderPath((String)
-                    areaVisual.getDetail(VisualDetail.KEY_IMAGEFOLDERPATH, "Touristar/default/images/"));
+                    areaVisual.getDetail(VisualDetailKt.KEY_IMAGEFOLDERPATH, "Touristar/default/images/"));
                 // slider.setSlides(FileUtils.getFilepathsOfFolder(puplicFolderPath));
                 // slider.startTimer(3000);
 

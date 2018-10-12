@@ -37,7 +37,7 @@ class AuthorViewModel(application: Application) : AndroidViewModel(application) 
 
     fun addLocation(location: Location) = repository.insert(location)
 
-    fun getLocation(uid: Int): LiveData<Location> = repository.getLocation(uid)
+    fun getLocation(uid: Long): LiveData<Location> = repository.getLocation(uid)
 
     fun getLocationsSize(): LiveData<Int> = repository.locationsSize
 
@@ -50,8 +50,8 @@ class AuthorViewModel(application: Application) : AndroidViewModel(application) 
 
     fun updateMarker(marker: Marker) = repository.update(marker)
 
-    fun getMarkersForLocation(locationId: Int, withTitles: Boolean):
-            LiveData<MutableList<Marker>> = repository.getMarkersForLocation(locationId, withTitles)
+    fun getMarkersForLocation(locationId: Long, withTitles: Boolean):
+            LiveData<List<Marker>> = repository.getMarkersForLocation(locationId, withTitles)
 
     fun clearCropMarker() {
         cropMarker = null
@@ -62,13 +62,13 @@ class AuthorViewModel(application: Application) : AndroidViewModel(application) 
 
     fun getArea(uId: Int): CompletableFuture<Area> = repository.getArea(uId)
 
-    fun getAreasForMarker(markerId: Int):
+    fun getAreasForMarker(markerId: Long):
             CompletableFuture<List<Area>> = repository.getAreasForMarker(markerId)
 
 
     fun getAreaVisual(uId: Int):
             CompletableFuture<AreaVisual> = repository.getAreaVisual(uId)
 
-    fun getAreaVisualsForMarker(uId: Int):
+    fun getAreaVisualsForMarker(uId: Long):
             CompletableFuture<List<AreaVisual>> = repository.getAreaVisualsForMarker(uId)
 }

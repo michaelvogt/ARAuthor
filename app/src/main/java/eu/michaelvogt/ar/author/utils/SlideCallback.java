@@ -13,7 +13,7 @@ import java.util.List;
 import eu.michaelvogt.ar.author.data.AreaVisual;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
 import eu.michaelvogt.ar.author.data.Slide;
-import eu.michaelvogt.ar.author.data.VisualDetail;
+import eu.michaelvogt.ar.author.data.VisualDetailKt;
 
 public class SlideCallback implements NodeCallback {
   private static final String TAG = SlideCallback.class.getSimpleName();
@@ -32,11 +32,11 @@ public class SlideCallback implements NodeCallback {
   public void createImageComparatorCover() {
     AuthorViewModel viewModel = ViewModelProviders.of((FragmentActivity) context).get(AuthorViewModel.class);
 
-    Slide comparisionData = ((List<Slide>) areaVisual.getDetail(VisualDetail.KEY_SLIDES)).get(3);
+    Slide comparisionData = ((List<Slide>) areaVisual.getDetail(VisualDetailKt.KEY_SLIDES)).get(3);
 
     AreaVisual comparisionArea = new AreaVisual(this.areaVisual);
     // TODO: Set details
-//    comparisionArea.setObjectType(AreaVisual.TYPE_COMPARATORONIMAGE);
+//    comparisionArea.setObjectType(AreaVisualKt.TYPE_COMPARATORONIMAGE);
 //    comparisionArea.setTitle("Compare old and new");
 //    comparisionArea.setResource(R.layout.view_comparison);
 //    comparisionArea.setPosition(Vector3.add(areaVisual.getPosition(), new Vector3(0.0f, 0.0f, -0.29f)));

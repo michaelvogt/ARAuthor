@@ -57,7 +57,9 @@ import androidx.navigation.Navigation;
 import eu.michaelvogt.ar.author.data.AreaVisual;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
 import eu.michaelvogt.ar.author.data.Marker;
-import eu.michaelvogt.ar.author.data.VisualDetail;
+import eu.michaelvogt.ar.author.data.VisualDetailKt;
+
+import static eu.michaelvogt.ar.author.data.AreaVisualKt.TYPE_3DOBJECTONPLANE;
 
 public class AreaPreviewFragment extends Fragment {
   private static final String TAG = AreaPreviewFragment.class.getSimpleName();
@@ -98,7 +100,7 @@ public class AreaPreviewFragment extends Fragment {
     viewModel.getMarker(markerId).observe(this, marker -> editMarker = marker);
 
     int areaId = getArguments().getInt("area_id");
-    viewModel.getAreaVisual( areaId)
+    viewModel.getAreaVisual(areaId)
         .thenAccept(areaVisual -> editArea = areaVisual);
 
     arFragment = (LoopArFragment) getChildFragmentManager().findFragmentById(R.id.ux_fragment);
@@ -135,7 +137,6 @@ public class AreaPreviewFragment extends Fragment {
           modelPoseOnPlaneListeners.remove(listener);
         }
       }
-      ;
     }
 
     if (editArea == null) {
@@ -155,10 +156,10 @@ public class AreaPreviewFragment extends Fragment {
               Session session = arFragment.getArSceneView().getSession();
 
               switch (editArea.getObjectType()) {
-                case AreaVisual.TYPE_3DOBJECTONPLANE:
+                case TYPE_3DOBJECTONPLANE:
                   attachPlaneStatusRenderable(getContext(), image,
-                      (Vector3) editArea.getDetail(VisualDetail.KEY_POSITION),
-                      (Quaternion) editArea.getDetail(VisualDetail.KEY_ROTATION), session);
+                      (Vector3) editArea.getDetail(VisualDetailKt.KEY_POSITION),
+                      (Quaternion) editArea.getDetail(VisualDetailKt.KEY_ROTATION), session);
                   break;
                 default:
                   attachShapeRenderable(getContext(), anchorNode);
@@ -180,7 +181,7 @@ public class AreaPreviewFragment extends Fragment {
     createMaterial(context, PREVIEWCOLOR, useTranslucency)
         .thenAccept(material -> {
           ModelRenderable shape = ShapeFactory.makeCube(
-              (Vector3) editArea.getDetail(VisualDetail.KEY_SIZE), Vector3.zero(), material);
+              (Vector3) editArea.getDetail(VisualDetailKt.KEY_SIZE), Vector3.zero(), material);
           attachRenderable(shape, imageAnchor);
         })
         .exceptionally(throwable -> {
@@ -198,13 +199,13 @@ public class AreaPreviewFragment extends Fragment {
     ModelRenderable.builder()
         // TODO: Load model from external position
 
-        .setSource(context, (Integer) editArea.getDetail(VisualDetail.KEY_RESOURCE))
+        .setSource(context, (Integer) editArea.getDetail(VisualDetailKt.KEY_RESOURCE))
         .build()
         .thenAccept(modelRenderable -> {
           createMaterial(context, PREVIEWCOLOR, useTranslucency)
               .thenAccept(modelRenderable::setMaterial);
 
-          anchorNode.setLocalScale((Vector3) editArea.getDetail(VisualDetail.KEY_SCALE));
+          anchorNode.setLocalScale((Vector3) editArea.getDetail(VisualDetailKt.KEY_SCALE));
 
           Node areaNode = new Node();
           areaNode.setRenderable(modelRenderable);
@@ -268,9 +269,9 @@ public class AreaPreviewFragment extends Fragment {
   private void attachRenderable(Renderable renderable, AnchorNode anchorNode) {
     Node areaNode = new Node();
     areaNode.setRenderable(renderable);
-    areaNode.setLocalPosition((Vector3) editArea.getDetail(VisualDetail.KEY_POSITION));
-    areaNode.setLocalRotation((Quaternion) editArea.getDetail(VisualDetail.KEY_ROTATION));
-    areaNode.setLocalScale((Vector3) editArea.getDetail(VisualDetail.KEY_SCALE));
+    areaNode.setLocalPosition((Vector3) editArea.getDetail(VisualDetailKt.KEY_POSITION));
+    areaNode.setLocalRotation((Quaternion) editArea.getDetail(VisualDetailKt.KEY_ROTATION));
+    areaNode.setLocalScale((Vector3) editArea.getDetail(VisualDetailKt.KEY_SCALE));
     areaNode.setParent(anchorNode);
   }
 

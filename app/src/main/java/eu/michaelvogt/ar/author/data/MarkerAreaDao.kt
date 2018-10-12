@@ -23,26 +23,23 @@ import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Query
 
 @Dao
-interface MarkerDao : BaseDao<Marker> {
+interface MarkerAreaDao : BaseDao<MarkerArea> {
+    @Query("SELECT * from marker_areas")
+    fun getAll(): LiveData<List<MarkerArea>>
 
-    @Query("SELECT * from markers ORDER BY title ASC")
-    fun getAll(): LiveData<List<Marker>>
-
-    @Query("SELECT * from markers where markers.u_id=:uId")
-    fun get(uId: Int): LiveData<Marker>
-
-    @Query("SELECT COUNT(*) FROM markers")
+    @Query("SELECT COUNT(*) FROM marker_areas")
     fun getSize(): LiveData<Int>
 
-    @Query("SELECT * from markers WHERE title like :title")
-    fun findMarkerByTitle(title: String): LiveData<Marker>
+    // Don't return LiveData
+    @Query("SELECT * FROM markers INNER JOIN marker_areas ON " +
+            "markers.u_id=marker_areas.marker_id WHERE marker_areas.area_id=:areaId")
+    fun getMarkersForArea(areaId: Long): List<Marker>
 
-    @Query("SELECT * FROM markers WHERE location_id=:locationId AND is_title=0")
-    fun findMarkersOnlyForLocation(locationId: Long): LiveData<List<Marker>>
+    // Don't return LIveData
+    @Query("SELECT * FROM areas INNER JOIN marker_areas ON " +
+            "areas.u_id = marker_areas.area_id WHERE marker_areas.marker_id=:markerId")
+    fun getAreasForMarker(markerId: Long): List<Area>
 
-    @Query("SELECT * FROM markers WHERE location_id=:locationId")
-    fun findMarkersAndTitlesForLocation(locationId: Long): LiveData<List<Marker>>
-
-    @Query("DELETE FROM markers")
+    @Query("DELETE FROM marker_areas")
     fun deleteAll()
 }

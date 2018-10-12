@@ -74,7 +74,8 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
         if (listener != null) {
           int position = getAdapterPosition();
           if (position != RecyclerView.NO_POSITION) {
-            listener.onItemClicked(position);
+            long locationId = locations.get(position).getUId();
+            listener.onItemClicked(locationId);
           }
         }
       });

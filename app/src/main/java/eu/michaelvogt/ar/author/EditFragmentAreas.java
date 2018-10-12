@@ -37,7 +37,7 @@ import eu.michaelvogt.ar.author.utils.ItemClickListener;
 public class EditFragmentAreas extends Fragment implements ItemClickListener {
   private View view;
 
-  private int markerId;
+  private long markerId;
 
   public EditFragmentAreas() {/* Required empty public constructor*/}
 
@@ -68,10 +68,10 @@ public class EditFragmentAreas extends Fragment implements ItemClickListener {
   }
 
   @Override
-  public void onItemClicked(int position) {
+  public void onItemClicked(long position) {
     Bundle bundle = new Bundle();
-    bundle.putInt("marker_id", markerId);
-    bundle.putInt("area_id", position);
+    bundle.putLong("marker_id", markerId);
+    bundle.putLong("area_id", position);
     Navigation.findNavController(view).navigate(R.id.action_edit_area_placement, bundle);
   }
 

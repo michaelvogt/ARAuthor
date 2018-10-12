@@ -46,7 +46,7 @@ import java.util.concurrent.CompletionStage;
 import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.AreaVisual;
 import eu.michaelvogt.ar.author.data.EventDetail;
-import eu.michaelvogt.ar.author.data.VisualDetail;
+import eu.michaelvogt.ar.author.data.VisualDetailKt;
 import eu.michaelvogt.ar.author.utils.AreaNodeBuilder;
 import eu.michaelvogt.ar.author.utils.FileUtils;
 
@@ -77,9 +77,9 @@ public class ImageNode extends AreaNode implements EventSender {
     CompletableFuture<Node> future = new CompletableFuture<>();
     CompletableFuture<Texture> futureTexture;
 
-    if (areaVisual.hasDetail(VisualDetail.KEY_IMAGEPATH)) {
+    if (areaVisual.hasDetail(VisualDetailKt.KEY_IMAGEPATH)) {
       String textureFilePath = FileUtils.getFullPuplicFolderPath(
-          (String) areaVisual.getDetail(VisualDetail.KEY_IMAGEPATH, "Touristar/default/images/"));
+          (String) areaVisual.getDetail(VisualDetailKt.KEY_IMAGEPATH, "Touristar/default/images/"));
 
       futureTexture = Texture.builder()
           .setSource(BitmapFactory.decodeFile(textureFilePath))
@@ -87,12 +87,12 @@ public class ImageNode extends AreaNode implements EventSender {
           .build()
           .exceptionally(throwable -> {
             Log.d(TAG, "Could not load texture image: " +
-                areaVisual.getDetail(VisualDetail.KEY_IMAGEPATH), throwable);
+                areaVisual.getDetail(VisualDetailKt.KEY_IMAGEPATH), throwable);
             return null;
           });
 
-    } else if (areaVisual.hasDetail(VisualDetail.KEY_IMAGERESOURCE)) {
-      int textureResource = (int) areaVisual.getDetail(VisualDetail.KEY_IMAGERESOURCE, R.drawable.ic_launcher);
+    } else if (areaVisual.hasDetail(VisualDetailKt.KEY_IMAGERESOURCE)) {
+      int textureResource = (int) areaVisual.getDetail(VisualDetailKt.KEY_IMAGERESOURCE, R.drawable.ic_launcher);
       Bitmap bitmap = getBitmapFromVectorDrawable(context, textureResource);
 
       futureTexture = Texture.builder()
@@ -101,7 +101,7 @@ public class ImageNode extends AreaNode implements EventSender {
           .build()
           .exceptionally(throwable -> {
             Log.d(TAG, "Could not load texture resource: " +
-                areaVisual.getDetail(VisualDetail.KEY_IMAGERESOURCE), throwable);
+                areaVisual.getDetail(VisualDetailKt.KEY_IMAGERESOURCE), throwable);
             return null;
           });
 
@@ -117,14 +117,14 @@ public class ImageNode extends AreaNode implements EventSender {
           // TODO: Hack - fix when custom material can be created #196
           Material material = temp.getMaterial();
           material.setTexture("primary", texture);
-          areaVisual.applyDetail(material);
+          areaVisual.apply(material);
 
           setupFadeAnimation(material);
 
           Renderable renderable = ShapeFactory.makeCube(
-              (Vector3) areaVisual.getDetail(VisualDetail.KEY_SIZE),
-              (Vector3) areaVisual.getDetail(VisualDetail.KEY_ZEROPOINT), material);
-          areaVisual.applyDetail(renderable);
+              (Vector3) areaVisual.getDetail(VisualDetailKt.KEY_SIZE),
+              (Vector3) areaVisual.getDetail(VisualDetailKt.KEY_ZEROPOINT), material);
+          areaVisual.apply(renderable);
 
           // Needs to be set, bacause Sceneform has a layering problem with transparent objects
           // https://github.com/google-ar/sceneform-android-sdk/issues/285#issuecomment-420730274
@@ -144,9 +144,9 @@ public class ImageNode extends AreaNode implements EventSender {
   }
 
   private void setupFadeAnimation(Material material) {
-    if (areaVisual.hasDetail(VisualDetail.KEY_SECONDARYIMAGEPATH)) {
+    if (areaVisual.hasDetail(VisualDetailKt.KEY_SECONDARYIMAGEPATH)) {
       String textureFilePath = FileUtils.getFullPuplicFolderPath(
-          (String) areaVisual.getDetail(VisualDetail.KEY_SECONDARYIMAGEPATH, "Touristar/default/images/"));
+          (String) areaVisual.getDetail(VisualDetailKt.KEY_SECONDARYIMAGEPATH, "Touristar/default/images/"));
 
       Texture.builder()
           .setSource(BitmapFactory.decodeFile(textureFilePath))
@@ -172,7 +172,7 @@ public class ImageNode extends AreaNode implements EventSender {
           })
           .exceptionally(throwable -> {
             Log.d(TAG, "Could not load texture path: " +
-                areaVisual.getDetail(VisualDetail.KEY_IMAGEPATH), throwable);
+                areaVisual.getDetail(VisualDetailKt.KEY_IMAGEPATH), throwable);
             return null;
           });
     }
@@ -180,7 +180,7 @@ public class ImageNode extends AreaNode implements EventSender {
 
   @Override
   public SparseArray<EventDetail> getEventDetails() {
-    return areaVisual.getDetailEvents();
+    return areaVisual.getEvents();
   }
 
   private Bitmap getBitmapFromVectorDrawable(Context context, int drawableId) {

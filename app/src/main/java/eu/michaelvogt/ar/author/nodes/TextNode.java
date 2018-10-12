@@ -37,7 +37,8 @@ import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.AreaVisual;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
 import eu.michaelvogt.ar.author.data.EventDetail;
-import eu.michaelvogt.ar.author.data.VisualDetail;
+import eu.michaelvogt.ar.author.data.EventDetailKt;
+import eu.michaelvogt.ar.author.data.VisualDetailKt;
 import eu.michaelvogt.ar.author.utils.FileUtils;
 
 /**
@@ -60,10 +61,10 @@ public class TextNode extends AreaNode implements EventHandler {
     CompletableFuture<Node> future = new CompletableFuture<>();
 
     ViewRenderable.builder()
-        .setView(context, (Integer) areaVisual.getDetail(VisualDetail.KEY_RESOURCE))
+        .setView(context, (Integer) areaVisual.getDetail(VisualDetailKt.KEY_RESOURCE))
         .build()
         .thenAccept(renderable -> {
-          renderable.setSizer(view -> (Vector3) areaVisual.getDetail(VisualDetail.KEY_SIZE));
+          renderable.setSizer(view -> (Vector3) areaVisual.getDetail(VisualDetailKt.KEY_SIZE));
           renderable.setShadowCaster(false);
           setRenderable(renderable);
 
@@ -85,11 +86,11 @@ public class TextNode extends AreaNode implements EventHandler {
 
   private void displayText(ViewRenderable renderable, String language) {
     TextView textView = renderable.getView().findViewById(R.id.view_text);
-    areaVisual.applyDetail(textView);
+    areaVisual.apply(textView);
 
-    if (areaVisual.hasDetail(VisualDetail.KEY_TEXTPATH)) {
+    if (areaVisual.hasDetail(VisualDetailKt.KEY_TEXTPATH)) {
       String content;
-      String filePath = (String) areaVisual.getDetail(VisualDetail.KEY_TEXTPATH);
+      String filePath = (String) areaVisual.getDetail(VisualDetailKt.KEY_TEXTPATH);
 
       try {
         content = FileUtils.readTextFile(filePath, language);
@@ -98,10 +99,10 @@ public class TextNode extends AreaNode implements EventHandler {
       }
 
       textView.setText(Html.fromHtml(content, Html.FROM_HTML_SEPARATOR_LINE_BREAK_HEADING));
-    } else if (areaVisual.hasDetail(VisualDetail.KEY_TEXTCONTENT)) {
+    } else if (areaVisual.hasDetail(VisualDetailKt.KEY_TEXTCONTENT)) {
       // TODO: make translatable by providing a map with translations
-      textView.setText((String) areaVisual.getDetail(VisualDetail.KEY_TEXTCONTENT));
-    } else if (areaVisual.hasDetail(VisualDetail.KEY_MARKUPCONTENT)) {
+      textView.setText((String) areaVisual.getDetail(VisualDetailKt.KEY_TEXTCONTENT));
+    } else if (areaVisual.hasDetail(VisualDetailKt.KEY_MARKUPCONTENT)) {
 //          String encoded = null;
 //          try {
 //            String content = FileUtils.readTextFile(area.getDetailString(AreaVisual.TEXTPATH));
@@ -118,8 +119,8 @@ public class TextNode extends AreaNode implements EventHandler {
 
   @Override
   public void handleEvent(EventDetail eventDetail, MotionEvent motionEvent) {
-    if (eventDetail.getType() == EventDetail.EVENT_SWITCHLANGUAGE) {
-      displayText((ViewRenderable) getRenderable(), (String) eventDetail.getValue());
+    if (eventDetail.getType() == EventDetailKt.EVENT_SWITCHLANGUAGE) {
+      displayText((ViewRenderable) getRenderable(), (String) eventDetail.getAnyValue());
     }
   }
 }

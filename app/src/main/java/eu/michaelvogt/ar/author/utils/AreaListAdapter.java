@@ -32,6 +32,7 @@ import java.util.List;
 import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.Area;
 import eu.michaelvogt.ar.author.data.AreaVisual;
+import eu.michaelvogt.ar.author.data.AreaVisualKt;
 
 public class AreaListAdapter extends RecyclerView.Adapter<AreaListAdapter.ViewHolder> {
   private ItemClickListener listener;
@@ -66,15 +67,15 @@ public class AreaListAdapter extends RecyclerView.Adapter<AreaListAdapter.ViewHo
       int typeResource = R.drawable.ic_launcher;
 
       switch (area.getObjectType()) {
-        case AreaVisual.TYPE_3DOBJECTONPLANE:
-        case AreaVisual.TYPE_3DOBJECTONIMAGE:
-          typeResource = AreaVisual.ICON_3DOBJECT;
+        case AreaVisualKt.TYPE_3DOBJECTONPLANE:
+        case AreaVisualKt.TYPE_3DOBJECTONIMAGE:
+          typeResource = AreaVisualKt.ICON_3DOBJECT;
           break;
-        case AreaVisual.TYPE_SLIDESONIMAGE:
-          typeResource = AreaVisual.ICON_FLATOVERLAY;
+        case AreaVisualKt.TYPE_SLIDESONIMAGE:
+          typeResource = AreaVisualKt.ICON_FLATOVERLAY;
           break;
-        case AreaVisual.TYPE_INTERACTIVEOVERLAY:
-          typeResource = AreaVisual.ICON_INTERACTIVEOVERLAY;
+        case AreaVisualKt.TYPE_INTERACTIVEOVERLAY:
+          typeResource = AreaVisualKt.ICON_INTERACTIVEOVERLAY;
           break;
       }
 
@@ -106,7 +107,8 @@ public class AreaListAdapter extends RecyclerView.Adapter<AreaListAdapter.ViewHo
         if (listener != null) {
           int position = getAdapterPosition();
           if (position != RecyclerView.NO_POSITION) {
-            listener.onItemClicked(position);
+            long uId = areas.get(position).getUId();
+            listener.onItemClicked(uId);
           }
         }
       });

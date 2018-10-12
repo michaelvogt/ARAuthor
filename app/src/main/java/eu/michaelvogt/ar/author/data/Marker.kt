@@ -26,15 +26,19 @@ import com.google.ar.sceneform.math.Vector3
         foreignKeys = [ForeignKey(
                 entity = Location::class,
                 parentColumns = arrayOf("u_id"),
-                childColumns = arrayOf("location_id"))])
+                childColumns = arrayOf("location_id"))],
+        indices = [
+            Index(value = ["title"]),
+            Index(value = ["location_id"])
+        ])
 class Marker {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "u_id")
-    var uId: Int = 0
+    var uId: Long = 0
 
     @ColumnInfo(name = "location_id")
-    var locationId: Int = 0
+    var locationId: Long = 0
 
     @ColumnInfo(name = "thumb_path")
     var thumbPath: String = ""
@@ -43,7 +47,7 @@ class Marker {
     var markerImagePath: String = ""
 
     @ColumnInfo(name = "background_image_path")
-    var backgroundImagePath: String? = null
+    var backgroundImagePath: String = ""
 
     @ColumnInfo(name = "title")
     var title: String = ""
@@ -61,28 +65,27 @@ class Marker {
     var widthInM = -1f
 
     @ColumnInfo(name = "size")
-    var size: Vector3? = Vector3.one()
+    var size: Vector3 = Vector3.one()
 
     @ColumnInfo(name = "zero_point")
-    var zeroPoint: Vector3? = Vector3.zero()
+    var zeroPoint: Vector3 = Vector3.zero()
 
     @ColumnInfo(name = "show_background")
     var isShowBackground: Boolean = false
 
     @Ignore
-    constructor() : this( 0,"", "", "", "",
-            "", .0f, Vector3.zero(), Vector3.zero(), true,  false)
+    constructor() : this( 0,"")
 
-    constructor(locationId: Int = 0,
+    constructor(locationId: Long,
                 title: String,
                 markerImagePath: String = "",
-                backgroundImagePath: String? = null,
+                backgroundImagePath: String = "",
                 intro: String? = null,
                 location: String = "",
                 widthInM: Float = -1f,
                 zeroPoint: Vector3 = Vector3.zero(),
                 size: Vector3 = Vector3.one(),
-                showBackground: Boolean = false,
+                isShowBackground: Boolean = false,
                 isTitle: Boolean = false) {
         this.markerImagePath = markerImagePath
         this.title = title
@@ -92,7 +95,7 @@ class Marker {
         this.zeroPoint = zeroPoint
         this.size = size
         this.backgroundImagePath = backgroundImagePath
-        this.isShowBackground = showBackground
+        this.isShowBackground = isShowBackground
         this.locationId = locationId
         this.isTitle = isTitle
         this.thumbPath = ""
@@ -114,14 +117,6 @@ class Marker {
         this.locationId = marker.locationId
     }
 
-    // TODO: Hack - Replace with Location object
-    @Ignore
-    constructor(locationId: Int, title: String) {
-        this.title = title
-        this.isTitle = true
-        this.locationId = locationId
-    }
-
     fun hasImage(): Boolean {
         return !markerImagePath.isEmpty()
     }
@@ -134,7 +129,53 @@ class Marker {
         isTitle = title
     }
 
+    override fun toString(): String {
+        return "Marker(uId=$uId, locationId=$locationId, thumbPath='$thumbPath', markerImagePath='$markerImagePath', backgroundImagePath=$backgroundImagePath, title='$title', intro=$intro, isTitle=$isTitle, location=$location, widthInM=$widthInM, size=$size, zeroPoint=$zeroPoint, isShowBackground=$isShowBackground)"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Marker
+
+        if (uId != other.uId) return false
+        if (locationId != other.locationId) return false
+        if (thumbPath != other.thumbPath) return false
+        if (markerImagePath != other.markerImagePath) return false
+        if (backgroundImagePath != other.backgroundImagePath) return false
+        if (title != other.title) return false
+        if (intro != other.intro) return false
+        if (isTitle != other.isTitle) return false
+        if (location != other.location) return false
+        if (widthInM != other.widthInM) return false
+        if (!Vector3.equals(size, other.size)) return false
+        if (!Vector3.equals(zeroPoint, other.zeroPoint)) return false
+        if (isShowBackground != other.isShowBackground) return false
+
+        return true
+    }
+
+    override fun hashCode() : Int {
+        var result = uId
+        result = 31 * result + locationId
+        result = 31 * result + thumbPath.hashCode()
+        result = 31 * result + markerImagePath.hashCode()
+        result = 31 * result + (backgroundImagePath.hashCode())
+        result = 31 * result + title.hashCode()
+        result = 31 * result + (intro?.hashCode() ?: 0)
+        result = 31 * result + isTitle.hashCode()
+        result = 31 * result + (location?.hashCode() ?: 0)
+        result = 31 * result + widthInM.hashCode()
+        result = 31 * result + (size.hashCode())
+        result = 31 * result + (zeroPoint.hashCode())
+        result = 31 * result + isShowBackground.hashCode()
+        return result.toInt()
+    }
+
     companion object {
         const val MIN_SIZE = 300
     }
+
+
 }

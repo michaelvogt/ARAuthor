@@ -35,7 +35,7 @@ import java.util.concurrent.CompletionStage;
 import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.AreaVisual;
 import eu.michaelvogt.ar.author.data.Slide;
-import eu.michaelvogt.ar.author.data.VisualDetail;
+import eu.michaelvogt.ar.author.data.VisualDetailKt;
 import eu.michaelvogt.ar.author.utils.SlideCallback;
 import eu.michaelvogt.ar.author.utils.Slider;
 import eu.michaelvogt.ar.author.utils.ToggleSlideTextHandler;
@@ -61,14 +61,14 @@ public class SliderNode extends AreaNode {
         .setView(context, R.layout.view_slider)
         .build()
         .thenAccept(renderable -> {
-          renderable.setSizer(view -> (Vector3) areaVisual.getDetail(VisualDetail.KEY_SIZE));
+          renderable.setSizer(view -> (Vector3) areaVisual.getDetail(VisualDetailKt.KEY_SIZE));
           setRenderable(renderable);
-          areaVisual.applyDetail(renderable);
+          areaVisual.apply(renderable);
 
           Slider slider = renderable.getView().findViewById(R.id.slider);
           View sliderText = renderable.getView().findViewById(R.id.slider_text);
 
-          slider.setSlides((List<Slide>) areaVisual.getDetail(VisualDetail.KEY_SLIDES), new SlideCallback(context, areaVisual, scene));
+          slider.setSlides((List<Slide>) areaVisual.getDetail(VisualDetailKt.KEY_SLIDES), new SlideCallback(context, areaVisual, scene));
           slider.setOnTouchListener(new ToggleSlideTextHandler(context, sliderText));
 
           Log.i(TAG, "ImageNode successfully created");

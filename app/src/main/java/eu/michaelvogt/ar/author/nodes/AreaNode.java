@@ -7,7 +7,9 @@ import com.google.ar.sceneform.math.Quaternion;
 import com.google.ar.sceneform.math.Vector3;
 
 import eu.michaelvogt.ar.author.data.AreaVisual;
+import eu.michaelvogt.ar.author.data.AreaVisualKt;
 import eu.michaelvogt.ar.author.data.VisualDetail;
+import eu.michaelvogt.ar.author.data.VisualDetailKt;
 
 public class AreaNode extends Node {
   public static final int RENDER_FIRST = 0;
@@ -24,17 +26,17 @@ public class AreaNode extends Node {
     this.areaVisual = areaVisual;
 
     setName(areaVisual.getTitle());
-    setLocalPosition((Vector3) areaVisual.getDetail(VisualDetail.KEY_POSITION));
-    setLocalRotation((Quaternion) areaVisual.getDetail(VisualDetail.KEY_ROTATION));
-    setLocalScale((Vector3) areaVisual.getDetail(VisualDetail.KEY_SCALE));
+    setLocalPosition((Vector3) areaVisual.getDetail(VisualDetailKt.KEY_POSITION));
+    setLocalRotation((Quaternion) areaVisual.getDetail(VisualDetailKt.KEY_ROTATION));
+    setLocalScale((Vector3) areaVisual.getDetail(VisualDetailKt.KEY_SCALE));
   }
 
   public boolean isUiNode() {
-    return areaVisual.getUsageType() == AreaVisual.KIND_UI;
+    return areaVisual.getUsageType() == AreaVisualKt.KIND_UI;
   }
 
   public boolean isContentNode() {
-    return areaVisual.getUsageType() == AreaVisual.KIND_CONTENT;
+    return areaVisual.getUsageType() == AreaVisualKt.KIND_CONTENT;
   }
 
   public boolean isCameraFacing() {

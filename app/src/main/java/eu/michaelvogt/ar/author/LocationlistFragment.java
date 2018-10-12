@@ -68,11 +68,9 @@ public class LocationlistFragment extends Fragment implements ItemClickListener 
   }
 
   @Override
-  public void onItemClicked(int position) {
-    Location location = adapter.getLocation(position);
-
+  public void onItemClicked(long position) {
     Bundle bundle = new Bundle();
-    bundle.putInt("location_id", location.getUId());
+    bundle.putLong("location_id", position);
     Navigation.findNavController(view).navigate(R.id.action_location_intro, bundle);
   }
 }

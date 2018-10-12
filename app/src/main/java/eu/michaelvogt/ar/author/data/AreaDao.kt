@@ -16,10 +16,28 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author.data;
+package eu.michaelvogt.ar.author.data
 
-import android.arch.persistence.room.Dao;
+import android.arch.lifecycle.LiveData
+import android.arch.persistence.room.Dao
+import android.arch.persistence.room.Query
 
 @Dao
-public interface ContentDao {
+interface AreaDao : BaseDao<Area> {
+
+    @Query("SELECT * from areas ORDER BY title ASC")
+    fun getAll(): LiveData<List<Area>>
+
+    @Query("SELECT * from areas where areas.u_id=:uId")
+    fun get(uId: Int): Area
+
+    @Query("SELECT COUNT(*) FROM areas")
+    fun getSize(): LiveData<Int>
+
+    @Query("SELECT * from areas where areas.title=:title")
+    fun findAreaByTitle(title: String): LiveData<Area>
+
+    @Query("DELETE FROM areas")
+    fun deleteAll()
+
 }

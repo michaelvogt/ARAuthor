@@ -83,9 +83,9 @@ public class MarkerListFragment extends Fragment implements ItemClickListener {
   }
 
   @Override
-  public void onItemClicked(int uId) {
+  public void onItemClicked(long uId) {
     Bundle bundle = new Bundle();
-    bundle.putInt("edit_index", uId);
+    bundle.putLong("edit_index", uId);
     Navigation.findNavController(view).navigate(R.id.action_edit_marker, bundle);
   }
 }

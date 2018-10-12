@@ -71,7 +71,7 @@ public class PreviewFragment extends Fragment {
     arFragment.focusMode = getArguments().getString("focus_mode");
     arFragment.lightEstimation = getArguments().getString("light_estimation");
 
-    arFragment.locationId = getArguments().getInt("location_id");
+    arFragment.locationId = getArguments().getLong("location_id");
   }
 
   private void onUpdateFrame(FrameTime frameTime) {
@@ -99,7 +99,7 @@ public class PreviewFragment extends Fragment {
     anchorNode.setParent(arFragment.getArSceneView().getScene());
 
     if (marker.isShowBackground()) {
-      buildArea(anchorNode, AreaVisual.getBackgroundArea(marker, marker.getBackgroundImagePath()),
+      buildArea(anchorNode, AreaVisual.Companion.getBackgroundArea(marker, marker.getBackgroundImagePath()),
           (node) -> {
             buildAreas(node, marker.getUId(), backgroundHeight, backgroundWidth);
             node.setLookDirection(Vector3.up(), anchorNode.getUp());
@@ -109,13 +109,13 @@ public class PreviewFragment extends Fragment {
     }
   }
 
-  private void buildAreas(Node anchorNode, int markerId, float backgroundHeight, float backgroundWidth) {
+  private void buildAreas(Node anchorNode, long markerId, float backgroundHeight, float backgroundWidth) {
     viewModel.getAreaVisualsForMarker(markerId).thenAccept(areaVisuals -> {
       if (areaVisuals.size() > 0) {
         areaVisuals.forEach(areaVisual -> buildArea(anchorNode, areaVisual, null));
       } else {
         // Build a default area for demo purposes
-        buildArea(anchorNode, AreaVisual.getDefaultArea(backgroundHeight, backgroundWidth), null);
+        buildArea(anchorNode, AreaVisual.Companion.getDefaultArea(backgroundHeight, backgroundWidth), null);
       }
     });
   }

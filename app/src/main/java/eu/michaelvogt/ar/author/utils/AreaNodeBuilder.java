@@ -32,7 +32,9 @@ import java.util.concurrent.CompletionStage;
 
 import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.AreaVisual;
+import eu.michaelvogt.ar.author.data.AreaVisualKt;
 import eu.michaelvogt.ar.author.data.VisualDetail;
+import eu.michaelvogt.ar.author.data.VisualDetailKt;
 import eu.michaelvogt.ar.author.nodes.AreaNode;
 import eu.michaelvogt.ar.author.nodes.ComparisonNode;
 import eu.michaelvogt.ar.author.nodes.ImageNode;
@@ -67,26 +69,26 @@ public class AreaNodeBuilder {
 
   public CompletionStage<Node> build() {
     switch (areaVisual.getObjectType()) {
-      case AreaVisual.TYPE_DEFAULT:
-      case AreaVisual.TYPE_3DOBJECTONIMAGE:
+      case AreaVisualKt.TYPE_DEFAULT:
+      case AreaVisualKt.TYPE_3DOBJECTONIMAGE:
         return future3dObjectOnImage();
-      case AreaVisual.TYPE_3DOBJECTONPLANE:
+      case AreaVisualKt.TYPE_3DOBJECTONPLANE:
         return null;
-      case AreaVisual.TYPE_BACKGROUNDONIMAGE:
+      case AreaVisualKt.TYPE_BACKGROUNDONIMAGE:
         return ImageNode.builder(context, areaVisual).setRenderPriority(AreaNode.RENDER_FIRST).build();
-      case AreaVisual.TYPE_SLIDESONIMAGE:
+      case AreaVisualKt.TYPE_SLIDESONIMAGE:
         return SliderNode.builder(context, areaVisual).setScene(scene).build();
-      case AreaVisual.TYPE_INTERACTIVEOVERLAY:
+      case AreaVisualKt.TYPE_INTERACTIVEOVERLAY:
         return null;
-      case AreaVisual.TYPE_INTERACTIVEPANEL:
+      case AreaVisualKt.TYPE_INTERACTIVEPANEL:
         return null;
-      case AreaVisual.TYPE_TEXTONIMAGE:
+      case AreaVisualKt.TYPE_TEXTONIMAGE:
         return TextNode.builder(context, areaVisual).build();
-      case AreaVisual.TYPE_IMAGEONIMAGE:
+      case AreaVisualKt.TYPE_IMAGEONIMAGE:
         return ImageNode.builder(context, areaVisual).build();
-      case AreaVisual.TYPE_ROTATIONBUTTON:
+      case AreaVisualKt.TYPE_ROTATIONBUTTON:
         return ImageNode.builder(context, areaVisual).setIsCameraFacing(true).build();
-      case AreaVisual.TYPE_COMPARATORONIMAGE:
+      case AreaVisualKt.TYPE_COMPARATORONIMAGE:
         return ComparisonNode.builder(context, areaVisual).build();
       default:
         throw new IllegalArgumentException("Unknown area object type: " + areaVisual.getObjectType());
@@ -96,7 +98,7 @@ public class AreaNodeBuilder {
   private CompletionStage<Node> future3dObjectOnImage() {
     CompletableFuture<Node> future = new CompletableFuture<>();
     ModelRenderable.builder()
-        .setSource(context, (Integer) areaVisual.getDetail(VisualDetail.KEY_RESOURCE))
+        .setSource(context, (Integer) areaVisual.getDetail(VisualDetailKt.KEY_RESOURCE))
         .build()
         .thenAccept(renderable -> future.complete(createNode(renderable)));
 
@@ -112,9 +114,9 @@ public class AreaNodeBuilder {
   private Node createNode(Renderable renderable) {
     Node node = new Node();
     node.setRenderable(renderable);
-    node.setLocalPosition((Vector3) areaVisual.getDetail(VisualDetail.KEY_POSITION));
-    node.setLocalRotation((Quaternion) areaVisual.getDetail(VisualDetail.KEY_ROTATION));
-    node.setLocalScale((Vector3) areaVisual.getDetail(VisualDetail.KEY_SCALE));
+    node.setLocalPosition((Vector3) areaVisual.getDetail(VisualDetailKt.KEY_POSITION));
+    node.setLocalRotation((Quaternion) areaVisual.getDetail(VisualDetailKt.KEY_ROTATION));
+    node.setLocalScale((Vector3) areaVisual.getDetail(VisualDetailKt.KEY_SCALE));
     return node;
   }
 }
