@@ -71,7 +71,7 @@ class AppRepository internal constructor(application: Application) {
 
 
     // Marker
-    internal fun getMarker(uId: Int): LiveData<Marker> {
+    internal fun getMarker(uId: Long): LiveData<Marker> {
         return markerDao.get(uId)
     }
 
@@ -133,6 +133,7 @@ class AppRepository internal constructor(application: Application) {
                     areaVisuals.add(AreaVisual(area, futureDetails.join(), futureEvents.join()))
                 }
             }
+
             areaVisuals
         }
     }

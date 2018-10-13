@@ -23,15 +23,6 @@ import eu.michaelvogt.ar.author.data.utils.Converters
 
 private val TAG = VisualDetail::class.java.simpleName
 
-// Default detail
-const val KEY_COORDTYPE = 28
-const val KEY_POSITION = 29
-const val KEY_ZEROPOINT = 30
-const val KEY_ROTATION = 32
-const val KEY_SIZE = 33
-const val KEY_SCALE = 34
-
-// Optional detail
 const val KEY_IMAGEPATH = 0
 const val KEY_IMAGEFOLDERPATH = 1
 const val KEY_TEXTCONTENT = 2

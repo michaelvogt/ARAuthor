@@ -50,9 +50,6 @@
             android:id="@+id/action_panorama"
             app:destination="@id/panoramaFragment"
             app:popUpTo="@+id/imagePreviewFragment" />
-        <argument
-            android:name="location_id"
-            android:defaultValue="-1" />
     </fragment>
     <fragment
         android:id="@+id/markerlistFragment"
@@ -65,9 +62,6 @@
         <action
             android:id="@+id/action_test_markers"
             app:destination="@id/imagePreviewFragment" />
-        <argument
-            android:name="location_id"
-            android:defaultValue="0" />
     </fragment>
     <navigation android:id="@+id/edit"
         app:startDestination="@id/editFragment">
@@ -201,9 +195,6 @@
             <action
                 android:id="@+id/action_preview_markers"
                 app:destination="@+id/imagePreviewFragment" />
-            <argument
-                android:name="location_id"
-                android:defaultValue="0" />
         </fragment>
     </navigation>
     <fragment

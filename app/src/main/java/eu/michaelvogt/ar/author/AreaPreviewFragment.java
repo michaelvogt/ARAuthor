@@ -157,9 +157,8 @@ public class AreaPreviewFragment extends Fragment {
 
               switch (editArea.getObjectType()) {
                 case TYPE_3DOBJECTONPLANE:
-                  attachPlaneStatusRenderable(getContext(), image,
-                      (Vector3) editArea.getDetail(VisualDetailKt.KEY_POSITION),
-                      (Quaternion) editArea.getDetail(VisualDetailKt.KEY_ROTATION), session);
+                  attachPlaneStatusRenderable(getContext(), image, editArea.getPosition(),
+                      editArea.getRotation(), session);
                   break;
                 default:
                   attachShapeRenderable(getContext(), anchorNode);
@@ -180,8 +179,7 @@ public class AreaPreviewFragment extends Fragment {
   private void attachShapeRenderable(Context context, AnchorNode imageAnchor) {
     createMaterial(context, PREVIEWCOLOR, useTranslucency)
         .thenAccept(material -> {
-          ModelRenderable shape = ShapeFactory.makeCube(
-              (Vector3) editArea.getDetail(VisualDetailKt.KEY_SIZE), Vector3.zero(), material);
+          ModelRenderable shape = ShapeFactory.makeCube(editArea.getSize(), Vector3.zero(), material);
           attachRenderable(shape, imageAnchor);
         })
         .exceptionally(throwable -> {
@@ -205,7 +203,7 @@ public class AreaPreviewFragment extends Fragment {
           createMaterial(context, PREVIEWCOLOR, useTranslucency)
               .thenAccept(modelRenderable::setMaterial);
 
-          anchorNode.setLocalScale((Vector3) editArea.getDetail(VisualDetailKt.KEY_SCALE));
+          anchorNode.setLocalScale(editArea.getScale());
 
           Node areaNode = new Node();
           areaNode.setRenderable(modelRenderable);
@@ -269,9 +267,9 @@ public class AreaPreviewFragment extends Fragment {
   private void attachRenderable(Renderable renderable, AnchorNode anchorNode) {
     Node areaNode = new Node();
     areaNode.setRenderable(renderable);
-    areaNode.setLocalPosition((Vector3) editArea.getDetail(VisualDetailKt.KEY_POSITION));
-    areaNode.setLocalRotation((Quaternion) editArea.getDetail(VisualDetailKt.KEY_ROTATION));
-    areaNode.setLocalScale((Vector3) editArea.getDetail(VisualDetailKt.KEY_SCALE));
+    areaNode.setLocalPosition(editArea.getPosition());
+    areaNode.setLocalRotation(editArea.getRotation());
+    areaNode.setLocalScale(editArea.getScale());
     areaNode.setParent(anchorNode);
   }
 

@@ -78,8 +78,9 @@ public class ImageNode extends AreaNode implements EventSender {
     CompletableFuture<Texture> futureTexture;
 
     if (areaVisual.hasDetail(VisualDetailKt.KEY_IMAGEPATH)) {
+      Object detail = areaVisual.getDetail(VisualDetailKt.KEY_IMAGEPATH);
       String textureFilePath = FileUtils.getFullPuplicFolderPath(
-          (String) areaVisual.getDetail(VisualDetailKt.KEY_IMAGEPATH, "Touristar/default/images/"));
+          (String) detail);
 
       futureTexture = Texture.builder()
           .setSource(BitmapFactory.decodeFile(textureFilePath))
@@ -122,8 +123,8 @@ public class ImageNode extends AreaNode implements EventSender {
           setupFadeAnimation(material);
 
           Renderable renderable = ShapeFactory.makeCube(
-              (Vector3) areaVisual.getDetail(VisualDetailKt.KEY_SIZE),
-              (Vector3) areaVisual.getDetail(VisualDetailKt.KEY_ZEROPOINT), material);
+              (Vector3) areaVisual.getSize(),
+              (Vector3) areaVisual.getZeroPoint(), material);
           areaVisual.apply(renderable);
 
           // Needs to be set, bacause Sceneform has a layering problem with transparent objects

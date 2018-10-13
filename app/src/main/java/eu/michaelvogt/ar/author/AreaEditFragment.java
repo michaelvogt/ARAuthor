@@ -35,7 +35,6 @@ import com.google.ar.sceneform.math.Vector3;
 import androidx.navigation.Navigation;
 import eu.michaelvogt.ar.author.data.AreaVisual;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
-import eu.michaelvogt.ar.author.data.VisualDetailKt;
 
 public class AreaEditFragment extends Fragment {
   private Switch useTranslucentSwitch;
@@ -98,34 +97,34 @@ public class AreaEditFragment extends Fragment {
     useTranslucentSwitch.setChecked(getArguments().getInt("area_edit_translucency") == 1);
 
     locationX = view.findViewById(R.id.areaedit_xl_edit);
-    locationX.setText(String.valueOf(((Vector3) editArea.getDetail(VisualDetailKt.KEY_POSITION)).x));
+    locationX.setText(String.valueOf(editArea.getPosition().x));
 
     locationY = view.findViewById(R.id.areaedit_yl_edit);
-    locationY.setText(String.valueOf(((Vector3) editArea.getDetail(VisualDetailKt.KEY_POSITION)).y));
+    locationY.setText(String.valueOf(editArea.getPosition().y));
 
     locationZ = view.findViewById(R.id.areaedit_zl_edit);
-    locationZ.setText(String.valueOf(((Vector3) editArea.getDetail(VisualDetailKt.KEY_POSITION)).z));
+    locationZ.setText(String.valueOf(editArea.getPosition().z));
 
     rotationX = view.findViewById(R.id.areaedit_xr_edit);
-    rotationX.setText(String.valueOf(((Quaternion) editArea.getDetail(VisualDetailKt.KEY_ROTATION)).x));
+    rotationX.setText(String.valueOf(editArea.getRotation().x));
 
     rotationY = view.findViewById(R.id.areaedit_yr_edit);
-    rotationY.setText(String.valueOf(((Quaternion) editArea.getDetail(VisualDetailKt.KEY_ROTATION)).y));
+    rotationY.setText(String.valueOf(editArea.getRotation().y));
 
     rotationZ = view.findViewById(R.id.areaedit_zr_edit);
-    rotationZ.setText(String.valueOf(((Quaternion) editArea.getDetail(VisualDetailKt.KEY_ROTATION)).z));
+    rotationZ.setText(String.valueOf(editArea.getRotation().z));
 
     rotationW = view.findViewById(R.id.areaedit_wr_edit);
-    rotationW.setText(String.valueOf(((Quaternion) editArea.getDetail(VisualDetailKt.KEY_ROTATION)).w));
+    rotationW.setText(String.valueOf(editArea.getRotation().w));
 
     scaleX = view.findViewById(R.id.areaedit_xs_edit);
-    scaleX.setText(String.valueOf(((Vector3) editArea.getDetail(VisualDetailKt.KEY_SCALE)).x));
+    scaleX.setText(String.valueOf(((Vector3) editArea.getScale()).x));
 
     scaleY = view.findViewById(R.id.areaedit_ys_edit);
-    scaleY.setText(String.valueOf(((Vector3) editArea.getDetail(VisualDetailKt.KEY_SCALE)).y));
+    scaleY.setText(String.valueOf(((Vector3) editArea.getScale()).y));
 
     scaleZ = view.findViewById(R.id.areaedit_zs_edit);
-    scaleZ.setText(String.valueOf(((Vector3) editArea.getDetail(VisualDetailKt.KEY_SCALE)).z));
+    scaleZ.setText(String.valueOf(((Vector3) editArea.getScale()).z));
   }
 
   private float asFloat(EditText text) {

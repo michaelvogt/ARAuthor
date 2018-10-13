@@ -75,11 +75,11 @@ public class EditFragmentAreas extends Fragment implements ItemClickListener {
     Navigation.findNavController(view).navigate(R.id.action_edit_area_placement, bundle);
   }
 
-  private void setMarkerId(int markerId) {
+  private void setMarkerId(long markerId) {
     this.markerId = markerId;
   }
 
-  public static Fragment instantiate(int markerId) {
+  public static Fragment instantiate(long markerId) {
     EditFragmentAreas tabFragment = new EditFragmentAreas();
     tabFragment.setMarkerId(markerId);
     return tabFragment;

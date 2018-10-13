@@ -157,7 +157,7 @@ class DatabaseInitializer private constructor(
         markerId = insertMarkerForLocation(locationId,
                 "看板",
                 "/Touristar/Markers/P_20180804_175049_vHDR_On.jpg",
-                "/Touristar/iwamiginzan/muneokake/boardbackground.png",
+                "/Touristar/iwamiginzan/muneokake/boardbackground.jpg",
                 "宗岡は、戦国時代毛利輝元の「銀山六人衆」として知られ、諸役の徴収方を担いました。江戸時代に入ると、奉行大久保長安に召し抱えられ",
                 "宗岡家",
                 0.435f,
@@ -180,10 +180,12 @@ class DatabaseInitializer private constructor(
 
         insertVisualDetail(areaId, TYPE_DETAIL_ALL,
                 KEY_IMAGEPATH, "Touristar/iwamiginzan/muneokake/infoboard/images/IMG_20180609_115300.png")
-        insertVisualDetail(areaId,
-                TYPE_DETAIL_ALL, KEY_SECONDARYIMAGEPATH, "Touristar/iwamiginzan/muneokake/infoboard/images/IMG_20180826_112846.png")
-        insertVisualDetail(areaId, TYPE_DETAIL_ALL, KEY_FADE_RIGHT_WIDTH, 0.4f)
-        insertVisualDetail(areaId, TYPE_DETAIL_ALL, KEY_ALLOWZOOM, true)
+        insertVisualDetail(areaId, TYPE_DETAIL_ALL,
+                KEY_SECONDARYIMAGEPATH, "Touristar/iwamiginzan/muneokake/infoboard/images/IMG_20180826_112846.png")
+        insertVisualDetail(areaId, TYPE_DETAIL_ALL,
+                KEY_FADE_RIGHT_WIDTH, 0.4f)
+        insertVisualDetail(areaId, TYPE_DETAIL_ALL,
+                KEY_ALLOWZOOM, true)
 
 
         //    AreaVisual.builder(areaId)

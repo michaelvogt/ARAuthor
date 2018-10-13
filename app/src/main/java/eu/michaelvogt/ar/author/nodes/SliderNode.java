@@ -61,7 +61,7 @@ public class SliderNode extends AreaNode {
         .setView(context, R.layout.view_slider)
         .build()
         .thenAccept(renderable -> {
-          renderable.setSizer(view -> (Vector3) areaVisual.getDetail(VisualDetailKt.KEY_SIZE));
+          renderable.setSizer(view -> (Vector3) areaVisual.getSize());
           setRenderable(renderable);
           areaVisual.apply(renderable);
 

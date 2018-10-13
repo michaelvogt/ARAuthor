@@ -44,22 +44,22 @@ class Area {
     var coordType: Int = 0
 
     @ColumnInfo(name = "position")
-    var position: Vector3? = null
+    var position: Vector3 = Vector3.zero()
 
     @ColumnInfo(name = "zero_point")
-    var zeroPoint: Vector3? = null
+    var zeroPoint: Vector3 = Vector3.zero()
 
     @ColumnInfo(name = "resource")
     var resource: Int = 0
 
     @ColumnInfo(name = "size")
-    var size: Vector3? = null
+    var size: Vector3 = Vector3.one()
 
     @ColumnInfo(name = "rotation")
-    var rotation: Quaternion? = null
+    var rotation: Quaternion = Quaternion.identity()
 
     @ColumnInfo(name = "scale")
-    var scale: Vector3? = null
+    var scale: Vector3 = Vector3.one()
 
     constructor(
             title: String, objectType: Int = 0, usageType: Int = 0, resource: Int = 0,

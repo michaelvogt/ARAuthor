@@ -30,8 +30,6 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import java.util.Objects;
-
 import androidx.navigation.Navigation;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
 import eu.michaelvogt.ar.author.data.Location;
@@ -39,8 +37,6 @@ import eu.michaelvogt.ar.author.utils.FileUtils;
 
 public class LocationIntroFragment extends Fragment implements View.OnClickListener {
   private static final String TAG = LocationIntroFragment.class.getSimpleName();
-
-  private long locationId;
 
   public LocationIntroFragment() {/* Required empty public constructor*/}
 
@@ -53,8 +49,7 @@ public class LocationIntroFragment extends Fragment implements View.OnClickListe
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
 
-    AuthorViewModel viewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(AuthorViewModel.class);
-    locationId = getArguments().getLong("location_id");
+    AuthorViewModel viewModel = ViewModelProviders.of(getActivity()).get(AuthorViewModel.class);
 
     WebView contentView = view.findViewById(R.id.content_info);
     contentView.setWebViewClient(new WebViewClient());
@@ -62,8 +57,14 @@ public class LocationIntroFragment extends Fragment implements View.OnClickListe
     contentView.getSettings().setDisplayZoomControls(false);
     contentView.getSettings().setJavaScriptEnabled(true);
 
-    Objects.requireNonNull(viewModel.getLocation(locationId))
+    long locationId = viewModel.getCurrentLocationId();
+
+    viewModel.getLocation(locationId)
         .observe(this, location -> initWebView(location, contentView));
+
+    // Due to the way the AR images database needs to be initialized, and the markers are
+    // delivered asynchronously from the data database, the markers need to be cached beforehand
+    viewModel.getMarkersForLocation(locationId, true).observe(this, viewModel::setMarkersCache);
 
     View fab = view.findViewById(R.id.fab_map);
     fab.setOnClickListener(this);
@@ -82,8 +83,6 @@ public class LocationIntroFragment extends Fragment implements View.OnClickListe
 
   @Override
   public void onClick(View view) {
-    Bundle bundle = new Bundle();
-    bundle.putLong("location_id", locationId);
-    Navigation.findNavController(view).navigate(R.id.action_preview_markers, bundle);
+    Navigation.findNavController(view).navigate(R.id.action_preview_markers);
   }
 }

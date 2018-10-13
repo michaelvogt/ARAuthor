@@ -30,11 +30,8 @@ import com.google.ar.core.Anchor;
 import com.google.ar.core.HitResult;
 import com.google.ar.core.Plane;
 import com.google.ar.core.TrackingState;
-import com.google.ar.sceneform.AnchorNode;
-import com.google.ar.sceneform.math.Vector3;
 
 import androidx.navigation.Navigation;
-import eu.michaelvogt.ar.author.data.Marker;
 
 public class MarkerPreviewFragment extends PreviewFragment {
   private static final String TAG = ImagePreviewFragment.class.getSimpleName();
@@ -53,11 +50,10 @@ public class MarkerPreviewFragment extends PreviewFragment {
 
     arFragment.getPlaneDiscoveryController().show();
     arFragment.hasMarker = true;
-
     arFragment.setOnTapArPlaneListener(this::onTapArPlane);
 
     Bundle bundle = new Bundle();
-    bundle.putInt("edit_index", getArguments().getInt("marker_id"));
+    bundle.putLong("edit_index", getArguments().getLong("marker_id"));
 
     view.findViewById(R.id.listmarker_fab).setOnClickListener(
         Navigation.createNavigateOnClickListener(R.id.editFragment, bundle)
@@ -70,8 +66,7 @@ public class MarkerPreviewFragment extends PreviewFragment {
         isSceneDropped = true;
 
         Anchor anchor = hitResult.createAnchor();
-        // TODO: make sure propper db uid is provided
-        viewModel.getMarker(getArguments().getInt("marker_id")).observe(this,
+        viewModel.getMarker(getArguments().getLong("marker_id")).observe(this,
             marker -> buildMarkerScene(anchor, marker, marker.getSize().x, marker.getSize().z));
       } else if (plane.getTrackingState() == TrackingState.STOPPED) {
         isSceneDropped = false;

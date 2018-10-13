@@ -75,9 +75,8 @@ public class ComparisonNode extends AreaNode {
             e.printStackTrace();
           }
 
-          Renderable renderable = ShapeFactory.makeCube(
-              (Vector3) areaVisual.getDetail(VisualDetailKt.KEY_SIZE),
-              (Vector3) areaVisual.getDetail(VisualDetailKt.KEY_ZEROPOINT), material);
+          Renderable renderable = ShapeFactory.makeCube(areaVisual.getSize(),
+              areaVisual.getZeroPoint(), material);
           areaVisual.apply(renderable);
           setRenderable(renderable);
 

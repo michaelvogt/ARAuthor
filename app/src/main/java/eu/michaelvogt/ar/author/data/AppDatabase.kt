@@ -24,13 +24,14 @@ import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.TypeConverters
 import android.content.Context
+import android.database.sqlite.SQLiteOpenHelper
 import android.os.AsyncTask
 
 import eu.michaelvogt.ar.author.data.utils.Converters
 import eu.michaelvogt.ar.author.data.utils.DatabaseInitializer
 
 @Database(entities = [Location::class, Marker::class, Area::class, MarkerArea::class,
-    VisualDetail::class, EventDetail::class], version = 12)
+    VisualDetail::class, EventDetail::class], version = 2)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun locationDao(): LocationDao
@@ -42,7 +43,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun visualDetailDao(): VisualDetailDao
     abstract fun eventDetailDao(): EventDetailDao
 
-    private class PopulateDbAsync internal constructor(private val db: AppDatabase) : AsyncTask<Void, Void, Void>() {
+    private class PopulateDbAsync internal constructor(private var db: AppDatabase) : AsyncTask<Void, Void, Void>() {
         private val locationDao: LocationDao = db.locationDao()
         private val markerDao: MarkerDao = db.markerDao()
         private val areaDao: AreaDao = db.areaDao()
@@ -53,7 +54,12 @@ abstract class AppDatabase : RoomDatabase() {
         private val eventDetailDao: EventDetailDao = db.eventDetailDao()
 
         override fun doInBackground(vararg params: Void): Void? {
-            db.clearAllTables()
+            eventDetailDao.deleteAll()
+            visualDetailDao.deleteAll()
+            markerAreaDao.deleteAll()
+            areaDao.deleteAll()
+            markerDao.deleteAll()
+            locationDao.deleteAll()
 
             DatabaseInitializer.runner(locationDao, markerDao, areaDao, markerAreaDao, visualDetailDao).run()
 

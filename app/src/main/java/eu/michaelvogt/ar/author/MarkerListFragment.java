@@ -29,8 +29,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.Objects;
-
 import androidx.navigation.Navigation;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
 import eu.michaelvogt.ar.author.utils.ItemClickListener;
@@ -54,8 +52,8 @@ public class MarkerListFragment extends Fragment implements ItemClickListener {
 
     this.view = view;
 
-    AuthorViewModel viewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity())).get(AuthorViewModel.class);
-    int locationId = getArguments().getInt("location_id");
+    AuthorViewModel viewModel = ViewModelProviders.of(getActivity()).get(AuthorViewModel.class);
+    long locationId = viewModel.getCurrentLocationId();
 
     RecyclerView recyclerView = view.findViewById(R.id.marker_list);
     recyclerView.setHasFixedSize(false);

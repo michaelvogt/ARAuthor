@@ -28,6 +28,8 @@ import com.google.ar.core.Config;
 import com.google.ar.core.Session;
 import com.google.ar.sceneform.ux.ArFragment;
 
+import java.util.List;
+
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
 import eu.michaelvogt.ar.author.data.Marker;
 import eu.michaelvogt.ar.author.nodes.AuthorAnchorNode;
@@ -42,8 +44,6 @@ public class LoopArFragment extends ArFragment {
   String focusMode;
   String lightEstimation;
 
-  long locationId;
-
   Bitmap bitmap;
   String location = "";
 
@@ -53,7 +53,8 @@ public class LoopArFragment extends ArFragment {
     AugmentedImageDatabase imagedb = new AugmentedImageDatabase(session);
 
     if (!hasMarker) {
-      viewModel.getMarkersForLocation(locationId, false).observe(this, markers -> {
+      List<Marker> markers = viewModel.getMarkersCache();
+      if (markers != null) {
         for (Marker marker : markers) {
           try {
             if (marker.isTitle()) {
@@ -72,13 +73,13 @@ public class LoopArFragment extends ArFragment {
                     Snackbar.LENGTH_SHORT).show();
               }
             }
-          } catch (Throwable ex) {
+          } catch (Exception ex) {
             Log.e(TAG, "Something bad happened", ex);
             Snackbar.make(getView(), "Exception: " + ex.getMessage(),
                 Snackbar.LENGTH_SHORT).show();
           }
         }
-      });
+      }
     }
 
     Config config = new Config(session);

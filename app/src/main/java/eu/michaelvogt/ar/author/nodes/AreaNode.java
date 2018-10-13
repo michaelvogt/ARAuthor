@@ -26,9 +26,9 @@ public class AreaNode extends Node {
     this.areaVisual = areaVisual;
 
     setName(areaVisual.getTitle());
-    setLocalPosition((Vector3) areaVisual.getDetail(VisualDetailKt.KEY_POSITION));
-    setLocalRotation((Quaternion) areaVisual.getDetail(VisualDetailKt.KEY_ROTATION));
-    setLocalScale((Vector3) areaVisual.getDetail(VisualDetailKt.KEY_SCALE));
+    setLocalPosition((Vector3) areaVisual.getPosition());
+    setLocalRotation((Quaternion) areaVisual.getRotation());
+    setLocalScale((Vector3) areaVisual.getScale());
   }
 
   public boolean isUiNode() {

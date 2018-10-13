@@ -27,7 +27,6 @@ import android.view.MotionEvent;
 import android.widget.TextView;
 
 import com.google.ar.sceneform.Node;
-import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.ViewRenderable;
 
 import java.util.concurrent.CompletableFuture;
@@ -64,7 +63,7 @@ public class TextNode extends AreaNode implements EventHandler {
         .setView(context, (Integer) areaVisual.getDetail(VisualDetailKt.KEY_RESOURCE))
         .build()
         .thenAccept(renderable -> {
-          renderable.setSizer(view -> (Vector3) areaVisual.getDetail(VisualDetailKt.KEY_SIZE));
+          renderable.setSizer(view -> areaVisual.getSize());
           renderable.setShadowCaster(false);
           setRenderable(renderable);
 

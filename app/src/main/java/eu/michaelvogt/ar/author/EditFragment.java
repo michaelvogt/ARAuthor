@@ -23,7 +23,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -43,14 +42,10 @@ public class EditFragment extends Fragment {
   private static final String TAG = EditFragment.class.getSimpleName();
   private static final int NUM_TABS = 3;
 
-  private int editUId;
+  private long editUId;
   private Marker editMarker;
   private ImageView markerImage;
   private AuthorViewModel viewModel;
-
-  private EditFragmentMarker tabMarker;
-  private Fragment tabInfo;
-  private Fragment tabAreas;
 
   public EditFragment() {/* Required empty public constructor*/}
 
@@ -65,7 +60,7 @@ public class EditFragment extends Fragment {
     super.onViewCreated(view, savedInstanceState);
 
     viewModel = ViewModelProviders.of(getActivity()).get(AuthorViewModel.class);
-    editUId = getArguments().getInt("edit_index");
+    editUId = getArguments().getLong("edit_index");
     Marker cropMarker = viewModel.getCropMarker();
 
     if (editUId == -1) {
@@ -101,10 +96,10 @@ public class EditFragment extends Fragment {
 
   private void handleAr(View view) {
     Bundle bundle = new Bundle();
-    bundle.putInt("drop_marker_id", editUId);
+    bundle.putLong("drop_marker_id", editUId);
     bundle.putString("plane_finding_mode", "VERTICAL");
     bundle.putInt("discovery_controller", 1);
-    bundle.putInt("marker_id", editUId);
+    bundle.putLong("marker_id", editUId);
     Navigation.findNavController(view).navigate(R.id.action_marker_preview, bundle);
   }
 
@@ -140,7 +135,7 @@ public class EditFragment extends Fragment {
     public Fragment getItem(int position) {
       switch (position) {
         case 0:
-          tabMarker = EditFragmentMarker.instantiate(editMarker, viewModel, new UpdateMarkerHandler() {
+          EditFragmentMarker tabMarker = EditFragmentMarker.instantiate(editMarker, viewModel, new UpdateMarkerHandler() {
             @Override
             public void updateMarker(Bitmap bitmap) {
               markerImage.setImageBitmap(bitmap);
@@ -153,10 +148,10 @@ public class EditFragment extends Fragment {
           });
           return tabMarker;
         case 1:
-          tabInfo = EditFragmentInfo.instantiate(editMarker);
+          Fragment tabInfo = EditFragmentInfo.instantiate(editMarker);
           return tabInfo;
         case 2:
-          tabAreas = EditFragmentAreas.instantiate(editUId);
+          Fragment tabAreas = EditFragmentAreas.instantiate(editUId);
           return tabAreas;
         default:
           throw new IllegalArgumentException("Wrong edit marker tab requested: " + position);

@@ -22,8 +22,6 @@ import android.content.Context;
 import android.util.Log;
 
 import com.google.ar.sceneform.Node;
-import com.google.ar.sceneform.math.Quaternion;
-import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.Material;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.rendering.ViewRenderable;
@@ -48,9 +46,9 @@ public class ViewNode extends Node {
     this.context = context;
     this.areaVisual = areaVisual;
 
-    setLocalPosition((Vector3) areaVisual.getDetail(VisualDetailKt.KEY_POSITION));
-    setLocalRotation((Quaternion) areaVisual.getDetail(VisualDetailKt.KEY_ROTATION));
-    setLocalScale((Vector3) areaVisual.getDetail(VisualDetailKt.KEY_SCALE));
+    setLocalPosition(areaVisual.getPosition());
+    setLocalRotation(areaVisual.getRotation());
+    setLocalScale(areaVisual.getScale());
     setName(areaVisual.getTitle());
   }
 
@@ -75,7 +73,7 @@ public class ViewNode extends Node {
               .setSource(context, R.raw.slide)
               .build()
               .thenAccept(renderable -> {
-                renderable.setSizer(view -> (Vector3) areaVisual.getDetail(VisualDetailKt.KEY_SIZE));
+                renderable.setSizer(view -> areaVisual.getSize());
                 setRenderable(renderable);
 
 

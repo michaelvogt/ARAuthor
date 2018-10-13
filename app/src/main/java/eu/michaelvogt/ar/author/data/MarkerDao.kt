@@ -29,7 +29,7 @@ interface MarkerDao : BaseDao<Marker> {
     fun getAll(): LiveData<List<Marker>>
 
     @Query("SELECT * from markers where markers.u_id=:uId")
-    fun get(uId: Int): LiveData<Marker>
+    fun get(uId: Long): LiveData<Marker>
 
     @Query("SELECT COUNT(*) FROM markers")
     fun getSize(): LiveData<Int>

@@ -31,13 +31,12 @@ import android.view.ViewGroup;
 
 import androidx.navigation.Navigation;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
-import eu.michaelvogt.ar.author.data.Location;
 import eu.michaelvogt.ar.author.utils.ItemClickListener;
 import eu.michaelvogt.ar.author.utils.LocationListAdapter;
 
 public class LocationlistFragment extends Fragment implements ItemClickListener {
   private View view;
-  private LocationListAdapter adapter;
+  private AuthorViewModel viewModel;
 
   public LocationlistFragment() {/* Required empty public constructor*/}
 
@@ -53,24 +52,24 @@ public class LocationlistFragment extends Fragment implements ItemClickListener 
 
     this.view = view;
 
+    viewModel = ViewModelProviders.of(getActivity()).get(AuthorViewModel.class);
+
     RecyclerView recyclerView = view.findViewById(R.id.location_list);
     recyclerView.setHasFixedSize(true);
     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
     recyclerView.setLayoutManager(layoutManager);
 
-    adapter = new LocationListAdapter(getContext());
+    LocationListAdapter adapter = new LocationListAdapter(getContext());
     adapter.setItemClickListener(this);
 
     recyclerView.setAdapter(adapter);
 
-    AuthorViewModel viewModel = ViewModelProviders.of(this).get(AuthorViewModel.class);
     viewModel.getAllLocations().observe(this, adapter::setLocations);
   }
 
   @Override
-  public void onItemClicked(long position) {
-    Bundle bundle = new Bundle();
-    bundle.putLong("location_id", position);
-    Navigation.findNavController(view).navigate(R.id.action_location_intro, bundle);
+  public void onItemClicked(long locationId) {
+    viewModel.setCurrentLocationId(locationId);
+    Navigation.findNavController(view).navigate(R.id.action_location_intro);
   }
 }

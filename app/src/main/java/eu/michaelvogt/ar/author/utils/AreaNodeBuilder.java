@@ -22,8 +22,6 @@ import android.content.Context;
 
 import com.google.ar.sceneform.Node;
 import com.google.ar.sceneform.Scene;
-import com.google.ar.sceneform.math.Quaternion;
-import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.rendering.Renderable;
 
@@ -33,7 +31,6 @@ import java.util.concurrent.CompletionStage;
 import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.AreaVisual;
 import eu.michaelvogt.ar.author.data.AreaVisualKt;
-import eu.michaelvogt.ar.author.data.VisualDetail;
 import eu.michaelvogt.ar.author.data.VisualDetailKt;
 import eu.michaelvogt.ar.author.nodes.AreaNode;
 import eu.michaelvogt.ar.author.nodes.ComparisonNode;
@@ -114,9 +111,9 @@ public class AreaNodeBuilder {
   private Node createNode(Renderable renderable) {
     Node node = new Node();
     node.setRenderable(renderable);
-    node.setLocalPosition((Vector3) areaVisual.getDetail(VisualDetailKt.KEY_POSITION));
-    node.setLocalRotation((Quaternion) areaVisual.getDetail(VisualDetailKt.KEY_ROTATION));
-    node.setLocalScale((Vector3) areaVisual.getDetail(VisualDetailKt.KEY_SCALE));
+    node.setLocalPosition(areaVisual.getPosition());
+    node.setLocalRotation(areaVisual.getRotation());
+    node.setLocalScale(areaVisual.getScale());
     return node;
   }
 }

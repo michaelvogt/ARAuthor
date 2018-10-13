@@ -113,6 +113,30 @@ class AreaVisual {
         this.events = areaVisual.getEvents()
     }
 
+    fun getCoordType(): Int{
+        return area!!.coordType
+    }
+
+    fun getPosition(): Vector3 {
+        return area!!.position
+    }
+
+    fun getZeroPoint(): Vector3 {
+        return area!!.zeroPoint
+    }
+
+    fun getRotation(): Quaternion {
+        return area!!.rotation
+    }
+
+    fun getSize(): Vector3 {
+        return area!!.size
+    }
+
+    fun getScale(): Vector3 {
+        return area!!.scale
+    }
+
     fun getDetails(): SparseArray<VisualDetail> {
         return details!!.clone()
     }
@@ -122,15 +146,15 @@ class AreaVisual {
     }
 
     fun hasDetail(type: Int): Boolean {
-        return details!!.indexOfKey(type) < 0
+        return details!!.indexOfKey(type) >= 0
     }
 
     fun getDetail(type: Int, orDefault: Any): Any {
         return if (hasDetail(type)) details!!.get(type).anyValue else orDefault
     }
 
-    fun getDetail(type: Int): Any {
-        return details!!.get(type).anyValue
+    fun getDetail(type: Int): Any? {
+        return details!!.get(type)?.anyValue
     }
 
     fun hasEvent(): Boolean {
@@ -151,7 +175,7 @@ class AreaVisual {
     }
 
     fun apply(renderable: Renderable) {
-        renderable.isShadowCaster = getDetail(KEY_ISCASTINGSHADOW) as Boolean
+        renderable.isShadowCaster = (getDetail(KEY_ISCASTINGSHADOW) ?: false) as Boolean
     }
 
     private fun sparsifyDetails(list: List<VisualDetail>): SparseArray<VisualDetail> {

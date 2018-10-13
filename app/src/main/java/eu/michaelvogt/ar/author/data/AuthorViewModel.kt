@@ -26,6 +26,10 @@ import java.util.concurrent.CompletableFuture
 class AuthorViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = AppRepository(application)
 
+    var currentLocationId: Long = 0
+
+    var markersCache: List<Marker>? = null
+
     var cropMarker: Marker? = null
 
     // TODO: Set to current system language or english when not available
@@ -46,7 +50,7 @@ class AuthorViewModel(application: Application) : AndroidViewModel(application) 
 
     fun addMarker(marker: Marker) = repository.insert(marker)
 
-    fun getMarker(uId: Int): LiveData<Marker> = repository.getMarker(uId)
+    fun getMarker(uId: Long): LiveData<Marker> = repository.getMarker(uId)
 
     fun updateMarker(marker: Marker) = repository.update(marker)
 
@@ -56,7 +60,6 @@ class AuthorViewModel(application: Application) : AndroidViewModel(application) 
     fun clearCropMarker() {
         cropMarker = null
     }
-
 
     fun addArea(area: Area) = repository.insert(area)
 

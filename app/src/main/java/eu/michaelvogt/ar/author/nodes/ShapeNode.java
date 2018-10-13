@@ -23,7 +23,6 @@ import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import com.google.ar.sceneform.Node;
-import com.google.ar.sceneform.math.Quaternion;
 import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.MaterialFactory;
 import com.google.ar.sceneform.rendering.Renderable;
@@ -47,9 +46,9 @@ public class ShapeNode extends Node {
     this.context = context;
     this.areaVisual = areaVisual;
 
-    setLocalPosition((Vector3) areaVisual.getDetail(VisualDetailKt.KEY_POSITION));
-    setLocalRotation((Quaternion) areaVisual.getDetail(VisualDetailKt.KEY_ROTATION));
-    setLocalScale((Vector3) areaVisual.getDetail(VisualDetailKt.KEY_SCALE));
+    setLocalPosition(areaVisual.getPosition());
+    setLocalRotation(areaVisual.getRotation());
+    setLocalScale(areaVisual.getScale());
   }
 
   public static ShapeNode builder(Context context, AreaVisual area) {
@@ -70,8 +69,7 @@ public class ShapeNode extends Node {
             .thenAccept(material -> {
               areaVisual.apply(material);
 
-              Renderable renderable = ShapeFactory.makeCube(
-                  (Vector3) areaVisual.getDetail(VisualDetailKt.KEY_SIZE), Vector3.zero(), material);
+              Renderable renderable = ShapeFactory.makeCube(areaVisual.getSize(), Vector3.zero(), material);
               renderable.setShadowCaster(false);
               setRenderable(renderable);
 
