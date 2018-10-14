@@ -69,7 +69,7 @@ public class AreaEditFragment extends Fragment {
     int markerId = getArguments().getInt("marker_id");
 
     // TODO: Make sure proper db uid is provided
-    int areaId = getArguments().getInt("area_id");
+    long areaId = getArguments().getLong("area_id");
     viewModel.getAreaVisual( areaId)
         .thenAccept(areaVisual -> finishSetup(view, areaVisual));
 

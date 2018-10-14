@@ -61,17 +61,13 @@ class AuthorViewModel(application: Application) : AndroidViewModel(application) 
         cropMarker = null
     }
 
-    fun addArea(area: Area) = repository.insert(area)
-
-    fun getArea(uId: Int): CompletableFuture<Area> = repository.getArea(uId)
-
     fun getAreasForMarker(markerId: Long):
             CompletableFuture<List<Area>> = repository.getAreasForMarker(markerId)
 
 
-    fun getAreaVisual(uId: Int):
+    fun getAreaVisual(uId: Long):
             CompletableFuture<AreaVisual> = repository.getAreaVisual(uId)
 
     fun getAreaVisualsForMarker(uId: Long):
-            CompletableFuture<List<AreaVisual>> = repository.getAreaVisualsForMarker(uId)
+            CompletableFuture<ArrayList<AreaVisual>> = repository.getAreaVisualsForMarker(uId)
 }

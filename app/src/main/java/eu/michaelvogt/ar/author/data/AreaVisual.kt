@@ -191,7 +191,6 @@ class AreaVisual {
     }
 
     companion object {
-
         fun getDefaultArea(backgroundHeight: Float, backgroundWidth: Float): AreaVisual {
             return AreaVisual(TYPE_DEFAULT, KIND_CONTENT, DEFAULTAREATITLE, R.raw.default_model,
                     Vector3.zero(), Vector3.one(), COORDINATE_LOCAL, Vector3(-backgroundWidth / 2, 0f, -backgroundHeight / 2),

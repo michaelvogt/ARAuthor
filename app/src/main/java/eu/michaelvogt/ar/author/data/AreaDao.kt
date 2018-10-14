@@ -29,7 +29,7 @@ interface AreaDao : BaseDao<Area> {
     fun getAll(): LiveData<List<Area>>
 
     @Query("SELECT * from areas where areas.u_id=:uId")
-    fun get(uId: Int): Area
+    fun get(uId: Long): Area
 
     @Query("SELECT COUNT(*) FROM areas")
     fun getSize(): LiveData<Int>

@@ -89,15 +89,15 @@ class AppRepository internal constructor(application: Application) {
 
     fun getMarkersForLocation(locationId: Long, withTitles: Boolean): LiveData<List<Marker>> {
         return if (withTitles) {
-            markerDao.findMarkersAndTitlesForLocation(locationId.toLong())
+            markerDao.findMarkersAndTitlesForLocation(locationId)
         } else {
-            markerDao.findMarkersOnlyForLocation(locationId.toLong())
+            markerDao.findMarkersOnlyForLocation(locationId)
         }
     }
 
 
     // Area
-    internal fun getArea(uId: Int): CompletableFuture<Area> {
+    internal fun getArea(uId: Long): CompletableFuture<Area> {
         return CompletableFuture.supplyAsync { areaDao.get(uId) }
     }
 
@@ -110,40 +110,29 @@ class AppRepository internal constructor(application: Application) {
     }
 
     // AreaVisual
-    fun getAreaVisual(areaId: Int): CompletableFuture<AreaVisual> {
-
+    fun getAreaVisual(areaId: Long): CompletableFuture<AreaVisual> {
         return CompletableFuture.supplyAsync {
-            val futureArea = getArea(areaId)
-            val futureDetails = getVisualDetailsForArea(areaId.toLong())
-            val futureEvents = getVisualEventsForArea(areaId.toLong())
+            val futureArea = areaDao.get(areaId)
+            val futureDetails = visualDetailDao.getForArea(areaId)
+            val futureEvents = eventDetailDao.getForArea(areaId)
 
-            AreaVisual(futureArea.join(), futureDetails.join(), futureEvents.join())
+            AreaVisual(futureArea, futureDetails, futureEvents)
         }
     }
 
-    fun getAreaVisualsForMarker(markerId: Long): CompletableFuture<List<AreaVisual>> {
+    fun getAreaVisualsForMarker(markerId: Long): CompletableFuture<ArrayList<AreaVisual>> {
         val areaVisuals = ArrayList<AreaVisual>()
 
         return CompletableFuture.supplyAsync {
-            getAreasForMarker(markerId).thenAccept { areas ->
-                areas.forEach { area ->
-                    val futureDetails = getVisualDetailsForArea(area.uId)
-                    val futureEvents = getVisualEventsForArea(area.uId)
+            val areas = markerAreaDao.getAreasForMarker(markerId)
+            areas.forEach { area ->
+                val details = visualDetailDao.getForArea(area.uId)
+                val events = eventDetailDao.getForArea(area.uId)
 
-                    areaVisuals.add(AreaVisual(area, futureDetails.join(), futureEvents.join()))
-                }
+                areaVisuals.add(AreaVisual(area, details, events))
             }
 
             areaVisuals
         }
-    }
-
-
-    private fun getVisualDetailsForArea(areaId: Long): CompletableFuture<List<VisualDetail>> {
-        return CompletableFuture.supplyAsync { visualDetailDao.getForArea(areaId) }
-    }
-
-    private fun getVisualEventsForArea(areaId: Long): CompletableFuture<List<EventDetail>> {
-        return CompletableFuture.supplyAsync { eventDetailDao.getForArea(areaId) }
     }
 }

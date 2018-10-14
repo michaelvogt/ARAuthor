@@ -108,7 +108,7 @@ public class PreviewFragment extends Fragment {
   }
 
   private void buildAreas(Node anchorNode, long markerId, float backgroundHeight, float backgroundWidth) {
-    viewModel.getAreaVisualsForMarker(markerId).thenAccept(areaVisuals -> {
+    viewModel.getAreaVisualsForMarker(markerId).thenAccept((ArrayList<AreaVisual> areaVisuals) -> {
       if (areaVisuals.size() > 0) {
         areaVisuals.forEach(areaVisual -> buildArea(anchorNode, areaVisual, null));
       } else {

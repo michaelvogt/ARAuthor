@@ -3,13 +3,9 @@ package eu.michaelvogt.ar.author.nodes;
 import android.content.Context;
 
 import com.google.ar.sceneform.Node;
-import com.google.ar.sceneform.math.Quaternion;
-import com.google.ar.sceneform.math.Vector3;
 
 import eu.michaelvogt.ar.author.data.AreaVisual;
 import eu.michaelvogt.ar.author.data.AreaVisualKt;
-import eu.michaelvogt.ar.author.data.VisualDetail;
-import eu.michaelvogt.ar.author.data.VisualDetailKt;
 
 public class AreaNode extends Node {
   public static final int RENDER_FIRST = 0;
@@ -26,9 +22,9 @@ public class AreaNode extends Node {
     this.areaVisual = areaVisual;
 
     setName(areaVisual.getTitle());
-    setLocalPosition((Vector3) areaVisual.getPosition());
-    setLocalRotation((Quaternion) areaVisual.getRotation());
-    setLocalScale((Vector3) areaVisual.getScale());
+    setLocalPosition(areaVisual.getPosition());
+    setLocalRotation(areaVisual.getRotation());
+    setLocalScale(areaVisual.getScale());
   }
 
   public boolean isUiNode() {
