@@ -18,6 +18,7 @@
 
 package eu.michaelvogt.ar.author.data.utils
 
+import android.graphics.Color
 import com.google.ar.sceneform.math.Quaternion
 import com.google.ar.sceneform.math.Vector3
 import eu.michaelvogt.ar.author.R
@@ -28,7 +29,8 @@ class DatabaseInitializer private constructor(
         private val markerDao: MarkerDao,
         private val areaDao: AreaDao,
         private val markerAreaDao: MarkerAreaDao,
-        private val visualDetailDao: VisualDetailDao) {
+        private val visualDetailDao: VisualDetailDao,
+        private val slideDao: SlideDao) {
 
     fun run() {
         var locationId = insertLocation(
@@ -166,7 +168,7 @@ class DatabaseInitializer private constructor(
                 true,
                 false)
 
-        val areaId = insertAreaForMarker(markerId,
+        var areaId = insertAreaForMarker(markerId,
                 "Muneoka Background Image",
                 TYPE_IMAGEONIMAGE,
                 KIND_CONTENT,
@@ -194,7 +196,7 @@ class DatabaseInitializer private constructor(
         //          .addSendsEvent(EventDetail.EVENT_SETMAINCONTENT, EventDetail.builder().setTitle("Muneoka Slide Area")),
 
 
-        insertAreaForMarker(markerId,
+        areaId = insertAreaForMarker(markerId,
                 "Muneoka Background Intro",
                 TYPE_TEXTONIMAGE,
                 KIND_CONTENT,
@@ -207,15 +209,16 @@ class DatabaseInitializer private constructor(
                 Vector3.one()
         )
 
+        insertVisualDetail(areaId, TYPE_DETAIL_ALL,
+                KEY_TEXTPATH, "Touristar/iwamiginzan/muneokake/infoboard/texts/infoboardtxt.html")
+        insertVisualDetail(areaId, TYPE_DETAIL_ALL,
+                KEY_HTMLPATH, "Touristar/iwamiginzan/muneokake/infoboard/texts/infoboard.html")
+        insertVisualDetail(areaId, TYPE_DETAIL_ALL,
+                KEY_BACKGROUNDCOLOR, Color.argb(0, 0, 0, 0))
+        insertVisualDetail(areaId, TYPE_DETAIL_ALL,
+                KEY_TEXTSIZE, 12f)
 
-        //      AreaVisual.builder()
-        //          .setTextPath("Touristar/iwamiginzan/muneokake/infoboard/texts/infoboardtxt.html")
-        //          .setHtmlPath("Touristar/iwamiginzan/muneokake/infoboard/texts/infoboard.html")
-        //          .setBackgroundColor(Color.argb(0, 0, 0, 0))
-        //          .setTextSize(12f),
-
-
-        insertAreaForMarker(markerId,
+        areaId = insertAreaForMarker(markerId,
                 "Muneoka Language Selector",
                 TYPE_ROTATIONBUTTON,
                 KIND_UI,
@@ -227,14 +230,16 @@ class DatabaseInitializer private constructor(
                 Quaternion(Vector3(-1.0f, 0.0f, 0.0f), 90.0f),
                 Vector3.one())
 
-        //      AreaVisual.builder()
-        //          .setImageResource(R.drawable.ic_language_selector)
+        insertVisualDetail(areaId, TYPE_DETAIL_ALL,
+                KEY_IMAGERESOURCE, R.drawable.ic_language_selector)
+        insertVisualDetail(areaId, TYPE_DETAIL_ALL,
+                KEY_ISCASTINGSHADOW, true)
+
         // TODO: Display language options with this button, and set the language with these buttons instead
         //              .addSendsEvent(Event.EVENT_SWITCHLANGUAGE, EventDetail.builder().setLanguage(AreaVisual.LANGUAGE_EN))
-        //          .isCastingShadow(true),
 
 
-        insertAreaForMarker(markerId,
+        areaId = insertAreaForMarker(markerId,
                 "Main Content Grabber",
                 TYPE_ROTATIONBUTTON,
                 KIND_UI,
@@ -246,13 +251,15 @@ class DatabaseInitializer private constructor(
                 Quaternion(Vector3(-1.0f, 0.0f, 0.0f), 90.0f),
                 Vector3.one())
 
-        //      AreaVisual.builder()
-        //          .setImageResource(R.drawable.if_tiny_arrows_diagonal_out_1_252127)
+        insertVisualDetail(areaId, TYPE_DETAIL_ALL,
+                KEY_IMAGERESOURCE, R.drawable.if_tiny_arrows_diagonal_out_1_252127)
+        insertVisualDetail(areaId, TYPE_DETAIL_ALL,
+                KEY_ISCASTINGSHADOW, true)
+
         //              .addSendsEvent(Event.EVENT_GRABCONTENT, null)
-        //          .isCastingShadow(true),
 
 
-        insertAreaForMarker(markerId,
+        areaId = insertAreaForMarker(markerId,
                 "Background Scaler",
                 TYPE_ROTATIONBUTTON,
                 KIND_UI,
@@ -265,13 +272,15 @@ class DatabaseInitializer private constructor(
                 Vector3.one()
         )
 
-        //      AreaVisual.builder()
-        //          .setImageResource(R.drawable.ic_linear_scale_black_24dp)
+        insertVisualDetail(areaId, TYPE_DETAIL_ALL,
+                KEY_IMAGERESOURCE, R.drawable.ic_linear_scale_black_24dp)
+        insertVisualDetail(areaId, TYPE_DETAIL_ALL,
+                KEY_ISCASTINGSHADOW, true)
+
         //              .addSendsEvent(Event.EVENT_SCALE, EventDetail.builder().setScaleValues(Arrays.asList(0.5f, 1f, 3f)))
-        //          .isCastingShadow(true),
 
 
-        insertAreaForMarker(markerId,
+        areaId = insertAreaForMarker(markerId,
                 "Muneoka Slide Area",
                 TYPE_SLIDESONIMAGE,
                 KIND_CONTENT,
@@ -283,11 +292,14 @@ class DatabaseInitializer private constructor(
                 Quaternion(Vector3(-1.0f, 0.0f, 0.0f), 90.0f),
                 Vector3.one())
 
-        //      AreaVisual.builder()
-        //          .addSlide(new Slide(Slide.Companion.getTYPE_IMAGE(),
-        //              "Touristar/iwamiginzan/muneokake/infoboard/images/igk_000_0682.jpg",
-        //              null,
-        //              "Image Slide 1"))
+        insertVisualDetail(areaId, TYPE_DETAIL_ALL,
+                KEY_SLIDES,
+                0,
+                TYPE_IMAGE,
+                "Touristar/iwamiginzan/muneokake/infoboard/images/igk_000_0682.jpg",
+                null,
+                "Image Slide 1")
+
         //          .addSlide(new Slide(Slide.Companion.getTYPE_IMAGE(),
         //              "Touristar/iwamiginzan/muneokake/infoboard/images/igk_000_0693.jpg",
         //              null,
@@ -516,16 +528,23 @@ class DatabaseInitializer private constructor(
         markerAreaDao.insert(MarkerArea(markerId, areaId))
     }
 
-    private fun insertVisualDetail(areaId: Long, type: Int, key: Int, value: Any) {
-        visualDetailDao.insert(VisualDetail(areaId, type, key, value))
+    private fun insertVisualDetail(areaId: Long, type: Int, key: Int, value: Any) : Long {
+        return visualDetailDao.insert(VisualDetail(areaId, type, key, value))
+    }
+
+    private fun insertVisualDetail(areaId: Long, detailType: Int, key: Int, order: Int, valueType: Int,
+                                   value: String, secondaryValues: List<String>?, description: String) {
+        val detailId = insertVisualDetail(areaId, detailType, key, "")
+        slideDao.insert(Slide(detailId, valueType, order, value, secondaryValues, description))
     }
 
     companion object {
         fun runner(
                 locationDao: LocationDao, markerDao: MarkerDao, areaDao: AreaDao,
-                markerAreaDao: MarkerAreaDao, visualDetailDao: VisualDetailDao): DatabaseInitializer {
+                markerAreaDao: MarkerAreaDao, visualDetailDao: VisualDetailDao,
+                slideDao: SlideDao): DatabaseInitializer {
             return DatabaseInitializer(
-                    locationDao, markerDao, areaDao, markerAreaDao, visualDetailDao)
+                    locationDao, markerDao, areaDao, markerAreaDao, visualDetailDao, slideDao)
         }
     }
 }

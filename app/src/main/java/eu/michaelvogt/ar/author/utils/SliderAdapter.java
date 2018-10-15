@@ -36,6 +36,7 @@ import java.util.List;
 
 import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.Slide;
+import eu.michaelvogt.ar.author.data.SlideKt;
 
 public class SliderAdapter extends PagerAdapter {
   private static final String TAG = SliderAdapter.class.getSimpleName();
@@ -65,11 +66,11 @@ public class SliderAdapter extends PagerAdapter {
 
     int type = slides.get(position).getType();
 
-    if (type == Slide.Companion.getTYPE_IMAGE()) {
+    if (type == SlideKt.TYPE_IMAGE) {
       slide = instantiateImageSlide(container, position);
-    } else if (type == Slide.Companion.getTYPE_VR()) {
+    } else if (type == SlideKt.TYPE_VR) {
       slide = instantiateVrSlide(container, position);
-    } else if (type == Slide.Companion.getTYPE_COMPARISON()) {
+    } else if (type == SlideKt.TYPE_COMPARISON) {
       slide = instantiateComparisonSlide(container, position);
     } else {
       throw new IllegalArgumentException("Unknown slide type " + type);

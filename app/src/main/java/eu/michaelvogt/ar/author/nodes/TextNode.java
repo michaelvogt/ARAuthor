@@ -60,7 +60,7 @@ public class TextNode extends AreaNode implements EventHandler {
     CompletableFuture<Node> future = new CompletableFuture<>();
 
     ViewRenderable.builder()
-        .setView(context, (Integer) areaVisual.getDetail(VisualDetailKt.KEY_RESOURCE))
+        .setView(context, areaVisual.getResource())
         .build()
         .thenAccept(renderable -> {
           renderable.setSizer(view -> areaVisual.getSize());

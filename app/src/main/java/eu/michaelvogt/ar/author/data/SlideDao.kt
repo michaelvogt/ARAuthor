@@ -18,14 +18,21 @@
 
 package eu.michaelvogt.ar.author.data
 
+import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Query
 
 @Dao
-interface VisualDetailDao : BaseDao<VisualDetail> {
-    @Query("SELECT * from visual_details where area_id=:areaId")
-    fun getForArea(areaId: Long): List<VisualDetail>
+interface SlideDao : BaseDao<Slide> {
+    @Query("SELECT * from slides")
+    fun getAll(): LiveData<List<Slide>>
 
-    @Query("DELETE FROM visual_details")
+    @Query("SELECT COUNT(*) FROM slides")
+    fun getSize(): LiveData<Int>
+
+    @Query("SELECT * from slides where detail_id=:detailId ORDER BY `order` ASC")
+    fun getSlidesForDetail(detailId: Long): List<Slide>
+
+    @Query("DELETE FROM slides")
     fun deleteAll()
 }

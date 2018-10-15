@@ -115,29 +115,34 @@ public class PreviewFragment extends Fragment {
         // Build a default area for demo purposes
         buildArea(anchorNode, AreaVisual.Companion.getDefaultArea(backgroundHeight, backgroundWidth), null);
       }
+    }).exceptionally(throwable -> {
+      Log.e(TAG, "Unable to build Areas: " + markerId, throwable);
+      return null;
     });
   }
 
   private void buildArea(Node anchorNode, AreaVisual areaVisual, Consumer<Node> fn) {
-    AreaNodeBuilder.builder(getActivity(), areaVisual)
-        .build()
-        .thenAccept(node -> {
-          node.setParent(anchorNode);
+    this.getActivity().runOnUiThread(() -> {
+      AreaNodeBuilder.builder(getActivity(), areaVisual)
+          .build()
+          .thenAccept(node -> {
+            node.setParent(anchorNode);
 
-          if (fn != null) {
-            fn.accept(node);
-          }
+            if (fn != null) {
+              fn.accept(node);
+            }
 
-          if (((AreaNode) node).isCameraFacing()) {
-            cameraFacingNodes.add(node);
-          }
-          
-          Log.i(TAG, "Area successfully created " + areaVisual.getTitle());
-        })
-        .exceptionally(throwable -> {
-          Log.e(TAG, "Unable to build Area: " + areaVisual.getTitle(), throwable);
-          return null;
-        });
+            if (((AreaNode) node).isCameraFacing()) {
+              cameraFacingNodes.add(node);
+            }
+
+            Log.i(TAG, "Area successfully created " + areaVisual.getTitle());
+          })
+          .exceptionally(throwable -> {
+            Log.e(TAG, "Unable to build Area: " + areaVisual.getTitle(), throwable);
+            return null;
+          });
+    });
   }
 
   public class EventCallback implements SceneViewCallback {

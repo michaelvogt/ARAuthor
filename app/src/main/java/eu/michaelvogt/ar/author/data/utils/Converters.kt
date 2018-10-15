@@ -86,6 +86,16 @@ class Converters {
     }
 
     @TypeConverter
+    fun stringListFromString(value: String): List<String> {
+        return value.split(VALUE_DIVIDER)
+    }
+
+    @TypeConverter
+    fun stringListToString(list: List<String>): String {
+        return list.joinToString(separator = VALUE_DIVIDER)
+    }
+
+    @TypeConverter
     fun fromTimestamp(value: Long?): Date? {
         return if (value == null) null else Date(value)
     }

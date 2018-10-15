@@ -79,8 +79,7 @@ public class ImageNode extends AreaNode implements EventSender {
 
     if (areaVisual.hasDetail(VisualDetailKt.KEY_IMAGEPATH)) {
       Object detail = areaVisual.getDetail(VisualDetailKt.KEY_IMAGEPATH);
-      String textureFilePath = FileUtils.getFullPuplicFolderPath(
-          (String) detail);
+      String textureFilePath = FileUtils.getFullPuplicFolderPath((String) detail);
 
       futureTexture = Texture.builder()
           .setSource(BitmapFactory.decodeFile(textureFilePath))

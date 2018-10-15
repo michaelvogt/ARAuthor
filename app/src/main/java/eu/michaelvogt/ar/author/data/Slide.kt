@@ -18,10 +18,40 @@
 
 package eu.michaelvogt.ar.author.data
 
-class Slide(var type: Int, var contentPath: String, var secondaryPaths: List<String>?, var description: String?) {
-    companion object {
-        val TYPE_IMAGE = 0
-        val TYPE_VR = 1
-        val TYPE_COMPARISON = 2
-    }
+import android.arch.persistence.room.*
+
+const val TYPE_IMAGE = 0
+const val TYPE_VR = 1
+const val TYPE_COMPARISON = 2
+
+@Entity(
+        tableName = "slides",
+        foreignKeys = [ForeignKey(
+                entity = VisualDetail::class,
+                parentColumns = arrayOf("u_id"),
+                childColumns = arrayOf("detail_id"))
+        ],
+        indices = [Index(value = ["detail_id"])])
+class Slide(
+        @ColumnInfo(name = "detail_id")
+        var detailId: Long,
+
+        @ColumnInfo(name = "type")
+        var type: Int,
+
+        @ColumnInfo(name = "order")
+        var order: Int,
+
+        @ColumnInfo(name = "content_path")
+        var contentPath: String,
+
+        @ColumnInfo(name = "secondary_paths")
+        var secondaryPaths: List<String>?,
+
+        @ColumnInfo(name = "description")
+        var description: String?) {
+
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "u_id")
+    var uId: Long = 0
 }

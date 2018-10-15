@@ -53,7 +53,7 @@ const val KEY_IMAGEDESCRIPTIONS = 27
 const val TYPE_DETAIL_ALL = 0
 
 @Entity(
-        tableName = "visual_detail",
+        tableName = "visual_details",
         indices = [
             Index(value = ["area_id"])
         ])
@@ -64,8 +64,8 @@ class VisualDetail(
         @field:ColumnInfo(name = "type")
         var type: Int = 0,
 
-        @field:ColumnInfo(name = "target")
-        var key: Int = 0,
+        @field:ColumnInfo(name = "key")
+        var key: Int = -1,
 
         value: Any = "") {
     @PrimaryKey(autoGenerate = true)

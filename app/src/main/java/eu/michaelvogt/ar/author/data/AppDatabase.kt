@@ -24,14 +24,13 @@ import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.TypeConverters
 import android.content.Context
-import android.database.sqlite.SQLiteOpenHelper
 import android.os.AsyncTask
 
 import eu.michaelvogt.ar.author.data.utils.Converters
 import eu.michaelvogt.ar.author.data.utils.DatabaseInitializer
 
 @Database(entities = [Location::class, Marker::class, Area::class, MarkerArea::class,
-    VisualDetail::class, EventDetail::class], version = 2)
+    VisualDetail::class, EventDetail::class, Slide::class], version = 4)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun locationDao(): LocationDao
@@ -43,6 +42,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun visualDetailDao(): VisualDetailDao
     abstract fun eventDetailDao(): EventDetailDao
 
+    abstract fun slideDao(): SlideDao
+
     private class PopulateDbAsync internal constructor(private var db: AppDatabase) : AsyncTask<Void, Void, Void>() {
         private val locationDao: LocationDao = db.locationDao()
         private val markerDao: MarkerDao = db.markerDao()
@@ -53,7 +54,10 @@ abstract class AppDatabase : RoomDatabase() {
         private val visualDetailDao: VisualDetailDao = db.visualDetailDao()
         private val eventDetailDao: EventDetailDao = db.eventDetailDao()
 
+        private val slideDao: SlideDao = db.slideDao()
+
         override fun doInBackground(vararg params: Void): Void? {
+            slideDao.deleteAll()
             eventDetailDao.deleteAll()
             visualDetailDao.deleteAll()
             markerAreaDao.deleteAll()
@@ -61,7 +65,7 @@ abstract class AppDatabase : RoomDatabase() {
             markerDao.deleteAll()
             locationDao.deleteAll()
 
-            DatabaseInitializer.runner(locationDao, markerDao, areaDao, markerAreaDao, visualDetailDao).run()
+            DatabaseInitializer.runner(locationDao, markerDao, areaDao, markerAreaDao, visualDetailDao, slideDao).run()
 
             return null
         }

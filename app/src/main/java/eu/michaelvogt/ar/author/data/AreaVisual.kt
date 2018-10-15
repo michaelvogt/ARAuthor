@@ -113,53 +113,33 @@ class AreaVisual {
         this.events = areaVisual.getEvents()
     }
 
-    fun getCoordType(): Int{
-        return area!!.coordType
-    }
+    fun getResource() : Int = area!!.resource
 
-    fun getPosition(): Vector3 {
-        return area!!.position
-    }
+    fun getCoordType(): Int = area!!.coordType
 
-    fun getZeroPoint(): Vector3 {
-        return area!!.zeroPoint
-    }
+    fun getPosition(): Vector3 = area!!.position
 
-    fun getRotation(): Quaternion {
-        return area!!.rotation
-    }
+    fun getZeroPoint(): Vector3 = area!!.zeroPoint
 
-    fun getSize(): Vector3 {
-        return area!!.size
-    }
+    fun getRotation(): Quaternion = area!!.rotation
 
-    fun getScale(): Vector3 {
-        return area!!.scale
-    }
+    fun getSize(): Vector3 = area!!.size
 
-    fun getDetails(): SparseArray<VisualDetail> {
-        return details!!.clone()
-    }
+    fun getScale(): Vector3 = area!!.scale
 
-    fun getEvents(): SparseArray<EventDetail> {
-        return events!!.clone()
-    }
+    fun getDetails(): SparseArray<VisualDetail> = details!!.clone()
 
-    fun hasDetail(type: Int): Boolean {
-        return details!!.indexOfKey(type) >= 0
-    }
+    fun getEvents(): SparseArray<EventDetail> = events!!.clone()
+
+    fun hasDetail(type: Int): Boolean = details!!.indexOfKey(type) >= 0
 
     fun getDetail(type: Int, orDefault: Any): Any {
         return if (hasDetail(type)) details!!.get(type).anyValue else orDefault
     }
 
-    fun getDetail(type: Int): Any? {
-        return details!!.get(type)?.anyValue
-    }
+    fun getDetail(type: Int): Any? = details!!.get(type)?.anyValue
 
-    fun hasEvent(): Boolean {
-        return events!!.size() > 0
-    }
+    fun hasEvent(): Boolean = events!!.size() > 0
 
     private val value = { key: Int -> getDetail(key, 0.0f) as Float }
 
@@ -180,7 +160,7 @@ class AreaVisual {
 
     private fun sparsifyDetails(list: List<VisualDetail>): SparseArray<VisualDetail> {
         val array = SparseArray<VisualDetail>(list.size)
-        list.forEach { visualDetail -> array.put(visualDetail.type, visualDetail) }
+        list.forEach { visualDetail -> array.put(visualDetail.key, visualDetail) }
         return array
     }
 

@@ -1,6 +1,5 @@
 package eu.michaelvogt.ar.author.data.utils
 
-import android.support.test.runner.AndroidJUnit4
 import com.google.ar.sceneform.math.Quaternion
 import com.google.ar.sceneform.math.Vector3
 import org.hamcrest.CoreMatchers.*
@@ -10,9 +9,7 @@ import org.junit.Assert
 import org.junit.Assert.assertThat
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
 class ConvertersTest {
 
     @Test

@@ -28,11 +28,10 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
-
 @RunWith(AndroidJUnit4::class)
 class MarkerDaoTest : DaoTest() {
-    private var markerDao: MarkerDao? = null
-    private var locationDao: LocationDao? = null
+    private lateinit var  markerDao: MarkerDao
+    private lateinit var locationDao: LocationDao
 
     @Before
     fun setUp() {
@@ -43,17 +42,17 @@ class MarkerDaoTest : DaoTest() {
 
     @Test
     fun getAllFromEmptyTable() {
-        val all = LiveDataTestUtil.getValue(markerDao!!.getAll())
+        val all = LiveDataTestUtil.getValue(markerDao.getAll())
 
         Assert.assertThat(all, IsEqual.equalTo(emptyList()))
     }
 
     @Test
     fun getSize() {
-        val locationId = locationDao!!.insert(TestUtil.location1())
+        val locationId = locationDao.insert(TestUtil.location1())
 
-        markerDao!!.insertAll(*TestUtil.markers(locationId))
-        val size = LiveDataTestUtil.getValue(markerDao!!.getSize())
+        markerDao.insertAll(*TestUtil.markers(locationId))
+        val size = LiveDataTestUtil.getValue(markerDao.getSize())
 
         Assert.assertThat(size, IsEqual.equalTo(TestUtil.locations().size))
     }
@@ -61,7 +60,7 @@ class MarkerDaoTest : DaoTest() {
     @Test
     fun cantInsertMarkertWithoutLocation() {
         try {
-            markerDao!!.insertAll(*TestUtil.markers(0))
+            markerDao.insertAll(*TestUtil.markers(0))
             Assert.fail("SQLiteConstraintException expected")
         } catch (ignored: SQLiteConstraintException) {
         }
@@ -69,11 +68,11 @@ class MarkerDaoTest : DaoTest() {
 
     @Test
     fun getByName() {
-        val locationId = locationDao!!.insert(TestUtil.location1())
+        val locationId = locationDao.insert(TestUtil.location1())
         val marker = TestUtil.marker(locationId)
 
-        markerDao!!.insert(marker)
-        val byName = LiveDataTestUtil.getValue(markerDao!!.findMarkerByTitle(marker.title))
+        markerDao.insert(marker)
+        val byName = LiveDataTestUtil.getValue(markerDao.findMarkerByTitle(marker.title))
 
         marker.uId = byName.uId
 
@@ -82,13 +81,13 @@ class MarkerDaoTest : DaoTest() {
 
     @Test
     fun getWithoutTitles() {
-        val locationId = locationDao!!.insert(TestUtil.location1())
+        val locationId = locationDao.insert(TestUtil.location1())
 
-        markerDao!!.insert(TestUtil.markerTitle(locationId))
-        markerDao!!.insertAll(TestUtil.marker(locationId))
+        markerDao.insert(TestUtil.markerTitle(locationId))
+        markerDao.insertAll(TestUtil.marker(locationId))
 
-        val withTitle = LiveDataTestUtil.getValue(markerDao!!.findMarkersAndTitlesForLocation(locationId))
-        val withoutTitle = LiveDataTestUtil.getValue(markerDao!!.findMarkersOnlyForLocation(locationId))
+        val withTitle = LiveDataTestUtil.getValue(markerDao.findMarkersAndTitlesForLocation(locationId))
+        val withoutTitle = LiveDataTestUtil.getValue(markerDao.findMarkersOnlyForLocation(locationId))
 
         Assert.assertThat<Int>(withTitle.size, IsEqual.equalTo(2))
         Assert.assertThat<Int>(withoutTitle.size, IsEqual.equalTo(1))
