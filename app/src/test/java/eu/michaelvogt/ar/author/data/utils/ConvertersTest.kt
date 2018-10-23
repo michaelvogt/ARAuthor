@@ -108,6 +108,13 @@ class ConvertersTest {
     }
 
     @Test
+    fun stringifyEmptyCollection() {
+        val converter = Converters()
+
+        Assert.assertThat(converter.stringify(listOf<String>()), IsEqual.equalTo("[]"))
+    }
+
+    @Test
     fun stringifyVector() {
         val converter = Converters()
 
@@ -153,6 +160,37 @@ class ConvertersTest {
         val converter = Converters()
 
         Assert.assertThat(converter.objectify("[1, 2, 3]") as List<Int>, IsEqual.equalTo(listOf<Int>(1, 2, 3)))
+    }
+
+    @Test
+    fun objectifyEmptyCollection() {
+        val converter = Converters()
+
+        Assert.assertThat(converter.objectify("[]"), IsInstanceOf.instanceOf(List::class.java))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        Assert.assertThat((converter.objectify("[]") as List<String>).size, IsEqual.equalTo(0))
     }
 
     private fun setupQuaternion(x: Float, y: Float, z: Float, w: Float): Quaternion {

@@ -19,12 +19,8 @@
 package eu.michaelvogt.ar.author.data.utils
 
 import android.arch.persistence.room.TypeConverter
-import android.graphics.Color
 import com.google.ar.sceneform.math.Quaternion
 import com.google.ar.sceneform.math.Vector3
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.JSON
-import java.lang.IllegalArgumentException
 import java.util.*
 
 const val VALUE_DIVIDER = "!!"
@@ -91,8 +87,8 @@ class Converters {
     }
 
     @TypeConverter
-    fun stringListToString(list: List<String>): String {
-        return list.joinToString(separator = VALUE_DIVIDER)
+    fun stringListToString(list: List<String>?): String {
+        return list?.joinToString(separator = VALUE_DIVIDER) ?: "[]"
     }
 
     @TypeConverter
@@ -122,9 +118,12 @@ class Converters {
             string.startsWith(BOOL_TAG) -> string.equals("${BOOL_TAG}1")
             string.startsWith(INT_TAG) -> string.removePrefix(INT_TAG).toInt()
             string.startsWith(FLOAT_TAG) -> string.removePrefix(FLOAT_TAG).toFloat()
-            string.startsWith("[") -> string.removePrefix("[").removeSuffix("]").split(",").toList()
             string.startsWith(VECTOR3_TAG) -> vector3FromString(string) as Any
             string.startsWith(QUATERNION_TAG) -> quaternionFromString(string) as Any
+            string.startsWith("[") -> {
+                val value = string.removePrefix("[").removeSuffix("]")
+                if (value.isEmpty()) emptyList<String>() else value.split(",").toList()
+            }
             else -> string
         }
     }

@@ -1,7 +1,7 @@
 package eu.michaelvogt.ar.author.data.utils
 
 import eu.michaelvogt.ar.author.data.*
-import java.util.ArrayList
+import java.util.*
 
 object TestUtil {
     fun location1(name: String = "home"): Location {
@@ -30,12 +30,12 @@ object TestUtil {
     }
 
 
-    fun area1(title: String = "photo"): Area {
-        return Area(title, TYPE_3DOBJECTONIMAGE, KIND_UI)
+    fun area1(title: String = "photo", group: Int = GROUP_NONE, usage: Int = KIND_CONTENT): Area {
+        return Area(title, TYPE_3DOBJECTONIMAGE, usage, group = group)
     }
 
-    fun area2(title: String = "text"): Area {
-        return Area(title, TYPE_DEFAULT, KIND_CONTENT)
+    fun area2(title: String = "text", group: Int = GROUP_NONE, usage: Int = KIND_CONTENT): Area {
+        return Area(title, TYPE_DEFAULT, usage, group = group)
     }
 
     fun areas(title1: String = "photo", title2: String = "text"): Array<Area> {

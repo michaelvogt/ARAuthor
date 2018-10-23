@@ -95,7 +95,7 @@ public class AreaNodeBuilder {
   private CompletionStage<Node> future3dObjectOnImage() {
     CompletableFuture<Node> future = new CompletableFuture<>();
     ModelRenderable.builder()
-        .setSource(context, (Integer) areaVisual.getDetail(VisualDetailKt.KEY_RESOURCE))
+        .setSource(context, (Integer) areaVisual.getDetailValue(VisualDetailKt.KEY_RESOURCE))
         .build()
         .thenAccept(renderable -> future.complete(createNode(renderable)));
 

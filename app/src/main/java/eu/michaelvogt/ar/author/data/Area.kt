@@ -25,14 +25,15 @@ import android.arch.persistence.room.PrimaryKey
 import com.google.ar.sceneform.math.Quaternion
 import com.google.ar.sceneform.math.Vector3
 
+const val GROUP_ALL = -1
+const val GROUP_NONE = 0
+const val GROUP_START = 1
+
 @Entity(tableName = "areas")
 class Area {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "u_id")
     var uId: Long = 0
-
-    @ColumnInfo(name = "title")
-    var title: String = ""
 
     @ColumnInfo(name = "object_type")
     var objectType: Int = TYPE_DEFAULT
@@ -43,27 +44,20 @@ class Area {
     @ColumnInfo(name = "coord_type")
     var coordType: Int = 0
 
-    @ColumnInfo(name = "position")
-    var position: Vector3 = Vector3.zero()
-
     @ColumnInfo(name = "zero_point")
     var zeroPoint: Vector3 = Vector3.zero()
 
-    @ColumnInfo(name = "resource")
+    var title: String = ""
+    var position: Vector3 = Vector3.zero()
     var resource: Int = 0
-
-    @ColumnInfo(name = "size")
     var size: Vector3 = Vector3.one()
-
-    @ColumnInfo(name = "rotation")
     var rotation: Quaternion = Quaternion.identity()
-
-    @ColumnInfo(name = "scale")
     var scale: Vector3 = Vector3.one()
+    var group: Int = GROUP_NONE
 
     constructor(
-            title: String, objectType: Int = 0, usageType: Int = 0, resource: Int = 0,
-            zeroPoint: Vector3 = Vector3.zero(), size: Vector3 = Vector3.one(),
+            title: String, objectType: Int = 0, usageType: Int = 0, group: Int = GROUP_NONE,
+            resource: Int = 0, zeroPoint: Vector3 = Vector3.zero(), size: Vector3 = Vector3.one(),
             coordType: Int = COORDINATE_LOCAL, position: Vector3 = Vector3.zero(),
             rotation: Quaternion = Quaternion.identity(), scale: Vector3 = Vector3.one()) {
         this.title = title
@@ -76,7 +70,7 @@ class Area {
         this.position = position
         this.rotation = rotation
         this.scale = scale
-
+        this.group = group
     }
 
     @Ignore

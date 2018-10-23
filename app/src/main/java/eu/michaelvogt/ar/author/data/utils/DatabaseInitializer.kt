@@ -172,18 +172,19 @@ class DatabaseInitializer private constructor(
                 "Muneoka Background Image",
                 TYPE_IMAGEONIMAGE,
                 KIND_CONTENT,
+                GROUP_START,
                 R.layout.view_image,
                 Vector3.zero(),
-                Vector3(0.415f, 0.572f, 0.01f),
+                Vector3(0.415f, 0.572f, 0.001f),
                 COORDINATE_LOCAL,
                 Vector3(-0.236f, 0.01f, 0.0f),
                 Quaternion(Vector3(-1.0f, 0.0f, 0.0f), 90.0f),
                 Vector3.one())
 
         insertVisualDetail(areaId, TYPE_DETAIL_ALL,
-                KEY_IMAGEPATH, "Touristar/iwamiginzan/muneokake/infoboard/images/IMG_20180609_115300.png")
+                KEY_IMAGEPATH, "Touristar/iwamiginzan/muneokake/infoboard/images/IMG_20180609_115300.jpg")
         insertVisualDetail(areaId, TYPE_DETAIL_ALL,
-                KEY_SECONDARYIMAGEPATH, "Touristar/iwamiginzan/muneokake/infoboard/images/IMG_20180826_112846.png")
+                KEY_SECONDARYIMAGEPATH, "Touristar/iwamiginzan/muneokake/infoboard/images/IMG_20180826_112846.jpg")
         insertVisualDetail(areaId, TYPE_DETAIL_ALL,
                 KEY_FADE_RIGHT_WIDTH, 0.4f)
         insertVisualDetail(areaId, TYPE_DETAIL_ALL,
@@ -200,6 +201,7 @@ class DatabaseInitializer private constructor(
                 "Muneoka Background Intro",
                 TYPE_TEXTONIMAGE,
                 KIND_CONTENT,
+                GROUP_START,
                 R.layout.view_text,
                 Vector3.zero(),
                 Vector3(0.445f, 0.572f, 0.2f),
@@ -222,6 +224,7 @@ class DatabaseInitializer private constructor(
                 "Muneoka Language Selector",
                 TYPE_ROTATIONBUTTON,
                 KIND_UI,
+                GROUP_ALL,
                 R.layout.view_image,    // TODO: Remove and hardcode in Node?
                 Vector3(-.04f, 0.05f, 0.0f),
                 Vector3(0.08f, 0.1f, 0.01f),
@@ -243,6 +246,7 @@ class DatabaseInitializer private constructor(
                 "Main Content Grabber",
                 TYPE_ROTATIONBUTTON,
                 KIND_UI,
+                GROUP_ALL,
                 R.layout.view_image,
                 Vector3(-.04f, 0.05f, 0.0f),
                 Vector3(0.08f, 0.1f, 0.01f),
@@ -263,14 +267,14 @@ class DatabaseInitializer private constructor(
                 "Background Scaler",
                 TYPE_ROTATIONBUTTON,
                 KIND_UI,
+                GROUP_ALL,
                 R.layout.view_image,
                 Vector3(-.04f, 0.05f, 0.0f),
                 Vector3(0.08f, 0.1f, 0.01f),
                 COORDINATE_LOCAL,
                 Vector3(0.475f, 0.01f, 0.035f),
                 Quaternion(Vector3(-1.0f, 0.0f, 0.0f), 90.0f),
-                Vector3.one()
-        )
+                Vector3.one())
 
         insertVisualDetail(areaId, TYPE_DETAIL_ALL,
                 KEY_IMAGERESOURCE, R.drawable.ic_linear_scale_black_24dp)
@@ -284,6 +288,7 @@ class DatabaseInitializer private constructor(
                 "Muneoka Slide Area",
                 TYPE_SLIDESONIMAGE,
                 KIND_CONTENT,
+                GROUP_NONE,
                 R.layout.view_slider,
                 Vector3.zero(),
                 Vector3(0.895f, 0.582f, 0.005f),
@@ -443,6 +448,7 @@ class DatabaseInitializer private constructor(
                 "Magistrate Office Building",
                 TYPE_3DOBJECTONPLANE,
                 KIND_CONTENT,
+                GROUP_START,
                 R.raw.default_model,
                 Vector3.zero(),
                 Vector3(-0.2f, -0.7f, -1.75f),
@@ -514,11 +520,11 @@ class DatabaseInitializer private constructor(
     }
 
     private fun insertAreaForMarker(
-            markerId: Long, backgroundImage: String, kind: Int, type: Int, resource: Int,
+            markerId: Long, backgroundImage: String, kind: Int, type: Int, group: Int, resource: Int,
             zeroPoint: Vector3, size: Vector3, coordType: Int, position: Vector3,
             rotation: Quaternion, scale: Vector3): Long {
-        val areaId = areaDao.insert(Area(backgroundImage, kind, type, resource, zeroPoint, size,
-                coordType, position, rotation, scale))
+        val areaId = areaDao.insert(Area(backgroundImage, kind, type, group, resource, zeroPoint,
+                size, coordType, position, rotation, scale))
         insertMarkerArea(markerId, areaId)
 
         return areaId

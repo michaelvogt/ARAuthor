@@ -32,7 +32,7 @@ public class SlideCallback implements NodeCallback {
   public void createImageComparatorCover() {
     AuthorViewModel viewModel = ViewModelProviders.of((FragmentActivity) context).get(AuthorViewModel.class);
 
-    Slide comparisionData = ((List<Slide>) areaVisual.getDetail(VisualDetailKt.KEY_SLIDES)).get(3);
+    Slide comparisionData = ((List<Slide>) areaVisual.getDetailValue(VisualDetailKt.KEY_SLIDES)).get(3);
 
     AreaVisual comparisionArea = new AreaVisual(this.areaVisual);
     // TODO: Set details

@@ -33,7 +33,6 @@ import android.util.Log;
 import android.util.SparseArray;
 
 import com.google.ar.sceneform.Node;
-import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.Material;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.rendering.Renderable;
@@ -78,7 +77,7 @@ public class ImageNode extends AreaNode implements EventSender {
     CompletableFuture<Texture> futureTexture;
 
     if (areaVisual.hasDetail(VisualDetailKt.KEY_IMAGEPATH)) {
-      Object detail = areaVisual.getDetail(VisualDetailKt.KEY_IMAGEPATH);
+      Object detail = areaVisual.getDetailValue(VisualDetailKt.KEY_IMAGEPATH);
       String textureFilePath = FileUtils.getFullPuplicFolderPath((String) detail);
 
       futureTexture = Texture.builder()
@@ -87,12 +86,12 @@ public class ImageNode extends AreaNode implements EventSender {
           .build()
           .exceptionally(throwable -> {
             Log.d(TAG, "Could not load texture image: " +
-                areaVisual.getDetail(VisualDetailKt.KEY_IMAGEPATH), throwable);
+                areaVisual.getDetailValue(VisualDetailKt.KEY_IMAGEPATH), throwable);
             return null;
           });
 
     } else if (areaVisual.hasDetail(VisualDetailKt.KEY_IMAGERESOURCE)) {
-      int textureResource = (int) areaVisual.getDetail(VisualDetailKt.KEY_IMAGERESOURCE, R.drawable.ic_launcher);
+      int textureResource = (int) areaVisual.getDetailValue(VisualDetailKt.KEY_IMAGERESOURCE, R.drawable.ic_launcher);
       Bitmap bitmap = getBitmapFromVectorDrawable(context, textureResource);
 
       futureTexture = Texture.builder()
@@ -101,7 +100,7 @@ public class ImageNode extends AreaNode implements EventSender {
           .build()
           .exceptionally(throwable -> {
             Log.d(TAG, "Could not load texture resource: " +
-                areaVisual.getDetail(VisualDetailKt.KEY_IMAGERESOURCE), throwable);
+                areaVisual.getDetailValue(VisualDetailKt.KEY_IMAGERESOURCE), throwable);
             return null;
           });
 
@@ -122,8 +121,8 @@ public class ImageNode extends AreaNode implements EventSender {
           setupFadeAnimation(material);
 
           Renderable renderable = ShapeFactory.makeCube(
-              (Vector3) areaVisual.getSize(),
-              (Vector3) areaVisual.getZeroPoint(), material);
+              areaVisual.getSize(),
+              areaVisual.getZeroPoint(), material);
           areaVisual.apply(renderable);
 
           // Needs to be set, bacause Sceneform has a layering problem with transparent objects
@@ -146,7 +145,7 @@ public class ImageNode extends AreaNode implements EventSender {
   private void setupFadeAnimation(Material material) {
     if (areaVisual.hasDetail(VisualDetailKt.KEY_SECONDARYIMAGEPATH)) {
       String textureFilePath = FileUtils.getFullPuplicFolderPath(
-          (String) areaVisual.getDetail(VisualDetailKt.KEY_SECONDARYIMAGEPATH, "Touristar/default/images/"));
+          (String) areaVisual.getDetailValue(VisualDetailKt.KEY_SECONDARYIMAGEPATH, "Touristar/default/images/"));
 
       Texture.builder()
           .setSource(BitmapFactory.decodeFile(textureFilePath))
@@ -172,7 +171,7 @@ public class ImageNode extends AreaNode implements EventSender {
           })
           .exceptionally(throwable -> {
             Log.d(TAG, "Could not load texture path: " +
-                areaVisual.getDetail(VisualDetailKt.KEY_IMAGEPATH), throwable);
+                areaVisual.getDetailValue(VisualDetailKt.KEY_IMAGEPATH), throwable);
             return null;
           });
     }

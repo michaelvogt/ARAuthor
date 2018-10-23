@@ -197,7 +197,7 @@ public class AreaPreviewFragment extends Fragment {
     ModelRenderable.builder()
         // TODO: Load model from external position
 
-        .setSource(context, (Integer) editArea.getDetail(VisualDetailKt.KEY_RESOURCE))
+        .setSource(context, (Integer) editArea.getDetailValue(VisualDetailKt.KEY_RESOURCE))
         .build()
         .thenAccept(modelRenderable -> {
           createMaterial(context, PREVIEWCOLOR, useTranslucency)

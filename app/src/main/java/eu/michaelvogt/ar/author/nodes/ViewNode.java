@@ -69,7 +69,7 @@ public class ViewNode extends Node {
           areaVisual.apply(material);
 
           ViewRenderable.builder()
-              .setView(context, (Integer) areaVisual.getDetail(VisualDetailKt.KEY_RESOURCE))
+              .setView(context, (Integer) areaVisual.getDetailValue(VisualDetailKt.KEY_RESOURCE))
               .setSource(context, R.raw.slide)
               .build()
               .thenAccept(renderable -> {
@@ -99,7 +99,7 @@ public class ViewNode extends Node {
 
                 Slider slider = renderable.getView().findViewById(R.id.slider);
                 String puplicFolderPath = FileUtils.getFullPuplicFolderPath((String)
-                    areaVisual.getDetail(VisualDetailKt.KEY_IMAGEFOLDERPATH, "Touristar/default/images/"));
+                    areaVisual.getDetailValue(VisualDetailKt.KEY_IMAGEFOLDERPATH, "Touristar/default/images/"));
                 // slider.setSlides(FileUtils.getFilepathsOfFolder(puplicFolderPath));
                 // slider.startTimer(3000);
 

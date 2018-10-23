@@ -24,7 +24,7 @@ import android.arch.lifecycle.LiveData
 import java.util.concurrent.CompletableFuture
 
 class AuthorViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository = AppRepository(application)
+    private val repository = AppRepository(AppDatabase.getDatabase(application.applicationContext))
 
     var currentLocationId: Long = 0
 
@@ -61,13 +61,13 @@ class AuthorViewModel(application: Application) : AndroidViewModel(application) 
         cropMarker = null
     }
 
-    fun getAreasForMarker(markerId: Long):
-            CompletableFuture<List<Area>> = repository.getAreasForMarker(markerId)
+    fun getAreasForMarker(markerId: Long, group: Int = GROUP_ALL):
+            CompletableFuture<List<Area>> = repository.getAreasForMarker(markerId, group)
 
 
     fun getAreaVisual(uId: Long):
             CompletableFuture<AreaVisual> = repository.getAreaVisual(uId)
 
-    fun getAreaVisualsForMarker(uId: Long):
-            CompletableFuture<ArrayList<AreaVisual>> = repository.getAreaVisualsForMarker(uId)
+    fun getAreaVisualsForMarker(uId: Long, group: Int = GROUP_ALL):
+            CompletableFuture<ArrayList<AreaVisual>> = repository.getAreaVisualsForMarker(uId, group)
 }

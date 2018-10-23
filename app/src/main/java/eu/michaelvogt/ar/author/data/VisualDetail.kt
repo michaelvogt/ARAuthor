@@ -75,6 +75,9 @@ class VisualDetail(
     @ColumnInfo(name = "value")
     protected var value: String = ""
 
+    @Ignore
+    var slides: List<Slide> = emptyList()
+
     var anyValue: Any
         get() = Converters().objectify(value)
         set(anyValue) {

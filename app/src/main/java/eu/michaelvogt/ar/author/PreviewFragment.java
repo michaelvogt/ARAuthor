@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
+import eu.michaelvogt.ar.author.data.AreaKt;
 import eu.michaelvogt.ar.author.data.AreaVisual;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
 import eu.michaelvogt.ar.author.data.Marker;
@@ -108,7 +109,7 @@ public class PreviewFragment extends Fragment {
   }
 
   private void buildAreas(Node anchorNode, long markerId, float backgroundHeight, float backgroundWidth) {
-    viewModel.getAreaVisualsForMarker(markerId).thenAccept((ArrayList<AreaVisual> areaVisuals) -> {
+    viewModel.getAreaVisualsForMarker(markerId, AreaKt.GROUP_START).thenAccept(areaVisuals -> {
       if (areaVisuals.size() > 0) {
         areaVisuals.forEach(areaVisual -> buildArea(anchorNode, areaVisual, null));
       } else {
@@ -122,27 +123,26 @@ public class PreviewFragment extends Fragment {
   }
 
   private void buildArea(Node anchorNode, AreaVisual areaVisual, Consumer<Node> fn) {
-    this.getActivity().runOnUiThread(() -> {
-      AreaNodeBuilder.builder(getActivity(), areaVisual)
-          .build()
-          .thenAccept(node -> {
-            node.setParent(anchorNode);
+    this.getActivity().runOnUiThread(() -> AreaNodeBuilder
+        .builder(getActivity(), areaVisual)
+        .build()
+        .thenAccept(node -> {
+          node.setParent(anchorNode);
 
-            if (fn != null) {
-              fn.accept(node);
-            }
+          if (fn != null) {
+            fn.accept(node);
+          }
 
-            if (((AreaNode) node).isCameraFacing()) {
-              cameraFacingNodes.add(node);
-            }
+          if (((AreaNode) node).isCameraFacing()) {
+            cameraFacingNodes.add(node);
+          }
 
-            Log.i(TAG, "Area successfully created " + areaVisual.getTitle());
-          })
-          .exceptionally(throwable -> {
-            Log.e(TAG, "Unable to build Area: " + areaVisual.getTitle(), throwable);
-            return null;
-          });
-    });
+          Log.i(TAG, "Area successfully created " + areaVisual.getTitle());
+        })
+        .exceptionally(throwable -> {
+          Log.e(TAG, "Unable to build Area: " + areaVisual.getTitle(), throwable);
+          return null;
+        }));
   }
 
   public class EventCallback implements SceneViewCallback {

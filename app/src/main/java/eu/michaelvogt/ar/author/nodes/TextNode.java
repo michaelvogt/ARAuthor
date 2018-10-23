@@ -65,6 +65,11 @@ public class TextNode extends AreaNode implements EventHandler {
         .thenAccept(renderable -> {
           renderable.setSizer(view -> areaVisual.getSize());
           renderable.setShadowCaster(false);
+
+          // Needs to be set, bacause Sceneform has a layering problem with transparent objects
+          // https://github.com/google-ar/sceneform-android-sdk/issues/285#issuecomment-420730274
+          renderable.setRenderPriority(renderPriority);
+
           setRenderable(renderable);
 
           AuthorViewModel viewModel = ViewModelProviders.of(
@@ -89,7 +94,7 @@ public class TextNode extends AreaNode implements EventHandler {
 
     if (areaVisual.hasDetail(VisualDetailKt.KEY_TEXTPATH)) {
       String content;
-      String filePath = (String) areaVisual.getDetail(VisualDetailKt.KEY_TEXTPATH);
+      String filePath = (String) areaVisual.getDetailValue(VisualDetailKt.KEY_TEXTPATH);
 
       try {
         content = FileUtils.readTextFile(filePath, language);
@@ -100,7 +105,7 @@ public class TextNode extends AreaNode implements EventHandler {
       textView.setText(Html.fromHtml(content, Html.FROM_HTML_SEPARATOR_LINE_BREAK_HEADING));
     } else if (areaVisual.hasDetail(VisualDetailKt.KEY_TEXTCONTENT)) {
       // TODO: make translatable by providing a map with translations
-      textView.setText((String) areaVisual.getDetail(VisualDetailKt.KEY_TEXTCONTENT));
+      textView.setText((String) areaVisual.getDetailValue(VisualDetailKt.KEY_TEXTCONTENT));
     } else if (areaVisual.hasDetail(VisualDetailKt.KEY_MARKUPCONTENT)) {
 //          String encoded = null;
 //          try {

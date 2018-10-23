@@ -9,7 +9,7 @@ import eu.michaelvogt.ar.author.data.AreaVisualKt;
 
 public class AreaNode extends Node {
   public static final int RENDER_FIRST = 0;
-  public static final int RENDER_LAST = 1;
+  public static final int RENDER_LAST = 7;
 
   protected Context context;
   protected final AreaVisual areaVisual;

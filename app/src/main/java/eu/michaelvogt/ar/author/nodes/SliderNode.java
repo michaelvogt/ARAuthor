@@ -25,16 +25,14 @@ import android.view.View;
 
 import com.google.ar.sceneform.Node;
 import com.google.ar.sceneform.Scene;
-import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.ViewRenderable;
 
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
 import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.AreaVisual;
-import eu.michaelvogt.ar.author.data.Slide;
+import eu.michaelvogt.ar.author.data.VisualDetail;
 import eu.michaelvogt.ar.author.data.VisualDetailKt;
 import eu.michaelvogt.ar.author.utils.SlideCallback;
 import eu.michaelvogt.ar.author.utils.Slider;
@@ -61,14 +59,16 @@ public class SliderNode extends AreaNode {
         .setView(context, R.layout.view_slider)
         .build()
         .thenAccept(renderable -> {
-          renderable.setSizer(view -> (Vector3) areaVisual.getSize());
+          renderable.setSizer(view -> areaVisual.getSize());
           setRenderable(renderable);
           areaVisual.apply(renderable);
 
           Slider slider = renderable.getView().findViewById(R.id.slider);
           View sliderText = renderable.getView().findViewById(R.id.slider_text);
 
-          slider.setSlides((List<Slide>) areaVisual.getDetail(VisualDetailKt.KEY_SLIDES), new SlideCallback(context, areaVisual, scene));
+          VisualDetail detail = areaVisual.getDetail(VisualDetailKt.KEY_SLIDES);
+
+          slider.setSlides(detail.getSlides(), new SlideCallback(context, areaVisual, scene));
           slider.setOnTouchListener(new ToggleSlideTextHandler(context, sliderText));
 
           Log.i(TAG, "ImageNode successfully created");

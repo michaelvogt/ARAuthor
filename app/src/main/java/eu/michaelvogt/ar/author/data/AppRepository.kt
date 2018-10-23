@@ -18,13 +18,12 @@
 
 package eu.michaelvogt.ar.author.data
 
-import android.app.Application
 import android.arch.lifecycle.LiveData
 import org.jetbrains.anko.doAsync
 import java.util.*
 import java.util.concurrent.CompletableFuture
 
-class AppRepository internal constructor(application: Application) {
+class AppRepository internal constructor(db: AppDatabase?) {
     private val locationDao: LocationDao
     private val markerDao: MarkerDao
     private val areaDao: AreaDao
@@ -34,6 +33,8 @@ class AppRepository internal constructor(application: Application) {
     private val visualDetailDao: VisualDetailDao
     private val eventDetailDao: EventDetailDao
 
+    private val slideDao: SlideDao
+
     // Location
     internal val allLocations: LiveData<List<Location>>
 
@@ -41,7 +42,6 @@ class AppRepository internal constructor(application: Application) {
         get() = locationDao.getSize()
 
     init {
-        val db = AppDatabase.getDatabase(application)
         locationDao = db!!.locationDao()
         allLocations = locationDao.getAll()
 
@@ -51,6 +51,8 @@ class AppRepository internal constructor(application: Application) {
 
         visualDetailDao = db.visualDetailDao()
         eventDetailDao = db.eventDetailDao()
+
+        slideDao = db.slideDao()
     }
 
     fun insert(location: Location) {
@@ -105,34 +107,36 @@ class AppRepository internal constructor(application: Application) {
         return areaDao.findAreaByTitle(title)
     }
 
-    fun getAreasForMarker(markerId: Long): CompletableFuture<List<Area>> {
-        return CompletableFuture.supplyAsync { markerAreaDao.getAreasForMarker(markerId) }
+    fun getAreasForMarker(markerId: Long, group: Int): CompletableFuture<List<Area>> {
+        return CompletableFuture.supplyAsync { markerAreaDao.getAreasForMarker(markerId, group) }
     }
 
     // AreaVisual
     fun getAreaVisual(areaId: Long): CompletableFuture<AreaVisual> {
         return CompletableFuture.supplyAsync {
-            val futureArea = areaDao.get(areaId)
-            val futureDetails = visualDetailDao.getForArea(areaId)
-            val futureEvents = eventDetailDao.getForArea(areaId)
-
-            AreaVisual(futureArea, futureDetails, futureEvents)
+            val area = areaDao.get(areaId)
+            setupAreaVisual(area)
         }
     }
 
-    fun getAreaVisualsForMarker(markerId: Long): CompletableFuture<ArrayList<AreaVisual>> {
+    fun getAreaVisualsForMarker(markerId: Long, group: Int): CompletableFuture<ArrayList<AreaVisual>> {
         val areaVisuals = ArrayList<AreaVisual>()
 
         return CompletableFuture.supplyAsync {
-            val areas = markerAreaDao.getAreasForMarker(markerId)
-            areas.forEach { area ->
-                val details = visualDetailDao.getForArea(area.uId)
-                val events = eventDetailDao.getForArea(area.uId)
-
-                areaVisuals.add(AreaVisual(area, details, events))
-            }
+            val areas = markerAreaDao.getAreasForMarker(markerId, group)
+            areas.forEach { areaVisuals.add(setupAreaVisual(it)) }
 
             areaVisuals
         }
+    }
+
+    private fun setupAreaVisual(area: Area): AreaVisual {
+        val details = visualDetailDao.getForArea(area.uId)
+        val events = eventDetailDao.getForArea(area.uId)
+
+        val slideDetails = details.filter { detail -> detail.key == KEY_SLIDES }
+        slideDetails.forEach { detail -> detail.slides = slideDao.getSlidesForDetail(detail.uId) }
+
+        return AreaVisual(area, details, events)
     }
 }

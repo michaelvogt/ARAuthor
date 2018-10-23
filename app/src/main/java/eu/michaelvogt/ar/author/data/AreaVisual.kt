@@ -101,8 +101,8 @@ class AreaVisual {
     constructor(objectType: Int, usageType: Int, title: String, resource: Int = 0,
                 zeroPoint: Vector3 = Vector3.zero(), size: Vector3 = Vector3.one(),
                 coordType: Int = COORDINATE_LOCAL, position: Vector3 = Vector3.zero(),
-                rotation: Quaternion = Quaternion.identity(), scale: Vector3 = Vector3.one()) {
-        area = Area(title, objectType, usageType, resource, zeroPoint, size, coordType, position, rotation, scale)
+                rotation: Quaternion = Quaternion.identity(), scale: Vector3 = Vector3.one(), group: Int = GROUP_NONE) {
+        area = Area(title, objectType, usageType, group, resource, zeroPoint, size, coordType, position, rotation, scale)
         details = SparseArray()
         events = SparseArray()
     }
@@ -133,29 +133,31 @@ class AreaVisual {
 
     fun hasDetail(type: Int): Boolean = details!!.indexOfKey(type) >= 0
 
-    fun getDetail(type: Int, orDefault: Any): Any {
-        return if (hasDetail(type)) details!!.get(type).anyValue else orDefault
+    fun getDetail(type: Int): VisualDetail? {
+        return details!!.get(type)
     }
 
-    fun getDetail(type: Int): Any? = details!!.get(type)?.anyValue
+    fun getDetailValue(type: Int, orDefault: Any): Any {
+        return if (hasDetail(type)) getDetail(type)!!.anyValue else orDefault
+    }
+
+    fun getDetailValue(type: Int): Any? = getDetail(type)?.anyValue
 
     fun hasEvent(): Boolean = events!!.size() > 0
 
-    private val value = { key: Int -> getDetail(key, 0.0f) as Float }
-
-
+    private val value = { key: Int -> getDetailValue(key, 0.0f) as Float }
     fun apply(material: Material) {
         material.setFloat(MATERIAL_FADELEFTWIDTH, 0f)
         material.setFloat(MATERIAL_FADERIGHTWIDTH, value.invoke(KEY_FADE_RIGHT_WIDTH))
     }
 
     fun apply(textView: TextView) {
-        textView.textSize = getDetail(KEY_TEXTSIZE) as Float
-        textView.setBackgroundColor(getDetail(KEY_BACKGROUNDCOLOR) as Int)
+        textView.textSize = getDetailValue(KEY_TEXTSIZE) as Float
+        textView.setBackgroundColor(getDetailValue(KEY_BACKGROUNDCOLOR) as Int)
     }
 
     fun apply(renderable: Renderable) {
-        renderable.isShadowCaster = (getDetail(KEY_ISCASTINGSHADOW) ?: false) as Boolean
+        renderable.isShadowCaster = (getDetailValue(KEY_ISCASTINGSHADOW) ?: false) as Boolean
     }
 
     private fun sparsifyDetails(list: List<VisualDetail>): SparseArray<VisualDetail> {

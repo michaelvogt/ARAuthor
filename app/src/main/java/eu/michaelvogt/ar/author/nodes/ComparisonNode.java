@@ -103,14 +103,14 @@ public class ComparisonNode extends AreaNode {
   }
 
   private CompletableFuture<Texture> getTextureFuture(CompletableFuture<Node> future, int detailPath) {
-    String fullPath = FileUtils.getFullPuplicFolderPath((String) areaVisual.getDetail(detailPath));
+    String fullPath = FileUtils.getFullPuplicFolderPath((String) areaVisual.getDetailValue(detailPath));
 
     return Texture.builder()
         .setSource(BitmapFactory.decodeFile(fullPath))
         .setUsage(Texture.Usage.COLOR)
         .build()
         .exceptionally(throwable -> {
-          Log.d(TAG, "Could not create texture builder for " + areaVisual.getDetail(detailPath), throwable);
+          Log.d(TAG, "Could not create texture builder for " + areaVisual.getDetailValue(detailPath), throwable);
           future.completeExceptionally(throwable);
           return null;
         });

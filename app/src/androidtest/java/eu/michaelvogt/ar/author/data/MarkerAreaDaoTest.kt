@@ -22,18 +22,20 @@ import android.database.sqlite.SQLiteConstraintException
 import android.support.test.runner.AndroidJUnit4
 import eu.michaelvogt.ar.author.data.utils.LiveDataTestUtil
 import eu.michaelvogt.ar.author.data.utils.TestUtil
-import org.hamcrest.core.IsEqual
-import org.junit.Assert
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.core.AnyOf.anyOf
+import org.hamcrest.core.IsEqual.equalTo
+import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class MarkerAreaDaoTest : DaoTest() {
-    private var locationDao: LocationDao? = null
-    private var markerDao: MarkerDao? = null
-    private var areaDao: AreaDao? = null
-    private var markerAreaDao: MarkerAreaDao? = null
+    private lateinit var locationDao: LocationDao
+    private lateinit var markerDao: MarkerDao
+    private lateinit var areaDao: AreaDao
+    private lateinit var markerAreaDao: MarkerAreaDao
 
     @Before
     fun setUp() {
@@ -46,91 +48,107 @@ class MarkerAreaDaoTest : DaoTest() {
 
     @Test
     fun getAllFromEmptyTable() {
-        val all = LiveDataTestUtil.getValue(markerAreaDao!!.getAll())
+        val all = LiveDataTestUtil.getValue(markerAreaDao.getAll())
 
-        Assert.assertThat(all, IsEqual.equalTo(emptyList()))
+        assertThat(all, equalTo(emptyList()))
     }
 
     @Test
     fun getSize() {
-        val locationId = locationDao!!.insert(TestUtil.location1())
-        val markerId = markerDao!!.insert(TestUtil.marker(locationId))
-        val areaId = areaDao!!.insert(TestUtil.area1())
+        val locationId = locationDao.insert(TestUtil.location1())
+        val markerId = markerDao.insert(TestUtil.marker(locationId))
+        val areaId = areaDao.insert(TestUtil.area1())
 
-        markerAreaDao!!.insert(TestUtil.markerArea(markerId, areaId))
+        markerAreaDao.insert(TestUtil.markerArea(markerId, areaId))
 
-        val size = LiveDataTestUtil.getValue(markerAreaDao!!.getSize())
+        val size = LiveDataTestUtil.getValue(markerAreaDao.getSize())
 
-        Assert.assertThat(size, IsEqual.equalTo(1))
+        assertThat(size, equalTo(1))
     }
 
     @Test
     fun cantInsertMarkerAreaWithoutMarkerAndArea() {
         try {
-            markerAreaDao!!.insert(TestUtil.markerArea(0, 0))
-            Assert.fail("SQLiteConstraintException expected")
+            markerAreaDao.insert(TestUtil.markerArea(0, 0))
+            fail("SQLiteConstraintException expected")
         } catch (ignored: SQLiteConstraintException) {
         }
     }
 
     @Test
     fun cantInsertMarkerAreaWithoutArea() {
-        val locationId = locationDao!!.insert(TestUtil.location1())
-        val markerId = markerDao!!.insert(TestUtil.marker(locationId))
+        val locationId = locationDao.insert(TestUtil.location1())
+        val markerId = markerDao.insert(TestUtil.marker(locationId))
 
         try {
-            markerAreaDao!!.insert(TestUtil.markerArea(markerId, 0))
-            Assert.fail("SQLiteConstraintException expected")
+            markerAreaDao.insert(TestUtil.markerArea(markerId, 0))
+            fail("SQLiteConstraintException expected")
         } catch (ignored: SQLiteConstraintException) {
         }
     }
 
     @Test
     fun cantInsertMarkerAreaWithoutMarker() {
-        val areaId = areaDao!!.insert(TestUtil.area1())
+        val areaId = areaDao.insert(TestUtil.area1())
 
         try {
-            markerAreaDao!!.insert(TestUtil.markerArea(0, areaId))
-            Assert.fail("SQLiteConstraintException expected")
+            markerAreaDao.insert(TestUtil.markerArea(0, areaId))
+            fail("SQLiteConstraintException expected")
         } catch (ignored: SQLiteConstraintException) {
         }
     }
 
     @Test
     fun getMarkersForArea() {
-        val locationId = locationDao!!.insert(TestUtil.location1())
+        val (markerId1, markerId2) = insertSampleItems()
 
-        val markerId1 = markerDao!!.insert(TestUtil.marker(locationId, "entrance"))
-        val markerId2 = markerDao!!.insert(TestUtil.marker(locationId, "exit"))
+        val marker1Areas = markerAreaDao.getAreasForMarker(markerId1, GROUP_ALL)
+        val marker2Areas = markerAreaDao.getAreasForMarker(markerId2, GROUP_ALL)
 
-        val areaId1 = areaDao!!.insert(TestUtil.area1("floor plan"))
-        val areaId2 = areaDao!!.insert(TestUtil.area1("explanation"))
-        val areaId3 = areaDao!!.insert(TestUtil.area1("map"))
-
-        markerAreaDao!!.insert(TestUtil.markerArea(markerId1, areaId1))
-        markerAreaDao!!.insert(TestUtil.markerArea(markerId1, areaId2))
-
-        markerAreaDao!!.insert(TestUtil.markerArea(markerId1, areaId3))
-        markerAreaDao!!.insert(TestUtil.markerArea(markerId2, areaId3))
-
-        val marker1Areas = markerAreaDao!!.getAreasForMarker(markerId1)
-        val marker2Areas = markerAreaDao!!.getAreasForMarker(markerId2)
-
-        val area1Markers = markerAreaDao!!.getMarkersForArea(areaId1)
-        val area3Markers = markerAreaDao!!.getMarkersForArea(areaId3)
-
-        Assert.assertThat(marker1Areas.size, IsEqual.equalTo(3))
-        Assert.assertThat(marker2Areas.size, IsEqual.equalTo(1))
-        Assert.assertThat(marker2Areas.get(0).title, IsEqual.equalTo("map"))
-
-        Assert.assertThat(area1Markers.size, IsEqual.equalTo(1))
-        Assert.assertThat(area3Markers.size, IsEqual.equalTo(2))
-        Assert.assertThat(area1Markers.get(0).title, IsEqual.equalTo("entrance"))
+        assertThat(marker1Areas.size, equalTo(3))
+        assertThat(marker2Areas.size, equalTo(1))
+        assertThat(marker2Areas[0].title, equalTo("map"))
     }
 
     @Test
     fun getAreasForMarker() {
+        val (markerId1, markerId2, areaId1, areaId2, areaId3) = insertSampleItems()
 
+        val area1Markers = markerAreaDao.getMarkersForArea(areaId1)
+        val area3Markers = markerAreaDao.getMarkersForArea(areaId3)
+
+        assertThat(area1Markers.size, equalTo(1))
+        assertThat(area3Markers.size, equalTo(2))
+        assertThat(area1Markers[0].title, equalTo("entrance"))
     }
 
+    @Test
+    fun getAreaGroupForMarker() {
+        val (markerId1) = insertSampleItems()
+
+        val areaGroupMarkers = markerAreaDao.getAreasForMarker(markerId1, GROUP_START)
+
+        assertThat(areaGroupMarkers.size, equalTo(2))
+        assertThat(areaGroupMarkers[1].title, anyOf(equalTo("explanation"), equalTo("map")))
+    }
+
+
+    private fun insertSampleItems(): List<Long> {
+        val locationId = locationDao.insert(TestUtil.location1())
+
+        val markerId1 = markerDao.insert(TestUtil.marker(locationId, "entrance"))
+        val markerId2 = markerDao.insert(TestUtil.marker(locationId, "exit"))
+
+        val areaId1 = areaDao.insert(TestUtil.area1("floor plan"))
+        val areaId2 = areaDao.insert(TestUtil.area1("explanation", group = GROUP_START))
+        val areaId3 = areaDao.insert(TestUtil.area1("map", group = GROUP_ALL))
+
+        markerAreaDao.insert(TestUtil.markerArea(markerId1, areaId1))
+        markerAreaDao.insert(TestUtil.markerArea(markerId1, areaId2))
+
+        markerAreaDao.insert(TestUtil.markerArea(markerId1, areaId3))
+        markerAreaDao.insert(TestUtil.markerArea(markerId2, areaId3))
+
+        return listOf(markerId1, markerId2, areaId1, areaId2, areaId3)
+    }
 }

@@ -31,14 +31,12 @@ interface MarkerAreaDao : BaseDao<MarkerArea> {
     fun getSize(): LiveData<Int>
 
     // Don't return LiveData
-    @Query("SELECT * FROM markers INNER JOIN marker_areas ON " +
-            "markers.u_id=marker_areas.marker_id WHERE marker_areas.area_id=:areaId")
+    @Query("SELECT * FROM markers INNER JOIN marker_areas ON markers.u_id=marker_areas.marker_id WHERE marker_areas.area_id=:areaId")
     fun getMarkersForArea(areaId: Long): List<Marker>
 
     // Don't return LIveData
-    @Query("SELECT * FROM areas INNER JOIN marker_areas ON " +
-            "areas.u_id = marker_areas.area_id WHERE marker_areas.marker_id=:markerId")
-    fun getAreasForMarker(markerId: Long): List<Area>
+    @Query("SELECT * FROM areas INNER JOIN marker_areas ON areas.u_id = marker_areas.area_id WHERE marker_areas.marker_id=:markerId AND (areas.`group`=:group OR areas.`group`=-1)")
+    fun getAreasForMarker(markerId: Long, group: Int): List<Area>
 
     @Query("DELETE FROM marker_areas")
     fun deleteAll()

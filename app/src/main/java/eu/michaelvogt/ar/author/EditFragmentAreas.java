@@ -30,6 +30,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.navigation.Navigation;
+import eu.michaelvogt.ar.author.data.AreaKt;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
 import eu.michaelvogt.ar.author.utils.AreaListAdapter;
 import eu.michaelvogt.ar.author.utils.ItemClickListener;
@@ -64,7 +65,7 @@ public class EditFragmentAreas extends Fragment implements ItemClickListener {
 
     recyclerView.setAdapter(adapter);
 
-    viewModel.getAreasForMarker(markerId).thenAccept(adapter::setAreas);
+    viewModel.getAreasForMarker(markerId, AreaKt.GROUP_ALL).thenAccept(adapter::setAreas);
   }
 
   @Override
