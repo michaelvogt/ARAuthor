@@ -23,6 +23,7 @@ import com.google.ar.sceneform.math.Quaternion
 import com.google.ar.sceneform.math.Vector3
 import eu.michaelvogt.ar.author.R
 import eu.michaelvogt.ar.author.data.*
+import java.util.*
 
 class DatabaseInitializer private constructor(
         private val locationDao: LocationDao,
@@ -30,7 +31,8 @@ class DatabaseInitializer private constructor(
         private val areaDao: AreaDao,
         private val markerAreaDao: MarkerAreaDao,
         private val visualDetailDao: VisualDetailDao,
-        private val slideDao: SlideDao) {
+        private val slideDao: SlideDao,
+        private val eventDetailDao: EventDetailDao) {
 
     fun run() {
         var locationId = insertLocation(
@@ -177,7 +179,7 @@ class DatabaseInitializer private constructor(
                 Vector3.zero(),
                 Vector3(0.415f, 0.572f, 0.001f),
                 COORDINATE_LOCAL,
-                Vector3(-0.236f, 0.01f, 0.0f),
+                Vector3(-0.436f, 0.001f, 0.0f),
                 Quaternion(Vector3(-1.0f, 0.0f, 0.0f), 90.0f),
                 Vector3.one())
 
@@ -190,11 +192,11 @@ class DatabaseInitializer private constructor(
         insertVisualDetail(areaId, TYPE_DETAIL_ALL,
                 KEY_ALLOWZOOM, true)
 
+        insertEventDetail(areaId, EVENT_HIDECONTENT, NO_VALUE)
+        insertEventDetail(areaId, EVENT_ZOOM, areaId)
 
-        //    AreaVisual.builder(areaId)
-        //          .addSendsEvent(EventDetail.EVENT_HIDECONTENT, null)
-        //          .addSendsEvent(EventDetail.EVENT_ZOOM, EventDetail.builder().setZoomId(areaId))
-        //          .addSendsEvent(EventDetail.EVENT_SETMAINCONTENT, EventDetail.builder().setTitle("Muneoka Slide Area")),
+        // TODO: replace string with uId of the area
+        insertEventDetail(areaId, EVENT_SETMAINCONTENT, "Muneoka Slide Area")
 
 
         areaId = insertAreaForMarker(markerId,
@@ -239,7 +241,7 @@ class DatabaseInitializer private constructor(
                 KEY_ISCASTINGSHADOW, true)
 
         // TODO: Display language options with this button, and set the language with these buttons instead
-        //              .addSendsEvent(Event.EVENT_SWITCHLANGUAGE, EventDetail.builder().setLanguage(AreaVisual.LANGUAGE_EN))
+        insertEventDetail(areaId, EVENT_SWITCHLANGUAGE, LANGUAGE_EN)
 
 
         areaId = insertAreaForMarker(markerId,
@@ -260,7 +262,7 @@ class DatabaseInitializer private constructor(
         insertVisualDetail(areaId, TYPE_DETAIL_ALL,
                 KEY_ISCASTINGSHADOW, true)
 
-        //              .addSendsEvent(Event.EVENT_GRABCONTENT, null)
+        insertEventDetail(areaId, EVENT_GRABCONTENT, NO_VALUE)
 
 
         areaId = insertAreaForMarker(markerId,
@@ -281,7 +283,7 @@ class DatabaseInitializer private constructor(
         insertVisualDetail(areaId, TYPE_DETAIL_ALL,
                 KEY_ISCASTINGSHADOW, true)
 
-        //              .addSendsEvent(Event.EVENT_SCALE, EventDetail.builder().setScaleValues(Arrays.asList(0.5f, 1f, 3f)))
+        insertEventDetail(areaId, EVENT_SCALE, Arrays.asList(0.5f, 1f, 3f))
 
 
         areaId = insertAreaForMarker(markerId,
@@ -305,18 +307,32 @@ class DatabaseInitializer private constructor(
                 null,
                 "Image Slide 1")
 
-        //          .addSlide(new Slide(Slide.Companion.getTYPE_IMAGE(),
-        //              "Touristar/iwamiginzan/muneokake/infoboard/images/igk_000_0693.jpg",
-        //              null,
-        //              "Image Slide 2"))
-        //          .addSlide(new Slide(Slide.Companion.getTYPE_VR(),
-        //              "Touristar/iwamiginzan/muneokake/infoboard/images/PANO_20180826_115346.jpg",
-        //              null,
-        //              "Panorama Slide"))
-        //          .addSlide(new Slide(Slide.Companion.getTYPE_COMPARISON(),
-        //              "Touristar/iwamiginzan/muneokake/infoboard/images/compare_new_color.png",
-        //              Arrays.asList("Touristar/iwamiginzan/muneokake/infoboard/images/compare_old_color.png"),
-        //              "Old New Comparision")),
+        insertVisualDetail(areaId, TYPE_DETAIL_ALL,
+                KEY_SLIDES,
+                1,
+                TYPE_IMAGE,
+                "Touristar/iwamiginzan/muneokake/infoboard/images/igk_000_0693.jpg",
+                null,
+                "Image Slide 2"
+        )
+
+        insertVisualDetail(areaId, TYPE_DETAIL_ALL,
+                KEY_SLIDES,
+                2,
+                TYPE_IMAGE,
+                "Touristar/iwamiginzan/muneokake/infoboard/images/PANO_20180826_115346.jpg",
+                null,
+                "Panorama Slide"
+        )
+
+        insertVisualDetail(areaId, TYPE_DETAIL_ALL,
+                KEY_SLIDES,
+                3,
+                TYPE_IMAGE,
+                "Touristar/iwamiginzan/muneokake/infoboard/images/compare_new_color.png",
+                Arrays.asList("Touristar/iwamiginzan/muneokake/infoboard/images/compare_old_color.png"),
+                "Old New Comparision"
+        )
 
 
         insertMarkerForLocation(locationId, "金森家")
@@ -544,13 +560,17 @@ class DatabaseInitializer private constructor(
         slideDao.insert(Slide(detailId, valueType, order, value, secondaryValues, description))
     }
 
+    private fun insertEventDetail(areaId: Long, eventType: Int, eventValue: Any): Long {
+        return eventDetailDao.insert(EventDetail(areaId, eventType, TYPE_EVENT_ALL, eventValue))
+    }
+
     companion object {
         fun runner(
                 locationDao: LocationDao, markerDao: MarkerDao, areaDao: AreaDao,
                 markerAreaDao: MarkerAreaDao, visualDetailDao: VisualDetailDao,
-                slideDao: SlideDao): DatabaseInitializer {
+                slideDao: SlideDao, eventDetailDao: EventDetailDao): DatabaseInitializer {
             return DatabaseInitializer(
-                    locationDao, markerDao, areaDao, markerAreaDao, visualDetailDao, slideDao)
+                    locationDao, markerDao, areaDao, markerAreaDao, visualDetailDao, slideDao, eventDetailDao)
         }
     }
 }

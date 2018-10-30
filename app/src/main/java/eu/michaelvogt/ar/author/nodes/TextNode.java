@@ -55,6 +55,10 @@ public class TextNode extends AreaNode implements EventHandler {
     return new TextNode(context, area);
   }
 
+  public TextNode setRenderPriority(int renderPriority) {
+    this.renderPriority = renderPriority;
+    return this;
+  }
 
   public CompletionStage<Node> build() {
     CompletableFuture<Node> future = new CompletableFuture<>();

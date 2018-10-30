@@ -20,7 +20,6 @@ package eu.michaelvogt.ar.author.utils;
 
 import android.graphics.Bitmap;
 import android.os.Environment;
-import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -34,7 +33,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.os.Environment.getExternalStorageDirectory;
-import static android.support.constraint.Constraints.TAG;
 
 public class FileUtils {
   public static final String MARKERS_PATH = "/Touristar/Markers/";

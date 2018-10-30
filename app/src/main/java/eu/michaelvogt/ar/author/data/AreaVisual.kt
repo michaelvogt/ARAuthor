@@ -62,36 +62,6 @@ class AreaVisual {
     private val MATERIAL_FADELEFTWIDTH = "fadeLeftWidth"
     private val MATERIAL_FADERIGHTWIDTH = "fadeRightWidth"
 
-    //  public AreaVisual setImagePath(@NonNull String path) {
-    //    if (!path.endsWith("jpg") && !path.endsWith(".png"))
-    //      throw new AssertionError("Only .png and .jpg files are supported");
-    //
-    //    details.add(new VisualDetail(area.getUid(), VisualDetail.TYPE_DETAIL_ALL, KEY_IMAGEPATH, path));
-    //    return this;
-    //  }
-    //
-    //  public AreaVisual setSecondaryImagePath(@NonNull String path) {
-    //    if (!path.endsWith("jpg") && !path.endsWith(".png"))
-    //      throw new AssertionError("Only .png and .jpg files are supported");
-    //
-    //    details.add(new VisualDetail(area.getUid(), VisualDetail.TYPE_DETAIL_ALL, KEY_SECONDARYIMAGEPATH, path));
-    //    return this;
-    //  }
-
-    protected var area: Area? = null
-        private set
-    private var details: SparseArray<VisualDetail>? = null
-    private var events: SparseArray<EventDetail>? = null
-
-    val title: String
-        get() = area!!.title
-
-    val objectType: Int
-        get() = area!!.objectType
-
-    val usageType: Int
-        get() = area!!.usageType
-
     constructor(area: Area, details: List<VisualDetail>, events: List<EventDetail>) {
         this.area = area
         this.details = sparsifyDetails(details)
@@ -109,41 +79,79 @@ class AreaVisual {
 
     constructor(areaVisual: AreaVisual) {
         this.area = areaVisual.area
-        this.details = areaVisual.getDetails()
-        this.events = areaVisual.getEvents()
+        this.details = areaVisual.details
+        this.events = areaVisual.events
     }
 
-    fun getResource() : Int = area!!.resource
+    //  public AreaVisual setImagePath(@NonNull String path) {
+    //    if (!path.endsWith("jpg") && !path.endsWith(".png"))
+    //      throw new AssertionError("Only .png and .jpg files are supported");
+    //
+    //    details.add(new VisualDetail(area.getUid(), VisualDetail.TYPE_DETAIL_ALL, KEY_IMAGEPATH, path));
+    //    return this;
+    //  }
+    //
+    //  public AreaVisual setSecondaryImagePath(@NonNull String path) {
+    //    if (!path.endsWith("jpg") && !path.endsWith(".png"))
+    //      throw new AssertionError("Only .png and .jpg files are supported");
+    //
+    //    details.add(new VisualDetail(area.getUid(), VisualDetail.TYPE_DETAIL_ALL, KEY_SECONDARYIMAGEPATH, path));
+    //    return this;
+    //  }
+    var area: Area
+        private set
 
-    fun getCoordType(): Int = area!!.coordType
+    val title: String
+        get() = area.title
 
-    fun getPosition(): Vector3 = area!!.position
+    val objectType: Int
+        get() = area.objectType
 
-    fun getZeroPoint(): Vector3 = area!!.zeroPoint
+    val usageType: Int
+        get() = area.usageType
 
-    fun getRotation(): Quaternion = area!!.rotation
+    val resource: Int
+        get() = area.resource
 
-    fun getSize(): Vector3 = area!!.size
+    val coordType: Int
+        get() = area.coordType
 
-    fun getScale(): Vector3 = area!!.scale
+    val position: Vector3
+        get() = area.position
 
-    fun getDetails(): SparseArray<VisualDetail> = details!!.clone()
+    val zeroPoint: Vector3
+        get() = area.zeroPoint
 
-    fun getEvents(): SparseArray<EventDetail> = events!!.clone()
+    val rotation: Quaternion
+        get() = area.rotation
 
-    fun hasDetail(type: Int): Boolean = details!!.indexOfKey(type) >= 0
+    val size: Vector3
+        get() = area.size
+
+    val scale: Vector3
+        get() = area.scale
+
+    var details: SparseArray<VisualDetail>
+        get() = details.clone()
+        private set
+
+    var events: SparseArray<EventDetail>
+        get() = events.clone()
+        private set
+
+    fun hasDetail(type: Int): Boolean = details.indexOfKey(type) >= 0
 
     fun getDetail(type: Int): VisualDetail? {
-        return details!!.get(type)
+        return details.get(type)
     }
+
+    fun hasEvent(): Boolean = events.size() > 0
 
     fun getDetailValue(type: Int, orDefault: Any): Any {
         return if (hasDetail(type)) getDetail(type)!!.anyValue else orDefault
     }
 
     fun getDetailValue(type: Int): Any? = getDetail(type)?.anyValue
-
-    fun hasEvent(): Boolean = events!!.size() > 0
 
     private val value = { key: Int -> getDetailValue(key, 0.0f) as Float }
     fun apply(material: Material) {
@@ -176,14 +184,14 @@ class AreaVisual {
         fun getDefaultArea(backgroundHeight: Float, backgroundWidth: Float): AreaVisual {
             return AreaVisual(TYPE_DEFAULT, KIND_CONTENT, DEFAULTAREATITLE, R.raw.default_model,
                     Vector3.zero(), Vector3.one(), COORDINATE_LOCAL, Vector3(-backgroundWidth / 2, 0f, -backgroundHeight / 2),
-            Quaternion(Vector3(0f, 1f, 0f), 180f), Vector3.one())
+                    Quaternion(Vector3(0f, 1f, 0f), 180f), Vector3.one())
         }
 
         fun getBackgroundArea(marker: Marker, path: String): AreaVisual {
             val areaVisual = AreaVisual(TYPE_BACKGROUNDONIMAGE, KIND_BACKGROUND, BACKGROUNDAREATITLE,
                     0, marker.zeroPoint, marker.size, COORDINATE_LOCAL, Vector3(0f, 0.1f, 0f),
                     Quaternion(Vector3.zero(), 0f), Vector3.one())
-            areaVisual.details!!.put(KEY_IMAGEPATH, VisualDetail(0, KEY_IMAGEPATH, 0, path as Any))
+            areaVisual.details.put(KEY_IMAGEPATH, VisualDetail(0, KEY_IMAGEPATH, 0, path as Any))
             return areaVisual
         }
     }

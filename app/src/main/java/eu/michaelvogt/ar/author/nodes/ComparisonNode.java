@@ -37,7 +37,6 @@ import java.util.concurrent.ExecutionException;
 
 import eu.michaelvogt.ar.author.data.AreaVisual;
 import eu.michaelvogt.ar.author.data.VisualDetailKt;
-import eu.michaelvogt.ar.author.utils.AreaNodeBuilder;
 import eu.michaelvogt.ar.author.utils.FileUtils;
 
 public class ComparisonNode extends AreaNode {
@@ -61,7 +60,7 @@ public class ComparisonNode extends AreaNode {
 
     CompletableFuture.allOf(futurePrim3Texture, futureSecTexture)
         .thenAccept(aVoid -> ModelRenderable.builder()
-        .setSource(context, AreaNodeBuilder.COMPARISON_MATERIAL_TEMP)
+            .setSource(context, AreaNode.COMPARISON_MATERIAL_TEMP)
         .build()
         .thenAccept(temp -> {
           // TODO: Hack - fix when custom material can be created #196
@@ -94,7 +93,7 @@ public class ComparisonNode extends AreaNode {
           future.complete(this);
         })
         .exceptionally(throwable -> {
-          Log.d(TAG, "Could not create model " + AreaNodeBuilder.COMPARISON_MATERIAL_TEMP, throwable);
+          Log.d(TAG, "Could not create model " + AreaNode.COMPARISON_MATERIAL_TEMP, throwable);
               future.completeExceptionally(throwable);
           return null;
         }));

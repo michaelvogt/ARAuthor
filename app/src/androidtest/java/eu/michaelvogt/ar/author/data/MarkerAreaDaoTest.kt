@@ -102,8 +102,8 @@ class MarkerAreaDaoTest : DaoTest() {
     fun getMarkersForArea() {
         val (markerId1, markerId2) = insertSampleItems()
 
-        val marker1Areas = markerAreaDao.getAreasForMarker(markerId1, GROUP_ALL)
-        val marker2Areas = markerAreaDao.getAreasForMarker(markerId2, GROUP_ALL)
+        val marker1Areas = markerAreaDao.getAreasForMarker(markerId1)
+        val marker2Areas = markerAreaDao.getAreasForMarker(markerId2)
 
         assertThat(marker1Areas.size, equalTo(3))
         assertThat(marker2Areas.size, equalTo(1))
@@ -126,7 +126,7 @@ class MarkerAreaDaoTest : DaoTest() {
     fun getAreaGroupForMarker() {
         val (markerId1) = insertSampleItems()
 
-        val areaGroupMarkers = markerAreaDao.getAreasForMarker(markerId1, GROUP_START)
+        val areaGroupMarkers = markerAreaDao.getAreaGroupForMarker(markerId1, GROUP_START)
 
         assertThat(areaGroupMarkers.size, equalTo(2))
         assertThat(areaGroupMarkers[1].title, anyOf(equalTo("explanation"), equalTo("map")))

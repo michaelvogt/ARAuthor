@@ -18,6 +18,7 @@
 
 package eu.michaelvogt.ar.author;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -32,6 +33,7 @@ import com.google.ar.core.Plane;
 import com.google.ar.core.TrackingState;
 
 import androidx.navigation.Navigation;
+import eu.michaelvogt.ar.author.data.AuthorViewModel;
 
 public class MarkerPreviewFragment extends PreviewFragment {
   private static final String TAG = ImagePreviewFragment.class.getSimpleName();
@@ -52,11 +54,8 @@ public class MarkerPreviewFragment extends PreviewFragment {
     arFragment.hasMarker = true;
     arFragment.setOnTapArPlaneListener(this::onTapArPlane);
 
-    Bundle bundle = new Bundle();
-    bundle.putLong("edit_index", getArguments().getLong("marker_id"));
-
     view.findViewById(R.id.listmarker_fab).setOnClickListener(
-        Navigation.createNavigateOnClickListener(R.id.editFragment, bundle)
+        Navigation.createNavigateOnClickListener(R.id.editFragment)
     );
   }
 
@@ -65,8 +64,10 @@ public class MarkerPreviewFragment extends PreviewFragment {
       if ((plane.getTrackingState() == TrackingState.TRACKING)) {
         isSceneDropped = true;
 
+        AuthorViewModel viewModel = ViewModelProviders.of(getActivity()).get(AuthorViewModel.class);
         Anchor anchor = hitResult.createAnchor();
-        viewModel.getMarker(getArguments().getLong("marker_id")).observe(this,
+
+        this.viewModel.getMarker(viewModel.getCurrentMarkerId()).observe(this,
             marker -> buildMarkerScene(anchor, marker, marker.getSize().x, marker.getSize().z));
       } else if (plane.getTrackingState() == TrackingState.STOPPED) {
         isSceneDropped = false;

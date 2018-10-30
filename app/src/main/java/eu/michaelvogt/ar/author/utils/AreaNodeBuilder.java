@@ -28,7 +28,6 @@ import com.google.ar.sceneform.rendering.Renderable;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
-import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.AreaVisual;
 import eu.michaelvogt.ar.author.data.AreaVisualKt;
 import eu.michaelvogt.ar.author.data.VisualDetailKt;
@@ -40,11 +39,6 @@ import eu.michaelvogt.ar.author.nodes.TextNode;
 
 public class AreaNodeBuilder {
   private static final String TAG = AreaNodeBuilder.class.getSimpleName();
-
-  // TODO: Remove when Sceneform supports creation of custom materials #196
-  public static final int CUSTOM_MATERIAL_TEMP = R.raw.default_model;
-  public static final int SLIDE_MATERIAL_TEMP = R.raw.slide;
-  public static final int COMPARISON_MATERIAL_TEMP = R.raw.compare;
 
   private final Context context;
   private final AreaVisual areaVisual;
@@ -80,7 +74,7 @@ public class AreaNodeBuilder {
       case AreaVisualKt.TYPE_INTERACTIVEPANEL:
         return null;
       case AreaVisualKt.TYPE_TEXTONIMAGE:
-        return TextNode.builder(context, areaVisual).build();
+        return TextNode.builder(context, areaVisual).setRenderPriority(5).build();
       case AreaVisualKt.TYPE_IMAGEONIMAGE:
         return ImageNode.builder(context, areaVisual).build();
       case AreaVisualKt.TYPE_ROTATIONBUTTON:

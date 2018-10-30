@@ -29,9 +29,6 @@
             android:id="@+id/action_list_markers"
             app:destination="@id/markerlistFragment" />
         <argument
-            android:name="drop_marker_id"
-            android:defaultValue="0" />
-        <argument
             android:name="plane_finding_mode"
             android:defaultValue="HORIZONTAL_AND_VERTICAL" />
         <argument
@@ -73,17 +70,14 @@
             <action
                 android:id="@+id/action_list_markers"
                 app:destination="@id/markerlistFragment" />
-            <argument
-                android:name="edit_index"
-                android:defaultValue="-1" />
-<!--
+            <!--
             <action
                 android:id="@+id/action_crop_marker_image"
                 app:destination="@id/cropFragment" />
 -->
             <action
                 android:id="@+id/action_edit_area_placement"
-                app:destination="@id/areaPreviewFragment" />
+                app:destination="@+id/areaEditFragment" />
             <action
                 android:id="@+id/action_marker_preview"
                 app:destination="@id/markerPreviewFragment" />
@@ -94,17 +88,14 @@
             android:label="fragment_area_edit"
             tools:layout="@layout/fragment_area_edit">
             <action
-                android:id="@+id/action_edit_area_placement"
+                android:id="@+id/action_test_area_placement"
                 app:destination="@id/areaPreviewFragment" />
-            <argument
-                android:name="area_id"
-                android:defaultValue="-1" />
             <argument
                 android:name="area_edit_translucency"
                 android:defaultValue="1" />
-            <argument
-                android:name="marker_id"
-                android:defaultValue="-1" />
+            <action
+                android:id="@+id/action_edit_marker"
+                app:destination="@id/editFragment" />
         </fragment>
         <fragment
             android:id="@+id/areaPreviewFragment"
@@ -113,13 +104,7 @@
             tools:layout="@layout/fragment_areapreview">
             <action
                 android:id="@+id/action_edit_marker"
-                app:destination="@id/editFragment" />
-            <argument
-                android:name="marker_id"
-                android:defaultValue="-1" />
-            <argument
-                android:name="area_id"
-                android:defaultValue="-1" />
+                app:destination="@+id/areaEditFragment" />
             <action
                 android:id="@+id/action_edit_area"
                 app:destination="@id/areaEditFragment" />
@@ -146,9 +131,6 @@
             <action
                 android:id="@+id/action_edit_marker"
                 app:destination="@id/editFragment" />
-            <argument
-                android:name="drop_marker_id"
-                android:defaultValue="0" />
             <argument
                 android:name="plane_finding_mode"
                 android:defaultValue="HORIZONTAL_AND_VERTICAL" />

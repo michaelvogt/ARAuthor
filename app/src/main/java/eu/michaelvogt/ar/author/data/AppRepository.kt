@@ -67,6 +67,18 @@ class AppRepository internal constructor(db: AppDatabase?) {
         doAsync { areaDao.insert(area) }
     }
 
+    fun update(location: Location) {
+        doAsync { locationDao.update(location) }
+    }
+
+    fun update(marker: Marker) {
+        doAsync { markerDao.update(marker) }
+    }
+
+    fun update(area: Area) {
+        doAsync { areaDao.update(area) }
+    }
+
     internal fun getLocation(uId: Long): LiveData<Location> {
         return locationDao.get(uId)
     }
@@ -75,14 +87,6 @@ class AppRepository internal constructor(db: AppDatabase?) {
     // Marker
     internal fun getMarker(uId: Long): LiveData<Marker> {
         return markerDao.get(uId)
-    }
-
-    fun update(location: Location) {
-        doAsync { locationDao.update(location) }
-    }
-
-    fun update(marker: Marker) {
-        doAsync { markerDao.update(marker) }
     }
 
     fun allMarkers(): LiveData<List<Marker>> {
@@ -108,7 +112,10 @@ class AppRepository internal constructor(db: AppDatabase?) {
     }
 
     fun getAreasForMarker(markerId: Long, group: Int): CompletableFuture<List<Area>> {
-        return CompletableFuture.supplyAsync { markerAreaDao.getAreasForMarker(markerId, group) }
+        return when (group) {
+            -1 -> CompletableFuture.supplyAsync { markerAreaDao.getAreasForMarker(markerId) }
+            else -> CompletableFuture.supplyAsync { markerAreaDao.getAreaGroupForMarker(markerId, group) }
+        }
     }
 
     // AreaVisual
@@ -123,7 +130,7 @@ class AppRepository internal constructor(db: AppDatabase?) {
         val areaVisuals = ArrayList<AreaVisual>()
 
         return CompletableFuture.supplyAsync {
-            val areas = markerAreaDao.getAreasForMarker(markerId, group)
+            val areas = markerAreaDao.getAreaGroupForMarker(markerId, group)
             areas.forEach { areaVisuals.add(setupAreaVisual(it)) }
 
             areaVisuals

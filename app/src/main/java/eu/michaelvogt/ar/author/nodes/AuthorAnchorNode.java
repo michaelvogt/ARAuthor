@@ -92,7 +92,7 @@ public class AuthorAnchorNode extends AnchorNode {
 
         SparseArray<EventDetail> eventDetails = eventNode.getEventDetails();
         for (int index = 0; index < eventDetails.size(); index++) {
-          EventDetail eventDetail = eventDetails.get(index);
+          EventDetail eventDetail = eventDetails.valueAt(index);
           switch (eventDetail.getType()) {
             case EventDetailKt.EVENT_HIDECONTENT:
               handleHideContent();
@@ -147,14 +147,18 @@ public class AuthorAnchorNode extends AnchorNode {
 
   private void handleZoom(EventDetail eventDetail) {
     AuthorViewModel viewModel = ViewModelProviders.of((FragmentActivity) context).get(AuthorViewModel.class);
-    int areaId = (int) eventDetail.getAnyValue();
+    long areaId = (long) eventDetail.getAnyValue();
     viewModel.getAreaVisual(areaId).thenAccept(areaVisual -> {
       Node background = findInHierarchy(node -> node.getName().equals(AreaVisualKt.BACKGROUNDAREATITLE));
 
       AreaNodeBuilder.builder(context, areaVisual)
           .setScene(getScene())
           .build()
-          .thenAccept(node -> node.setParent(background));
+          .thenAccept(node -> node.setParent(background))
+          .exceptionally(throwable -> {
+            Log.e(TAG, "Unable to zoom area.", throwable);
+            return null;
+          });
     });
   }
 

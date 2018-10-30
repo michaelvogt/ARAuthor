@@ -95,11 +95,10 @@ public class AreaPreviewFragment extends Fragment {
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     AuthorViewModel viewModel = ViewModelProviders.of(getActivity()).get(AuthorViewModel.class);
-    // TODO: Make sure propper db uid is provided
-    int markerId = getArguments().getInt("marker_id");
+    long markerId = viewModel.getCurrentMarkerId();
     viewModel.getMarker(markerId).observe(this, marker -> editMarker = marker);
 
-    int areaId = getArguments().getInt("area_id");
+    long areaId = viewModel.getCurrentAreaId();
     viewModel.getAreaVisual(areaId)
         .thenAccept(areaVisual -> editArea = areaVisual);
 
@@ -114,8 +113,8 @@ public class AreaPreviewFragment extends Fragment {
     View editButton = view.findViewById(R.id.area_edit);
     editButton.setOnClickListener(event -> {
       Bundle bundle = new Bundle();
-      bundle.putInt("marker_id", markerId);
-      bundle.putInt("area_id", areaId);
+      bundle.putLong("marker_id", markerId);
+      bundle.putLong("area_id", areaId);
       bundle.putInt("area_edit_translucency", useTranslucency ? 1 : 0);
       Navigation.findNavController(view).navigate(R.id.action_edit_area, bundle);
     });

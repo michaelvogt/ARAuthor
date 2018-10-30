@@ -32,7 +32,6 @@ import java.util.concurrent.CompletionStage;
 import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.AreaVisual;
 import eu.michaelvogt.ar.author.data.VisualDetailKt;
-import eu.michaelvogt.ar.author.utils.AreaNodeBuilder;
 import eu.michaelvogt.ar.author.utils.FileUtils;
 import eu.michaelvogt.ar.author.utils.Slider;
 
@@ -61,7 +60,7 @@ public class ViewNode extends Node {
 
     ModelRenderable.builder()
         // Keep default model as resource
-        .setSource(context, AreaNodeBuilder.SLIDE_MATERIAL_TEMP)
+        .setSource(context, AreaNode.SLIDE_MATERIAL_TEMP)
         .build()
         .thenAccept(temp -> {
           // TODO: Hack - fix when custom material can be created #196
@@ -115,7 +114,7 @@ public class ViewNode extends Node {
               });
         })
         .exceptionally(throwable -> {
-          Log.d(TAG, "Could not create model " + AreaNodeBuilder.SLIDE_MATERIAL_TEMP, throwable);
+          Log.d(TAG, "Could not create model " + AreaNode.SLIDE_MATERIAL_TEMP, throwable);
           return null;
         });
 

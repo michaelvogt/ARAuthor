@@ -36,6 +36,7 @@ import eu.michaelvogt.ar.author.utils.MarkerListAdapter;
 
 public class MarkerListFragment extends Fragment implements ItemClickListener {
   private View view;
+  private AuthorViewModel viewModel;
 
   public MarkerListFragment() {/* Required empty public constructor*/}
 
@@ -52,7 +53,7 @@ public class MarkerListFragment extends Fragment implements ItemClickListener {
 
     this.view = view;
 
-    AuthorViewModel viewModel = ViewModelProviders.of(getActivity()).get(AuthorViewModel.class);
+    viewModel = ViewModelProviders.of(getActivity()).get(AuthorViewModel.class);
     long locationId = viewModel.getCurrentLocationId();
 
     RecyclerView recyclerView = view.findViewById(R.id.marker_list);
@@ -64,7 +65,7 @@ public class MarkerListFragment extends Fragment implements ItemClickListener {
     recyclerView.setAdapter(adapter);
 
     viewModel.getMarkersForLocation(locationId, true)
-        .observe(this, markers -> adapter.setMarkers(markers)
+        .observe(this, adapter::setMarkers
     );
 
     adapter.setItemClickListener(this);
@@ -82,8 +83,7 @@ public class MarkerListFragment extends Fragment implements ItemClickListener {
 
   @Override
   public void onItemClicked(long uId) {
-    Bundle bundle = new Bundle();
-    bundle.putLong("edit_index", uId);
-    Navigation.findNavController(view).navigate(R.id.action_edit_marker, bundle);
+    viewModel.setCurrentMarkerId(uId);
+    Navigation.findNavController(view).navigate(R.id.action_edit_marker);
   }
 }

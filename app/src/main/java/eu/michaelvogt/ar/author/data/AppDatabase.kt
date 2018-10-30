@@ -65,7 +65,7 @@ abstract class AppDatabase : RoomDatabase() {
             markerDao.deleteAll()
             locationDao.deleteAll()
 
-            DatabaseInitializer.runner(locationDao, markerDao, areaDao, markerAreaDao, visualDetailDao, slideDao).run()
+            DatabaseInitializer.runner(locationDao, markerDao, areaDao, markerAreaDao, visualDetailDao, slideDao, eventDetailDao).run()
 
             return null
         }

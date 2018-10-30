@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,10 +34,13 @@ import com.google.ar.sceneform.math.Quaternion;
 import com.google.ar.sceneform.math.Vector3;
 
 import androidx.navigation.Navigation;
+import eu.michaelvogt.ar.author.data.Area;
 import eu.michaelvogt.ar.author.data.AreaVisual;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
 
 public class AreaEditFragment extends Fragment {
+  private static final String TAG = AreaEditFragment.class.getSimpleName();
+
   private Switch useTranslucentSwitch;
 
   private EditText locationX;
@@ -50,8 +54,9 @@ public class AreaEditFragment extends Fragment {
   private EditText scaleY;
   private EditText scaleZ;
 
+  private AuthorViewModel viewModel;
+
   public AreaEditFragment() {
-    int a = 0;
   }
 
   @Override
@@ -65,31 +70,15 @@ public class AreaEditFragment extends Fragment {
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
 
-    AuthorViewModel viewModel = ViewModelProviders.of(getActivity()).get(AuthorViewModel.class);
-    int markerId = getArguments().getInt("marker_id");
+    viewModel = ViewModelProviders.of(getActivity()).get(AuthorViewModel.class);
 
-    // TODO: Make sure proper db uid is provided
-    long areaId = getArguments().getLong("area_id");
-    viewModel.getAreaVisual( areaId)
-        .thenAccept(areaVisual -> finishSetup(view, areaVisual));
-
-    view.findViewById(R.id.areaedit_save).setOnClickListener(event -> {
-      Vector3 location = new Vector3(asFloat(locationX), asFloat(locationY), asFloat(locationZ));
-      Quaternion rotation = new Quaternion(
-          asFloat(rotationX), asFloat(rotationY), asFloat(rotationZ), asFloat(rotationW));
-      Vector3 scale = new Vector3(asFloat(scaleX), asFloat(scaleY), asFloat(scaleZ));
-
-      // TODO: Implement update
-//      editArea.setPosition(location);
-//      editArea.setRotation(rotation);
-//      editArea.setScale(scale);
-
-      Bundle bundle = new Bundle();
-      bundle.putInt("marker_id", getArguments().getInt("marker_id"));
-      bundle.putInt("area_id", getArguments().getInt("area_id"));
-      bundle.putInt("area_edit_translucency", useTranslucentSwitch.isChecked() ? 1 : 0);
-      Navigation.findNavController(view).navigate(R.id.action_edit_area_placement, bundle);
-    });
+    long areaId = viewModel.getCurrentAreaId();
+    viewModel.getAreaVisual(areaId)
+        .thenAccept(areaVisual -> this.getActivity().runOnUiThread(() -> finishSetup(view, areaVisual)))
+        .exceptionally(throwable -> {
+          Log.e(TAG, "Unable to create area and set data.", throwable);
+          return null;
+        });
   }
 
   private void finishSetup(View view, AreaVisual editArea) {
@@ -118,13 +107,46 @@ public class AreaEditFragment extends Fragment {
     rotationW.setText(String.valueOf(editArea.getRotation().w));
 
     scaleX = view.findViewById(R.id.areaedit_xs_edit);
-    scaleX.setText(String.valueOf(((Vector3) editArea.getScale()).x));
+    scaleX.setText(String.valueOf(editArea.getScale().x));
 
     scaleY = view.findViewById(R.id.areaedit_ys_edit);
-    scaleY.setText(String.valueOf(((Vector3) editArea.getScale()).y));
+    scaleY.setText(String.valueOf(editArea.getScale().y));
 
     scaleZ = view.findViewById(R.id.areaedit_zs_edit);
-    scaleZ.setText(String.valueOf(((Vector3) editArea.getScale()).z));
+    scaleZ.setText(String.valueOf(editArea.getScale().z));
+
+    view.findViewById(R.id.areaedit_save).setOnClickListener(v -> handleSave(v, editArea));
+    view.findViewById(R.id.areaedit_cancel).setOnClickListener(this::handleCancel);
+    view.findViewById(R.id.areaedit_test).setOnClickListener(this::handleTest);
+  }
+
+  private void handleCancel(View view) {
+    Bundle bundle = new Bundle();
+    bundle.putInt("area_edit_translucency", useTranslucentSwitch.isChecked() ? 1 : 0);
+    Navigation.findNavController(view).navigate(R.id.action_edit_marker, bundle);
+  }
+
+  private void handleTest(View view) {
+    Bundle bundle = new Bundle();
+    bundle.putInt("area_edit_translucency", useTranslucentSwitch.isChecked() ? 1 : 0);
+    Navigation.findNavController(view).navigate(R.id.action_test_area_placement, bundle);
+  }
+
+  private void handleSave(View view, AreaVisual editArea) {
+    Vector3 location = new Vector3(asFloat(locationX), asFloat(locationY), asFloat(locationZ));
+    Quaternion rotation = new Quaternion(
+        asFloat(rotationX), asFloat(rotationY), asFloat(rotationZ), asFloat(rotationW));
+    Vector3 scale = new Vector3(asFloat(scaleX), asFloat(scaleY), asFloat(scaleZ));
+
+    Area area = editArea.getArea();
+    area.setPosition(location);
+    area.setRotation(rotation);
+    area.setScale(scale);
+    viewModel.updateArea(area);
+
+    Bundle bundle = new Bundle();
+    bundle.putInt("area_edit_translucency", useTranslucentSwitch.isChecked() ? 1 : 0);
+    Navigation.findNavController(view).navigate(R.id.action_edit_marker, bundle);
   }
 
   private float asFloat(EditText text) {

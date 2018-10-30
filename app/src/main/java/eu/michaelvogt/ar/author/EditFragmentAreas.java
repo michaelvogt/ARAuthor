@@ -39,6 +39,7 @@ public class EditFragmentAreas extends Fragment implements ItemClickListener {
   private View view;
 
   private long markerId;
+  private AuthorViewModel viewModel;
 
   public EditFragmentAreas() {/* Required empty public constructor*/}
 
@@ -53,7 +54,7 @@ public class EditFragmentAreas extends Fragment implements ItemClickListener {
     super.onViewCreated(view, savedInstanceState);
 
     this.view = view;
-    AuthorViewModel viewModel = ViewModelProviders.of(getActivity()).get(AuthorViewModel.class);
+    viewModel = ViewModelProviders.of(getActivity()).get(AuthorViewModel.class);
 
     RecyclerView recyclerView = view.findViewById(R.id.areas_list);
     recyclerView.setHasFixedSize(true);
@@ -69,11 +70,9 @@ public class EditFragmentAreas extends Fragment implements ItemClickListener {
   }
 
   @Override
-  public void onItemClicked(long position) {
-    Bundle bundle = new Bundle();
-    bundle.putLong("marker_id", markerId);
-    bundle.putLong("area_id", position);
-    Navigation.findNavController(view).navigate(R.id.action_edit_area_placement, bundle);
+  public void onItemClicked(long uId) {
+    viewModel.setCurrentAreaId(uId);
+    Navigation.findNavController(view).navigate(R.id.action_edit_area_placement);
   }
 
   private void setMarkerId(long markerId) {

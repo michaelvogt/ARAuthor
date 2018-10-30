@@ -26,7 +26,11 @@ import java.util.concurrent.CompletableFuture
 class AuthorViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = AppRepository(AppDatabase.getDatabase(application.applicationContext))
 
-    var currentLocationId: Long = 0
+    var currentLocationId: Long = -1
+
+    var currentMarkerId: Long = -1
+
+    var currentAreaId: Long = -1
 
     var markersCache: List<Marker>? = null
 
@@ -70,4 +74,6 @@ class AuthorViewModel(application: Application) : AndroidViewModel(application) 
 
     fun getAreaVisualsForMarker(uId: Long, group: Int = GROUP_ALL):
             CompletableFuture<ArrayList<AreaVisual>> = repository.getAreaVisualsForMarker(uId, group)
+
+    fun updateArea(area: Area) = repository.update(area)
 }

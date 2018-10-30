@@ -46,7 +46,6 @@ import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.AreaVisual;
 import eu.michaelvogt.ar.author.data.EventDetail;
 import eu.michaelvogt.ar.author.data.VisualDetailKt;
-import eu.michaelvogt.ar.author.utils.AreaNodeBuilder;
 import eu.michaelvogt.ar.author.utils.FileUtils;
 
 public class ImageNode extends AreaNode implements EventSender {
@@ -110,7 +109,7 @@ public class ImageNode extends AreaNode implements EventSender {
 
     futureTexture.thenAccept(texture -> ModelRenderable.builder()
         // Keep default model as resource
-        .setSource(context, AreaNodeBuilder.CUSTOM_MATERIAL_TEMP)
+        .setSource(context, AreaNode.CUSTOM_MATERIAL_TEMP)
         .build()
         .thenAccept(temp -> {
           // TODO: Hack - fix when custom material can be created #196
@@ -135,7 +134,7 @@ public class ImageNode extends AreaNode implements EventSender {
           future.complete(this);
         })
         .exceptionally(throwable -> {
-          Log.d(TAG, "Could not create model " + AreaNodeBuilder.CUSTOM_MATERIAL_TEMP, throwable);
+          Log.d(TAG, "Could not create model " + AreaNode.CUSTOM_MATERIAL_TEMP, throwable);
           return null;
         }));
 

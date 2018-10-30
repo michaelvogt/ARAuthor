@@ -42,7 +42,7 @@ public class EditFragment extends Fragment {
   private static final String TAG = EditFragment.class.getSimpleName();
   private static final int NUM_TABS = 3;
 
-  private long editUId;
+  private long editMarkerId;
   private Marker editMarker;
   private ImageView markerImage;
   private AuthorViewModel viewModel;
@@ -60,10 +60,10 @@ public class EditFragment extends Fragment {
     super.onViewCreated(view, savedInstanceState);
 
     viewModel = ViewModelProviders.of(getActivity()).get(AuthorViewModel.class);
-    editUId = getArguments().getLong("edit_index");
+    editMarkerId = viewModel.getCurrentMarkerId();
     Marker cropMarker = viewModel.getCropMarker();
 
-    if (editUId == -1) {
+    if (editMarkerId == -1) {
       editMarker = new Marker();
       if (cropMarker != null) {
         editMarker = cropMarker;
@@ -71,8 +71,8 @@ public class EditFragment extends Fragment {
       }
       finishSetup(view);
     } else {
-      viewModel.getMarker(editUId).observe(this, marker -> {
-        editMarker = new Marker(marker);
+      viewModel.getMarker(editMarkerId).observe(this, marker -> {
+        editMarker = marker;
         finishSetup(view);
       });
     }
@@ -90,26 +90,28 @@ public class EditFragment extends Fragment {
     tabPager.setAdapter(tabAdapter);
 
     view.findViewById(R.id.button_save).setOnClickListener(this::handleSave);
+    view.findViewById(R.id.button_cancel).setOnClickListener(this::handleCancel);
     view.findViewById(R.id.fab_ar).setOnClickListener(this::handleAr);
-
   }
 
   private void handleAr(View view) {
     Bundle bundle = new Bundle();
-    bundle.putLong("drop_marker_id", editUId);
     bundle.putString("plane_finding_mode", "VERTICAL");
     bundle.putInt("discovery_controller", 1);
-    bundle.putLong("marker_id", editUId);
     Navigation.findNavController(view).navigate(R.id.action_marker_preview, bundle);
   }
 
   private void handleSave(View view) {
-    if (editUId == -1) {
+    if (editMarkerId == -1) {
       viewModel.addMarker(editMarker);
     } else {
       viewModel.updateMarker(editMarker);
     }
 
+    Navigation.findNavController(view).navigate(R.id.action_list_markers);
+  }
+
+  private void handleCancel(View view) {
     Navigation.findNavController(view).navigate(R.id.action_list_markers);
   }
 
@@ -151,10 +153,10 @@ public class EditFragment extends Fragment {
           Fragment tabInfo = EditFragmentInfo.instantiate(editMarker);
           return tabInfo;
         case 2:
-          Fragment tabAreas = EditFragmentAreas.instantiate(editUId);
+          Fragment tabAreas = EditFragmentAreas.instantiate(editMarkerId);
           return tabAreas;
         default:
-          throw new IllegalArgumentException("Wrong edit marker tab requested: " + position);
+          throw new IllegalArgumentException("Requested edit marker tab doesn't exist: " + position);
       }
     }
   }

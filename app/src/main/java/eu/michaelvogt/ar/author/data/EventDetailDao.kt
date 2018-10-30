@@ -22,7 +22,7 @@ import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Query
 
 @Dao
-interface EventDetailDao {
+interface EventDetailDao : BaseDao<EventDetail> {
     @Query("SELECT * from event_detail where area_id=:areaId")
     fun getForArea(areaId: Long): List<EventDetail>
 

@@ -18,7 +18,10 @@
 
 package eu.michaelvogt.ar.author.data
 
-import android.arch.persistence.room.*
+import android.arch.persistence.room.ColumnInfo
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.Index
+import android.arch.persistence.room.PrimaryKey
 import eu.michaelvogt.ar.author.data.utils.Converters
 
 private val TAG = EventDetail::class.java.simpleName
@@ -32,6 +35,8 @@ const val EVENT_SETMAINCONTENT = 6
 
 const val TYPE_EVENT_ALL = 0
 
+const val NO_VALUE = -1
+
 @Entity(
         tableName = "event_detail",
         indices = [
@@ -39,7 +44,7 @@ const val TYPE_EVENT_ALL = 0
         ])
 class EventDetail (
         @field:ColumnInfo(name = "area_id")
-        var areaId: Int = 0,
+        var areaId: Long = 0,
 
         @field:ColumnInfo(name = "type")
         var type: Int = 0,
