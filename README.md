@@ -7,4 +7,6 @@ AR makes it possible to extend the display space of regular information boards t
 
 Right now, this application is developed for the world heritage site Iwami Ginzan in Japan. But the aim is, that it should be applicable all over the world at equally structures places. 
 
+Work has started to provide a first prototype through Google's play store.
+
 Collaborators are highly welcome.
