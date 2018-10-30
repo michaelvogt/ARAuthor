@@ -19,6 +19,7 @@
 package eu.michaelvogt.ar.author.data.utils
 
 import android.graphics.Color
+import android.util.Log
 import com.google.ar.sceneform.math.Quaternion
 import com.google.ar.sceneform.math.Vector3
 import eu.michaelvogt.ar.author.R
@@ -39,6 +40,8 @@ class DatabaseInitializer private constructor(
                 "石見銀山",
                 "Touristar/iwamiginzan/images/igk_machinami.jpg",
                 "Touristar/iwamiginzan/intro.html")
+
+        Log.i(DatabaseInitializer.TAG, "Location 石見銀山 $locationId inserted")
 
         insertMarkerForLocation(locationId, "城上神社")
         var markerId = insertMarkerForLocation(locationId,
@@ -447,6 +450,8 @@ class DatabaseInitializer private constructor(
                 "Touristar/hakodate/images/goryokakumainhall.jpg",
                 "Touristar/hakodate/intro.html")
 
+        Log.i(DatabaseInitializer.TAG, "Location 箱館 $locationId inserted")
+
         insertMarkerForLocation(locationId, "箱館")
         markerId = insertMarkerForLocation(locationId,
                 "奉行菅",
@@ -565,10 +570,15 @@ class DatabaseInitializer private constructor(
     }
 
     companion object {
+        const val TAG: String = "DatabaseInitializer"
+
         fun runner(
                 locationDao: LocationDao, markerDao: MarkerDao, areaDao: AreaDao,
                 markerAreaDao: MarkerAreaDao, visualDetailDao: VisualDetailDao,
                 slideDao: SlideDao, eventDetailDao: EventDetailDao): DatabaseInitializer {
+
+            Log.i(TAG, "Start database initialisation")
+
             return DatabaseInitializer(
                     locationDao, markerDao, areaDao, markerAreaDao, visualDetailDao, slideDao, eventDetailDao)
         }

@@ -25,6 +25,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,8 @@ import eu.michaelvogt.ar.author.utils.ItemClickListener;
 import eu.michaelvogt.ar.author.utils.MarkerListAdapter;
 
 public class MarkerListFragment extends Fragment implements ItemClickListener {
+  private static final String TAG = MarkerListFragment.class.getSimpleName();
+
   private View view;
   private AuthorViewModel viewModel;
 
@@ -65,8 +68,11 @@ public class MarkerListFragment extends Fragment implements ItemClickListener {
     recyclerView.setAdapter(adapter);
 
     viewModel.getMarkersForLocation(locationId, true)
-        .observe(this, adapter::setMarkers
-    );
+        .thenAccept(adapter::setMarkers)
+        .exceptionally(throwable -> {
+          Log.e(TAG, "Unable to fetch markers for location " + locationId, throwable);
+          return null;
+        });
 
     adapter.setItemClickListener(this);
 

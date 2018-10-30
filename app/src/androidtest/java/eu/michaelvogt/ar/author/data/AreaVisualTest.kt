@@ -19,9 +19,6 @@
 package eu.michaelvogt.ar.author.data
 
 import android.support.test.runner.AndroidJUnit4
-import eu.michaelvogt.ar.author.data.utils.LiveDataTestUtil
-import org.hamcrest.CoreMatchers
-import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

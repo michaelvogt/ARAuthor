@@ -18,25 +18,23 @@
 
 package eu.michaelvogt.ar.author.data
 
-import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Query
 
 @Dao
 interface LocationDao : BaseDao<Location> {
-
     @Query("SELECT * from locations ORDER BY name ASC")
-    fun getAll(): LiveData<List<Location>>
+    fun getAll(): List<Location>
 
     @Query("SELECT COUNT(*) FROM locations")
-    fun getSize(): LiveData<Int>
+    fun getSize(): Int
 
     @Query("SELECT * from locations where u_id=:uId")
-    fun get(uId: Long): LiveData<Location>
+    fun get(uId: Long): Location
 
     @Query("DELETE FROM locations")
     fun deleteAll()
 
     @Query("Select * from locations where name like :name")
-    fun findLocationByName(name: String): LiveData<Location>
+    fun findLocationByName(name: String): Location
 }

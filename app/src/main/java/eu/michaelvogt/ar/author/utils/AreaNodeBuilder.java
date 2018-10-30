@@ -19,6 +19,7 @@
 package eu.michaelvogt.ar.author.utils;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.google.ar.sceneform.Node;
 import com.google.ar.sceneform.Scene;
@@ -91,7 +92,11 @@ public class AreaNodeBuilder {
     ModelRenderable.builder()
         .setSource(context, (Integer) areaVisual.getDetailValue(VisualDetailKt.KEY_RESOURCE))
         .build()
-        .thenAccept(renderable -> future.complete(createNode(renderable)));
+        .thenAccept(renderable -> future.complete(createNode(renderable)))
+        .exceptionally(throwable -> {
+          Log.e(TAG, "Unable to build ModelRenderable.", throwable);
+          return null;
+        });
 
     return future;
   }

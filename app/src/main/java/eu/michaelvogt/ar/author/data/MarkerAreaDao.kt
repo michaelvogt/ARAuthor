@@ -18,27 +18,23 @@
 
 package eu.michaelvogt.ar.author.data
 
-import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Query
 
 @Dao
 interface MarkerAreaDao : BaseDao<MarkerArea> {
     @Query("SELECT * from marker_areas")
-    fun getAll(): LiveData<List<MarkerArea>>
+    fun getAll(): List<MarkerArea>
 
     @Query("SELECT COUNT(*) FROM marker_areas")
-    fun getSize(): LiveData<Int>
+    fun getSize(): Int
 
-    // Don't return LiveData
     @Query("SELECT * FROM markers INNER JOIN marker_areas ON markers.u_id=marker_areas.marker_id WHERE marker_areas.area_id=:areaId")
     fun getMarkersForArea(areaId: Long): List<Marker>
 
-    // Don't return LiveData
     @Query("SELECT * FROM areas INNER JOIN marker_areas ON areas.u_id = marker_areas.area_id WHERE marker_areas.marker_id=:markerId")
     fun getAreasForMarker(markerId: Long): List<Area>
 
-    // Don't return LIveData
     @Query("SELECT * FROM areas INNER JOIN marker_areas ON areas.u_id = marker_areas.area_id WHERE marker_areas.marker_id=:markerId AND (areas.`group`=:group OR areas.`group`=-1)")
     fun getAreaGroupForMarker(markerId: Long, group: Int): List<Area>
 

@@ -25,6 +25,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,8 @@ import eu.michaelvogt.ar.author.utils.AreaListAdapter;
 import eu.michaelvogt.ar.author.utils.ItemClickListener;
 
 public class EditFragmentAreas extends Fragment implements ItemClickListener {
+  private static final String TAG = EditFragmentAreas.class.getSimpleName();
+
   private View view;
 
   private long markerId;
@@ -66,7 +69,12 @@ public class EditFragmentAreas extends Fragment implements ItemClickListener {
 
     recyclerView.setAdapter(adapter);
 
-    viewModel.getAreasForMarker(markerId, AreaKt.GROUP_ALL).thenAccept(adapter::setAreas);
+    viewModel.getAreasForMarker(markerId, AreaKt.GROUP_ALL)
+        .thenAccept(adapter::setAreas)
+        .exceptionally(throwable -> {
+          Log.e(TAG, "Unable to fetch areas for marker " + markerId, throwable);
+          return null;
+        });
   }
 
   @Override

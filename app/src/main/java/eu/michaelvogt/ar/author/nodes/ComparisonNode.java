@@ -53,50 +53,54 @@ public class ComparisonNode extends AreaNode {
   public CompletionStage<Node> build() {
     CompletableFuture<Node> future = new CompletableFuture<>();
 
-    CompletableFuture<Texture> futurePrim3Texture = getTextureFuture(future, VisualDetailKt.KEY_IMAGEPATH);
+    CompletableFuture<Texture> futurePrimeTexture = getTextureFuture(future, VisualDetailKt.KEY_IMAGEPATH);
 
     // TODO: There can be more than 1 secondary images available in the future.
     CompletableFuture<Texture> futureSecTexture = getTextureFuture(future, VisualDetailKt.KEY_SECONDARYIMAGEPATH);
 
-    CompletableFuture.allOf(futurePrim3Texture, futureSecTexture)
+    CompletableFuture.allOf(futurePrimeTexture, futureSecTexture)
         .thenAccept(aVoid -> ModelRenderable.builder()
             .setSource(context, AreaNode.COMPARISON_MATERIAL_TEMP)
-        .build()
-        .thenAccept(temp -> {
-          // TODO: Hack - fix when custom material can be created #196
-          Material material = temp.getMaterial();
+            .build()
+            .thenAccept(temp -> {
+              // TODO: Hack - fix when custom material can be created #196
+              Material material = temp.getMaterial();
               // area.applyDetail(material);
 
-          try {
-            material.setTexture("primaryTexture", futurePrim3Texture.get());
-            material.setTexture("secondaryTexture", futureSecTexture.get());
-          } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-          }
+              try {
+                material.setTexture("primaryTexture", futurePrimeTexture.get());
+                material.setTexture("secondaryTexture", futureSecTexture.get());
+              } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+              }
 
-          Renderable renderable = ShapeFactory.makeCube(areaVisual.getSize(),
-              areaVisual.getZeroPoint(), material);
-          areaVisual.apply(renderable);
-          setRenderable(renderable);
+              Renderable renderable = ShapeFactory.makeCube(areaVisual.getSize(),
+                  areaVisual.getZeroPoint(), material);
+              areaVisual.apply(renderable);
+              setRenderable(renderable);
 
-          setOnTouchListener((hitTestResult, motionEvent) -> {
-            if (motionEvent.getActionMasked() == MotionEvent.ACTION_DOWN || motionEvent.getActionMasked() == MotionEvent.ACTION_MOVE ) {
-              Vector3 normalLocation = worldToLocalPoint(hitTestResult.getPoint());
-              material.setFloat("dividerLocation", (float) (normalLocation.x + 0.45));
+              setOnTouchListener((hitTestResult, motionEvent) -> {
+                if (motionEvent.getActionMasked() == MotionEvent.ACTION_DOWN || motionEvent.getActionMasked() == MotionEvent.ACTION_MOVE) {
+                  Vector3 normalLocation = worldToLocalPoint(hitTestResult.getPoint());
+                  material.setFloat("dividerLocation", (float) (normalLocation.x + 0.45));
 
-              Log.i(TAG, "hit point x: " + hitTestResult.getPoint().x + " local point x: " + normalLocation.x);
-            }
-            return true;
-          });
+                  Log.i(TAG, "hit point x: " + hitTestResult.getPoint().x + " local point x: " + normalLocation.x);
+                }
+                return true;
+              });
 
-          Log.i(TAG, "ComparisonNode successfully created");
-          future.complete(this);
-        })
-        .exceptionally(throwable -> {
-          Log.d(TAG, "Could not create model " + AreaNode.COMPARISON_MATERIAL_TEMP, throwable);
+              Log.i(TAG, "ComparisonNode successfully created");
+              future.complete(this);
+            })
+            .exceptionally(throwable -> {
+              Log.d(TAG, "Could not create model " + AreaNode.COMPARISON_MATERIAL_TEMP, throwable);
               future.completeExceptionally(throwable);
+              return null;
+            }))
+        .exceptionally(throwable -> {
+          Log.e(TAG, "Unable to build textures.", throwable);
           return null;
-        }));
+        });
 
     return future;
   }

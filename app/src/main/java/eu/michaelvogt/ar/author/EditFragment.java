@@ -27,6 +27,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,10 +72,15 @@ public class EditFragment extends Fragment {
       }
       finishSetup(view);
     } else {
-      viewModel.getMarker(editMarkerId).observe(this, marker -> {
-        editMarker = marker;
-        finishSetup(view);
-      });
+      viewModel.getMarker(editMarkerId)
+          .thenAccept(marker -> {
+            editMarker = marker;
+            finishSetup(view);
+          })
+          .exceptionally(throwable -> {
+            Log.e(TAG, "Unable to fetch marker " + editMarkerId, throwable);
+            return null;
+          });
     }
   }
 

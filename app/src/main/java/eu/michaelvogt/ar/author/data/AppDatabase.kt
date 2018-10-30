@@ -25,6 +25,7 @@ import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.TypeConverters
 import android.content.Context
 import android.os.AsyncTask
+import android.util.Log
 
 import eu.michaelvogt.ar.author.data.utils.Converters
 import eu.michaelvogt.ar.author.data.utils.DatabaseInitializer
@@ -44,7 +45,7 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract fun slideDao(): SlideDao
 
-    private class PopulateDbAsync internal constructor(private var db: AppDatabase) : AsyncTask<Void, Void, Void>() {
+    private class PopulateDbAsync internal constructor(db: AppDatabase) : AsyncTask<Void, Void, Void>() {
         private val locationDao: LocationDao = db.locationDao()
         private val markerDao: MarkerDao = db.markerDao()
         private val areaDao: AreaDao = db.areaDao()
@@ -69,23 +70,34 @@ abstract class AppDatabase : RoomDatabase() {
 
             return null
         }
+
+        override fun onPostExecute(result: Void?) {
+
+        }
     }
 
     companion object {
         private var INSTANCE: AppDatabase? = null
 
+        fun createDatabase(context: Context) {
+
+            Log.i("AppDatabase", "Create database")
+
+            synchronized(AppDatabase::class.java) {
+                if (INSTANCE == null) {
+                    INSTANCE = Room
+                            .databaseBuilder(
+                                    context.applicationContext, AppDatabase::class.java, "app_database")
+                            .fallbackToDestructiveMigration()
+                            .addCallback(sRoomDatabaseCallback)
+                            .build()
+                }
+            }
+        }
+
         fun getDatabase(context: Context): AppDatabase? {
             if (INSTANCE == null) {
-                synchronized(AppDatabase::class.java) {
-                    if (INSTANCE == null) {
-                        INSTANCE = Room
-                                .databaseBuilder(
-                                        context.applicationContext, AppDatabase::class.java, "app_database")
-                                .fallbackToDestructiveMigration()
-                                .addCallback(sRoomDatabaseCallback)
-                                .build()
-                    }
-                }
+                createDatabase(context)
             }
             return INSTANCE
         }
@@ -93,6 +105,8 @@ abstract class AppDatabase : RoomDatabase() {
         private val sRoomDatabaseCallback = object : RoomDatabase.Callback() {
             override fun onOpen(db: SupportSQLiteDatabase) {
                 super.onOpen(db)
+
+                Log.i("AppDatabase", "Populate database")
 
                 PopulateDbAsync(INSTANCE!!).execute()
             }

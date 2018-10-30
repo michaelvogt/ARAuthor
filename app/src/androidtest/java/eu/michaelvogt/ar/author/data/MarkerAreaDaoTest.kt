@@ -20,7 +20,6 @@ package eu.michaelvogt.ar.author.data
 
 import android.database.sqlite.SQLiteConstraintException
 import android.support.test.runner.AndroidJUnit4
-import eu.michaelvogt.ar.author.data.utils.LiveDataTestUtil
 import eu.michaelvogt.ar.author.data.utils.TestUtil
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.AnyOf.anyOf
@@ -48,7 +47,7 @@ class MarkerAreaDaoTest : DaoTest() {
 
     @Test
     fun getAllFromEmptyTable() {
-        val all = LiveDataTestUtil.getValue(markerAreaDao.getAll())
+        val all = markerAreaDao.getAll()
 
         assertThat(all, equalTo(emptyList()))
     }
@@ -61,7 +60,7 @@ class MarkerAreaDaoTest : DaoTest() {
 
         markerAreaDao.insert(TestUtil.markerArea(markerId, areaId))
 
-        val size = LiveDataTestUtil.getValue(markerAreaDao.getSize())
+        val size = markerAreaDao.getSize()
 
         assertThat(size, equalTo(1))
     }

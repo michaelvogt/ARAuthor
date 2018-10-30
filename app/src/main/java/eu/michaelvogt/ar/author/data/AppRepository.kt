@@ -18,7 +18,6 @@
 
 package eu.michaelvogt.ar.author.data
 
-import android.arch.lifecycle.LiveData
 import org.jetbrains.anko.doAsync
 import java.util.*
 import java.util.concurrent.CompletableFuture
@@ -35,15 +34,8 @@ class AppRepository internal constructor(db: AppDatabase?) {
 
     private val slideDao: SlideDao
 
-    // Location
-    internal val allLocations: LiveData<List<Location>>
-
-    val locationsSize: LiveData<Int>
-        get() = locationDao.getSize()
-
     init {
         locationDao = db!!.locationDao()
-        allLocations = locationDao.getAll()
 
         markerDao = db.markerDao()
         areaDao = db.areaDao()
@@ -79,25 +71,30 @@ class AppRepository internal constructor(db: AppDatabase?) {
         doAsync { areaDao.update(area) }
     }
 
-    internal fun getLocation(uId: Long): LiveData<Location> {
-        return locationDao.get(uId)
+    // Location
+    fun getLocation(uId: Long): CompletableFuture<Location> {
+        return CompletableFuture.supplyAsync { locationDao.get(uId) }
+    }
+
+    fun allLocations(): CompletableFuture<List<Location>> {
+        return CompletableFuture.supplyAsync { locationDao.getAll() }
     }
 
 
     // Marker
-    internal fun getMarker(uId: Long): LiveData<Marker> {
-        return markerDao.get(uId)
+    fun getMarker(uId: Long): CompletableFuture<Marker> {
+        return CompletableFuture.supplyAsync { markerDao.get(uId) }
     }
 
-    fun allMarkers(): LiveData<List<Marker>> {
-        return markerDao.getAll()
+    fun allMarkers(): CompletableFuture<List<Marker>> {
+        return CompletableFuture.supplyAsync { markerDao.getAll() }
     }
 
-    fun getMarkersForLocation(locationId: Long, withTitles: Boolean): LiveData<List<Marker>> {
+    fun getMarkersForLocation(locationId: Long, withTitles: Boolean): CompletableFuture<List<Marker>> {
         return if (withTitles) {
-            markerDao.findMarkersAndTitlesForLocation(locationId)
+            CompletableFuture.supplyAsync { markerDao.findMarkersAndTitlesForLocation(locationId) }
         } else {
-            markerDao.findMarkersOnlyForLocation(locationId)
+            CompletableFuture.supplyAsync { markerDao.findMarkersOnlyForLocation(locationId) }
         }
     }
 
@@ -107,8 +104,8 @@ class AppRepository internal constructor(db: AppDatabase?) {
         return CompletableFuture.supplyAsync { areaDao.get(uId) }
     }
 
-    internal fun getAreaWithTitle(title: String): LiveData<Area> {
-        return areaDao.findAreaByTitle(title)
+    internal fun getAreaWithTitle(title: String): CompletableFuture<Area> {
+        return CompletableFuture.supplyAsync { areaDao.findAreaByTitle(title) }
     }
 
     fun getAreasForMarker(markerId: Long, group: Int): CompletableFuture<List<Area>> {

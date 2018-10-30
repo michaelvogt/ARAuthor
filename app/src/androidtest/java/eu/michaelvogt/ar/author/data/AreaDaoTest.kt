@@ -19,7 +19,6 @@
 package eu.michaelvogt.ar.author.data
 
 import android.support.test.runner.AndroidJUnit4
-import eu.michaelvogt.ar.author.data.utils.LiveDataTestUtil
 import eu.michaelvogt.ar.author.data.utils.TestUtil
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.Assert
@@ -38,7 +37,7 @@ class AreaDaoTest : DaoTest() {
 
     @Test
     fun getAllFromEmptyTable() {
-        val all = LiveDataTestUtil.getValue(dao.getAll())
+        val all = dao.getAll()
 
         Assert.assertThat(all, equalTo(emptyList()))
     }
@@ -46,7 +45,7 @@ class AreaDaoTest : DaoTest() {
     @Test
     fun getSize() {
         dao.insertAll(*TestUtil.areas())
-        val size = LiveDataTestUtil.getValue(dao.getSize())
+        val size = dao.getSize()
 
         Assert.assertThat(size, equalTo(TestUtil.areas().size))
     }
@@ -56,7 +55,7 @@ class AreaDaoTest : DaoTest() {
         val area = TestUtil.area1()
 
         dao.insert(area)
-        val byName = LiveDataTestUtil.getValue(dao.findAreaByTitle(area.title))
+        val byName = dao.findAreaByTitle(area.title)
 
         area.uId = byName.uId
 

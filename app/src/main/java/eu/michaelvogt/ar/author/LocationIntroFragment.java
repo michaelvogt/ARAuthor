@@ -60,11 +60,20 @@ public class LocationIntroFragment extends Fragment implements View.OnClickListe
     long locationId = viewModel.getCurrentLocationId();
 
     viewModel.getLocation(locationId)
-        .observe(this, location -> initWebView(location, contentView));
+        .thenAccept(location -> getActivity().runOnUiThread(() -> initWebView(location, contentView)))
+        .exceptionally(throwable -> {
+          Log.e(TAG, "Unable to fetch location " + locationId, throwable);
+          return null;
+        });
 
     // Due to the way the AR images database needs to be initialized, and the markers are
     // delivered asynchronously from the data database, the markers need to be cached beforehand
-    viewModel.getMarkersForLocation(locationId, true).observe(this, viewModel::setMarkersCache);
+    viewModel.getMarkersForLocation(locationId, true)
+        .thenAccept(locations -> getActivity().runOnUiThread(() -> viewModel.setMarkersCache(locations)))
+        .exceptionally(throwable -> {
+          Log.e(TAG, "Unable to fetch markers for location " + locationId, throwable);
+          return null;
+        });
 
     View fab = view.findViewById(R.id.fab_map);
     fab.setOnClickListener(this);

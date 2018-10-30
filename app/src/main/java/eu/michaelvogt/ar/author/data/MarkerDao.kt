@@ -18,7 +18,6 @@
 
 package eu.michaelvogt.ar.author.data
 
-import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Query
 
@@ -26,22 +25,22 @@ import android.arch.persistence.room.Query
 interface MarkerDao : BaseDao<Marker> {
 
     @Query("SELECT * from markers ORDER BY title ASC")
-    fun getAll(): LiveData<List<Marker>>
+    fun getAll(): List<Marker>
 
     @Query("SELECT * from markers where markers.u_id=:uId")
-    fun get(uId: Long): LiveData<Marker>
+    fun get(uId: Long): Marker
 
     @Query("SELECT COUNT(*) FROM markers")
-    fun getSize(): LiveData<Int>
+    fun getSize(): Int
 
     @Query("SELECT * from markers WHERE title like :title")
-    fun findMarkerByTitle(title: String): LiveData<Marker>
+    fun findMarkerByTitle(title: String): Marker
 
     @Query("SELECT * FROM markers WHERE location_id=:locationId AND is_title=0")
-    fun findMarkersOnlyForLocation(locationId: Long): LiveData<List<Marker>>
+    fun findMarkersOnlyForLocation(locationId: Long): List<Marker>
 
     @Query("SELECT * FROM markers WHERE location_id=:locationId")
-    fun findMarkersAndTitlesForLocation(locationId: Long): LiveData<List<Marker>>
+    fun findMarkersAndTitlesForLocation(locationId: Long): List<Marker>
 
     @Query("DELETE FROM markers")
     fun deleteAll()

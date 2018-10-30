@@ -109,14 +109,15 @@ public class PreviewFragment extends Fragment {
   }
 
   private void buildAreas(Node anchorNode, long markerId, float backgroundHeight, float backgroundWidth) {
-    viewModel.getAreaVisualsForMarker(markerId, AreaKt.GROUP_START).thenAccept(areaVisuals -> {
-      if (areaVisuals.size() > 0) {
-        areaVisuals.forEach(areaVisual -> buildArea(anchorNode, areaVisual, null));
-      } else {
-        // Build a default area for demo purposes
-        buildArea(anchorNode, AreaVisual.Companion.getDefaultArea(backgroundHeight, backgroundWidth), null);
-      }
-    }).exceptionally(throwable -> {
+    viewModel.getAreaVisualsForMarker(markerId, AreaKt.GROUP_START)
+        .thenAccept(areaVisuals -> {
+          if (areaVisuals.size() > 0) {
+            areaVisuals.forEach(areaVisual -> buildArea(anchorNode, areaVisual, null));
+          } else {
+            // Build a default area for demo purposes
+            buildArea(anchorNode, AreaVisual.Companion.getDefaultArea(backgroundHeight, backgroundWidth), null);
+          }
+        }).exceptionally(throwable -> {
       Log.e(TAG, "Unable to build Areas: " + markerId, throwable);
       return null;
     });

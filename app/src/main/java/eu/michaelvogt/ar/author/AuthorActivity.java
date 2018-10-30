@@ -26,12 +26,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import java.util.concurrent.CompletableFuture;
+
+import eu.michaelvogt.ar.author.data.AppDatabase;
+
 public class AuthorActivity extends AppCompatActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_author);
+
+    AppDatabase database = AppDatabase.Companion.getDatabase(getApplicationContext());
+
+    // Fetching something seems to be the only way to open the database and trigger the callback
+    CompletableFuture.supplyAsync(() -> database.locationDao().getSize());
   }
 
   @Override

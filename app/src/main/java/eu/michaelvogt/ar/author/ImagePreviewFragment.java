@@ -22,6 +22,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,8 +81,13 @@ public class ImagePreviewFragment extends PreviewFragment {
       if (trackingState == TrackingState.TRACKING && !handledImages.containsKey(image.getName())) {
         handledImages.put(image.getName(), null);
         Anchor anchor = image.createAnchor(image.getCenterPose());
-        viewModel.getMarker(Integer.parseInt(image.getName())).observe(this, marker ->
-            buildMarkerScene(anchor, marker, image.getExtentX(), image.getExtentZ()));
+        viewModel.getMarker(Integer.parseInt(image.getName()))
+            .thenAccept(marker ->
+                buildMarkerScene(anchor, marker, image.getExtentX(), image.getExtentZ()))
+            .exceptionally(throwable -> {
+              Log.e(TAG, "Unable to fetch marker " + image.getName(), throwable);
+              return null;
+            });
       } else if (image.getTrackingState() == TrackingState.STOPPED) {
         handledImages.remove(image.getName());
       }

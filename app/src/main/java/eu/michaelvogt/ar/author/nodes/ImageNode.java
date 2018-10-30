@@ -107,36 +107,41 @@ public class ImageNode extends AreaNode implements EventSender {
       throw new IllegalArgumentException("Missing AreaVisual IMAGEPATH or IMAGERESOURCE");
     }
 
-    futureTexture.thenAccept(texture -> ModelRenderable.builder()
-        // Keep default model as resource
-        .setSource(context, AreaNode.CUSTOM_MATERIAL_TEMP)
-        .build()
-        .thenAccept(temp -> {
-          // TODO: Hack - fix when custom material can be created #196
-          Material material = temp.getMaterial();
-          material.setTexture("primary", texture);
-          areaVisual.apply(material);
+    futureTexture
+        .thenAccept(texture -> ModelRenderable.builder()
+            // Keep default model as resource
+            .setSource(context, AreaNode.CUSTOM_MATERIAL_TEMP)
+            .build()
+            .thenAccept(temp -> {
+              // TODO: Hack - fix when custom material can be created #196
+              Material material = temp.getMaterial();
+              material.setTexture("primary", texture);
+              areaVisual.apply(material);
 
-          setupFadeAnimation(material);
+              setupFadeAnimation(material);
 
-          Renderable renderable = ShapeFactory.makeCube(
-              areaVisual.getSize(),
-              areaVisual.getZeroPoint(), material);
-          areaVisual.apply(renderable);
+              Renderable renderable = ShapeFactory.makeCube(
+                  areaVisual.getSize(),
+                  areaVisual.getZeroPoint(), material);
+              areaVisual.apply(renderable);
 
-          // Needs to be set, bacause Sceneform has a layering problem with transparent objects
-          // https://github.com/google-ar/sceneform-android-sdk/issues/285#issuecomment-420730274
-          renderable.setRenderPriority(renderPriority);
+              // Needs to be set, bacause Sceneform has a layering problem with transparent objects
+              // https://github.com/google-ar/sceneform-android-sdk/issues/285#issuecomment-420730274
+              renderable.setRenderPriority(renderPriority);
 
-          setRenderable(renderable);
+              setRenderable(renderable);
 
-          Log.i(TAG, "ImageNode successfully created");
-          future.complete(this);
-        })
+              Log.i(TAG, "ImageNode successfully created");
+              future.complete(this);
+            })
+            .exceptionally(throwable -> {
+              Log.d(TAG, "Could not create model " + AreaNode.CUSTOM_MATERIAL_TEMP, throwable);
+              return null;
+            }))
         .exceptionally(throwable -> {
-          Log.d(TAG, "Could not create model " + AreaNode.CUSTOM_MATERIAL_TEMP, throwable);
+          Log.e(TAG, "Unable to build texture.", throwable);
           return null;
-        }));
+        });
 
     return future;
   }

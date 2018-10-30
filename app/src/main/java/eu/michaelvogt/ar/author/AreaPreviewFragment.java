@@ -96,11 +96,20 @@ public class AreaPreviewFragment extends Fragment {
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     AuthorViewModel viewModel = ViewModelProviders.of(getActivity()).get(AuthorViewModel.class);
     long markerId = viewModel.getCurrentMarkerId();
-    viewModel.getMarker(markerId).observe(this, marker -> editMarker = marker);
+    viewModel.getMarker(markerId)
+        .thenAccept(marker -> editMarker = marker)
+        .exceptionally(throwable -> {
+          Log.e(TAG, "Unable to fetch marker" + markerId, throwable);
+          return null;
+        });
 
     long areaId = viewModel.getCurrentAreaId();
     viewModel.getAreaVisual(areaId)
-        .thenAccept(areaVisual -> editArea = areaVisual);
+        .thenAccept(areaVisual -> editArea = areaVisual)
+        .exceptionally(throwable -> {
+          Log.e(TAG, "Unable to fetch area visual " + areaId, throwable);
+          return null;
+        });
 
     arFragment = (LoopArFragment) getChildFragmentManager().findFragmentById(R.id.ux_fragment);
     arFragment.getPlaneDiscoveryController().hide();
@@ -200,7 +209,11 @@ public class AreaPreviewFragment extends Fragment {
         .build()
         .thenAccept(modelRenderable -> {
           createMaterial(context, PREVIEWCOLOR, useTranslucency)
-              .thenAccept(modelRenderable::setMaterial);
+              .thenAccept(modelRenderable::setMaterial)
+              .exceptionally(throwable -> {
+                Log.e(TAG, "Unable to build ModelRenderable.", throwable);
+                return null;
+              });
 
           anchorNode.setLocalScale(editArea.getScale());
 

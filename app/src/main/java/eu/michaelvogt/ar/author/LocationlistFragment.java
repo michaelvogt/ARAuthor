@@ -25,6 +25,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,8 @@ import eu.michaelvogt.ar.author.utils.ItemClickListener;
 import eu.michaelvogt.ar.author.utils.LocationListAdapter;
 
 public class LocationlistFragment extends Fragment implements ItemClickListener {
+  private static final String TAG = LocationlistFragment.class.getSimpleName();
+
   private View view;
   private AuthorViewModel viewModel;
 
@@ -64,11 +67,21 @@ public class LocationlistFragment extends Fragment implements ItemClickListener 
 
     recyclerView.setAdapter(adapter);
 
-    viewModel.getAllLocations().observe(this, adapter::setLocations);
+    Log.i(TAG, "Fetch all locations");
+
+    viewModel.getAllLocations()
+        .thenAccept(locations -> getActivity().runOnUiThread(() -> adapter.setLocations(locations)))
+        .exceptionally(throwable -> {
+          Log.e(TAG, "Unable to fetch all locations.", throwable);
+          return null;
+        });
   }
 
   @Override
   public void onItemClicked(long locationId) {
+
+    Log.i(TAG, "Set currentLocationId " + locationId);
+
     viewModel.setCurrentLocationId(locationId);
     Navigation.findNavController(view).navigate(R.id.action_location_intro);
   }

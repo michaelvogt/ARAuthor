@@ -20,7 +20,6 @@ package eu.michaelvogt.ar.author.data
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
-import android.arch.lifecycle.LiveData
 import java.util.concurrent.CompletableFuture
 
 class AuthorViewModel(application: Application) : AndroidViewModel(application) {
@@ -45,21 +44,19 @@ class AuthorViewModel(application: Application) : AndroidViewModel(application) 
 
     fun addLocation(location: Location) = repository.insert(location)
 
-    fun getLocation(uid: Long): LiveData<Location> = repository.getLocation(uid)
+    fun getLocation(uid: Long): CompletableFuture<Location> = repository.getLocation(uid)
 
-    fun getLocationsSize(): LiveData<Int> = repository.locationsSize
-
-    fun getAllLocations(): LiveData<List<Location>> = repository.allLocations
+    fun getAllLocations(): CompletableFuture<List<Location>> = repository.allLocations()
 
 
     fun addMarker(marker: Marker) = repository.insert(marker)
 
-    fun getMarker(uId: Long): LiveData<Marker> = repository.getMarker(uId)
+    fun getMarker(uId: Long): CompletableFuture<Marker> = repository.getMarker(uId)
 
     fun updateMarker(marker: Marker) = repository.update(marker)
 
     fun getMarkersForLocation(locationId: Long, withTitles: Boolean):
-            LiveData<List<Marker>> = repository.getMarkersForLocation(locationId, withTitles)
+            CompletableFuture<List<Marker>> = repository.getMarkersForLocation(locationId, withTitles)
 
     fun clearCropMarker() {
         cropMarker = null

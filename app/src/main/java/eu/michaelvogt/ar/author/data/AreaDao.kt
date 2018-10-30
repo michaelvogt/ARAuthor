@@ -18,7 +18,6 @@
 
 package eu.michaelvogt.ar.author.data
 
-import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Query
 
@@ -26,16 +25,16 @@ import android.arch.persistence.room.Query
 interface AreaDao : BaseDao<Area> {
 
     @Query("SELECT * from areas ORDER BY title ASC")
-    fun getAll(): LiveData<List<Area>>
+    fun getAll(): List<Area>
 
     @Query("SELECT * from areas where areas.u_id=:uId")
     fun get(uId: Long): Area
 
     @Query("SELECT COUNT(*) FROM areas")
-    fun getSize(): LiveData<Int>
+    fun getSize(): Int
 
     @Query("SELECT * from areas where areas.title=:title")
-    fun findAreaByTitle(title: String): LiveData<Area>
+    fun findAreaByTitle(title: String): Area
 
     @Query("DELETE FROM areas")
     fun deleteAll()

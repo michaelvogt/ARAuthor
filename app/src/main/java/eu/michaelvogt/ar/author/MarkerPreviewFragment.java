@@ -22,6 +22,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -67,8 +68,12 @@ public class MarkerPreviewFragment extends PreviewFragment {
         AuthorViewModel viewModel = ViewModelProviders.of(getActivity()).get(AuthorViewModel.class);
         Anchor anchor = hitResult.createAnchor();
 
-        this.viewModel.getMarker(viewModel.getCurrentMarkerId()).observe(this,
-            marker -> buildMarkerScene(anchor, marker, marker.getSize().x, marker.getSize().z));
+        this.viewModel.getMarker(viewModel.getCurrentMarkerId())
+            .thenAccept(marker -> buildMarkerScene(anchor, marker, marker.getSize().x, marker.getSize().z))
+            .exceptionally(throwable -> {
+              Log.e(TAG, "Unable to fetch marker " + viewModel.getCurrentMarkerId(), throwable);
+              return null;
+            });
       } else if (plane.getTrackingState() == TrackingState.STOPPED) {
         isSceneDropped = false;
       }
