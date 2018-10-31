@@ -75,7 +75,7 @@ public class EditFragment extends Fragment {
       viewModel.getMarker(editMarkerId)
           .thenAccept(marker -> {
             editMarker = marker;
-            finishSetup(view);
+            getActivity().runOnUiThread(() -> finishSetup(view));
           })
           .exceptionally(throwable -> {
             Log.e(TAG, "Unable to fetch marker " + editMarkerId, throwable);
@@ -109,6 +109,7 @@ public class EditFragment extends Fragment {
 
   private void handleSave(View view) {
     if (editMarkerId == -1) {
+      editMarker.setLocationId(viewModel.getCurrentLocationId());
       viewModel.addMarker(editMarker);
     } else {
       viewModel.updateMarker(editMarker);

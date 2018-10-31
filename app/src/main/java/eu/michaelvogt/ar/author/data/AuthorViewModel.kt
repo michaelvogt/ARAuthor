@@ -22,14 +22,18 @@ import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import java.util.concurrent.CompletableFuture
 
+const val NEW_CURRENT_LOCATION = -1L
+const val NEW_CURRENT_MARKER = -1L
+const val NEW_CURRENT_AREA = -1L
+
 class AuthorViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = AppRepository(AppDatabase.getDatabase(application.applicationContext))
 
-    var currentLocationId: Long = -1
+    var currentLocationId: Long = NEW_CURRENT_LOCATION
 
-    var currentMarkerId: Long = -1
+    var currentMarkerId: Long = NEW_CURRENT_MARKER
 
-    var currentAreaId: Long = -1
+    var currentAreaId: Long = NEW_CURRENT_AREA
 
     var markersCache: List<Marker>? = null
 

@@ -18,6 +18,7 @@
 
 package eu.michaelvogt.ar.author.data
 
+import android.util.Log
 import org.jetbrains.anko.doAsync
 import java.util.*
 import java.util.concurrent.CompletableFuture
@@ -48,15 +49,21 @@ class AppRepository internal constructor(db: AppDatabase?) {
     }
 
     fun insert(location: Location) {
-        doAsync { locationDao.insert(location) }
+        doAsync(exceptionHandler = { throwable -> handleException(throwable) }) {
+            locationDao.insert(location)
+        }
     }
 
     fun insert(marker: Marker) {
-        doAsync { markerDao.insert(marker) }
+        doAsync(exceptionHandler = { throwable -> handleException(throwable) }) {
+            markerDao.insert(marker)
+        }
     }
 
     fun insert(area: Area) {
-        doAsync { areaDao.insert(area) }
+        doAsync(exceptionHandler = { throwable -> handleException(throwable) }) {
+            areaDao.insert(area)
+        }
     }
 
     fun update(location: Location) {
@@ -142,5 +149,9 @@ class AppRepository internal constructor(db: AppDatabase?) {
         slideDetails.forEach { detail -> detail.slides = slideDao.getSlidesForDetail(detail.uId) }
 
         return AreaVisual(area, details, events)
+    }
+
+    private fun handleException(throwable: Throwable) {
+        Log.e(AppRepository::class.simpleName, "Database error", throwable)
     }
 }

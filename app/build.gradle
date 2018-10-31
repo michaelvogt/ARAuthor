@@ -66,6 +66,7 @@ dependencies {
     implementation "android.arch.lifecycle:common-java8:$google_lifecycle_version"
     implementation "android.arch.lifecycle:extensions:$google_lifecycle_version"
     implementation "android.arch.lifecycle:reactivestreams:$google_lifecycle_version"
+    implementation 'com.android.support:support-v4:28.0.0'
     kapt "android.arch.lifecycle:compiler:$google_lifecycle_version"
 
     implementation 'android.arch.navigation:navigation-fragment:1.0.0-alpha06'
@@ -78,11 +79,14 @@ dependencies {
     api 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.0'
     api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.0.0'
 
-    // implementation 'com.lyft:scissors:1.1.1'
+    implementation('com.lyft:scissors:1.1.1') {
+        exclude group: 'com.github.bumptech.glide'
+    }
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serialization_version"
     implementation "org.jetbrains.anko:anko-commons:0.10.4"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.hamcrest:hamcrest-all:1.3'

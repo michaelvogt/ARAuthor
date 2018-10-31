@@ -32,6 +32,7 @@ import android.view.ViewGroup;
 
 import androidx.navigation.Navigation;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
+import eu.michaelvogt.ar.author.data.AuthorViewModelKt;
 import eu.michaelvogt.ar.author.utils.ItemClickListener;
 import eu.michaelvogt.ar.author.utils.MarkerListAdapter;
 
@@ -76,9 +77,10 @@ public class MarkerListFragment extends Fragment implements ItemClickListener {
 
     adapter.setItemClickListener(this);
 
-    view.findViewById(R.id.editmarker_fab).setOnClickListener(
-        Navigation.createNavigateOnClickListener(R.id.action_edit_marker)
-    );
+    view.findViewById(R.id.editmarker_fab).setOnClickListener(v -> {
+      viewModel.setCurrentMarkerId(AuthorViewModelKt.NEW_CURRENT_MARKER);
+      Navigation.findNavController(view).navigate(R.id.action_edit_marker);
+    });
 
 //        view.findViewById(R.id.button_importmarkers).setOnClickListener();
 
