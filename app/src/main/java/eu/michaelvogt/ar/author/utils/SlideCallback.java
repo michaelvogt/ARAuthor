@@ -1,8 +1,6 @@
 package eu.michaelvogt.ar.author.utils;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
 import com.google.ar.sceneform.Node;
@@ -10,6 +8,8 @@ import com.google.ar.sceneform.Scene;
 
 import java.util.List;
 
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProviders;
 import eu.michaelvogt.ar.author.data.AreaVisual;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
 import eu.michaelvogt.ar.author.data.Slide;

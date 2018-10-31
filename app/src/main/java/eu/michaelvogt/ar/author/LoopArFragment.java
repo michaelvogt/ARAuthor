@@ -18,11 +18,10 @@
 
 package eu.michaelvogt.ar.author;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.Bitmap;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.ar.core.AugmentedImageDatabase;
 import com.google.ar.core.Config;
 import com.google.ar.core.Session;
@@ -30,6 +29,7 @@ import com.google.ar.sceneform.ux.ArFragment;
 
 import java.util.List;
 
+import androidx.lifecycle.ViewModelProviders;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
 import eu.michaelvogt.ar.author.data.Marker;
 import eu.michaelvogt.ar.author.nodes.AuthorAnchorNode;

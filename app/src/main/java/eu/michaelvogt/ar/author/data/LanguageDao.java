@@ -18,7 +18,7 @@
 
 package eu.michaelvogt.ar.author.data;
 
-import android.arch.persistence.room.Dao;
+import androidx.room.Dao;
 
 @Dao
 public interface LanguageDao {

@@ -19,11 +19,9 @@
 package eu.michaelvogt.ar.author.nodes;
 
 import android.annotation.SuppressLint;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -41,6 +39,8 @@ import com.google.ar.sceneform.rendering.ViewRenderable;
 
 import java.util.List;
 
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProviders;
 import eu.michaelvogt.ar.author.ImagePreviewFragment;
 import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.AreaVisualKt;

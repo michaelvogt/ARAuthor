@@ -18,8 +18,8 @@
 
 package eu.michaelvogt.ar.author.data.utils
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit

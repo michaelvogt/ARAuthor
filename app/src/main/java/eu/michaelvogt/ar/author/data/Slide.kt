@@ -18,7 +18,7 @@
 
 package eu.michaelvogt.ar.author.data
 
-import android.arch.persistence.room.*
+import androidx.room.*
 
 const val TYPE_IMAGE = 0
 const val TYPE_VR = 1

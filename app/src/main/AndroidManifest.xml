@@ -33,7 +33,7 @@
             android:resource="@array/preloaded_fonts" />
 
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="eu.michaelvogt.ar.author.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">

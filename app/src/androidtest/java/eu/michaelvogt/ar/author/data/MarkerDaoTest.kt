@@ -19,7 +19,7 @@
 package eu.michaelvogt.ar.author.data
 
 import android.database.sqlite.SQLiteConstraintException
-import android.support.test.runner.AndroidJUnit4
+import androidx.test.runner.AndroidJUnit4
 import eu.michaelvogt.ar.author.data.utils.TestUtil
 import org.hamcrest.core.IsEqual
 import org.junit.Assert

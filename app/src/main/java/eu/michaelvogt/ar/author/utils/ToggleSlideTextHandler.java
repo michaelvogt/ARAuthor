@@ -19,10 +19,11 @@
 package eu.michaelvogt.ar.author.utils;
 
 import android.content.Context;
-import android.support.v4.view.GestureDetectorCompat;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+
+import androidx.core.view.GestureDetectorCompat;
 
 public class ToggleSlideTextHandler extends GestureDetector.SimpleOnGestureListener implements View.OnTouchListener {
   private static final String TAG = ToggleSlideTextHandler.class.getSimpleName();

@@ -21,13 +21,18 @@ package eu.michaelvogt.ar.author;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
 import java.util.concurrent.CompletableFuture;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 import eu.michaelvogt.ar.author.data.AppDatabase;
 
 public class AuthorActivity extends AppCompatActivity {
@@ -36,6 +41,11 @@ public class AuthorActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_author);
+
+    Toolbar toolbar = findViewById(R.id.toolbar);
+    NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+    AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
+    NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
 
     AppDatabase database = AppDatabase.Companion.getDatabase(getApplicationContext());
 

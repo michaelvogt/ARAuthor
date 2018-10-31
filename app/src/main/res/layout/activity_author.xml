@@ -15,15 +15,23 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 -->
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AuthorActivity"
-    tools:layout_editor_absoluteY="81dp">
+    android:orientation="vertical"
+    tools:context=".AuthorActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <fragment
         android:id="@+id/nav_host_fragment"
@@ -38,4 +46,4 @@
         app:navGraph="@navigation/main_navigation"
         tools:layout="@layout/fragment_intro" />
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

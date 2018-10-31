@@ -18,7 +18,7 @@
 
 package eu.michaelvogt.ar.author.data
 
-import android.arch.persistence.room.*
+import androidx.room.*
 import com.google.ar.sceneform.math.Vector3
 
 @Entity(

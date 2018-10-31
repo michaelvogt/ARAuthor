@@ -18,7 +18,7 @@
 
 package eu.michaelvogt.ar.author.data.tuples;
 
-import android.arch.persistence.room.ColumnInfo;
+import androidx.room.ColumnInfo;
 
 public class ListArea {
   @ColumnInfo(name = "title")

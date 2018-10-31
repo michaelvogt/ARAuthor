@@ -18,7 +18,7 @@
 
 package eu.michaelvogt.ar.author.data.utils
 
-import android.arch.persistence.room.TypeConverter
+import androidx.room.TypeConverter
 import com.google.ar.sceneform.math.Quaternion
 import com.google.ar.sceneform.math.Vector3
 import java.util.*

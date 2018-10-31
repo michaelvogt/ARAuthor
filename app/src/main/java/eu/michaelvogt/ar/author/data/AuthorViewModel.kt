@@ -19,7 +19,7 @@
 package eu.michaelvogt.ar.author.data
 
 import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
+import androidx.lifecycle.AndroidViewModel
 import java.util.concurrent.CompletableFuture
 
 const val NEW_CURRENT_LOCATION = -1L

@@ -23,8 +23,8 @@
     <fragment
         android:id="@+id/imagePreviewFragment"
         android:name="eu.michaelvogt.ar.author.ImagePreviewFragment"
-        android:label="fragment_main"
-        tools:layout="@layout/fragment_imagepreview" >
+        android:label="Preview"
+        tools:layout="@layout/fragment_imagepreview">
         <action
             android:id="@+id/action_list_markers"
             app:destination="@id/markerlistFragment" />
@@ -51,8 +51,8 @@
     <fragment
         android:id="@+id/markerlistFragment"
         android:name="eu.michaelvogt.ar.author.MarkerListFragment"
-        android:label="fragment_list"
-        tools:layout="@layout/fragment_markerlist" >
+        android:label="Markers"
+        tools:layout="@layout/fragment_markerlist">
         <action
             android:id="@+id/action_edit_marker"
             app:destination="@+id/edit" />
@@ -65,7 +65,7 @@
         <fragment
             android:id="@+id/editFragment"
             android:name="eu.michaelvogt.ar.author.EditFragment"
-            android:label="fragment_capture"
+            android:label="Edit Marker"
             tools:layout="@layout/fragment_editmarker">
             <action
                 android:id="@+id/action_list_markers"
@@ -83,7 +83,7 @@
         <fragment
             android:id="@+id/areaEditFragment"
             android:name="eu.michaelvogt.ar.author.AreaEditFragment"
-            android:label="fragment_area_edit"
+            android:label="Edit area"
             tools:layout="@layout/fragment_area_edit">
             <action
                 android:id="@+id/action_test_area_placement"
@@ -98,7 +98,7 @@
         <fragment
             android:id="@+id/areaPreviewFragment"
             android:name="eu.michaelvogt.ar.author.AreaPreviewFragment"
-            android:label="fragment_area"
+            android:label="Area preview"
             tools:layout="@layout/fragment_areapreview">
             <action
                 android:id="@+id/action_edit_marker"
@@ -113,7 +113,7 @@
         <fragment
             android:id="@+id/cropFragment"
             android:name="eu.michaelvogt.ar.author.CropFragment"
-            android:label="fragment_crop"
+            android:label="Crop image"
             tools:layout="@layout/fragment_crop">
             <action
                 android:id="@+id/action_edit_marker"
@@ -122,7 +122,7 @@
         <fragment
             android:id="@+id/markerPreviewFragment"
             android:name="eu.michaelvogt.ar.author.MarkerPreviewFragment"
-            android:label="fragment_markerpreview"
+            android:label="Marker preview"
             tools:layout="@layout/fragment_markerpreview">
             <action
                 android:id="@+id/action_edit_marker"
@@ -143,11 +143,6 @@
                 android:name="light_estimation"
                 android:defaultValue="AMBIENT_INTENSITY" />
         </fragment>
-        <fragment
-            android:id="@+id/blankFragment"
-            android:name="eu.michaelvogt.ar.author.BlankFragment"
-            android:label="fragment_blank"
-            tools:layout="@layout/fragment_blank" />
     </navigation>
     <navigation
         android:id="@+id/intro"
@@ -155,7 +150,7 @@
         <fragment
             android:id="@+id/introFragment"
             android:name="eu.michaelvogt.ar.author.IntroFragment"
-            android:label="fragment_intro"
+            android:label="Welcome"
             tools:layout="@layout/fragment_intro">
             <action
                 android:id="@+id/action_locationlist"
@@ -164,7 +159,7 @@
         <fragment
             android:id="@+id/locationlistFragment"
             android:name="eu.michaelvogt.ar.author.LocationlistFragment"
-            android:label="fragment_locationlist"
+            android:label="Locations"
             tools:layout="@layout/fragment_locationlist">
             <action
                 android:id="@+id/action_location_intro"
@@ -173,7 +168,7 @@
         <fragment
             android:id="@+id/locationIntro"
             android:name="eu.michaelvogt.ar.author.LocationIntroFragment"
-            android:label="fragment_location_intro"
+            android:label="Location info"
             tools:layout="@layout/fragment_locationintro">
             <action
                 android:id="@+id/action_preview_markers"
@@ -183,8 +178,8 @@
     <fragment
         android:id="@+id/panoramaFragment"
         android:name="eu.michaelvogt.ar.author.PanoramaFragment"
-        android:label="fragment_panorama"
-        tools:layout="@layout/fragment_panorama" >
+        android:label="Panorama"
+        tools:layout="@layout/fragment_panorama">
         <action
             android:id="@+id/action_panoramaFragment_to_imagePreviewFragment"
             app:destination="@id/imagePreviewFragment" />

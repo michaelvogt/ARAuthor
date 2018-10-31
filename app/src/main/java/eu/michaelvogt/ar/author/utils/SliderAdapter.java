@@ -20,9 +20,6 @@ package eu.michaelvogt.ar.author.utils;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v4.view.PagerAdapter;
-import android.support.v7.widget.AppCompatImageButton;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +31,9 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.viewpager.widget.PagerAdapter;
 import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.Slide;
 import eu.michaelvogt.ar.author.data.SlideKt;

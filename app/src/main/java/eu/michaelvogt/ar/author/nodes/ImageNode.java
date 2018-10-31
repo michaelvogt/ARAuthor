@@ -28,7 +28,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.util.SparseArray;
 
@@ -42,6 +41,7 @@ import com.google.ar.sceneform.rendering.Texture;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
+import androidx.core.content.ContextCompat;
 import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.AreaVisual;
 import eu.michaelvogt.ar.author.data.EventDetail;
