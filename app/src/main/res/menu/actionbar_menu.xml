@@ -15,13 +15,11 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 -->
-<resources>
-    <color name="primaryColor">#4caf50</color>
-    <color name="primaryLightColor">#80e27e</color>
-    <color name="primaryDarkColor">#087f23</color>
-    <color name="secondaryColor">#2e7d32</color>
-    <color name="secondaryLightColor">#60ad5e</color>
-    <color name="secondaryDarkColor">#005005</color>
-    <color name="primaryTextColor">#000000</color>
-    <color name="secondaryTextColor">#ffffff</color>
-</resources>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_feedback"
+        android:title="Feedback"
+        app:showAsAction="never" />
+</menu>

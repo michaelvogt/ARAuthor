@@ -28,6 +28,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.File;
@@ -57,6 +58,7 @@ public class EditFragmentMarker extends Fragment {
   private CheckBox editShowBackground;
 
   private Marker editMarker;
+  private ImageView markerImage;
   private AuthorViewModel viewModel;
   private EditFragment.UpdateMarkerHandler markerHandler;
 
@@ -71,6 +73,12 @@ public class EditFragmentMarker extends Fragment {
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
+
+    markerImage = view.findViewById(R.id.image_marker);
+    if (editMarker.hasImage()) {
+      markerImage.setImageBitmap(ImageUtils.decodeSampledBitmapFromImagePath(
+          editMarker.getMarkerImagePath(), 300, 300));
+    }
 
     // TODO: Use value binding?
     editTitle = view.findViewById(R.id.edit_title);

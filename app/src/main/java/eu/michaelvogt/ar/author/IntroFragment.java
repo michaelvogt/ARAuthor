@@ -30,7 +30,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
 
 public class IntroFragment extends Fragment {
@@ -70,10 +69,6 @@ public class IntroFragment extends Fragment {
             requestStorage.setOnClickListener(v -> ActivityCompat.requestPermissions(getActivity(),
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_STORAGE));
         }
-
-        view.findViewById(R.id.start_authoring_btn).setOnClickListener(
-                Navigation.createNavigateOnClickListener(R.id.action_locationlist)
-        );
     }
 
     @Override

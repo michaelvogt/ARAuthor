@@ -16,13 +16,20 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/action_search"
-        android:title="Search"
-        android:icon="@android:drawable/ic_menu_search" />
-    <item android:id="@+id/action_settings"
-        android:title="Settings"
-        android:icon="@android:drawable/ic_menu_add" />
-    <item android:id="@+id/action_navigation"
-        android:title="navigation"
-        android:icon="@android:drawable/ic_menu_save" />
+    <item
+        android:id="@id/location_list_fragment"
+        android:icon="@drawable/ic_account_balance_black_24dp"
+        android:title="Locations" />
+    <item
+        android:id="@id/marker_list_fragment"
+        android:icon="@android:drawable/ic_menu_report_image"
+        android:title="Marker" />
+    <item
+        android:id="@id/area_list_fragment"
+        android:icon="@android:drawable/ic_menu_report_image"
+        android:title="Area" />
+    <item
+        android:id="@+id/bottom_ar"
+        android:icon="@drawable/ic_ar_icon"
+        android:title="AR" />
 </menu>

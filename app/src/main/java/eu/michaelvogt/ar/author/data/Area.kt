@@ -29,6 +29,8 @@ const val GROUP_ALL = -1
 const val GROUP_NONE = 0
 const val GROUP_START = 1
 
+val GROUPS_ALL = arrayOf(GROUP_ALL, GROUP_START, GROUP_NONE)
+
 @Entity(tableName = "areas")
 class Area {
     @PrimaryKey(autoGenerate = true)

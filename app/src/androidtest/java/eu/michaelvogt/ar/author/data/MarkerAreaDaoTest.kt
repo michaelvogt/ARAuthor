@@ -19,7 +19,7 @@
 package eu.michaelvogt.ar.author.data
 
 import android.database.sqlite.SQLiteConstraintException
-import androidx.test.runner.AndroidJUnit4
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import eu.michaelvogt.ar.author.data.utils.TestUtil
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.AnyOf.anyOf
@@ -101,8 +101,8 @@ class MarkerAreaDaoTest : DaoTest() {
     fun getMarkersForArea() {
         val (markerId1, markerId2) = insertSampleItems()
 
-        val marker1Areas = markerAreaDao.getAreasForMarker(markerId1)
-        val marker2Areas = markerAreaDao.getAreasForMarker(markerId2)
+        val marker1Areas = markerAreaDao.getAreasForMarker(markerId1, GROUPS_ALL)
+        val marker2Areas = markerAreaDao.getAreasForMarker(markerId2, GROUPS_ALL)
 
         assertThat(marker1Areas.size, equalTo(3))
         assertThat(marker2Areas.size, equalTo(1))
@@ -125,7 +125,7 @@ class MarkerAreaDaoTest : DaoTest() {
     fun getAreaGroupForMarker() {
         val (markerId1) = insertSampleItems()
 
-        val areaGroupMarkers = markerAreaDao.getAreaGroupForMarker(markerId1, GROUP_START)
+        val areaGroupMarkers = markerAreaDao.getAreasForMarker(markerId1, arrayOf(GROUP_START, GROUP_ALL))
 
         assertThat(areaGroupMarkers.size, equalTo(2))
         assertThat(areaGroupMarkers[1].title, anyOf(equalTo("explanation"), equalTo("map")))

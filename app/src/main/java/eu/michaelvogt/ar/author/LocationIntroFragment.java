@@ -33,6 +33,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
 import eu.michaelvogt.ar.author.data.Location;
+import eu.michaelvogt.ar.author.data.MarkerKt;
 import eu.michaelvogt.ar.author.utils.FileUtils;
 
 public class LocationIntroFragment extends Fragment implements View.OnClickListener {
@@ -68,7 +69,7 @@ public class LocationIntroFragment extends Fragment implements View.OnClickListe
 
     // Due to the way the AR images database needs to be initialized, and the markers are
     // delivered asynchronously from the data database, the markers need to be cached beforehand
-    viewModel.getMarkersForLocation(locationId, true)
+    viewModel.getMarkersForLocation(locationId, MarkerKt.getMARKERS_AND_TITLES())
         .thenAccept(locations -> getActivity().runOnUiThread(() -> viewModel.setMarkersCache(locations)))
         .exceptionally(throwable -> {
           Log.e(TAG, "Unable to fetch markers for location " + locationId, throwable);

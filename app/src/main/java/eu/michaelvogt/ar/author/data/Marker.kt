@@ -21,6 +21,10 @@ package eu.michaelvogt.ar.author.data
 import androidx.room.*
 import com.google.ar.sceneform.math.Vector3
 
+val TITLES_ONLY = arrayOf(1)
+val MARKERS_ONLY = arrayOf(0)
+val MARKERS_AND_TITLES = arrayOf(0, 1)
+
 @Entity(
         tableName = "markers",
         foreignKeys = [ForeignKey(

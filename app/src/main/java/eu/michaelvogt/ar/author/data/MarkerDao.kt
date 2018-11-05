@@ -24,23 +24,20 @@ import androidx.room.Query
 @Dao
 interface MarkerDao : BaseDao<Marker> {
 
-    @Query("SELECT * from markers ORDER BY title ASC")
+    @Query("SELECT * FROM markers")
     fun getAll(): List<Marker>
 
-    @Query("SELECT * from markers where markers.u_id=:uId")
+    @Query("SELECT * FROM markers WHERE markers.u_id=:uId")
     fun get(uId: Long): Marker
 
     @Query("SELECT COUNT(*) FROM markers")
     fun getSize(): Int
 
-    @Query("SELECT * from markers WHERE title like :title")
+    @Query("SELECT * FROM markers WHERE title LIKE :title")
     fun findMarkerByTitle(title: String): Marker
 
-    @Query("SELECT * FROM markers WHERE location_id=:locationId AND is_title=0")
-    fun findMarkersOnlyForLocation(locationId: Long): List<Marker>
-
-    @Query("SELECT * FROM markers WHERE location_id=:locationId")
-    fun findMarkersAndTitlesForLocation(locationId: Long): List<Marker>
+    @Query("SELECT * FROM markers WHERE location_id=:locationId AND is_title IN (:titles)")
+    fun findMarkersForLocation(locationId: Long, titles: Array<Int>): List<Marker>
 
     @Query("DELETE FROM markers")
     fun deleteAll()

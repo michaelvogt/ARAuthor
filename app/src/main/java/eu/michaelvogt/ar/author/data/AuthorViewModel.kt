@@ -59,21 +59,21 @@ class AuthorViewModel(application: Application) : AndroidViewModel(application) 
 
     fun updateMarker(marker: Marker) = repository.update(marker)
 
-    fun getMarkersForLocation(locationId: Long, withTitles: Boolean):
+    fun getMarkersForLocation(locationId: Long, withTitles: Array<Int>):
             CompletableFuture<List<Marker>> = repository.getMarkersForLocation(locationId, withTitles)
 
     fun clearCropMarker() {
         cropMarker = null
     }
 
-    fun getAreasForMarker(markerId: Long, group: Int = GROUP_ALL):
+    fun getAreasForMarker(markerId: Long, group: Array<Int> = GROUPS_ALL):
             CompletableFuture<List<Area>> = repository.getAreasForMarker(markerId, group)
 
 
     fun getAreaVisual(uId: Long):
             CompletableFuture<AreaVisual> = repository.getAreaVisual(uId)
 
-    fun getAreaVisualsForMarker(uId: Long, group: Int = GROUP_ALL):
+    fun getAreaVisualsForMarker(uId: Long, group: Array<Int> = GROUPS_ALL):
             CompletableFuture<ArrayList<AreaVisual>> = repository.getAreaVisualsForMarker(uId, group)
 
     fun updateArea(area: Area) = repository.update(area)

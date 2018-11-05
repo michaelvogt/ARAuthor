@@ -20,7 +20,7 @@ package eu.michaelvogt.ar.author.data
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
-import androidx.test.InstrumentationRegistry
+import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -34,7 +34,7 @@ open class DaoTest {
 
     @Before
     fun createDb() {
-        db = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getTargetContext(), AppDatabase::class.java)
+        db = Room.inMemoryDatabaseBuilder(InstrumentationRegistry.getInstrumentation().targetContext, AppDatabase::class.java)
                 // allowing main thread queries, just for testing
                 .allowMainThreadQueries()
                 .build()

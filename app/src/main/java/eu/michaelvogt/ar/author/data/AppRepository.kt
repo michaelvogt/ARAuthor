@@ -97,11 +97,10 @@ class AppRepository internal constructor(db: AppDatabase?) {
         return CompletableFuture.supplyAsync { markerDao.getAll() }
     }
 
-    fun getMarkersForLocation(locationId: Long, withTitles: Boolean): CompletableFuture<List<Marker>> {
-        return if (withTitles) {
-            CompletableFuture.supplyAsync { markerDao.findMarkersAndTitlesForLocation(locationId) }
-        } else {
-            CompletableFuture.supplyAsync { markerDao.findMarkersOnlyForLocation(locationId) }
+    fun getMarkersForLocation(locationId: Long, withTitles: Array<Int>): CompletableFuture<List<Marker>> {
+        return when (locationId) {
+            NEW_CURRENT_LOCATION -> CompletableFuture.supplyAsync { markerDao.getAll() }
+            else -> CompletableFuture.supplyAsync { markerDao.findMarkersForLocation(locationId, withTitles) }
         }
     }
 
@@ -115,10 +114,10 @@ class AppRepository internal constructor(db: AppDatabase?) {
         return CompletableFuture.supplyAsync { areaDao.findAreaByTitle(title) }
     }
 
-    fun getAreasForMarker(markerId: Long, group: Int): CompletableFuture<List<Area>> {
-        return when (group) {
-            -1 -> CompletableFuture.supplyAsync { markerAreaDao.getAreasForMarker(markerId) }
-            else -> CompletableFuture.supplyAsync { markerAreaDao.getAreaGroupForMarker(markerId, group) }
+    fun getAreasForMarker(markerId: Long, group: Array<Int> = GROUPS_ALL): CompletableFuture<List<Area>> {
+        return when (markerId) {
+            NEW_CURRENT_MARKER -> CompletableFuture.supplyAsync { areaDao.getAll() }
+            else -> CompletableFuture.supplyAsync { markerAreaDao.getAreasForMarker(markerId, group) }
         }
     }
 
@@ -130,11 +129,11 @@ class AppRepository internal constructor(db: AppDatabase?) {
         }
     }
 
-    fun getAreaVisualsForMarker(markerId: Long, group: Int): CompletableFuture<ArrayList<AreaVisual>> {
+    fun getAreaVisualsForMarker(markerId: Long, groups: Array<Int>): CompletableFuture<ArrayList<AreaVisual>> {
         val areaVisuals = ArrayList<AreaVisual>()
 
         return CompletableFuture.supplyAsync {
-            val areas = markerAreaDao.getAreaGroupForMarker(markerId, group)
+            val areas = markerAreaDao.getAreasForMarker(markerId, groups)
             areas.forEach { areaVisuals.add(setupAreaVisual(it)) }
 
             areaVisuals

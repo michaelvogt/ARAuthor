@@ -24,7 +24,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,7 +35,6 @@ import androidx.navigation.Navigation;
 import androidx.viewpager.widget.ViewPager;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
 import eu.michaelvogt.ar.author.data.Marker;
-import eu.michaelvogt.ar.author.utils.ImageUtils;
 
 
 public class EditFragment extends Fragment {
@@ -45,7 +43,6 @@ public class EditFragment extends Fragment {
 
   private long editMarkerId;
   private Marker editMarker;
-  private ImageView markerImage;
   private AuthorViewModel viewModel;
 
   public EditFragment() {/* Required empty public constructor*/}
@@ -85,18 +82,11 @@ public class EditFragment extends Fragment {
   }
 
   private void finishSetup(View view) {
-    markerImage = view.findViewById(R.id.image_marker);
-    if (editMarker.hasImage()) {
-      markerImage.setImageBitmap(ImageUtils.decodeSampledBitmapFromImagePath(
-          editMarker.getMarkerImagePath(), 300, 300));
-    }
-
     TabAdapter tabAdapter = new TabAdapter(getChildFragmentManager(), editMarker);
     ViewPager tabPager = view.findViewById(R.id.editmarker_pager);
     tabPager.setAdapter(tabAdapter);
 
     view.findViewById(R.id.button_save).setOnClickListener(this::handleSave);
-    view.findViewById(R.id.button_cancel).setOnClickListener(this::handleCancel);
     view.findViewById(R.id.fab_ar).setOnClickListener(this::handleAr);
   }
 
@@ -115,10 +105,6 @@ public class EditFragment extends Fragment {
       viewModel.updateMarker(editMarker);
     }
 
-    Navigation.findNavController(view).navigate(R.id.action_list_markers);
-  }
-
-  private void handleCancel(View view) {
     Navigation.findNavController(view).navigate(R.id.action_list_markers);
   }
 
@@ -144,24 +130,11 @@ public class EditFragment extends Fragment {
     public Fragment getItem(int position) {
       switch (position) {
         case 0:
-          EditFragmentMarker tabMarker = EditFragmentMarker.instantiate(editMarker, viewModel, new UpdateMarkerHandler() {
-            @Override
-            public void updateMarker(Bitmap bitmap) {
-              markerImage.setImageBitmap(bitmap);
-            }
-
-            @Override
-            public void updateMarker(int resId) {
-              markerImage.setImageResource(resId);
-            }
-          });
-          return tabMarker;
+          return EditFragmentMarker.instantiate(editMarker, viewModel, null);
         case 1:
-          Fragment tabInfo = EditFragmentInfo.instantiate(editMarker);
-          return tabInfo;
+          return EditFragmentInfo.instantiate(editMarker);
         case 2:
-          Fragment tabAreas = EditFragmentAreas.instantiate(editMarkerId);
-          return tabAreas;
+          return EditFragmentAreas.instantiate(editMarkerId);
         default:
           throw new IllegalArgumentException("Requested edit marker tab doesn't exist: " + position);
       }

@@ -24,6 +24,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -32,6 +34,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
+import eu.michaelvogt.ar.author.data.AuthorViewModelKt;
 import eu.michaelvogt.ar.author.utils.ItemClickListener;
 import eu.michaelvogt.ar.author.utils.LocationListAdapter;
 
@@ -67,8 +70,6 @@ public class LocationlistFragment extends Fragment implements ItemClickListener 
 
     recyclerView.setAdapter(adapter);
 
-    Log.i(TAG, "Fetch all locations");
-
     viewModel.getAllLocations()
         .thenAccept(locations -> getActivity().runOnUiThread(() -> adapter.setLocations(locations)))
         .exceptionally(throwable -> {
@@ -79,10 +80,13 @@ public class LocationlistFragment extends Fragment implements ItemClickListener 
 
   @Override
   public void onItemClicked(long locationId) {
-
-    Log.i(TAG, "Set currentLocationId " + locationId);
+    BottomNavigationView bottomNav = getActivity().findViewById(R.id.bottom_nav);
+    bottomNav.getMenu().findItem(R.id.marker_list_fragment).setEnabled(true);
 
     viewModel.setCurrentLocationId(locationId);
+    viewModel.setCurrentMarkerId(AuthorViewModelKt.NEW_CURRENT_MARKER);
+    viewModel.setCurrentAreaId(AuthorViewModelKt.NEW_CURRENT_AREA);
+
     Navigation.findNavController(view).navigate(R.id.action_location_intro);
   }
 }

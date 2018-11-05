@@ -1,7 +1,7 @@
 package eu.michaelvogt.ar.author.data
 
 import android.database.sqlite.SQLiteConstraintException
-import androidx.test.runner.AndroidJUnit4
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import eu.michaelvogt.ar.author.data.utils.LiveDataTestUtil
 import eu.michaelvogt.ar.author.data.utils.TestUtil
 import org.hamcrest.core.IsEqual

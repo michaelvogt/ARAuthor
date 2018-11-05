@@ -19,7 +19,7 @@
 package eu.michaelvogt.ar.author.data
 
 import android.database.sqlite.SQLiteConstraintException
-import androidx.test.runner.AndroidJUnit4
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import eu.michaelvogt.ar.author.data.utils.TestUtil
 import org.hamcrest.core.IsEqual
 import org.junit.Assert
@@ -79,14 +79,14 @@ class MarkerDaoTest : DaoTest() {
     }
 
     @Test
-    fun getWithoutTitles() {
+    fun getWithOrWithoutTitles() {
         val locationId = locationDao.insert(TestUtil.location1())
 
         markerDao.insert(TestUtil.markerTitle(locationId))
         markerDao.insertAll(TestUtil.marker(locationId))
 
-        val withTitle = markerDao.findMarkersAndTitlesForLocation(locationId)
-        val withoutTitle = markerDao.findMarkersOnlyForLocation(locationId)
+        val withTitle = markerDao.findMarkersForLocation(locationId, arrayOf(0, 1))
+        val withoutTitle = markerDao.findMarkersForLocation(locationId, arrayOf(0))
 
         Assert.assertThat<Int>(withTitle.size, IsEqual.equalTo(2))
         Assert.assertThat<Int>(withoutTitle.size, IsEqual.equalTo(1))

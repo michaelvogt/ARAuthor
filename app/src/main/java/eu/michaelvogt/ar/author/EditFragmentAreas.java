@@ -33,6 +33,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import eu.michaelvogt.ar.author.data.AreaKt;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
+import eu.michaelvogt.ar.author.data.AuthorViewModelKt;
 import eu.michaelvogt.ar.author.utils.AreaListAdapter;
 import eu.michaelvogt.ar.author.utils.ItemClickListener;
 
@@ -41,7 +42,7 @@ public class EditFragmentAreas extends Fragment implements ItemClickListener {
 
   private View view;
 
-  private long markerId;
+  private long markerId = AuthorViewModelKt.NEW_CURRENT_MARKER;
   private AuthorViewModel viewModel;
 
   public EditFragmentAreas() {/* Required empty public constructor*/}
@@ -69,8 +70,8 @@ public class EditFragmentAreas extends Fragment implements ItemClickListener {
 
     recyclerView.setAdapter(adapter);
 
-    viewModel.getAreasForMarker(markerId, AreaKt.GROUP_ALL)
-        .thenAccept(adapter::setAreas)
+    viewModel.getAreasForMarker(markerId, AreaKt.getGROUPS_ALL())
+        .thenAccept(areas -> getActivity().runOnUiThread(() -> adapter.setAreas(areas)))
         .exceptionally(throwable -> {
           Log.e(TAG, "Unable to fetch areas for marker " + markerId, throwable);
           return null;

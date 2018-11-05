@@ -18,7 +18,7 @@
 
 package eu.michaelvogt.ar.author.data
 
-import androidx.test.runner.AndroidJUnit4
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import eu.michaelvogt.ar.author.data.utils.TestUtil
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.Assert
