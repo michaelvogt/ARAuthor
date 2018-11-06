@@ -18,11 +18,13 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
 
   private List<Location> locations;
   private LayoutInflater inflater;
+  private CardMenuHandler locationMenuHandler;
 
   private ItemClickListener listener;
 
-  public LocationListAdapter(Context context) {
+  public LocationListAdapter(Context context, CardMenuHandler locationMenuHandler) {
     inflater = LayoutInflater.from(context);
+    this.locationMenuHandler = locationMenuHandler;
   }
 
   public void setLocations(List<Location> locations) {
@@ -47,6 +49,8 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
       holder.locationName.setText(item.getName());
       holder.locationImage.setImageBitmap(ImageUtils.decodeSampledBitmapFromImagePath(
           item.getThumbPath(), 500, 200));
+      holder.locationMenu.setOnClickListener(view ->
+          locationMenuHandler.onMenuClick(view, locations.get(position)));
     }
   }
 
@@ -63,12 +67,14 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
     // each data item is just a string in this case
     private ImageView locationImage;
     private TextView locationName;
+    private ImageView locationMenu;
 
     ViewHolder(View view) {
       super(view);
 
       locationImage = view.findViewById(R.id.location_image);
       locationName = view.findViewById(R.id.location_title);
+      locationMenu = view.findViewById(R.id.location_menu);
 
       view.setOnClickListener(view1 -> {
         if (listener != null) {

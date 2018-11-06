@@ -21,6 +21,8 @@ package eu.michaelvogt.ar.author;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -62,7 +64,7 @@ public class AreaEditFragment extends Fragment {
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
-    // Inflate the layout for this fragment
+    setHasOptionsMenu(true);
     return inflater.inflate(R.layout.fragment_area_edit, container, false);
   }
 
@@ -79,6 +81,11 @@ public class AreaEditFragment extends Fragment {
           Log.e(TAG, "Unable to create area and set data.", throwable);
           return null;
         });
+  }
+
+  @Override
+  public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    inflater.inflate(R.menu.actionbar_areaedit_menu, menu);
   }
 
   private void finishSetup(View view, AreaVisual editArea) {

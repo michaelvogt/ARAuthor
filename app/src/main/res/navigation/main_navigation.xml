@@ -18,7 +18,7 @@
 <navigation xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/introFragment">
+    app:startDestination="@id/intro_fragment">
 
     <fragment
         android:id="@+id/imagePreviewFragment"
@@ -53,9 +53,6 @@
         android:name="eu.michaelvogt.ar.author.MarkerListFragment"
         android:label="Markers"
         tools:layout="@layout/fragment_markerlist">
-        <action
-            android:id="@+id/action_edit_marker"
-            app:destination="@+id/edit" />
         <action
             android:id="@+id/action_test_markers"
             app:destination="@id/imagePreviewFragment" />
@@ -145,13 +142,16 @@
             android:defaultValue="AMBIENT_INTENSITY" />
     </fragment>
     <fragment
-        android:id="@+id/introFragment"
+        android:id="@+id/intro_fragment"
         android:name="eu.michaelvogt.ar.author.IntroFragment"
         android:label="Welcome"
         tools:layout="@layout/fragment_intro">
         <action
             android:id="@+id/action_locationlist"
             app:destination="@id/location_list_fragment" />
+        <action
+            android:id="@+id/action_permission_check"
+            app:destination="@id/permission_check_fragment" />
     </fragment>
     <fragment
         android:id="@+id/location_list_fragment"
@@ -188,5 +188,14 @@
         <action
             android:id="@+id/action_edit_area_placement"
             app:destination="@id/area_edit_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/permission_check_fragment"
+        android:name="eu.michaelvogt.ar.author.PermissionCheckFragment"
+        android:label="Permissions"
+        tools:layout="@layout/fragment_permission_check">
+        <action
+            android:id="@+id/action_locationlist"
+            app:destination="@id/location_list_fragment" />
     </fragment>
 </navigation>

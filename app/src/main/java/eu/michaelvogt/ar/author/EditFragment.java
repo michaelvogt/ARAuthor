@@ -18,10 +18,12 @@
 
 package eu.michaelvogt.ar.author;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -44,18 +46,22 @@ public class EditFragment extends Fragment {
   private long editMarkerId;
   private Marker editMarker;
   private AuthorViewModel viewModel;
+  private View view;
 
   public EditFragment() {/* Required empty public constructor*/}
 
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
+    setHasOptionsMenu(true);
     return inflater.inflate(R.layout.fragment_editmarker, container, false);
   }
 
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
+
+    this.view = view;
 
     viewModel = ViewModelProviders.of(getActivity()).get(AuthorViewModel.class);
     editMarkerId = viewModel.getCurrentMarkerId();
@@ -67,12 +73,12 @@ public class EditFragment extends Fragment {
         editMarker = cropMarker;
         viewModel.clearCropMarker();
       }
-      finishSetup(view);
+      finishSetup();
     } else {
       viewModel.getMarker(editMarkerId)
           .thenAccept(marker -> {
             editMarker = marker;
-            getActivity().runOnUiThread(() -> finishSetup(view));
+            getActivity().runOnUiThread(this::finishSetup);
           })
           .exceptionally(throwable -> {
             Log.e(TAG, "Unable to fetch marker " + editMarkerId, throwable);
@@ -81,13 +87,26 @@ public class EditFragment extends Fragment {
     }
   }
 
-  private void finishSetup(View view) {
+  @Override
+  public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    inflater.inflate(R.menu.actionbar_editmarker_menu, menu);
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case R.id.actionbar_editmarker_save:
+        handleSave();
+        return true;
+      default:
+        return super.onOptionsItemSelected(item);
+    }
+  }
+
+  private void finishSetup() {
     TabAdapter tabAdapter = new TabAdapter(getChildFragmentManager(), editMarker);
     ViewPager tabPager = view.findViewById(R.id.editmarker_pager);
     tabPager.setAdapter(tabAdapter);
-
-    view.findViewById(R.id.button_save).setOnClickListener(this::handleSave);
-    view.findViewById(R.id.fab_ar).setOnClickListener(this::handleAr);
   }
 
   private void handleAr(View view) {
@@ -97,7 +116,7 @@ public class EditFragment extends Fragment {
     Navigation.findNavController(view).navigate(R.id.action_marker_preview, bundle);
   }
 
-  private void handleSave(View view) {
+  private void handleSave() {
     if (editMarkerId == -1) {
       editMarker.setLocationId(viewModel.getCurrentLocationId());
       viewModel.addMarker(editMarker);
@@ -130,7 +149,7 @@ public class EditFragment extends Fragment {
     public Fragment getItem(int position) {
       switch (position) {
         case 0:
-          return EditFragmentMarker.instantiate(editMarker, viewModel, null);
+          return EditFragmentMarker.instantiate(editMarker, viewModel);
         case 1:
           return EditFragmentInfo.instantiate(editMarker);
         case 2:
@@ -139,11 +158,5 @@ public class EditFragment extends Fragment {
           throw new IllegalArgumentException("Requested edit marker tab doesn't exist: " + position);
       }
     }
-  }
-
-  public interface UpdateMarkerHandler {
-    void updateMarker(Bitmap bitmap);
-
-    void updateMarker(int ic_launcher);
   }
 }

@@ -19,28 +19,26 @@
 package eu.michaelvogt.ar.author;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 
 public class IntroFragment extends Fragment {
 
-    private static final int REQUEST_CAMERA = 1;
-    private static final int REQUEST_STORAGE = 2;
-
     public IntroFragment() {/* Required empty public constructor*/}
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_intro, container, false);
     }
@@ -49,35 +47,18 @@ public class IntroFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (ActivityCompat.checkSelfPermission(getContext(),
-                Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            view.findViewById(R.id.req_needed_header).setVisibility(View.VISIBLE);
-            view.findViewById(R.id.camera_req_text).setVisibility(View.VISIBLE);
-            View requestCamera = view.findViewById(R.id.camera_req_btn);
-            requestCamera.setVisibility(View.VISIBLE);
-            requestCamera.setOnClickListener(v -> ActivityCompat.requestPermissions(getActivity(),
-                    new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA));
+      String buttonText = "Enter application";
+      int action = R.id.action_locationlist;
 
-        }
+      if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
+          ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+        buttonText = "Check permissions";
+        action = R.id.action_permission_check;
+      }
 
-        if (ActivityCompat.checkSelfPermission(getContext(),
-                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            view.findViewById(R.id.req_needed_header).setVisibility(View.VISIBLE);
-            view.findViewById(R.id.storage_req_text).setVisibility(View.VISIBLE);
-            View requestStorage = view.findViewById(R.id.storage_req_btn);
-            requestStorage.setVisibility(View.VISIBLE);
-            requestStorage.setOnClickListener(v -> ActivityCompat.requestPermissions(getActivity(),
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_STORAGE));
-        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
+      Button enterButton = view.findViewById(R.id.intro_enter_button);
+      enterButton.setText(buttonText);
+      enterButton.setOnClickListener(Navigation.createNavigateOnClickListener(action)
+      );
     }
 }

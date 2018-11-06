@@ -60,14 +60,14 @@ public class EditFragmentMarker extends Fragment {
   private Marker editMarker;
   private ImageView markerImage;
   private AuthorViewModel viewModel;
-  private EditFragment.UpdateMarkerHandler markerHandler;
 
   public EditFragmentMarker() {/* Required empty public constructor*/}
 
-  @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                           Bundle savedInstanceState) {
-    return inflater.inflate(R.layout.fragment_editmarker_marker, container, false);
+  public static EditFragmentMarker instantiate(Marker marker, AuthorViewModel viewModel) {
+    EditFragmentMarker fragmentMarker = new EditFragmentMarker();
+    fragmentMarker.setViewModel(viewModel);
+    fragmentMarker.setMarker(marker);
+    return fragmentMarker;
   }
 
   @Override
@@ -116,41 +116,9 @@ public class EditFragmentMarker extends Fragment {
   }
 
   @Override
-  public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-      markerHandler.updateMarker(ImageUtils.decodeSampledBitmapFromImagePath(
-          editMarker.getMarkerImagePath(), 100, 100));
-    } else if (requestCode == REQUEST_PICK_IMAGE && resultCode == RESULT_OK) {
-      Uri selectedImage = data.getData();
-      String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
-      Cursor cursor = getActivity().getContentResolver().query(selectedImage,
-          filePathColumn, null, null, null);
-
-      if (cursor != null) {
-        cursor.moveToFirst();
-        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-        String imagePath = cursor.getString(columnIndex);
-        cursor.close();
-
-        String photoPath;
-
-        try {
-          File sourceFile = new File(imagePath);
-          photoPath = FileUtils.MARKERS_PATH + sourceFile.getName();
-          FileUtils.copyFile(sourceFile, FileUtils.getFullPuplicFolderFile(photoPath));
-        } catch (IOException e) {
-          photoPath = "";
-          markerHandler.updateMarker(R.drawable.ic_launcher);
-          e.printStackTrace();
-        }
-
-        markerHandler.updateMarker(ImageUtils.decodeSampledBitmapFromImagePath(
-            photoPath, 100, 100));
-
-        editMarker.setMarkerImagePath(photoPath);
-      }
-    }
+  public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                           Bundle savedInstanceState) {
+    return inflater.inflate(R.layout.fragment_editmarker_marker, container, false);
   }
 
   private void setMarker(Marker marker) {
@@ -159,10 +127,6 @@ public class EditFragmentMarker extends Fragment {
 
   private void setViewModel(AuthorViewModel viewModel) {
     this.viewModel = viewModel;
-  }
-
-  private void setMarkerHandler(EditFragment.UpdateMarkerHandler markerHandler) {
-    this.markerHandler = markerHandler;
   }
 
   private void handleCrop(View view) {
@@ -211,11 +175,41 @@ public class EditFragmentMarker extends Fragment {
     return image;
   }
 
-  public static EditFragmentMarker instantiate(Marker marker, AuthorViewModel viewModel, EditFragment.UpdateMarkerHandler markerHandler) {
-    EditFragmentMarker fragmentMarker = new EditFragmentMarker();
-    fragmentMarker.setViewModel(viewModel);
-    fragmentMarker.setMarker(marker);
-    fragmentMarker.setMarkerHandler(markerHandler);
-    return fragmentMarker;
+  @Override
+  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+      markerImage.setImageBitmap(ImageUtils.decodeSampledBitmapFromImagePath(
+          editMarker.getMarkerImagePath(), 100, 100));
+    } else if (requestCode == REQUEST_PICK_IMAGE && resultCode == RESULT_OK) {
+      Uri selectedImage = data.getData();
+      String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+      Cursor cursor = getActivity().getContentResolver().query(selectedImage,
+          filePathColumn, null, null, null);
+
+      if (cursor != null) {
+        cursor.moveToFirst();
+        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+        String imagePath = cursor.getString(columnIndex);
+        cursor.close();
+
+        String photoPath;
+
+        try {
+          File sourceFile = new File(imagePath);
+          photoPath = FileUtils.MARKERS_PATH + sourceFile.getName();
+          FileUtils.copyFile(sourceFile, FileUtils.getFullPuplicFolderFile(photoPath));
+        } catch (IOException e) {
+          photoPath = "";
+          markerImage.setImageResource(R.drawable.ic_launcher);
+          e.printStackTrace();
+        }
+
+        markerImage.setImageBitmap(ImageUtils.decodeSampledBitmapFromImagePath(
+            photoPath, 100, 100));
+
+        editMarker.setMarkerImagePath(photoPath);
+      }
+    }
   }
 }

@@ -31,10 +31,11 @@
         as a browser app.
     </string>
 
-    <string name="req_header">The following requirements are needed</string>
+    <string name="req_header">The application needs access to the following parts of your device,
+        that need your approval. Without them, the application can\'t provide its functionality.</string>
 
     <string name="camera_req">The camera requirement is needed for the ARCore preview. Image
-        processing is handled locally, no images are sent over the network</string>
+        processing is handled locally, no images are sent back over the network</string>
     <string name="camera_req_btn">Approve camera access</string>
 
     <string name="storage_req">Images and settings are stored in files on the public local storage

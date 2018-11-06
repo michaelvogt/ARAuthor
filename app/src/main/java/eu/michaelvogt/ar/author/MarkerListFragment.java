@@ -54,7 +54,6 @@ public class MarkerListFragment extends Fragment implements ItemClickListener {
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     setHasOptionsMenu(true);
-
     return inflater.inflate(R.layout.fragment_markerlist, container, false);
   }
 
@@ -92,25 +91,23 @@ public class MarkerListFragment extends Fragment implements ItemClickListener {
       Navigation.findNavController(view).navigate(R.id.action_test_markers);
       return true;
     });
-
-    view.findViewById(R.id.editmarker_fab).setOnClickListener(v -> {
-      viewModel.setCurrentMarkerId(AuthorViewModelKt.NEW_CURRENT_MARKER);
-      Navigation.findNavController(view).navigate(R.id.action_edit_marker);
-    });
   }
 
   @Override
   public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
     if (getActivity() == null) return;
-
-    getActivity().getMenuInflater().inflate(R.menu.actionbar_marker_menu, menu);
+    inflater.inflate(R.menu.actionbar_markerlist_menu, menu);
   }
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
-      case R.id.action_load_markers:
+      case R.id.actionbar_markerlist_load:
         Log.i(TAG, "Load markers");
+        return true;
+      case R.id.actionbar_markerlist_new:
+        viewModel.setCurrentMarkerId(AuthorViewModelKt.NEW_CURRENT_MARKER);
+        Navigation.findNavController(view).navigate(R.id.action_edit_marker);
         return true;
     }
 
