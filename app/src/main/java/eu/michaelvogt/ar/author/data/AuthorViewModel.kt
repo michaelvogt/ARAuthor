@@ -52,6 +52,8 @@ class AuthorViewModel(application: Application) : AndroidViewModel(application) 
 
     fun getAllLocations(): CompletableFuture<List<Location>> = repository.allLocations()
 
+    fun deleteLocation(location: Location): CompletableFuture<Unit>? = repository.deleteLocation(location)
+
 
     fun addMarker(marker: Marker) = repository.insert(marker)
 

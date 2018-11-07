@@ -48,6 +48,7 @@ public class LocationlistFragment extends Fragment implements ItemClickListener 
 
   private View view;
   private AuthorViewModel viewModel;
+  private LocationListAdapter adapter;
 
   public LocationlistFragment() {/* Required empty public constructor*/}
 
@@ -72,16 +73,11 @@ public class LocationlistFragment extends Fragment implements ItemClickListener 
     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
     recyclerView.setLayoutManager(layoutManager);
 
-    LocationListAdapter adapter = new LocationListAdapter(getContext(), new HandleLocationMenu());
+    adapter = new LocationListAdapter(getContext(), new HandleLocationMenu());
     adapter.setItemClickListener(this);
     recyclerView.setAdapter(adapter);
 
-    viewModel.getAllLocations()
-        .thenAccept(locations -> getActivity().runOnUiThread(() -> adapter.setLocations(locations)))
-        .exceptionally(throwable -> {
-          Log.e(TAG, "Unable to fetch all locations.", throwable);
-          return null;
-        });
+    setLocations();
   }
 
   @Override
@@ -101,6 +97,15 @@ public class LocationlistFragment extends Fragment implements ItemClickListener 
     Navigation.findNavController(view).navigate(R.id.action_location_intro);
   }
 
+  private void setLocations() {
+    viewModel.getAllLocations()
+        .thenAccept(locations -> getActivity().runOnUiThread(() -> adapter.setLocations(locations)))
+        .exceptionally(throwable -> {
+          Log.e(TAG, "Unable to fetch all locations.", throwable);
+          return null;
+        });
+  }
+
   private class HandleLocationMenu implements CardMenuHandler {
     @Override
     public void onMenuClick(View view, Location location) {
@@ -110,7 +115,8 @@ public class LocationlistFragment extends Fragment implements ItemClickListener 
       popupMenu.setOnMenuItemClickListener(item -> {
         switch (item.getItemId()) {
           case R.id.menu_location_delete:
-            Log.i(TAG, "Delete location");
+            viewModel.deleteLocation(location)
+                .thenAccept(unit -> getActivity().runOnUiThread(LocationlistFragment.this::setLocations));
             return true;
           default:
             return false;

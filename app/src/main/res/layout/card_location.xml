@@ -51,7 +51,7 @@
             android:layout_height="44dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp"
+            android:layout_marginEnd="52dp"
             android:background="#4cffffff"
             android:fontFamily="serif"
             android:gravity="center_vertical|start"
@@ -69,13 +69,13 @@
 
         <ImageButton
             android:id="@+id/location_menu"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="8dp"
+            android:layout_width="44dp"
+            android:layout_height="0dp"
             android:layout_marginEnd="8dp"
             android:background="#7fff"
+            card_view:layout_constraintBottom_toBottomOf="@+id/location_title"
             card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintTop_toTopOf="parent"
+            card_view:layout_constraintTop_toTopOf="@+id/location_title"
             card_view:srcCompat="@drawable/ic_more_vert_black_24dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

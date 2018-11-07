@@ -30,7 +30,8 @@ import androidx.room.Index
             ForeignKey(
                     entity = Marker::class,
                     parentColumns = arrayOf("u_id"),
-                    childColumns = arrayOf("marker_id")),
+                    childColumns = arrayOf("marker_id"),
+                    onDelete = ForeignKey.CASCADE),       // TODO: Need to check
             ForeignKey(
                     entity = Area::class,
                     parentColumns = arrayOf("u_id"),

@@ -67,6 +67,15 @@ class AuthorActivity : AppCompatActivity() {
         val bottomNav = findViewById<View>(R.id.bottom_nav) as BottomNavigationView
         NavigationUI.setupWithNavController(bottomNav, navController)
 
+        navController.addOnNavigatedListener { controller, destination ->
+            when (destination.id) {
+                R.id.intro_fragment, R.id.permission_check_fragment ->
+                    bottomNav.visibility = View.GONE
+                else ->
+                    bottomNav.visibility = View.VISIBLE
+            }
+        }
+
         val database = AppDatabase.getDatabase(applicationContext)
 
         // Fetching something seems to be the only way to open the database and trigger the callback

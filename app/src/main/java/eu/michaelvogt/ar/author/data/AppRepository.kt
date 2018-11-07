@@ -66,6 +66,7 @@ class AppRepository internal constructor(db: AppDatabase?) {
         }
     }
 
+
     fun update(location: Location) {
         doAsync { locationDao.update(location) }
     }
@@ -77,6 +78,12 @@ class AppRepository internal constructor(db: AppDatabase?) {
     fun update(area: Area) {
         doAsync { areaDao.update(area) }
     }
+
+
+    fun deleteLocation(location: Location): CompletableFuture<Unit>? {
+        return CompletableFuture.supplyAsync { locationDao.delete(location) }
+    }
+
 
     // Location
     fun getLocation(uId: Long): CompletableFuture<Location> {
