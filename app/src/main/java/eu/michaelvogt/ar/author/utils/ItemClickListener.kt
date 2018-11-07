@@ -16,12 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author.utils;
+package eu.michaelvogt.ar.author.utils
 
-import com.google.ar.core.exceptions.CameraNotAvailableException;
-
-public interface SceneViewCallback {
-  void pause();
-
-  void resume() throws CameraNotAvailableException;
+interface ItemClickListener {
+    fun onItemClicked(uId: Long)
 }

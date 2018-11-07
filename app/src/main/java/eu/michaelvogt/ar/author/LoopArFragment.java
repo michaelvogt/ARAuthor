@@ -60,7 +60,7 @@ public class LoopArFragment extends ArFragment {
             if (marker.isTitle()) {
               location = marker.getTitle();
             } else {
-              bitmap = ImageUtils.decodeSampledBitmapFromImagePath(
+              bitmap = ImageUtils.INSTANCE.decodeSampledBitmapFromImagePath(
                   marker.getMarkerImagePath(), Marker.MIN_SIZE, Marker.MIN_SIZE);
               if (bitmap != null) {
                 int index = marker.getWidthInM() <= 0

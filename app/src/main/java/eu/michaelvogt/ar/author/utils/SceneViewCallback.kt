@@ -16,20 +16,13 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author.utils;
+package eu.michaelvogt.ar.author.utils
 
-public class ListHeader {
-  private String title;
+import com.google.ar.core.exceptions.CameraNotAvailableException
 
-  public ListHeader(String title) {
-    this.title = title;
-  }
+interface SceneViewCallback {
+    fun pause()
 
-  public String getTitle() {
-    return title;
-  }
-
-  public void setTitle(String title) {
-    this.title = title;
-  }
+    @Throws(CameraNotAvailableException::class)
+    fun resume()
 }

@@ -16,53 +16,50 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author.utils;
+package eu.michaelvogt.ar.author.utils
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 
-public class ImageUtils {
+object ImageUtils {
 
-    public static Bitmap decodeSampledBitmapFromImagePath(
-            String path, int reqWidth, int reqHeight) {
+    fun decodeSampledBitmapFromImagePath(
+            path: String, reqWidth: Int, reqHeight: Int): Bitmap {
 
-        String picturePath = FileUtils.getFullPuplicFolderPath(path);
+        val picturePath = FileUtils.getFullPuplicFolderPath(path)
 
         // First decode with inJustDecodeBounds=true to check dimensions
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(picturePath, options);
+        val options = BitmapFactory.Options()
+        options.inJustDecodeBounds = true
+        BitmapFactory.decodeFile(picturePath, options)
 
         // Calculate inSampleSize
-        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight)
 
         // Decode bitmap with inSampleSize set
-        options.inJustDecodeBounds = false;
-        return BitmapFactory.decodeFile(picturePath, options);
+        options.inJustDecodeBounds = false
+        return BitmapFactory.decodeFile(picturePath, options)
     }
 
-    public static int calculateInSampleSize(
-            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+    private fun calculateInSampleSize(
+            options: BitmapFactory.Options, reqWidth: Int, reqHeight: Int): Int {
         // Raw height and width of image
-        final int height = options.outHeight;
-        final int width = options.outWidth;
-        int inSampleSize = 1;
+        val height = options.outHeight
+        val width = options.outWidth
+        var inSampleSize = 1
 
         if (height > reqHeight && width > reqWidth) {
 
-            final int halfHeight = height / 2;
-            final int halfWidth = width / 2;
+            val halfHeight = height / 2
+            val halfWidth = width / 2
 
             // Calculate the largest inSampleSize value that is a power of 2 and keeps both
             // height and width larger than the requested height and width.
-            while ((halfHeight / inSampleSize) > reqHeight
-                    && (halfWidth / inSampleSize) > reqWidth) {
-                inSampleSize *= 2;
+            while (halfHeight / inSampleSize > reqHeight && halfWidth / inSampleSize > reqWidth) {
+                inSampleSize *= 2
             }
         }
 
-        return inSampleSize;
+        return inSampleSize
     }
-
-
 }
