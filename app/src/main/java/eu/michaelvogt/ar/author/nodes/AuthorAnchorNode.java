@@ -41,15 +41,14 @@ import java.util.List;
 
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
-import eu.michaelvogt.ar.author.ImagePreviewFragment;
 import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.AreaVisualKt;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
 import eu.michaelvogt.ar.author.data.EventDetail;
 import eu.michaelvogt.ar.author.data.EventDetailKt;
 import eu.michaelvogt.ar.author.data.Slide;
-import eu.michaelvogt.ar.author.utils.AreaNodeBuilder;
-import eu.michaelvogt.ar.author.utils.Slider;
+import eu.michaelvogt.ar.author.fragments.ImagePreviewFragment;
+import eu.michaelvogt.ar.author.fragments.adapters.Slider;
 import eu.michaelvogt.ar.author.utils.ToggleSlideTextHandler;
 
 public class AuthorAnchorNode extends AnchorNode {

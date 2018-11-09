@@ -15,69 +15,84 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 -->
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
 
-    android:id="@+id/marker_card"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="3dp"
-    android:layout_marginBottom="3dp"
-    card_view:cardBackgroundColor="@android:color/background_light"
-    card_view:cardCornerRadius="2dp"
-    card_view:cardElevation="2dp"
-    card_view:cardUseCompatPadding="false">
+<layout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <data>
+
+        <variable
+            name="location"
+            type="eu.michaelvogt.ar.author.data.Location" />
+    </data>
+
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+
+        android:id="@+id/location_card"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
+        card_view:cardBackgroundColor="@android:color/background_light"
+        card_view:cardCornerRadius="2dp"
+        card_view:cardElevation="2dp"
+        card_view:cardUseCompatPadding="false">
 
-        <ImageView
-            android:id="@+id/location_image"
-            android:layout_width="0dp"
-            android:layout_height="200dp"
-            android:contentDescription="@string/marker_image_desc"
-            android:scaleType="centerCrop"
-            card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/location_title"
-            android:layout_width="0dp"
-            android:layout_height="44dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="52dp"
-            android:background="#4cffffff"
-            android:fontFamily="serif"
-            android:gravity="center_vertical|start"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:textAlignment="center"
-            android:textAppearance="@android:style/TextAppearance.Material.Title"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            card_view:layout_constraintEnd_toEndOf="@+id/location_image"
-            card_view:layout_constraintHorizontal_bias="0.0"
-            card_view:layout_constraintStart_toStartOf="@+id/location_image"
-            card_view:layout_constraintTop_toTopOf="@+id/location_image"
-            tools:text="石見銀山" />
+            <ImageView
+                android:id="@+id/location_image"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:contentDescription="@string/marker_image_desc"
+                android:scaleType="centerCrop"
 
-        <ImageButton
-            android:id="@+id/location_menu"
-            android:layout_width="44dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="8dp"
-            android:background="#7fff"
-            card_view:layout_constraintBottom_toBottomOf="@+id/location_title"
-            card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintTop_toTopOf="@+id/location_title"
-            card_view:srcCompat="@drawable/ic_more_vert_black_24dp" />
+                card_view:imageUrl="@{location.thumbPath}"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent"
+                card_view:placeholder="@{@drawable/ic_launcher}" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/location_title"
+                android:layout_width="0dp"
+                android:layout_height="44dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="52dp"
+                android:background="#4cffffff"
+                android:fontFamily="serif"
+                android:gravity="center_vertical|start"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:text="@{location.name}"
+                android:textAlignment="center"
+                android:textAppearance="@android:style/TextAppearance.Material.Title"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                card_view:layout_constraintEnd_toEndOf="@+id/location_image"
+                card_view:layout_constraintHorizontal_bias="0.0"
+                card_view:layout_constraintStart_toStartOf="@+id/location_image"
+                card_view:layout_constraintTop_toTopOf="@+id/location_image"
+                tools:text="石見銀山" />
 
-</androidx.cardview.widget.CardView>
+            <ImageButton
+                android:id="@+id/location_menu"
+                android:layout_width="44dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="8dp"
+                android:background="#7fff"
+
+                card_view:layout_constraintBottom_toBottomOf="@+id/location_title"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintTop_toTopOf="@+id/location_title"
+                card_view:srcCompat="@drawable/ic_more_vert_black_24dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

@@ -35,7 +35,7 @@ const val TAG_QUATERNION = "<quaternion>"
 const val TAG_FLOATLIST = "<floatlist>"
 
 class Converters {
-    // TODO: Use kotlin.serializable
+    // TODO: Use kotlin.serializable when usable
 
     @TypeConverter
     fun vector3FromString(value: String?): Vector3? {

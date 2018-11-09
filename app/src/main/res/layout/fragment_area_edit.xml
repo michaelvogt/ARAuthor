@@ -15,412 +15,397 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 -->
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:isScrollContainer="true"
-    android:scrollbars="vertical">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <data>
+
+        <import type="eu.michaelvogt.ar.author.utils.ViewConverters" />
+
+        <variable
+            name="area"
+            type="eu.michaelvogt.ar.author.data.Area" />
+    </data>
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="2000dp"
-        tools:context=".AreaEditFragment">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:isScrollContainer="true"
+        android:scrollbars="vertical">
 
-
-        <TextView
-            android:id="@+id/area_edit_display_header"
+        <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="Display"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="2000dp"
+            tools:context=".fragments.AreaEditFragment">
 
-        <View
-            android:id="@+id/area_edit_display_divider"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:background="?android:attr/listDivider"
-            android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/area_edit_display_header" />
 
-        <Switch
-            android:id="@+id/area_edit_display_translucent"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="Translucent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/area_edit_display_divider" />
+            <TextView
+                android:id="@+id/area_edit_display_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="Display"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/area_edit_location_header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:text="Location"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/area_edit_display_translucent" />
+            <View
+                android:id="@+id/area_edit_display_divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="?android:attr/listDivider"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/area_edit_display_header" />
 
-        <View
-            android:id="@+id/area_edit_location_divider"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:background="?android:attr/listDivider"
-            android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/area_edit_location_header" />
+            <Switch
+                android:id="@+id/area_edit_display_translucent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="Translucent"
+                android:textStyle="normal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/area_edit_display_divider" />
 
-        <TextView
-            android:id="@+id/areaedit_xl_label"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="X:"
-            android:textAlignment="textEnd"
-            app:layout_constraintBaseline_toBaselineOf="@+id/areaedit_xl_edit"
-            app:layout_constraintEnd_toStartOf="@+id/areaedit_xl_edit"
-            app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/area_edit_location_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:text="Position"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/area_edit_display_translucent" />
 
-        <EditText
-            android:id="@+id/areaedit_xl_edit"
-            android:layout_width="260dp"
-            android:layout_height="46dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:ems="10"
-            android:inputType="numberSigned|numberDecimal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/area_edit_location_divider" />
+            <View
+                android:id="@+id/area_edit_location_divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="?android:attr/listDivider"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/area_edit_location_header" />
 
-        <TextView
-            android:id="@+id/areaedit_yl_label"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="Y:"
-            android:textAlignment="textEnd"
-            app:layout_constraintBaseline_toBaselineOf="@+id/areaedit_yl_edit"
-            app:layout_constraintEnd_toStartOf="@+id/areaedit_yl_edit"
-            app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/areaedit_xl_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="X:"
+                android:textAlignment="textEnd"
+                app:layout_constraintBaseline_toBaselineOf="@+id/areaedit_xl_edit"
+                app:layout_constraintEnd_toStartOf="@+id/areaedit_xl_edit"
+                app:layout_constraintStart_toStartOf="parent" />
 
-        <EditText
-            android:id="@+id/areaedit_yl_edit"
-            android:layout_width="260dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:ems="10"
-            android:inputType="numberSigned|numberDecimal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/areaedit_xl_edit" />
+            <EditText
+                android:id="@+id/areaedit_xl_edit"
+                android:layout_width="260dp"
+                android:layout_height="46dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:inputType="numberSigned|numberDecimal"
+                android:text="@={ViewConverters.stringFromFloat(area.position.x)}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/area_edit_location_divider" />
 
-        <TextView
-            android:id="@+id/areaedit_zl_label"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="Z:"
-            android:textAlignment="textEnd"
-            app:layout_constraintBaseline_toBaselineOf="@+id/areaedit_zl_edit"
-            app:layout_constraintEnd_toStartOf="@+id/areaedit_zl_edit"
-            app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/areaedit_yl_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="Y:"
+                android:textAlignment="textEnd"
+                app:layout_constraintBaseline_toBaselineOf="@+id/areaedit_yl_edit"
+                app:layout_constraintEnd_toStartOf="@+id/areaedit_yl_edit"
+                app:layout_constraintStart_toStartOf="parent" />
 
-        <EditText
-            android:id="@+id/areaedit_zl_edit"
-            android:layout_width="260dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:ems="10"
-            android:inputType="numberSigned|numberDecimal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/areaedit_yl_edit" />
+            <EditText
+                android:id="@+id/areaedit_yl_edit"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:inputType="numberSigned|numberDecimal"
+                android:text="@={ViewConverters.stringFromFloat(area.position.y)}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/areaedit_xl_edit" />
 
-        <TextView
-            android:id="@+id/areaedit_rotation_header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="8dp"
-            android:text="Rotation"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/areaedit_zl_edit" />
+            <TextView
+                android:id="@+id/areaedit_zl_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="Z:"
+                android:textAlignment="textEnd"
+                app:layout_constraintBaseline_toBaselineOf="@+id/areaedit_zl_edit"
+                app:layout_constraintEnd_toStartOf="@+id/areaedit_zl_edit"
+                app:layout_constraintStart_toStartOf="parent" />
 
-        <View
-            android:id="@+id/area_edit_rotation_divider"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:background="?android:attr/listDivider"
-            android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/areaedit_rotation_header" />
+            <EditText
+                android:id="@+id/areaedit_zl_edit"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:inputType="numberSigned|numberDecimal"
+                android:text="@={ViewConverters.stringFromFloat(area.position.z)}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/areaedit_yl_edit" />
 
-        <TextView
-            android:id="@+id/areaedit_xr_label"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="X:"
-            android:textAlignment="textEnd"
-            app:layout_constraintBaseline_toBaselineOf="@+id/areaedit_xr_edit"
-            app:layout_constraintEnd_toStartOf="@+id/areaedit_xr_edit"
-            app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/areaedit_rotation_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="8dp"
+                android:text="Rotation"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/areaedit_zl_edit" />
 
-        <EditText
-            android:id="@+id/areaedit_xr_edit"
-            android:layout_width="260dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:ems="10"
-            android:inputType="numberSigned|numberDecimal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/area_edit_rotation_divider" />
+            <View
+                android:id="@+id/area_edit_rotation_divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="?android:attr/listDivider"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/areaedit_rotation_header" />
 
-        <TextView
-            android:id="@+id/areaedit_yr_label"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="Y:"
-            android:textAlignment="textEnd"
-            app:layout_constraintBaseline_toBaselineOf="@+id/areaedit_yr_edit"
-            app:layout_constraintEnd_toStartOf="@+id/areaedit_yr_edit"
-            app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/areaedit_xr_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="X:"
+                android:textAlignment="textEnd"
+                app:layout_constraintBaseline_toBaselineOf="@+id/areaedit_xr_edit"
+                app:layout_constraintEnd_toStartOf="@+id/areaedit_xr_edit"
+                app:layout_constraintStart_toStartOf="parent" />
 
-        <EditText
-            android:id="@+id/areaedit_yr_edit"
-            android:layout_width="260dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:ems="10"
-            android:inputType="numberSigned|numberDecimal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/areaedit_xr_edit" />
+            <EditText
+                android:id="@+id/areaedit_xr_edit"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:inputType="numberSigned|numberDecimal"
+                android:text="@={ViewConverters.stringFromFloat(area.rotation.x)}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/area_edit_rotation_divider" />
 
-        <TextView
-            android:id="@+id/areaedit_zr_label"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="24dp"
-            android:text="Z:"
-            android:textAlignment="textEnd"
-            app:layout_constraintBaseline_toBaselineOf="@+id/areaedit_zr_edit"
-            app:layout_constraintEnd_toStartOf="@+id/areaedit_zr_edit"
-            app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/areaedit_yr_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="Y:"
+                android:textAlignment="textEnd"
+                app:layout_constraintBaseline_toBaselineOf="@+id/areaedit_yr_edit"
+                app:layout_constraintEnd_toStartOf="@+id/areaedit_yr_edit"
+                app:layout_constraintStart_toStartOf="parent" />
 
-        <EditText
-            android:id="@+id/areaedit_zr_edit"
-            android:layout_width="260dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:ems="10"
-            android:inputType="numberSigned|numberDecimal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/areaedit_yr_edit" />
+            <EditText
+                android:id="@+id/areaedit_yr_edit"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:inputType="numberSigned|numberDecimal"
+                android:text="@={ViewConverters.stringFromFloat(area.rotation.y)}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/areaedit_xr_edit" />
 
-        <TextView
-            android:id="@+id/areaedit_wr_label"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="W:"
-            android:textAlignment="textEnd"
-            app:layout_constraintBaseline_toBaselineOf="@+id/areaedit_wr_edit"
-            app:layout_constraintEnd_toStartOf="@+id/areaedit_wr_edit"
-            app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/areaedit_zr_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="24dp"
+                android:text="Z:"
+                android:textAlignment="textEnd"
+                app:layout_constraintBaseline_toBaselineOf="@+id/areaedit_zr_edit"
+                app:layout_constraintEnd_toStartOf="@+id/areaedit_zr_edit"
+                app:layout_constraintStart_toStartOf="parent" />
 
-        <EditText
-            android:id="@+id/areaedit_wr_edit"
-            android:layout_width="260dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:ems="10"
-            android:inputType="numberSigned|numberDecimal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/areaedit_zr_edit" />
+            <EditText
+                android:id="@+id/areaedit_zr_edit"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:inputType="numberSigned|numberDecimal"
+                android:text="@={ViewConverters.stringFromFloat(area.rotation.z)}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/areaedit_yr_edit" />
 
-        <TextView
-            android:id="@+id/area_edit_scale_header"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:text="Size"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/areaedit_wr_edit" />
+            <TextView
+                android:id="@+id/areaedit_wr_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="W:"
+                android:textAlignment="textEnd"
+                app:layout_constraintBaseline_toBaselineOf="@+id/areaedit_wr_edit"
+                app:layout_constraintEnd_toStartOf="@+id/areaedit_wr_edit"
+                app:layout_constraintStart_toStartOf="parent" />
 
-        <View
-            android:id="@+id/area_edit_scale_divider"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:background="?android:attr/listDivider"
-            android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/area_edit_scale_header" />
+            <EditText
+                android:id="@+id/areaedit_wr_edit"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:inputType="numberSigned|numberDecimal"
+                android:text="@={ViewConverters.stringFromFloat(area.rotation.w)}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/areaedit_zr_edit" />
 
-        <TextView
-            android:id="@+id/areaedit_xs_label"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="X:"
-            android:textAlignment="textEnd"
-            app:layout_constraintBaseline_toBaselineOf="@+id/areaedit_xs_edit"
-            app:layout_constraintEnd_toStartOf="@+id/areaedit_xs_edit"
-            app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/area_edit_scale_header"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:text="Size"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/areaedit_wr_edit" />
 
-        <EditText
-            android:id="@+id/areaedit_xs_edit"
-            android:layout_width="260dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:ems="10"
-            android:inputType="numberSigned|numberDecimal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/area_edit_scale_divider" />
+            <View
+                android:id="@+id/area_edit_scale_divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="?android:attr/listDivider"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/area_edit_scale_header" />
 
-        <TextView
-            android:id="@+id/areaedit_ys_label"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="Y:"
-            android:textAlignment="textEnd"
-            app:layout_constraintBaseline_toBaselineOf="@+id/areaedit_ys_edit"
-            app:layout_constraintEnd_toStartOf="@+id/areaedit_ys_edit"
-            app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/areaedit_xs_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="X:"
+                android:textAlignment="textEnd"
+                app:layout_constraintBaseline_toBaselineOf="@+id/areaedit_xs_edit"
+                app:layout_constraintEnd_toStartOf="@+id/areaedit_xs_edit"
+                app:layout_constraintStart_toStartOf="parent" />
 
-        <EditText
-            android:id="@+id/areaedit_ys_edit"
-            android:layout_width="260dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:ems="10"
-            android:inputType="numberSigned|numberDecimal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/areaedit_xs_edit" />
+            <EditText
+                android:id="@+id/areaedit_xs_edit"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:inputType="numberSigned|numberDecimal"
+                android:text="@={ViewConverters.stringFromFloat(area.size.x)}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/area_edit_scale_divider" />
 
-        <TextView
-            android:id="@+id/areaedit_zs_label"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="Z:"
-            android:textAlignment="textEnd"
-            app:layout_constraintBaseline_toBaselineOf="@+id/areaedit_zs_edit"
-            app:layout_constraintEnd_toStartOf="@+id/areaedit_zs_edit"
-            app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/areaedit_ys_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="Y:"
+                android:textAlignment="textEnd"
+                app:layout_constraintBaseline_toBaselineOf="@+id/areaedit_ys_edit"
+                app:layout_constraintEnd_toStartOf="@+id/areaedit_ys_edit"
+                app:layout_constraintStart_toStartOf="parent" />
 
-        <EditText
-            android:id="@+id/areaedit_zs_edit"
-            android:layout_width="260dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:ems="10"
-            android:inputType="numberSigned|numberDecimal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/areaedit_ys_edit" />
+            <EditText
+                android:id="@+id/areaedit_ys_edit"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:inputType="numberSigned|numberDecimal"
+                android:text="@={ViewConverters.stringFromFloat(area.size.y)}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/areaedit_xs_edit" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/areaedit_test"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:clickable="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_ar_icon" />
+            <TextView
+                android:id="@+id/areaedit_zs_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="Z:"
+                android:textAlignment="textEnd"
+                app:layout_constraintBaseline_toBaselineOf="@+id/areaedit_zs_edit"
+                app:layout_constraintEnd_toStartOf="@+id/areaedit_zs_edit"
+                app:layout_constraintStart_toStartOf="parent" />
 
-        <Button
-            android:id="@+id/areaedit_cancel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="72dp"
-            android:layout_marginBottom="8dp"
-            android:text="Cancel"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline2" />
+            <EditText
+                android:id="@+id/areaedit_zs_edit"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:inputType="numberSigned|numberDecimal"
+                android:text="@={ViewConverters.stringFromFloat(area.size.z)}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/areaedit_ys_edit" />
 
-        <Button
-            android:id="@+id/areaedit_save"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="@android:drawable/ic_menu_save"
-            android:text="Save"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/guideline2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/areaedit_zs_edit" />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline2"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</ScrollView>
+    </ScrollView>
+</layout>

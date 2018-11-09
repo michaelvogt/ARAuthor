@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author;
+package eu.michaelvogt.ar.author.fragments;
 
 import android.graphics.Bitmap;
 import android.util.Log;

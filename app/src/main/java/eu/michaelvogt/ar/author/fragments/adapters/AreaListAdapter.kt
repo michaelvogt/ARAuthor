@@ -16,76 +16,64 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author.utils
+package eu.michaelvogt.ar.author.fragments.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import eu.michaelvogt.ar.author.R
 import eu.michaelvogt.ar.author.data.*
+import eu.michaelvogt.ar.author.databinding.CardAreaBinding
+import eu.michaelvogt.ar.author.utils.ItemClickListener
 
-class AreaListAdapter : RecyclerView.Adapter<AreaListAdapter.ViewHolder>() {
+class AreaListAdapter(context: Context?) : RecyclerView.Adapter<AreaListAdapter.ViewHolder>() {
+    private var areas: List<Area> = emptyList()
+    private val inflater: LayoutInflater = LayoutInflater.from(context)
+
     private var listener: ItemClickListener? = null
-    private var areas: List<Area>? = null
 
     fun setAreas(areas: List<Area>) {
         this.areas = areas
         notifyDataSetChanged()
     }
 
-    // Create new views (invoked by the layout manager)
     override
-    fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AreaListAdapter.ViewHolder {
-        val v = LayoutInflater.from(parent.context)
-                .inflate(R.layout.card_area, parent, false)
-        return ViewHolder(v)
+    fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binder = CardAreaBinding.inflate(inflater, parent, false)
+        return ViewHolder(binder)
     }
 
     override
     fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        if (areas != null) {
-            val area = areas!![position]
-            holder.areaName.text = area.title
+        val area = areas[position]
+        holder.binder.area = area
 
-            var typeResource = R.drawable.ic_launcher
+        var typeResource = R.drawable.ic_launcher
 
-            when (area.objectType) {
-                TYPE_3DOBJECTONPLANE, TYPE_3DOBJECTONIMAGE -> typeResource = ICON_3DOBJECT
-                TYPE_SLIDESONIMAGE -> typeResource = ICON_FLATOVERLAY
-                TYPE_INTERACTIVEOVERLAY -> typeResource = ICON_INTERACTIVEOVERLAY
-            }
-
-            holder.areaImage.setImageResource(typeResource)
+        when (area.objectType) {
+            TYPE_3DOBJECTONPLANE, TYPE_3DOBJECTONIMAGE -> typeResource = ICON_3DOBJECT
+            TYPE_SLIDESONIMAGE -> typeResource = ICON_FLATOVERLAY
+            TYPE_INTERACTIVEOVERLAY -> typeResource = ICON_INTERACTIVEOVERLAY
         }
+
+        holder.binder.areaImage.setImageResource(typeResource)
     }
 
     override
-    fun getItemCount(): Int {
-        return if (areas == null) 0 else areas!!.size
-    }
+    fun getItemCount(): Int = areas.size
 
     fun setItemClickListener(listener: ItemClickListener) {
         this.listener = listener
     }
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        // each data item is just a string in this case
-        internal val areaImage: ImageView
-        internal val areaName: TextView
-
+    inner class ViewHolder(val binder: CardAreaBinding) : RecyclerView.ViewHolder(binder.root) {
         init {
-
-            areaImage = view.findViewById(R.id.area_image)
-            areaName = view.findViewById(R.id.area_title)
-
-            view.setOnClickListener {
+            binder.root.setOnClickListener {
                 if (listener != null) {
                     val position = adapterPosition
                     if (position != RecyclerView.NO_POSITION) {
-                        val uId = areas!![position].uId
+                        val uId = areas[position].uId
                         listener!!.onItemClicked(uId)
                     }
                 }

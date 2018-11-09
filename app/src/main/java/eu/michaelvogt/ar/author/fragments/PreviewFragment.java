@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author;
+package eu.michaelvogt.ar.author.fragments;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -40,13 +40,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.AreaKt;
 import eu.michaelvogt.ar.author.data.AreaVisual;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
 import eu.michaelvogt.ar.author.data.Marker;
 import eu.michaelvogt.ar.author.nodes.AreaNode;
+import eu.michaelvogt.ar.author.nodes.AreaNodeBuilder;
 import eu.michaelvogt.ar.author.nodes.AuthorAnchorNode;
-import eu.michaelvogt.ar.author.utils.AreaNodeBuilder;
 import eu.michaelvogt.ar.author.utils.SceneViewCallback;
 
 public class PreviewFragment extends Fragment {

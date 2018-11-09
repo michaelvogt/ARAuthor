@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author
+package eu.michaelvogt.ar.author.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -24,24 +24,27 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import eu.michaelvogt.ar.author.R
 import eu.michaelvogt.ar.author.data.AuthorViewModel
 import eu.michaelvogt.ar.author.data.MARKERS_AND_TITLES
 import eu.michaelvogt.ar.author.data.NEW_CURRENT_MARKER
+import eu.michaelvogt.ar.author.databinding.FragmentMarkerlistBinding
+import eu.michaelvogt.ar.author.fragments.adapters.MarkerListAdapter
 import eu.michaelvogt.ar.author.utils.ItemClickListener
-import eu.michaelvogt.ar.author.utils.MarkerListAdapter
 
 class MarkerListFragment : Fragment(), ItemClickListener {
 
     private lateinit var viewModel: AuthorViewModel
+    private lateinit var binder: FragmentMarkerlistBinding
 
     override
     fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                      savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
-        return inflater.inflate(R.layout.fragment_markerlist, container, false)
+
+        binder = FragmentMarkerlistBinding.inflate(inflater, container, false)
+        return binder.root
     }
 
     override
@@ -51,14 +54,13 @@ class MarkerListFragment : Fragment(), ItemClickListener {
         viewModel = ViewModelProviders.of(activity!!).get(AuthorViewModel::class.java)
         val locationId = viewModel.currentLocationId
 
-        val recyclerView = view.findViewById<RecyclerView>(R.id.marker_list)
-        recyclerView.setHasFixedSize(false)
+        binder.markerList.setHasFixedSize(false)
 
-        val layoutManager = LinearLayoutManager(context)
-        recyclerView.layoutManager = layoutManager
+//        val layoutManager = LinearLayoutManager(context)
+//        binder.markerList.layoutManager = layoutManager
 
         val adapter = MarkerListAdapter(context)
-        recyclerView.adapter = adapter
+        binder.markerList.adapter = adapter
 
         viewModel.getMarkersForLocation(locationId, MARKERS_AND_TITLES)
                 .thenAccept { markers -> activity!!.runOnUiThread { adapter.setMarkers(markers) } }
@@ -69,8 +71,8 @@ class MarkerListFragment : Fragment(), ItemClickListener {
 
         adapter.setItemClickListener(this)
 
-        val bottomNav = activity!!.findViewById<BottomNavigationView>(R.id.bottom_nav)
-        val item = bottomNav.menu.findItem(R.id.bottom_ar)
+        val bottomNav = activity!!.findViewById<View>(R.id.bottom_nav)
+        val item = (bottomNav as BottomNavigationView).menu.findItem(R.id.bottom_ar)
         item.setOnMenuItemClickListener {
             Navigation.findNavController(view).navigate(R.id.action_test_markers)
             true

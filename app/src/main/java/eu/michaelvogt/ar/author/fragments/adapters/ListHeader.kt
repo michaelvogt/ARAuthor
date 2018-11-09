@@ -16,6 +16,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author.utils
+package eu.michaelvogt.ar.author.fragments.adapters
 
 class ListHeader(var title: String?)

@@ -16,13 +16,15 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author
+package eu.michaelvogt.ar.author.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import eu.michaelvogt.ar.author.AuthorActivity
+import eu.michaelvogt.ar.author.R
 
 class PermissionCheckFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

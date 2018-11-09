@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author
+package eu.michaelvogt.ar.author.fragments
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -28,6 +28,7 @@ import android.widget.Button
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import eu.michaelvogt.ar.author.R
 
 
 class IntroFragment : Fragment() {

@@ -16,62 +16,47 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author
+package eu.michaelvogt.ar.author.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.TextView
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
+import eu.michaelvogt.ar.author.R
 import eu.michaelvogt.ar.author.data.Marker
+import eu.michaelvogt.ar.author.databinding.FragmentMarkerEditInfoBinding
 
-class EditFragmentInfo : Fragment(), PopupMenu.OnMenuItemClickListener {
+class MarkerEditFragmentInfo : Fragment() {
+    private lateinit var binder: FragmentMarkerEditInfoBinding
     private lateinit var marker: Marker
-
-    private lateinit var popupButton: Button
-    private lateinit var introText: TextView
 
     override
     fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                      savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_editmarker_info, container, false)
+        val binder = FragmentMarkerEditInfoBinding.inflate(inflater, container, false)
+        binder.fragment = this
+        binder.marker = marker
+        return binder.root
     }
 
-    override
-    fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    fun onShowTypePopup(view: View) {
+        val popup = PopupMenu(context!!, view)
+        popup.inflate(R.menu.marker_object_types)
+        popup.setOnMenuItemClickListener {
+            val button = view as Button
+            button.text = it.title
 
-        introText = view.findViewById(R.id.edit_intro)
-        introText.text = marker.intro
-        introText.setOnFocusChangeListener { _, hasFocus ->
-            if (!hasFocus) {
-                marker.intro = introText.text.toString()
+            when (it.itemId) {
+                R.id.marker_type_building -> true
+                R.id.marker_type_location -> true
+                R.id.marker_type_infoboard -> true
+                else -> false
             }
         }
-
-        popupButton = view.findViewById(R.id.edit_type)
-        popupButton.setOnClickListener { popupView ->
-            val popup = PopupMenu(context!!, popupView)
-            popup.inflate(R.menu.marker_object_types)
-            popup.setOnMenuItemClickListener(this@EditFragmentInfo)
-            popup.show()
-        }
-    }
-
-    override
-    fun onMenuItemClick(item: MenuItem): Boolean {
-        popupButton.text = item.title
-
-        return when (item.itemId) {
-            R.id.marker_type_building -> true
-            R.id.marker_type_location -> true
-            R.id.marker_type_infoboard -> true
-            else -> false
-        }
+        popup.show()
     }
 
     private fun setMarker(marker: Marker) {
@@ -81,7 +66,7 @@ class EditFragmentInfo : Fragment(), PopupMenu.OnMenuItemClickListener {
     companion object {
 
         fun instantiate(marker: Marker): Fragment {
-            val tabFragment = EditFragmentInfo()
+            val tabFragment = MarkerEditFragmentInfo()
             tabFragment.setMarker(marker)
             return tabFragment
         }

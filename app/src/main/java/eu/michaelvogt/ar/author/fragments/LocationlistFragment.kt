@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author
+package eu.michaelvogt.ar.author.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -25,27 +25,28 @@ import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import eu.michaelvogt.ar.author.R
 import eu.michaelvogt.ar.author.data.AuthorViewModel
 import eu.michaelvogt.ar.author.data.Location
 import eu.michaelvogt.ar.author.data.NEW_CURRENT_AREA
 import eu.michaelvogt.ar.author.data.NEW_CURRENT_MARKER
+import eu.michaelvogt.ar.author.databinding.FragmentLocationlistBinding
+import eu.michaelvogt.ar.author.fragments.adapters.LocationListAdapter
 import eu.michaelvogt.ar.author.utils.CardMenuHandler
 import eu.michaelvogt.ar.author.utils.ItemClickListener
-import eu.michaelvogt.ar.author.utils.LocationListAdapter
 
 class LocationlistFragment : Fragment(), ItemClickListener {
-
     private lateinit var viewModel: AuthorViewModel
     private lateinit var adapter: LocationListAdapter
+
+    private lateinit var binder: FragmentLocationlistBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
 
-        return inflater.inflate(R.layout.fragment_locationlist, container, false)
+        binder = FragmentLocationlistBinding.inflate(inflater, container, false)
+        return binder.root
     }
 
     override
@@ -54,29 +55,23 @@ class LocationlistFragment : Fragment(), ItemClickListener {
 
         viewModel = ViewModelProviders.of(activity!!).get(AuthorViewModel::class.java)
 
-        val recyclerView = view.findViewById<RecyclerView>(R.id.location_list)
-        recyclerView.setHasFixedSize(true)
-        val layoutManager = LinearLayoutManager(context)
-        recyclerView.layoutManager = layoutManager
+        binder.locationList.setHasFixedSize(true)
 
         adapter = LocationListAdapter(context, HandleLocationMenu())
+        binder.locationList.adapter = adapter
         adapter.setItemClickListener(this)
-        recyclerView.adapter = adapter
 
         setLocations()
     }
 
     override
     fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater!!.inflate(R.menu.actionbar_location_menu, menu)
+        inflater!!.inflate(R.menu.actionbar_locationlist_menu, menu)
     }
 
     override
-    fun onItemClicked(locationId: Long) {
-        val bottomNav = activity!!.findViewById<BottomNavigationView>(R.id.bottom_nav)
-        bottomNav.menu.findItem(R.id.marker_list_fragment).isEnabled = true
-
-        viewModel.currentLocationId = locationId
+    fun onItemClicked(uId: Long) {
+        viewModel.currentLocationId = uId
         viewModel.currentMarkerId = NEW_CURRENT_MARKER
         viewModel.currentAreaId = NEW_CURRENT_AREA
 
@@ -101,7 +96,7 @@ class LocationlistFragment : Fragment(), ItemClickListener {
                 when (item.itemId) {
                     R.id.menu_location_delete -> {
                         viewModel.deleteLocation(location)!!
-                                .thenAccept { unit -> activity!!.runOnUiThread { this@LocationlistFragment.setLocations() } }
+                                .thenAccept { activity!!.runOnUiThread { this@LocationlistFragment.setLocations() } }
                         true
                     }
                     else -> false

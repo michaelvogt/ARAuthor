@@ -23,11 +23,11 @@
     android:id="@+id/arLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AreaPreviewFragment">
+    tools:context=".fragments.AreaPreviewFragment">
 
     <fragment
         android:id="@+id/ux_fragment"
-        android:name="eu.michaelvogt.ar.author.LoopArFragment"
+        android:name="eu.michaelvogt.ar.author.fragments.LoopArFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author;
+package eu.michaelvogt.ar.author.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import eu.michaelvogt.ar.author.R;
 
 public class PanoramaFragment extends Fragment {
   public PanoramaFragment() {}

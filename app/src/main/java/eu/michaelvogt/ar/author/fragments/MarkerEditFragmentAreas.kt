@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author
+package eu.michaelvogt.ar.author.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -28,13 +28,16 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import eu.michaelvogt.ar.author.R
 import eu.michaelvogt.ar.author.data.AuthorViewModel
 import eu.michaelvogt.ar.author.data.GROUPS_ALL
+import eu.michaelvogt.ar.author.data.NEW_CURRENT_AREA
 import eu.michaelvogt.ar.author.data.NEW_CURRENT_MARKER
-import eu.michaelvogt.ar.author.utils.AreaListAdapter
+import eu.michaelvogt.ar.author.databinding.FragmentMarkerEditAreasBinding
+import eu.michaelvogt.ar.author.fragments.adapters.AreaListAdapter
 import eu.michaelvogt.ar.author.utils.ItemClickListener
 
-class EditFragmentAreas : Fragment(), ItemClickListener {
+class MarkerEditFragmentAreas : Fragment(), ItemClickListener {
 
     private var markerId = NEW_CURRENT_MARKER
     private lateinit var viewModel: AuthorViewModel
@@ -42,7 +45,9 @@ class EditFragmentAreas : Fragment(), ItemClickListener {
     override
     fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                      savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_editmarker_areas, container, false)
+        val binder = FragmentMarkerEditAreasBinding.inflate(inflater, container, false)
+        binder.fragment = this
+        return binder.root
     }
 
     override
@@ -56,7 +61,7 @@ class EditFragmentAreas : Fragment(), ItemClickListener {
         val mLayoutManager = LinearLayoutManager(context)
         recyclerView.layoutManager = mLayoutManager
 
-        val adapter = AreaListAdapter()
+        val adapter = AreaListAdapter(context)
         adapter.setItemClickListener(this)
 
         recyclerView.adapter = adapter
@@ -69,10 +74,20 @@ class EditFragmentAreas : Fragment(), ItemClickListener {
                 }
     }
 
+    private fun navigateToEdit(areaId: Long) {
+        viewModel.currentAreaId = areaId
+        Navigation.findNavController(view!!).navigate(R.id.action_edit_area_placement)
+    }
+
+    // Called from layout
+    fun onAddArea(view: View) {
+        navigateToEdit(NEW_CURRENT_AREA)
+    }
+
+    // Called from adapter
     override
     fun onItemClicked(uId: Long) {
-        viewModel.currentAreaId = uId
-        Navigation.findNavController(view!!).navigate(R.id.action_edit_area_placement)
+        navigateToEdit(uId)
     }
 
     private fun setMarkerId(markerId: Long) {
@@ -80,10 +95,10 @@ class EditFragmentAreas : Fragment(), ItemClickListener {
     }
 
     companion object {
-        private val TAG = EditFragmentAreas::class.java.simpleName
+        private val TAG = MarkerEditFragmentAreas::class.java.simpleName
 
         fun instantiate(markerId: Long): Fragment {
-            val tabFragment = EditFragmentAreas()
+            val tabFragment = MarkerEditFragmentAreas()
             tabFragment.setMarkerId(markerId)
             return tabFragment
         }

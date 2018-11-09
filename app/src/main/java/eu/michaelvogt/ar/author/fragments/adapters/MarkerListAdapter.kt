@@ -16,21 +16,19 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author.utils
+package eu.michaelvogt.ar.author.fragments.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import eu.michaelvogt.ar.author.R
 import eu.michaelvogt.ar.author.data.Marker
+import eu.michaelvogt.ar.author.databinding.CardHeaderBinding
+import eu.michaelvogt.ar.author.databinding.CardMarkerBinding
+import eu.michaelvogt.ar.author.utils.ItemClickListener
 
 class MarkerListAdapter(context: Context?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-    private var markers: List<Marker> = ArrayList()
+    private var markers: List<Marker> = emptyList()
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
     private var listener: ItemClickListener? = null
@@ -47,25 +45,21 @@ class MarkerListAdapter(context: Context?) : RecyclerView.Adapter<RecyclerView.V
     override
     fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_HEADER) {
-            val view = inflater.inflate(R.layout.card_header, parent, false)
-            HeaderHolder(view)
+            val headerBinder = CardHeaderBinding.inflate(inflater, parent, false)
+            HeaderHolder(headerBinder)
         } else {
-            val view = inflater.inflate(R.layout.card_marker, parent, false)
-            MarkerHolder(view)
+            val markerBinder = CardMarkerBinding.inflate(inflater, parent, false)
+            MarkerHolder(markerBinder)
         }
     }
 
     override
     fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val item = markers[position]
-        if (holder is HeaderHolder) {
-            holder.titleView.text = item.title
+        val marker = markers[position]
+        if (holder is HeaderHolder) {       // yes, I know
+            holder.binding.marker = marker
         } else {
-            val markerHolder = holder as MarkerHolder
-            markerHolder.markerImageView.setImageBitmap(ImageUtils.decodeSampledBitmapFromImagePath(
-                    item.markerImagePath, 100, 100))
-            markerHolder.nameView.text = item.title
-            markerHolder.infoView.text = item.intro
+            (holder as MarkerHolder).binding.marker = marker
         }
     }
 
@@ -79,13 +73,9 @@ class MarkerListAdapter(context: Context?) : RecyclerView.Adapter<RecyclerView.V
         return markers.size
     }
 
-    internal inner class MarkerHolder(view: View) : RecyclerView.ViewHolder(view) {
-        internal val markerImageView: ImageView = view.findViewById(R.id.location_image)
-        internal val nameView: TextView = view.findViewById(R.id.location_title)
-        internal val infoView: TextView = view.findViewById(R.id.marker_info)
-
+    internal inner class MarkerHolder(val binding: CardMarkerBinding) : RecyclerView.ViewHolder(binding.root) {
         init {
-            view.setOnClickListener {
+            binding.root.setOnClickListener {
                 if (listener != null) {
                     val position = adapterPosition
                     if (position != RecyclerView.NO_POSITION) {
@@ -97,9 +87,7 @@ class MarkerListAdapter(context: Context?) : RecyclerView.Adapter<RecyclerView.V
         }
     }
 
-    internal inner class HeaderHolder(view: View) : RecyclerView.ViewHolder(view) {
-        internal val titleView: TextView = view.findViewById(R.id.header_location)
-    }
+    internal inner class HeaderHolder(val binding: CardHeaderBinding) : RecyclerView.ViewHolder(binding.root)
 
     companion object {
         private const val TYPE_HEADER = 0

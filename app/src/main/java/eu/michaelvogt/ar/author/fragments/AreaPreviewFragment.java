@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author;
+package eu.michaelvogt.ar.author.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -54,6 +54,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
+import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.AreaVisual;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
 import eu.michaelvogt.ar.author.data.Marker;

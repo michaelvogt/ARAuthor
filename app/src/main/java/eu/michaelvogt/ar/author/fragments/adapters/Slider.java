@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author.utils;
+package eu.michaelvogt.ar.author.fragments.adapters;
 
 import android.content.Context;
 import android.os.Handler;
@@ -34,6 +34,7 @@ import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.Slide;
+import eu.michaelvogt.ar.author.utils.NodeCallback;
 
 public class Slider extends ViewPager {
   private static final String TAG = Slider.class.getSimpleName();

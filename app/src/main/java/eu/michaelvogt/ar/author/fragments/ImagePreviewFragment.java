@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author;
+package eu.michaelvogt.ar.author.fragments;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -36,6 +36,7 @@ import java.util.Collection;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.navigation.Navigation;
+import eu.michaelvogt.ar.author.R;
 
 public class ImagePreviewFragment extends PreviewFragment {
   private static final String TAG = ImagePreviewFragment.class.getSimpleName();

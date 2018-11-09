@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author.utils;
+package eu.michaelvogt.ar.author.nodes;
 
 import android.content.Context;
 import android.util.Log;
@@ -32,11 +32,6 @@ import java.util.concurrent.CompletionStage;
 import eu.michaelvogt.ar.author.data.AreaVisual;
 import eu.michaelvogt.ar.author.data.AreaVisualKt;
 import eu.michaelvogt.ar.author.data.VisualDetailKt;
-import eu.michaelvogt.ar.author.nodes.AreaNode;
-import eu.michaelvogt.ar.author.nodes.ComparisonNode;
-import eu.michaelvogt.ar.author.nodes.ImageNode;
-import eu.michaelvogt.ar.author.nodes.SliderNode;
-import eu.michaelvogt.ar.author.nodes.TextNode;
 
 public class AreaNodeBuilder {
   private static final String TAG = AreaNodeBuilder.class.getSimpleName();

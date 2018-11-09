@@ -1,0 +1,188 @@
+<!--
+    ARTester - AR for tourists by tourists
+    Copyright (C) 2018  Michael Vogt
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+-->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="eu.michaelvogt.ar.author.utils.ViewConverters" />
+
+        <variable
+            name="marker"
+            type="eu.michaelvogt.ar.author.data.Marker" />
+
+        <variable
+            name="fragment"
+            type="eu.michaelvogt.ar.author.fragments.MarkerEditFragmentMarker" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/image_marker"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="@string/marker_image"
+                android:src="@drawable/ic_launcher"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/button_capture"
+                style="@android:style/Widget.Material.Button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:onClick="@{fragment::onCaptureClick}"
+                android:text="@string/marker_capture_button"
+                app:layout_constraintEnd_toStartOf="@+id/button_import"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/image_marker" />
+
+            <Button
+                android:id="@+id/button_import"
+                style="@android:style/Widget.Material.Button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:enabled="false"
+                android:onClick="@{fragment::onImportClick}"
+                android:text="@string/marker_import_button"
+                app:layout_constraintEnd_toStartOf="@+id/button_edit"
+                app:layout_constraintStart_toEndOf="@+id/button_capture"
+                app:layout_constraintTop_toBottomOf="@+id/image_marker" />
+
+            <Button
+                android:id="@+id/button_edit"
+                style="@android:style/Widget.Material.Button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:enabled="false"
+                android:onClick="@{fragment::onCropClick}"
+                android:text="Crop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/button_import"
+                app:layout_constraintTop_toBottomOf="@+id/image_marker" />
+
+            <TextView
+                android:id="@+id/text_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="Title:"
+                android:textAlignment="viewEnd"
+                app:layout_constraintBaseline_toBaselineOf="@+id/edit_title"
+                app:layout_constraintEnd_toStartOf="@+id/edit_title"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <EditText
+                android:id="@+id/edit_title"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="@={marker.title}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button_import" />
+
+            <TextView
+                android:id="@+id/text_location"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="Location:"
+                android:textAlignment="viewEnd"
+                app:layout_constraintBaseline_toBaselineOf="@+id/edit_location"
+                app:layout_constraintEnd_toStartOf="@+id/edit_location"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <EditText
+                android:id="@+id/edit_location"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="@={marker.location}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_title" />
+
+            <TextView
+                android:id="@+id/text_width"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="Width in m:"
+                android:textAlignment="viewEnd"
+                app:layout_constraintBaseline_toBaselineOf="@+id/edit_width"
+                app:layout_constraintEnd_toStartOf="@+id/edit_width"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <EditText
+                android:id="@+id/edit_width"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:inputType="numberDecimal"
+                android:text="@={ViewConverters.stringFromFloat(marker.widthInM)}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_location" />
+
+            <!--TODO: Make 2-way binding work-->
+            <CheckBox
+                android:id="@+id/edit_show_background"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="24dp"
+                android:checked="@{marker.isShowBackground}"
+                android:text="Show virtual background"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_width" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

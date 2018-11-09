@@ -15,19 +15,21 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-package eu.michaelvogt.ar.author
+package eu.michaelvogt.ar.author.fragments
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import eu.michaelvogt.ar.author.R
 
 class AreaListFragment : Fragment() {
     override
     fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                      savedInstanceState: Bundle?): View? {
-        setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_area_list, container, false)
     }
 
@@ -39,19 +41,6 @@ class AreaListFragment : Fragment() {
         item.setOnMenuItemClickListener { thisItem ->
             Navigation.findNavController(view).navigate(R.id.action_test_markers)
             true
-        }
-    }
-
-    override
-    fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.actionbar_area_menu, menu)
-    }
-
-    override
-    fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return when (item?.itemId) {
-            R.id.actionbar_area_new -> true
-            else -> super.onOptionsItemSelected(item)
         }
     }
 }

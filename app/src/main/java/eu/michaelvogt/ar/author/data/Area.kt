@@ -80,6 +80,14 @@ class Area {
         this.title = area.title
         this.objectType = area.objectType
         this.usageType = area.usageType
+        this.resource = area.resource
+        this.zeroPoint = area.zeroPoint
+        this.size = area.size
+        this.coordType = area.coordType
+        this.position = area.position
+        this.rotation = area.rotation
+        this.scale = area.scale
+        this.group = area.group
     }
 
     override fun toString(): String {

@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author
+package eu.michaelvogt.ar.author.fragments
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
@@ -26,14 +26,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import eu.michaelvogt.ar.author.R
 import eu.michaelvogt.ar.author.data.AuthorViewModel
 import eu.michaelvogt.ar.author.data.Marker
+import eu.michaelvogt.ar.author.databinding.FragmentMarkerEditMarkerBinding
 import eu.michaelvogt.ar.author.utils.FileUtils
 import eu.michaelvogt.ar.author.utils.ImageUtils
 import java.io.File
@@ -41,16 +41,19 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class EditFragmentMarker : Fragment() {
-
-    private lateinit var editLocation: TextView
-    private lateinit var editTitle: TextView
-    private lateinit var editWidth: TextView
-    private lateinit var editShowBackground: CheckBox
-
+class MarkerEditFragmentMarker : Fragment() {
     private lateinit var editMarker: Marker
     private lateinit var markerImage: ImageView
     private lateinit var viewModel: AuthorViewModel
+
+    override
+    fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                     savedInstanceState: Bundle?): View? {
+        val binder = FragmentMarkerEditMarkerBinding.inflate(inflater, container, false)
+        binder.fragment = this
+        binder.marker = editMarker
+        return binder.root
+    }
 
     override
     fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -61,45 +64,6 @@ class EditFragmentMarker : Fragment() {
             markerImage.setImageBitmap(ImageUtils.decodeSampledBitmapFromImagePath(
                     editMarker.markerImagePath, 300, 300))
         }
-
-        // TODO: Use value binding?
-        editTitle = view.findViewById(R.id.edit_title)
-        editTitle.text = editMarker.title
-        editTitle.setOnFocusChangeListener { _, hasFocus ->
-            if (!hasFocus) {
-                editMarker.title = editTitle.text.toString()
-            }
-        }
-
-        editLocation = view.findViewById(R.id.edit_location)
-        editLocation.text = editMarker.location
-        editLocation.setOnFocusChangeListener { _, hasFocus ->
-            if (!hasFocus) {
-                editMarker.location = editLocation.text.toString()
-            }
-        }
-
-        editWidth = view.findViewById(R.id.edit_width)
-        editWidth.text = editMarker.widthInM.toString()
-        editWidth.setOnFocusChangeListener { _, hasFocus ->
-            if (!hasFocus) {
-                editMarker.widthInM = java.lang.Float.parseFloat(editWidth.text.toString())
-            }
-        }
-
-        editShowBackground = view.findViewById(R.id.edit_show_background)
-        editShowBackground.isChecked = editMarker.isShowBackground
-        editShowBackground.setOnCheckedChangeListener { _, isChecked -> editMarker.isShowBackground = isChecked }
-
-        view.findViewById<View>(R.id.button_capture).setOnClickListener { this.handleCapture(it) }
-        view.findViewById<View>(R.id.button_import).setOnClickListener { handleImport() }
-        view.findViewById<View>(R.id.button_edit).setOnClickListener { handleCrop(view) }
-    }
-
-    override
-    fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                     savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_editmarker_marker, container, false)
     }
 
     private fun setMarker(marker: Marker) {
@@ -110,19 +74,19 @@ class EditFragmentMarker : Fragment() {
         this.viewModel = viewModel
     }
 
-    private fun handleCrop(view: View) {
+    fun onCropClick(view: View) {
         viewModel.cropMarker = editMarker
         Navigation.findNavController(view).navigate(R.id.action_crop_marker_image)
     }
 
-    private fun handleImport() {
+    fun onImportClick(view: View) {
         val photoPickerIntent = Intent(Intent.ACTION_PICK)
         photoPickerIntent.type = "image/*"
         startActivityForResult(photoPickerIntent, REQUEST_PICK_IMAGE)
     }
 
 
-    private fun handleCapture(view: View) {
+    fun onCaptureClick(view: View) {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 
         if (takePictureIntent.resolveActivity(activity!!.packageManager) != null) {
@@ -131,7 +95,7 @@ class EditFragmentMarker : Fragment() {
             try {
                 photoFile = createImageFile("marker_", FileUtils.MARKERS_PATH)
             } catch (ex: IOException) {
-                Log.d("EditFragment", ex.localizedMessage)
+                Log.d("MarkerEditFragment", ex.localizedMessage)
             }
 
             // Continue only if the File was successfully created
@@ -199,8 +163,8 @@ class EditFragmentMarker : Fragment() {
         private const val REQUEST_IMAGE_CAPTURE = 1
         private const val REQUEST_PICK_IMAGE = 2
 
-        fun instantiate(marker: Marker, viewModel: AuthorViewModel): EditFragmentMarker {
-            val fragmentMarker = EditFragmentMarker()
+        fun instantiate(marker: Marker, viewModel: AuthorViewModel): MarkerEditFragmentMarker {
+            val fragmentMarker = MarkerEditFragmentMarker()
             fragmentMarker.setViewModel(viewModel)
             fragmentMarker.setMarker(marker)
             return fragmentMarker

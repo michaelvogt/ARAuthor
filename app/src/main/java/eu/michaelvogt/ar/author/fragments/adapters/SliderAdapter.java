@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author.utils;
+package eu.michaelvogt.ar.author.fragments.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -37,6 +37,8 @@ import androidx.viewpager.widget.PagerAdapter;
 import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.Slide;
 import eu.michaelvogt.ar.author.data.SlideKt;
+import eu.michaelvogt.ar.author.utils.FileUtils;
+import eu.michaelvogt.ar.author.utils.NodeCallback;
 
 public class SliderAdapter extends PagerAdapter {
   private static final String TAG = SliderAdapter.class.getSimpleName();

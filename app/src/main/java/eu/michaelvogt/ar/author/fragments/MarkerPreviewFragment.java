@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author;
+package eu.michaelvogt.ar.author.fragments;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -34,6 +34,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
+import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
 
 public class MarkerPreviewFragment extends PreviewFragment {

@@ -14,6 +14,7 @@ import eu.michaelvogt.ar.author.data.AreaVisual;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
 import eu.michaelvogt.ar.author.data.Slide;
 import eu.michaelvogt.ar.author.data.VisualDetailKt;
+import eu.michaelvogt.ar.author.nodes.AreaNodeBuilder;
 
 public class SlideCallback implements NodeCallback {
   private static final String TAG = SlideCallback.class.getSimpleName();

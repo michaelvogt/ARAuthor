@@ -41,7 +41,7 @@ class ConvertersTest {
     @Test
     fun vector3ToString_negative123() {
         assertThat(Converters()
-                .vector3ToString(Vector3(-1f, -2f, -3f)), `is`(equalTo("${TAG_VECTOR3}-1.0!!-2.0!!-3.0")))
+                .vector3ToString(Vector3(-1f, -2f, -3f)), `is`(equalTo("$TAG_VECTOR3-1.0!!-2.0!!-3.0")))
     }
 
     @Test
@@ -64,7 +64,7 @@ class ConvertersTest {
 
     @Test
     fun quaternionFromString_negative1234() {
-        assertThat(Converters().quaternionFromString("${TAG_QUATERNION}-1.0!!2.0!!-3.0!!4.0").toString(),
+        assertThat(Converters().quaternionFromString("$TAG_QUATERNION-1.0!!2.0!!-3.0!!4.0").toString(),
                 `is`(equalTo("[x=-1.0, y=2.0, z=-3.0, w=4.0]")))
     }
 
@@ -77,7 +77,7 @@ class ConvertersTest {
     @Test
     fun quaternionToString_negative123() {
         assertThat(Converters().quaternionToString(setupQuaternion(-1f, -2f, -3f, -4f)),
-                `is`(equalTo("${TAG_QUATERNION}-1.0!!-2.0!!-3.0!!-4.0")))
+                `is`(equalTo("$TAG_QUATERNION-1.0!!-2.0!!-3.0!!-4.0")))
     }
 
     @Test
@@ -149,7 +149,7 @@ class ConvertersTest {
         val converter = Converters()
 
         assertThat(converter.objectify("${TAG_INT}5"), IsInstanceOf.instanceOf(Int::class.java))
-        assertThat(converter.objectify("${TAG_INT}-5") as Int, equalTo(-5))
+        assertThat(converter.objectify("$TAG_INT-5") as Int, equalTo(-5))
     }
 
     @Test
@@ -157,7 +157,7 @@ class ConvertersTest {
         val converter = Converters()
 
         assertThat(converter.objectify("${TAG_FLOAT}5"), IsInstanceOf.instanceOf(Float::class.java))
-        assertThat(converter.objectify("${TAG_FLOAT}-1.23") as Float, equalTo(-1.23f))
+        assertThat(converter.objectify("$TAG_FLOAT-1.23") as Float, equalTo(-1.23f))
     }
 
     @Test

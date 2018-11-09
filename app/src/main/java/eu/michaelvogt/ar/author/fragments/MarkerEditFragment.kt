@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author
+package eu.michaelvogt.ar.author.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -27,11 +27,12 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import androidx.viewpager.widget.ViewPager
+import eu.michaelvogt.ar.author.R
 import eu.michaelvogt.ar.author.data.AuthorViewModel
 import eu.michaelvogt.ar.author.data.Marker
 
 
-class EditFragment : Fragment() {
+class MarkerEditFragment : Fragment() {
 
     private var editMarkerId: Long = 0
     private lateinit var editMarker: Marker
@@ -41,7 +42,7 @@ class EditFragment : Fragment() {
     fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                      savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
-        return inflater.inflate(R.layout.fragment_editmarker, container, false)
+        return inflater.inflate(R.layout.fragment_marker_edit, container, false)
     }
 
     override
@@ -125,16 +126,16 @@ class EditFragment : Fragment() {
 
         override fun getItem(position: Int): Fragment {
             return when (position) {
-                0 -> EditFragmentMarker.instantiate(editMarker, viewModel)
-                1 -> EditFragmentInfo.instantiate(editMarker)
-                2 -> EditFragmentAreas.instantiate(editMarkerId)
+                0 -> MarkerEditFragmentMarker.instantiate(editMarker, viewModel)
+                1 -> MarkerEditFragmentInfo.instantiate(editMarker)
+                2 -> MarkerEditFragmentAreas.instantiate(editMarkerId)
                 else -> throw IllegalArgumentException("Requested edit marker tab doesn't exist: $position")
             }
         }
     }
 
     companion object {
-        private val TAG = EditFragment::class.java.simpleName
+        private val TAG = MarkerEditFragment::class.java.simpleName
         private const val NUM_TABS = 3
     }
 }/* Required empty public constructor*/

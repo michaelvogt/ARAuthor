@@ -32,8 +32,8 @@ import java.util.concurrent.CompletionStage;
 import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.AreaVisual;
 import eu.michaelvogt.ar.author.data.VisualDetailKt;
+import eu.michaelvogt.ar.author.fragments.adapters.Slider;
 import eu.michaelvogt.ar.author.utils.FileUtils;
-import eu.michaelvogt.ar.author.utils.Slider;
 
 public class ViewNode extends Node {
   private static final String TAG = ViewNode.class.getSimpleName();

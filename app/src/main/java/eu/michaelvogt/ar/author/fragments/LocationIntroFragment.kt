@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author
+package eu.michaelvogt.ar.author.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -28,6 +28,7 @@ import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
+import eu.michaelvogt.ar.author.R
 import eu.michaelvogt.ar.author.data.AuthorViewModel
 import eu.michaelvogt.ar.author.data.Location
 import eu.michaelvogt.ar.author.data.MARKERS_AND_TITLES
@@ -69,9 +70,6 @@ class LocationIntroFragment : Fragment(), View.OnClickListener {
                     Log.e(TAG, "Unable to fetch markers for location $locationId", throwable)
                     null
                 }
-
-        val fab = view.findViewById<View>(R.id.fab_map)
-        fab.setOnClickListener(this)
     }
 
     private fun initWebView(location: Location, contentView: WebView) {
