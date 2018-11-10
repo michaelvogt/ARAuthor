@@ -21,6 +21,10 @@
     <data>
 
         <variable
+            name="handler"
+            type="eu.michaelvogt.ar.author.fragments.adapters.LocationListAdapter" />
+
+        <variable
             name="location"
             type="eu.michaelvogt.ar.author.data.Location" />
     </data>

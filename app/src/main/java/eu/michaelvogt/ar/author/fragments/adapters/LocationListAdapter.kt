@@ -43,6 +43,7 @@ class LocationListAdapter(context: Context?, private val locationMenuHandler: Ca
     override
     fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binder = CardLocationBinding.inflate(inflater, parent, false)
+        binder.handler = this
         return ViewHolder(binder)
     }
 
@@ -67,6 +68,10 @@ class LocationListAdapter(context: Context?, private val locationMenuHandler: Ca
                         listener!!.onItemClicked(locationId)
                     }
                 }
+            }
+
+            binder.locationMenu.setOnClickListener { view ->
+                locationMenuHandler.onMenuClick(view, locations[adapterPosition])
             }
         }
     }

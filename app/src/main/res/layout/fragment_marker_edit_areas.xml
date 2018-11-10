@@ -23,7 +23,7 @@
     <data>
 
         <variable
-            name="fragment"
+            name="handler"
             type="eu.michaelvogt.ar.author.fragments.MarkerEditFragmentAreas" />
     </data>
 
@@ -56,7 +56,7 @@
             android:layout_marginBottom="16dp"
             android:clickable="true"
             android:focusable="true"
-            android:onClick="@{fragment::onAddArea}"
+            android:onClick="@{handler::onAddArea}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@android:drawable/ic_menu_add" />

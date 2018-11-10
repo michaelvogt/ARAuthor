@@ -23,7 +23,7 @@
     <data>
 
         <variable
-            name="fragment"
+            name="handler"
             type="eu.michaelvogt.ar.author.fragments.CropFragment" />
     </data>
 
@@ -53,7 +53,7 @@
             android:layout_marginBottom="8dp"
             android:clickable="true"
             android:focusable="true"
-            android:onClick="@{fragment::onDoCrop}"
+            android:onClick="@{handler::onDoCrop}"
             android:src="@android:drawable/ic_menu_crop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

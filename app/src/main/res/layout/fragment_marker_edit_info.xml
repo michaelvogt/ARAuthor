@@ -25,7 +25,7 @@
             type="eu.michaelvogt.ar.author.data.Marker" />
 
         <variable
-            name="fragment"
+            name="handler"
             type="eu.michaelvogt.ar.author.fragments.MarkerEditFragmentInfo" />
     </data>
 
@@ -82,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
-                android:onClick="@{fragment::onShowTypePopup}"
+                android:onClick="@{handler::onShowTypePopup}"
                 android:text="Select"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edit_intro" />

@@ -46,7 +46,7 @@ class MarkerEditFragmentAreas : Fragment(), ItemClickListener {
     fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                      savedInstanceState: Bundle?): View? {
         val binder = FragmentMarkerEditAreasBinding.inflate(inflater, container, false)
-        binder.fragment = this
+        binder.handler = this
         return binder.root
     }
 

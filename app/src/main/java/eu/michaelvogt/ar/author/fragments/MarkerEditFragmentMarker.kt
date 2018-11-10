@@ -50,7 +50,7 @@ class MarkerEditFragmentMarker : Fragment() {
     fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                      savedInstanceState: Bundle?): View? {
         val binder = FragmentMarkerEditMarkerBinding.inflate(inflater, container, false)
-        binder.fragment = this
+        binder.handler = this
         binder.marker = editMarker
         return binder.root
     }

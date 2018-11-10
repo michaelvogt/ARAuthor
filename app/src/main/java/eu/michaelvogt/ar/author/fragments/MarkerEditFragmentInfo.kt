@@ -37,7 +37,7 @@ class MarkerEditFragmentInfo : Fragment() {
     fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                      savedInstanceState: Bundle?): View? {
         val binder = FragmentMarkerEditInfoBinding.inflate(inflater, container, false)
-        binder.fragment = this
+        binder.handler = this
         binder.marker = marker
         return binder.root
     }

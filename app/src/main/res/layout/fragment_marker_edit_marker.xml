@@ -28,7 +28,7 @@
             type="eu.michaelvogt.ar.author.data.Marker" />
 
         <variable
-            name="fragment"
+            name="handler"
             type="eu.michaelvogt.ar.author.fragments.MarkerEditFragmentMarker" />
     </data>
 
@@ -61,7 +61,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:onClick="@{fragment::onCaptureClick}"
+                android:onClick="@{handler::onCaptureClick}"
                 android:text="@string/marker_capture_button"
                 app:layout_constraintEnd_toStartOf="@+id/button_import"
                 app:layout_constraintStart_toStartOf="parent"
@@ -74,22 +74,22 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:enabled="false"
-                android:onClick="@{fragment::onImportClick}"
+                android:onClick="@{handler::onImportClick}"
                 android:text="@string/marker_import_button"
-                app:layout_constraintEnd_toStartOf="@+id/button_edit"
+                app:layout_constraintEnd_toStartOf="@+id/button_crop"
                 app:layout_constraintStart_toEndOf="@+id/button_capture"
                 app:layout_constraintTop_toBottomOf="@+id/image_marker" />
 
             <Button
-                android:id="@+id/button_edit"
+                android:id="@+id/button_crop"
                 style="@android:style/Widget.Material.Button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
-                android:enabled="false"
-                android:onClick="@{fragment::onCropClick}"
+                android:enabled="@{marker.hasImage()}"
+                android:onClick="@{handler::onCropClick}"
                 android:text="Crop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/button_import"
