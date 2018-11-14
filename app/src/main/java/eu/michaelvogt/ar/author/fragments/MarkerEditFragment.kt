@@ -110,7 +110,7 @@ class MarkerEditFragment : Fragment() {
             viewModel.updateMarker(editMarker)
         }
 
-        Navigation.findNavController(view!!).navigate(R.id.action_list_markers)
+        Navigation.findNavController(view!!).popBackStack()
     }
 
     private inner class TabAdapter internal constructor(fragmentManager: FragmentManager, editIndex: Marker) : FragmentPagerAdapter(fragmentManager) {

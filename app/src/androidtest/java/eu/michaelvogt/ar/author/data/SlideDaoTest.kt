@@ -19,9 +19,9 @@ class SlideDaoTest : DaoTest() {
 
     @Before
     fun setUp() {
-        slideDao = db!!.slideDao()
-        visualDetailDao = db!!.visualDetailDao()
-        areaDao = db!!.areaDao()
+        slideDao = db.slideDao()
+        visualDetailDao = db.visualDetailDao()
+        areaDao = db.areaDao()
     }
 
     @Test

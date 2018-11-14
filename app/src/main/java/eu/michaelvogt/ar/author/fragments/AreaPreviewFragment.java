@@ -126,7 +126,7 @@ public class AreaPreviewFragment extends Fragment {
       bundle.putLong("marker_id", markerId);
       bundle.putLong("area_id", areaId);
       bundle.putInt("area_edit_translucency", useTranslucency ? 1 : 0);
-      Navigation.findNavController(view).navigate(R.id.action_edit_area, bundle);
+      Navigation.findNavController(view).popBackStack();
     });
 
     arFragment.getArSceneView().getScene().addOnUpdateListener(this::onUpdateFrame);

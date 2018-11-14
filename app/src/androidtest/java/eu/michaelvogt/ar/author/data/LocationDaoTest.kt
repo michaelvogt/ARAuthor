@@ -32,7 +32,7 @@ class LocationDaoTest : DaoTest() {
 
     @Before
     fun setUp() {
-        dao = db!!.locationDao()
+        dao = db.locationDao()
     }
 
     @Test

@@ -60,12 +60,13 @@ dependencies {
         exclude group: 'com.android.support'
     }
 
-    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation "androidx.constraintlayout:constraintlayout:2.0.0-alpha2"
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.fragment:fragment:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation "androidx.webkit:webkit:1.0.0"
 
     implementation 'androidx.lifecycle:lifecycle-common-java8:2.0.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'

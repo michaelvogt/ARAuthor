@@ -32,7 +32,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import eu.michaelvogt.ar.author.data.AppDatabase
@@ -61,8 +60,8 @@ class AuthorActivity : AppCompatActivity() {
         setContentView(R.layout.activity_author)
 
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
-        val appBarConfiguration = AppBarConfiguration.Builder(navController.graph).build()
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
+//        val appBarConfiguration = AppBarConfiguration.Builder(navController.graph).build()
+//        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
 
         val bottomNav = findViewById<View>(R.id.bottom_nav) as BottomNavigationView
         NavigationUI.setupWithNavController(bottomNav, navController)

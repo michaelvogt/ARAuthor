@@ -58,9 +58,7 @@ public class ImagePreviewFragment extends PreviewFragment {
 
     arFragment.getArSceneView().getScene().addOnUpdateListener(this::onUpdateFrame);
 
-    view.findViewById(R.id.listmarker_fab).setOnClickListener(v -> {
-      Navigation.findNavController(view).navigate(R.id.action_list_markers);
-    });
+    view.findViewById(R.id.listmarker_fab).setOnClickListener(v -> Navigation.findNavController(view).popBackStack());
   }
 
   @Override

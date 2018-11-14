@@ -24,19 +24,18 @@ import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseMethod
+import com.google.ar.sceneform.math.Vector3
+import eu.michaelvogt.ar.author.fragments.AreaEditCard
 
 @InverseMethod("floatFromString")
-fun stringFromFloat(value: Float): String {
+fun floatToString(value: Float): String {
     return when (value) {
         Float.NaN -> ""
         else -> value.toString()
     }
 }
 
-fun floatFromString(value: String): Float {
-    return value.toFloat()
-}
-
+fun floatFromString(value: String): Float = value.toFloat()
 
 @InverseMethod("booleanFromString")
 fun stringFromBoolean(value: Boolean): String {
@@ -54,4 +53,13 @@ fun setImage(view: ImageView, url: String, placeholder: Drawable) {
     } else {
         view.setImageBitmap(ImageUtils.decodeSampledBitmapFromImagePath(url, 100, 100))
     }
+}
+
+@BindingAdapter("values")
+fun setVector3(view: AreaEditCard, vector3: Vector3?) {
+    val string = when (vector3) {
+        null -> ""
+        else -> vector3.toString()
+    }
+    view.setValues(string)
 }

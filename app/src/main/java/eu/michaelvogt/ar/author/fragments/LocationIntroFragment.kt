@@ -24,10 +24,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
-import android.webkit.WebViewClient
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
+import androidx.webkit.WebViewClientCompat
 import eu.michaelvogt.ar.author.R
 import eu.michaelvogt.ar.author.data.AuthorViewModel
 import eu.michaelvogt.ar.author.data.Location
@@ -48,7 +48,7 @@ class LocationIntroFragment : Fragment(), View.OnClickListener {
         val viewModel = ViewModelProviders.of(activity!!).get(AuthorViewModel::class.java)
 
         val contentView = view.findViewById<WebView>(R.id.content_info)
-        contentView.webViewClient = WebViewClient()
+        contentView.webViewClient = WebViewClientCompat()
         contentView.settings.builtInZoomControls = true
         contentView.settings.displayZoomControls = false
         contentView.settings.javaScriptEnabled = true

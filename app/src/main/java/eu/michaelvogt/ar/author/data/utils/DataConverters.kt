@@ -54,9 +54,12 @@ class Converters {
         return if (vector3 == null)
             ""
         else
-            TAG_VECTOR3 + vector3.x + VALUE_DIVIDER + vector3.y + VALUE_DIVIDER + vector3.z
+            TAG_VECTOR3 + vector3String(vector3)
     }
 
+    fun vector3String(vector3: Vector3): String {
+        return "" + vector3.x + VALUE_DIVIDER + vector3.y + VALUE_DIVIDER + vector3.z
+    }
 
     @TypeConverter
     fun quaternionFromString(value: String?): Quaternion? {

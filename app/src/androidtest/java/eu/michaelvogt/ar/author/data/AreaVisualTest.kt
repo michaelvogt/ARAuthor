@@ -31,9 +31,9 @@ class AreaVisualTest : DaoTest() {
 
     @Before
     fun setUp() {
-        areaDao = db!!.areaDao()
-        detailDao = db!!.visualDetailDao()
-        eventDao = db!!.eventDetailDao()
+        areaDao = db.areaDao()
+        detailDao = db.visualDetailDao()
+        eventDao = db.eventDetailDao()
     }
 
     @Test

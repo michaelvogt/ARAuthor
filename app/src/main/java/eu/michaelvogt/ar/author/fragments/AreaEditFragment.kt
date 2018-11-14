@@ -81,8 +81,8 @@ class AreaEditFragment : Fragment() {
         this.areaVisual = areaVisual
         this.editArea = Area(areaVisual.area)
 
-        useTranslucentSwitch = view.findViewById(R.id.area_edit_display_translucent)
-        useTranslucentSwitch.isChecked = arguments!!.getInt("area_edit_translucency") == 1
+//        useTranslucentSwitch = view.findViewById(R.id.area_edit_display_translucent)
+//        useTranslucentSwitch.isChecked = arguments!!.getInt("area_edit_translucency") == 1
 
         binding.area = editArea
         binding.notifyChange()

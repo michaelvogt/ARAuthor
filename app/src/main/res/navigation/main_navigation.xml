@@ -25,9 +25,6 @@
         android:name="eu.michaelvogt.ar.author.fragments.ImagePreviewFragment"
         android:label="Preview"
         tools:layout="@layout/fragment_imagepreview">
-        <action
-            android:id="@+id/action_list_markers"
-            app:destination="@id/marker_list_fragment" />
         <argument
             android:name="plane_finding_mode"
             android:defaultValue="HORIZONTAL_AND_VERTICAL" />
@@ -66,14 +63,8 @@
         android:label="Edit Marker"
         tools:layout="@layout/fragment_marker_edit">
         <action
-            android:id="@+id/action_list_markers"
-            app:destination="@id/marker_list_fragment" />
-        <action
             android:id="@+id/action_crop_marker_image"
             app:destination="@id/cropFragment" />
-        <action
-            android:id="@+id/action_edit_area_placement"
-            app:destination="@+id/area_edit_fragment" />
         <action
             android:id="@+id/action_marker_preview"
             app:destination="@id/markerPreviewFragment" />
@@ -98,12 +89,6 @@
         android:name="eu.michaelvogt.ar.author.fragments.AreaPreviewFragment"
         android:label="Area preview"
         tools:layout="@layout/fragment_areapreview">
-        <action
-            android:id="@+id/action_edit_marker"
-            app:destination="@+id/area_edit_fragment" />
-        <action
-            android:id="@+id/action_edit_area"
-            app:destination="@id/area_edit_fragment" />
         <argument
             android:name="area_edit_translucency"
             android:defaultValue="1" />
@@ -112,19 +97,12 @@
         android:id="@+id/cropFragment"
         android:name="eu.michaelvogt.ar.author.fragments.CropFragment"
         android:label="Crop image"
-        tools:layout="@layout/fragment_crop">
-        <action
-            android:id="@+id/action_edit_marker"
-            app:destination="@id/editFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_crop" />
     <fragment
         android:id="@+id/markerPreviewFragment"
         android:name="eu.michaelvogt.ar.author.fragments.MarkerPreviewFragment"
         android:label="Marker preview"
         tools:layout="@layout/fragment_markerpreview">
-        <action
-            android:id="@+id/action_edit_marker"
-            app:destination="@id/editFragment" />
         <argument
             android:name="plane_finding_mode"
             android:defaultValue="HORIZONTAL_AND_VERTICAL" />
@@ -175,11 +153,7 @@
         android:id="@+id/panoramaFragment"
         android:name="eu.michaelvogt.ar.author.fragments.PanoramaFragment"
         android:label="Panorama"
-        tools:layout="@layout/fragment_panorama">
-        <action
-            android:id="@+id/action_panoramaFragment_to_imagePreviewFragment"
-            app:destination="@id/imagePreviewFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_panorama" />
     <fragment
         android:id="@+id/area_list_fragment"
         android:name="eu.michaelvogt.ar.author.fragments.AreaListFragment"

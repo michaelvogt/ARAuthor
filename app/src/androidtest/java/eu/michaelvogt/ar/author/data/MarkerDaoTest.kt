@@ -34,8 +34,8 @@ class MarkerDaoTest : DaoTest() {
 
     @Before
     fun setUp() {
-        markerDao = db!!.markerDao()
-        locationDao = db!!.locationDao()
+        markerDao = db.markerDao()
+        locationDao = db.locationDao()
     }
 
 

@@ -26,7 +26,7 @@ import org.junit.Before
 import org.junit.Rule
 
 open class DaoTest {
-    protected var db: AppDatabase? = null
+    protected lateinit var db: AppDatabase
 
     @Rule
     @JvmField
@@ -42,6 +42,6 @@ open class DaoTest {
 
     @After
     fun closeDb() {
-        db!!.close()
+        db.close()
     }
 }

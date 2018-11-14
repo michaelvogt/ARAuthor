@@ -94,9 +94,7 @@ public class SliderAdapter extends PagerAdapter {
         .into(imageView);
 
     ImageButton button = slide.findViewById(R.id.button_compare);
-    button.setOnClickListener(view -> {
-      slideCallback.createImageComparatorCover();
-    });
+    button.setOnClickListener(view -> slideCallback.createImageComparatorCover());
 
     return slide;
   }
@@ -113,9 +111,7 @@ public class SliderAdapter extends PagerAdapter {
         .into(imageView);
 
     AppCompatImageButton button = slide.findViewById(R.id.vr_button);
-    button.setOnTouchListener((view, motionEvent) -> {
-      return true;
-    });
+    button.setOnTouchListener((view, motionEvent) -> true);
 
     return slide;
   }

@@ -32,7 +32,7 @@ class AreaDaoTest : DaoTest() {
 
     @Before
     fun setUp() {
-        dao = db!!.areaDao()
+        dao = db.areaDao()
     }
 
     @Test
