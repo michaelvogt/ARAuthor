@@ -32,9 +32,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.ui.NavigationUI
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.bottomappbar.BottomAppBar
 import eu.michaelvogt.ar.author.data.AppDatabase
+import eu.michaelvogt.ar.author.utils.BottomSheetNav
+import eu.michaelvogt.ar.author.utils.MenuSelectedListener
 import java.util.concurrent.CompletableFuture
 
 private const val CAMERA_BUTTON = R.id.camera_req_btn
@@ -55,23 +56,28 @@ class AuthorActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private var deniedPermissions = ArrayList<String>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override
+    fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_author)
 
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
-//        val appBarConfiguration = AppBarConfiguration.Builder(navController.graph).build()
-//        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration)
 
-        val bottomNav = findViewById<View>(R.id.bottom_nav) as BottomNavigationView
-        NavigationUI.setupWithNavController(bottomNav, navController)
+        val fab = findViewById<View>(R.id.fab)
+        val bottomNav = findViewById<BottomAppBar>(R.id.bottom_nav)
+        setSupportActionBar(bottomNav)
 
         navController.addOnNavigatedListener { controller, destination ->
             when (destination.id) {
-                R.id.intro_fragment, R.id.permission_check_fragment ->
+                R.id.intro_fragment,
+                R.id.permission_check_fragment -> {
                     bottomNav.visibility = View.GONE
-                else ->
+                    fab.visibility = View.GONE
+                }
+                else -> {
                     bottomNav.visibility = View.VISIBLE
+                    fab.visibility = View.VISIBLE
+                }
             }
         }
 
@@ -81,17 +87,34 @@ class AuthorActivity : AppCompatActivity() {
         CompletableFuture.supplyAsync { database!!.locationDao().getSize() }
     }
 
-    override fun onSupportNavigateUp(): Boolean {
+    override
+    fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override
+    fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.actionbar_menu, menu)
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override
+    fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            android.R.id.home -> {
+                val bottomSheetNav = BottomSheetNav()
+                bottomSheetNav.show(supportFragmentManager, bottomSheetNav.tag)
+                bottomSheetNav.setMenuSelectedListener(object : MenuSelectedListener {
+                    override fun onMenuSelected(menuId: Int) {
+                        when (menuId) {
+                            R.id.location_list_fragment -> navController.navigate(R.id.location_list_fragment)
+                            R.id.marker_list_fragment -> navController.navigate(R.id.marker_list_fragment)
+                            R.id.area_list_fragment -> navController.navigate(R.id.area_list_fragment)
+                        }
+                    }
+                })
+                true
+            }
             R.id.action_feedback -> {
                 true
             }

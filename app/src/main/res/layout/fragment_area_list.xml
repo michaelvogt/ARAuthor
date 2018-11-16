@@ -37,7 +37,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <fragment
-        android:id="@+id/area_edit_fragment"
+        android:id="@+id/area_list_fragment"
         android:name="eu.michaelvogt.ar.author.fragments.MarkerEditFragmentAreas"
         android:layout_width="0dp"
         android:layout_height="0dp"

@@ -22,8 +22,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import eu.michaelvogt.ar.author.R
 
 class AreaListFragment : Fragment() {
@@ -33,14 +31,4 @@ class AreaListFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_area_list, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        val bottomNav = activity!!.findViewById<BottomNavigationView>(R.id.bottom_nav)
-        val item = bottomNav.menu.findItem(R.id.bottom_ar)
-        item.setOnMenuItemClickListener { thisItem ->
-            Navigation.findNavController(view).navigate(R.id.action_test_markers)
-            true
-        }
-    }
 }

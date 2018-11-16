@@ -522,6 +522,11 @@ class DatabaseInitializer private constructor(
         //        new Vector3(0.55f, 0.01f, 0.13f),
         //        new Quaternion((float) -1, 0f, 0f, 1f),
         //        Vector3.one()));
+
+        locationId = insertLocation(
+                "中島",
+                "Touristar/hiroshima/images/P_20180724_101817_vHDR_On.jpg",
+                "Touristar/hiroshima/intro.html")
     }
 
     private fun insertLocation(name: String, thumbPath: String, introHtmlPath: String): Long {

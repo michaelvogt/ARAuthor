@@ -18,5 +18,13 @@
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorSecondary">@color/secondaryColor</item>
+
+        <item name="android:textViewStyle">@style/NoHyphenationStyle</item>
     </style>
+
+    <style name="NoHyphenationStyle" parent="HyphenationStyle">
+        <item name="android:hyphenationFrequency">none</item>
+    </style>
+
+    <style name="HyphenationStyle" parent="android:Widget.Material.TextView" />
 </resources>

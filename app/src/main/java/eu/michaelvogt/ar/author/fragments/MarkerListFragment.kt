@@ -24,7 +24,6 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import eu.michaelvogt.ar.author.R
 import eu.michaelvogt.ar.author.data.AuthorViewModel
 import eu.michaelvogt.ar.author.data.MARKERS_AND_TITLES
@@ -71,12 +70,12 @@ class MarkerListFragment : Fragment(), ItemClickListener {
 
         adapter.setItemClickListener(this)
 
-        val bottomNav = activity!!.findViewById<View>(R.id.bottom_nav)
-        val item = (bottomNav as BottomNavigationView).menu.findItem(R.id.bottom_ar)
-        item.setOnMenuItemClickListener {
-            Navigation.findNavController(view).navigate(R.id.action_test_markers)
-            true
-        }
+//        val bottomNav = activity!!.findViewById<View>(R.id.bottom_nav)
+//        val item = (bottomNav as BottomNavigationView).menu.findItem(R.id.bottom_ar)
+//        item.setOnMenuItemClickListener {
+//            Navigation.findNavController(view).navigate(R.id.action_test_markers)
+//            true
+//        }
     }
 
     override

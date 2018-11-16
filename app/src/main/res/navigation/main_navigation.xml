@@ -70,7 +70,7 @@
             app:destination="@id/markerPreviewFragment" />
     </fragment>
     <fragment
-        android:id="@+id/area_edit_fragment"
+        android:id="@+id/area_list_fragment"
         android:name="eu.michaelvogt.ar.author.fragments.AreaEditFragment"
         android:label="Edit area"
         tools:layout="@layout/fragment_area_edit">
@@ -161,7 +161,7 @@
         tools:layout="@layout/fragment_area_list">
         <action
             android:id="@+id/action_edit_area_placement"
-            app:destination="@id/area_edit_fragment" />
+            app:destination="@id/area_list_fragment" />
     </fragment>
     <fragment
         android:id="@+id/permission_check_fragment"

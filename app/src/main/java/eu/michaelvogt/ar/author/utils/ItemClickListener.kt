@@ -21,3 +21,7 @@ package eu.michaelvogt.ar.author.utils
 interface ItemClickListener {
     fun onItemClicked(uId: Long)
 }
+
+interface MenuSelectedListener {
+    fun onMenuSelected(id: Int)
+}
