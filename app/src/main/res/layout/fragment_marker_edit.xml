@@ -33,7 +33,6 @@
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/editmarker_tabs"
-            style="@style/Widget.Design.TabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_scrollFlags="scroll|enterAlways"

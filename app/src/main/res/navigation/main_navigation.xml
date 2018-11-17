@@ -155,15 +155,6 @@
         android:label="Panorama"
         tools:layout="@layout/fragment_panorama" />
     <fragment
-        android:id="@+id/area_list_fragment"
-        android:name="eu.michaelvogt.ar.author.fragments.AreaListFragment"
-        android:label="Areas"
-        tools:layout="@layout/fragment_area_list">
-        <action
-            android:id="@+id/action_edit_area_placement"
-            app:destination="@id/area_list_fragment" />
-    </fragment>
-    <fragment
         android:id="@+id/permission_check_fragment"
         android:name="eu.michaelvogt.ar.author.fragments.PermissionCheckFragment"
         android:label="Permissions"
@@ -172,4 +163,8 @@
             android:id="@+id/action_locationlist"
             app:destination="@id/location_list_fragment" />
     </fragment>
+    <fragment
+        android:id="@+id/preferences_fragment"
+        android:name="eu.michaelvogt.ar.author.fragments.PreferencesFragment"
+        android:label="PreferencesFragment" />
 </navigation>

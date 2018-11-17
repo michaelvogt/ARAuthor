@@ -1,4 +1,4 @@
-<!--
+/*
     ARTester - AR for tourists by tourists
     Copyright (C) 2018  Michael Vogt
 
@@ -14,11 +14,22 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
--->
+*/
 
-<paths>
-    <external-path name="marker_images" path="/Touristar/" />
-    <external-path name="marker_images" path="/Touristar/Markers/" />
-    <external-path name="hidaka_data" path="/Touristar/Hidaka/" />
-    <external-path name="hidaka_data" path="/Touristar/iwamiginzan/muneokake/infoboard/images/" />
-</paths>
+@file:JvmName("Constants")
+
+package eu.michaelvogt.ar.author.utils
+
+import android.Manifest
+
+const val NEW_CURRENT_LOCATION = -1L
+const val NEW_CURRENT_MARKER = -1L
+const val NEW_CURRENT_AREA = -1L
+
+
+// Permissions
+const val CAMERA_PERMISSION_CODE = 0
+const val CAMERA_PERMISSION = Manifest.permission.CAMERA
+
+const val STORAGE_PERMISSION_CODE = 1
+const val STORAGE_PERMISSION = Manifest.permission.WRITE_EXTERNAL_STORAGE

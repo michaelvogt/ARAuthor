@@ -28,12 +28,12 @@ import androidx.navigation.Navigation
 import eu.michaelvogt.ar.author.R
 import eu.michaelvogt.ar.author.data.AuthorViewModel
 import eu.michaelvogt.ar.author.data.Location
-import eu.michaelvogt.ar.author.data.NEW_CURRENT_AREA
-import eu.michaelvogt.ar.author.data.NEW_CURRENT_MARKER
 import eu.michaelvogt.ar.author.databinding.FragmentLocationlistBinding
 import eu.michaelvogt.ar.author.fragments.adapters.LocationListAdapter
 import eu.michaelvogt.ar.author.utils.CardMenuHandler
 import eu.michaelvogt.ar.author.utils.ItemClickListener
+import eu.michaelvogt.ar.author.utils.NEW_CURRENT_AREA
+import eu.michaelvogt.ar.author.utils.NEW_CURRENT_MARKER
 
 class LocationlistFragment : Fragment(), ItemClickListener {
     private lateinit var viewModel: AuthorViewModel

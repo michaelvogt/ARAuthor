@@ -61,7 +61,6 @@
 
     <Button
         android:id="@+id/intro_enter_button"
-        style="@style/Widget.MaterialComponents.Button"
         android:layout_width="0dp"
         android:layout_height="@dimen/bottom_button_height"
         android:layout_marginStart="8dp"

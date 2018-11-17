@@ -18,8 +18,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/action_feedback"
-        android:title="Feedback"
-        app:showAsAction="never" />
+    <group android:id="@+id/actionbar_group_settings">
+        <item
+            android:id="@+id/actionbar_preferences"
+            android:title="Preferences" />
+    </group>
+    <group android:id="@+id/actionbar_group_feedback">
+        <item
+            android:id="@+id/actionbar_feedback"
+            android:title="Feedback"
+            app:showAsAction="never" />
+    </group>
 </menu>

@@ -31,11 +31,11 @@ import androidx.recyclerview.widget.RecyclerView
 import eu.michaelvogt.ar.author.R
 import eu.michaelvogt.ar.author.data.AuthorViewModel
 import eu.michaelvogt.ar.author.data.GROUPS_ALL
-import eu.michaelvogt.ar.author.data.NEW_CURRENT_AREA
-import eu.michaelvogt.ar.author.data.NEW_CURRENT_MARKER
 import eu.michaelvogt.ar.author.databinding.FragmentMarkerEditAreasBinding
 import eu.michaelvogt.ar.author.fragments.adapters.AreaListAdapter
 import eu.michaelvogt.ar.author.utils.ItemClickListener
+import eu.michaelvogt.ar.author.utils.NEW_CURRENT_AREA
+import eu.michaelvogt.ar.author.utils.NEW_CURRENT_MARKER
 
 class MarkerEditFragmentAreas : Fragment(), ItemClickListener {
 
@@ -76,7 +76,7 @@ class MarkerEditFragmentAreas : Fragment(), ItemClickListener {
 
     private fun navigateToEdit(areaId: Long) {
         viewModel.currentAreaId = areaId
-        Navigation.findNavController(view!!).navigate(R.id.action_edit_area_placement)
+        Navigation.findNavController(view!!).navigate(R.id.action_test_area_placement)
     }
 
     // Called from layout

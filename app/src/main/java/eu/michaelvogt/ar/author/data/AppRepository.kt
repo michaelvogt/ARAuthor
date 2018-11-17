@@ -19,6 +19,8 @@
 package eu.michaelvogt.ar.author.data
 
 import android.util.Log
+import eu.michaelvogt.ar.author.utils.NEW_CURRENT_LOCATION
+import eu.michaelvogt.ar.author.utils.NEW_CURRENT_MARKER
 import org.jetbrains.anko.doAsync
 import java.util.*
 import java.util.concurrent.CompletableFuture

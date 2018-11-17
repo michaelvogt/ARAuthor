@@ -31,18 +31,36 @@
         as a browser app.
     </string>
 
-    <string name="req_header">The application needs access to the following parts of your device,
-        that need your approval. Without them, the application can\'t provide its functionality.</string>
+    <!--Permissions-->
+    <string name="req_header">The application needs your approval to access the following features of
+        your device.</string>
+    <string name="arcore_cap">Augmented reality (AR) functionality is provided using ARCore from
+        Google, which can be installed for free from Play store. It allows to place 3D objects
+        into the real world, giving the impression as if they\'re really there.</string>
+    <string name="arcore_cap_not_capable">Unfortunately, your phone isn\'t able to run ArCore.
+        AR scenes will be partially available as 3D models.</string>
+    <string name="arcore_cap_deactivated">ARCore is deactivated</string>
+    <string name="arcore_cap_ready">Full augmented reality experience available</string>
 
+    <string name="arcore_cap_btn_install">Install ARCore</string>
+    <string name="arcore_cap_btn_not_capable">Install ARCore</string>
+    <string name="arcore_cap_btn_deactivated">Deactivated</string>
+    <string name="arcore_cap_btn_ready">Ready</string>
+
+    <string name="arcore_no_btn_title">Use ARCore</string>
     <string name="camera_req">The camera requirement is needed for the ARCore preview. Image
         processing is handled locally, no images are sent back over the network</string>
     <string name="camera_req_btn">Approve camera access</string>
-
     <string name="storage_req">Images and settings are stored in files on the public local storage
         of the device in a folder called \'TouristAR\'. Other locations on the device aren\'t
         accessed
     </string>
     <string name="storage_req_btn">Approve storage access</string>
+
+
+    <!--Preferences-->
+    <string name="checkbox_use_arcore_key">use_arcore</string>
+
 
     <string name="marker_import_button">import</string>
     <string name="marker_capture_button">capture</string>
@@ -55,8 +73,4 @@
     <string name="button_image_desc">Show product images</string>
     <string name="button_video_desc">Play promo video</string>
     <string name="image_alternative_desc">Interactive image for use in AR scene</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
 </resources>

@@ -27,10 +27,10 @@ import androidx.navigation.Navigation
 import eu.michaelvogt.ar.author.R
 import eu.michaelvogt.ar.author.data.AuthorViewModel
 import eu.michaelvogt.ar.author.data.MARKERS_AND_TITLES
-import eu.michaelvogt.ar.author.data.NEW_CURRENT_MARKER
 import eu.michaelvogt.ar.author.databinding.FragmentMarkerlistBinding
 import eu.michaelvogt.ar.author.fragments.adapters.MarkerListAdapter
 import eu.michaelvogt.ar.author.utils.ItemClickListener
+import eu.michaelvogt.ar.author.utils.NEW_CURRENT_MARKER
 
 class MarkerListFragment : Fragment(), ItemClickListener {
 

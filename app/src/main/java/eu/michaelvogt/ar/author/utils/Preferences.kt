@@ -1,4 +1,4 @@
-<!--
+/*
     ARTester - AR for tourists by tourists
     Copyright (C) 2018  Michael Vogt
 
@@ -14,11 +14,23 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
--->
+*/
 
-<paths>
-    <external-path name="marker_images" path="/Touristar/" />
-    <external-path name="marker_images" path="/Touristar/Markers/" />
-    <external-path name="hidaka_data" path="/Touristar/Hidaka/" />
-    <external-path name="hidaka_data" path="/Touristar/iwamiginzan/muneokake/infoboard/images/" />
-</paths>
+package eu.michaelvogt.ar.author.utils
+
+import android.content.Context
+import androidx.fragment.app.FragmentActivity
+
+fun setPreference(activity: FragmentActivity?, key: String, value: Boolean) {
+    defaultPreferences(activity).edit().putBoolean(key, value).apply()
+}
+
+fun getPreference(activity: FragmentActivity?, key: String, default: Boolean): Boolean {
+    return defaultPreferences(activity).getBoolean(key, true)
+}
+
+fun getPreference(activity: FragmentActivity?, key: String, default: String): String? {
+    return defaultPreferences(activity).getString(key, default)
+}
+
+private fun defaultPreferences(activity: FragmentActivity?) = activity!!.getPreferences(Context.MODE_PRIVATE)

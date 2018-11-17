@@ -20,11 +20,10 @@ package eu.michaelvogt.ar.author.data
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import eu.michaelvogt.ar.author.utils.NEW_CURRENT_AREA
+import eu.michaelvogt.ar.author.utils.NEW_CURRENT_LOCATION
+import eu.michaelvogt.ar.author.utils.NEW_CURRENT_MARKER
 import java.util.concurrent.CompletableFuture
-
-const val NEW_CURRENT_LOCATION = -1L
-const val NEW_CURRENT_MARKER = -1L
-const val NEW_CURRENT_AREA = -1L
 
 class AuthorViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = AppRepository(AppDatabase.getDatabase(application.applicationContext))

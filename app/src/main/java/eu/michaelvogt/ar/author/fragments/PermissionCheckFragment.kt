@@ -25,18 +25,38 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import eu.michaelvogt.ar.author.AuthorActivity
 import eu.michaelvogt.ar.author.R
+import eu.michaelvogt.ar.author.utils.getPreference
+import eu.michaelvogt.ar.author.utils.setPreference
+import kotlinx.android.synthetic.main.fragment_permission_check.*
 
 class PermissionCheckFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_permission_check, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val isCheckedPreference = getPreference(
+                activity,
+                resources.getString((R.string.checkbox_use_arcore_key)),
+                resources.getBoolean(R.bool.use_arcore_key_default))
+
+        use_arcore_check.isChecked = isCheckedPreference
+        capable_arcore_btn.isEnabled = isCheckedPreference
+
+        use_arcore_check.setOnCheckedChangeListener { _, isChecked ->
+            capable_arcore_btn.isEnabled = isChecked
+            setPreference(activity, resources.getString(R.string.checkbox_use_arcore_key), isChecked)
+            (activity as AuthorActivity).checkArcorePermission()
+        }
+    }
+
     override
-    fun onStart() {
-        super.onStart()
-        val authorActivity: AuthorActivity = activity as AuthorActivity
-        authorActivity.checkPermissions()
+    fun onResume() {
+        super.onResume()
+
+        (activity as AuthorActivity).checkPermissions()
     }
 }
