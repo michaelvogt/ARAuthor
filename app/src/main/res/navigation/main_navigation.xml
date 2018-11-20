@@ -121,7 +121,7 @@
         android:label="Welcome"
         tools:layout="@layout/fragment_intro">
         <action
-            android:id="@+id/action_permission_check"
+            android:id="@+id/action_to_permission_check"
             app:destination="@id/permission_check_fragment" />
         <argument
             android:name="forward"
@@ -142,6 +142,13 @@
             <argument
                 android:name="forward"
                 android:defaultValue="false" />
+        </action>
+        <action
+            android:id="@+id/action_to_location_edit"
+            app:destination="@id/location_edit_fragment">
+            <argument
+                android:name="locationId"
+                android:defaultValue="-1L" />
         </action>
     </fragment>
     <fragment
@@ -183,5 +190,14 @@
         <action
             android:id="@+id/action_to_intro"
             app:destination="@id/intro_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/location_edit_fragment"
+        android:name="eu.michaelvogt.ar.author.fragments.LocationEdit"
+        android:label="LocationEdit">
+        <argument
+            android:name="locationId"
+            android:defaultValue="-1L"
+            app:argType="long" />
     </fragment>
 </navigation>

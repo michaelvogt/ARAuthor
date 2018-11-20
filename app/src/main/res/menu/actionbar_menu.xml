@@ -20,17 +20,17 @@
 
     <item
         android:id="@+id/actionbar_show_intro"
-        android:title="Show Intro"
+        android:title="@string/actionbar_show_intro"
         app:showAsAction="never" />
     <group android:id="@+id/actionbar_group_settings">
         <item
             android:id="@+id/actionbar_preferences"
-            android:title="Preferences" />
+            android:title="@string/actionbar_preferences" />
     </group>
     <group android:id="@+id/actionbar_group_feedback">
         <item
             android:id="@+id/actionbar_feedback"
-            android:title="Feedback"
+            android:title="@string/actionbar_feedback"
             app:showAsAction="never" />
     </group>
 </menu>

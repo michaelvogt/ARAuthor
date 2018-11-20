@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 -->
 <resources>
-    <color name="primaryColor">#d50000</color>
+    <color name="primaryColor">#D50000</color>
     <color name="primaryLightColor">#FF5131</color>
     <color name="primaryDarkColor">#9b0000</color>
     <color name="secondaryColor">#767778</color>

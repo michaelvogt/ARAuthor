@@ -27,7 +27,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import eu.michaelvogt.ar.author.R
 import eu.michaelvogt.ar.author.data.AuthorViewModel
 import eu.michaelvogt.ar.author.data.GROUPS_ALL
@@ -36,6 +35,7 @@ import eu.michaelvogt.ar.author.fragments.adapters.AreaListAdapter
 import eu.michaelvogt.ar.author.utils.ItemClickListener
 import eu.michaelvogt.ar.author.utils.NEW_CURRENT_AREA
 import eu.michaelvogt.ar.author.utils.NEW_CURRENT_MARKER
+import kotlinx.android.synthetic.main.fragment_marker_edit_areas.*
 
 class MarkerEditFragmentAreas : Fragment(), ItemClickListener {
 
@@ -43,8 +43,7 @@ class MarkerEditFragmentAreas : Fragment(), ItemClickListener {
     private lateinit var viewModel: AuthorViewModel
 
     override
-    fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                     savedInstanceState: Bundle?): View? {
+    fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binder = FragmentMarkerEditAreasBinding.inflate(inflater, container, false)
         binder.handler = this
         return binder.root
@@ -56,15 +55,13 @@ class MarkerEditFragmentAreas : Fragment(), ItemClickListener {
 
         viewModel = ViewModelProviders.of(activity!!).get(AuthorViewModel::class.java)
 
-        val recyclerView = view.findViewById<RecyclerView>(R.id.areas_list)
-        recyclerView.setHasFixedSize(true)
         val mLayoutManager = LinearLayoutManager(context)
-        recyclerView.layoutManager = mLayoutManager
+        areas_list.layoutManager = mLayoutManager
+        areas_list.setHasFixedSize(true)
 
         val adapter = AreaListAdapter(context)
         adapter.setItemClickListener(this)
-
-        recyclerView.adapter = adapter
+        areas_list.adapter = adapter
 
         viewModel.getAreasForMarker(markerId, GROUPS_ALL)
                 .thenAccept { areas -> activity!!.runOnUiThread { adapter.setAreas(areas) } }

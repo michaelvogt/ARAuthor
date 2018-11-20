@@ -54,6 +54,8 @@ class AuthorViewModel(application: Application) : AndroidViewModel(application) 
 
     fun getAllLocations(): CompletableFuture<List<Location>> = repository.allLocations()
 
+    fun updateLocation(location: Location) = repository.update(location)
+
     fun deleteLocation(location: Location): CompletableFuture<Unit>? = repository.deleteLocation(location)
 
 

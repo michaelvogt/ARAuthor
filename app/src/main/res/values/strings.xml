@@ -74,9 +74,31 @@
     <string name="APPROVE_IN_SETTINGS_TITLE">Approve in application settings</string>
 
 
+    <!--Menus-->
+    <string name="actionbar_show_intro">Show Intro</string>
+    <string name="actionbar_preferences">Preferences</string>
+    <string name="actionbar_feedback">Feedback</string>
+
+    <string name="menu_location_edit">Edit</string>
+
+
     <!--Preferences-->
     <string name="checkbox_use_arcore_key">use_arcore</string>
     <string name="show_intro_key">has_seen_intro</string>
+
+
+    <!--Locations-->
+    <string name="location_image_desc">Image representing the location of this card</string>
+    <string name="location_info_button_desc">Button to open info about locations</string>
+    <string name="location_info_label">What are locations, what are they used for</string>
+    <string name="location_menu_desc">Location item menu</string>
+    <string name="location_edit_header">Edit location header</string>
+
+    <string name="location_edit_hint_name">Location Name</string>
+    <string name="location_edit_hint_thumb">Thumb Path</string>
+    <string name="location_edit_hint_intro">Intro Path</string>
+    <string name="location_edit_save">Save Location</string>
+    <string name="location_edit_cancel">Cancel</string>
 
 
     <string name="marker_import_button">import</string>

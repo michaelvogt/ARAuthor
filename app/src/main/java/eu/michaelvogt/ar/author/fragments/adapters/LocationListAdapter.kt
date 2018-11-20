@@ -27,6 +27,9 @@ import eu.michaelvogt.ar.author.databinding.CardLocationBinding
 import eu.michaelvogt.ar.author.utils.CardMenuHandler
 import eu.michaelvogt.ar.author.utils.ItemClickListener
 
+/**
+ * Adapter for the list of Locations
+ */
 class LocationListAdapter(context: Context?, private val locationMenuHandler: CardMenuHandler) :
         RecyclerView.Adapter<LocationListAdapter.ViewHolder>() {
 
@@ -43,7 +46,6 @@ class LocationListAdapter(context: Context?, private val locationMenuHandler: Ca
     override
     fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binder = CardLocationBinding.inflate(inflater, parent, false)
-        binder.handler = this
         return ViewHolder(binder)
     }
 
@@ -74,9 +76,5 @@ class LocationListAdapter(context: Context?, private val locationMenuHandler: Ca
                 locationMenuHandler.onMenuClick(view, locations[adapterPosition])
             }
         }
-    }
-
-    fun getLocation(position: Int): Location {
-        return locations[position]
     }
 }

@@ -16,7 +16,9 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 -->
 
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -29,10 +31,7 @@
             type="eu.michaelvogt.ar.author.data.Location" />
     </data>
 
-    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-
+    <androidx.cardview.widget.CardView
         android:id="@+id/location_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,7 +50,7 @@
                 android:id="@+id/location_image"
                 android:layout_width="0dp"
                 android:layout_height="200dp"
-                android:contentDescription="@string/marker_image_desc"
+                android:contentDescription="@string/location_image_desc"
                 android:scaleType="centerCrop"
 
                 card_view:imageUrl="@{location.thumbPath}"
@@ -67,7 +66,7 @@
                 android:layout_height="44dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="52dp"
+                android:layout_marginEnd="16dp"
                 android:background="#4cffffff"
                 android:fontFamily="serif"
                 android:gravity="center_vertical|start"
@@ -91,6 +90,7 @@
                 android:layout_marginEnd="8dp"
                 android:background="#7fff"
 
+                android:contentDescription="@string/location_menu_desc"
                 card_view:layout_constraintBottom_toBottomOf="@+id/location_title"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintTop_toTopOf="@+id/location_title"

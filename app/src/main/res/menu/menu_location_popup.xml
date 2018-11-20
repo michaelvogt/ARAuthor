@@ -18,6 +18,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/menu_location_delete"
-        android:title="Delete" />
+        android:id="@+id/menu_location_edit"
+        android:title="@string/menu_location_edit" />
 </menu>

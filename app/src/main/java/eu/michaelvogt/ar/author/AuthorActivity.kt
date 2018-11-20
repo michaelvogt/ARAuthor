@@ -27,6 +27,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.Navigation
 import com.google.ar.core.ArCoreApk
 import eu.michaelvogt.ar.author.data.AppDatabase
@@ -55,18 +56,20 @@ class AuthorActivity : AppCompatActivity() {
 
         setSupportActionBar(bottom_nav)
 
-        val fab = findViewById<View>(R.id.bottom_nav_fab)   // Can't be replaced by generated id
         navController.addOnNavigatedListener { _, destination ->
+            handleBottomAppbarVisibility(destination)
+
+            val fab = findViewById<View>(R.id.bottom_nav_fab)   // Can't be replaced by generated id
+
             when (destination.id) {
-                R.id.intro_fragment,
-                R.id.permission_check_fragment,
-                R.id.splash_fragment -> {
-                    bottom_nav.visibility = View.GONE
-                    fab.visibility = View.GONE
+                R.id.location_list_fragment -> {
+                    fab.setOnClickListener {
+                        navController.navigate(LocationlistFragmentDirections.actionToLocationEdit())
+                    }
                 }
                 else -> {
-                    bottom_nav.visibility = View.VISIBLE
-                    fab.visibility = View.VISIBLE
+                    fab.visibility = View.GONE
+                    fab.setOnClickListener(null)
                 }
             }
         }
@@ -106,8 +109,7 @@ class AuthorActivity : AppCompatActivity() {
                 true
             }
             R.id.actionbar_show_intro -> {
-                val arguments = LocationlistFragmentDirections.actionToIntro().setForward(false).arguments
-                navController.navigate(LocationlistFragmentDirections.actionToIntro().actionId, arguments)
+                navController.navigate(LocationlistFragmentDirections.actionToIntro())
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -147,6 +149,25 @@ class AuthorActivity : AppCompatActivity() {
         checkPermissions(this, app_layout)
     }
 
+    /**
+     * The bottom app bar isn't required on every screen. This is handled globally here.
+     */
+    private fun handleBottomAppbarVisibility(destination: NavDestination) {
+        val fab = findViewById<View>(R.id.bottom_nav_fab)   // Can't be replaced by generated id
+
+        when (destination.id) {
+            R.id.intro_fragment,
+            R.id.permission_check_fragment,
+            R.id.splash_fragment -> {
+                bottom_nav.visibility = View.GONE
+                fab.visibility = View.GONE
+            }
+            else -> {
+                bottom_nav.visibility = View.VISIBLE
+                fab.visibility = View.VISIBLE
+            }
+        }
+    }
 
     /**
      * Handle selections from the navigation menu, shown on the left side of the bottom app bar

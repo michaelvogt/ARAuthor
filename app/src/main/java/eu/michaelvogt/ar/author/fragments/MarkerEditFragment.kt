@@ -39,8 +39,7 @@ class MarkerEditFragment : Fragment() {
     private lateinit var viewModel: AuthorViewModel
 
     override
-    fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                     savedInstanceState: Bundle?): View? {
+    fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_marker_edit, container, false)
     }

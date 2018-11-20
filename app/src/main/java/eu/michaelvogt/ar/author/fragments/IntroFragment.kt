@@ -38,6 +38,8 @@ class IntroFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val navController = Navigation.findNavController(view)
-        intro_enter_button.setOnClickListener { navController.navigate(R.id.action_permission_check) }
+        intro_enter_button.setOnClickListener {
+            navController.navigate(IntroFragmentDirections.actionToPermissionCheck())
+        }
     }
 }

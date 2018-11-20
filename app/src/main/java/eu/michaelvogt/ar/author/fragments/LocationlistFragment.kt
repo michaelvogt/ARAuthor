@@ -21,7 +21,7 @@ package eu.michaelvogt.ar.author.fragments
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.PopupMenu
+import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -31,7 +31,11 @@ import eu.michaelvogt.ar.author.data.AuthorViewModel
 import eu.michaelvogt.ar.author.data.Location
 import eu.michaelvogt.ar.author.databinding.FragmentLocationlistBinding
 import eu.michaelvogt.ar.author.fragments.adapters.LocationListAdapter
-import eu.michaelvogt.ar.author.utils.*
+import eu.michaelvogt.ar.author.utils.CardMenuHandler
+import eu.michaelvogt.ar.author.utils.ItemClickListener
+import eu.michaelvogt.ar.author.utils.NEW_CURRENT_AREA
+import eu.michaelvogt.ar.author.utils.NEW_CURRENT_MARKER
+import kotlinx.android.synthetic.main.fragment_locationlist.*
 
 class LocationlistFragment : Fragment(), ItemClickListener {
     private lateinit var viewModel: AuthorViewModel
@@ -55,8 +59,12 @@ class LocationlistFragment : Fragment(), ItemClickListener {
         binder.locationList.setHasFixedSize(true)
 
         adapter = LocationListAdapter(context, HandleLocationMenu())
-        binder.locationList.adapter = adapter
         adapter.setItemClickListener(this)
+        binder.locationList.adapter = adapter
+
+        info_button.setOnClickListener {
+            // TODO: Show location info overlay
+        }
 
         viewModel.locationLoadTrigger.observe(this, Observer { setLocations() })
     }
@@ -72,13 +80,8 @@ class LocationlistFragment : Fragment(), ItemClickListener {
         viewModel.currentMarkerId = NEW_CURRENT_MARKER
         viewModel.currentAreaId = NEW_CURRENT_AREA
 
-        Navigation.findNavController(view!!).navigate(R.id.action_location_intro)
+        Navigation.findNavController(view!!).navigate(LocationlistFragmentDirections.actionToIntro())
     }
-
-
-    private fun showIntroPreference() = getPreference(activity,
-            resources.getString(R.string.show_intro_key),
-            resources.getBoolean(R.bool.show_intro_default))
 
     private fun setLocations() {
         viewModel.getAllLocations()
@@ -91,14 +94,14 @@ class LocationlistFragment : Fragment(), ItemClickListener {
 
     private inner class HandleLocationMenu : CardMenuHandler {
         override fun onMenuClick(view: View, location: Location) {
-            val popupMenu = PopupMenu(context, view)
+            val popupMenu = PopupMenu(context!!, view)
             val menuInflater = popupMenu.menuInflater
             menuInflater.inflate(R.menu.menu_location_popup, popupMenu.menu)
             popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
-                    R.id.menu_location_delete -> {
-                        viewModel.deleteLocation(location)!!
-                                .thenAccept { activity!!.runOnUiThread { this@LocationlistFragment.setLocations() } }
+                    R.id.menu_location_edit -> {
+                        val locationId = LocationlistFragmentDirections.actionToLocationEdit().setLocationId(location.uId).arguments
+                        Navigation.findNavController(view).navigate(LocationlistFragmentDirections.actionToLocationEdit().actionId, locationId)
                         true
                     }
                     else -> false
