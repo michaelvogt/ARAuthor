@@ -15,4 +15,5 @@
 -->
 <resources>
     <bool name="use_arcore_key_default">true</bool>
+    <bool name="show_intro_default">false</bool>
 </resources>

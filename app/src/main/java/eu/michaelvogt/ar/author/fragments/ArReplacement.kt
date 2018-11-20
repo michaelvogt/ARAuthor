@@ -16,8 +16,21 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author.utils
+package eu.michaelvogt.ar.author.fragments
 
-interface NodeCallback {
-    fun createImageComparatorCover()
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import eu.michaelvogt.ar.author.R
+
+class ArReplacement : Fragment() {
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_ar_replacement, container, false)
+    }
+
+
 }

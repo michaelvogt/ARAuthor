@@ -39,8 +39,9 @@
             <ImageView
                 android:id="@+id/imageView2"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:src="@drawable/img_20170408_174704" />
+                android:layout_height="180dp"
+                android:layout_margin="8dp"
+                app:srcCompat="@drawable/touristar_logo" />
 
             <TextView
                 android:id="@+id/intro_text"
@@ -65,6 +66,7 @@
         android:layout_height="@dimen/bottom_button_height"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:text="Check Permissions"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -3,6 +3,7 @@ apply plugin: 'com.google.ar.sceneform.plugin'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'androidx.navigation.safeargs'
 
 android {
     compileSdkVersion 28
@@ -97,6 +98,7 @@ dependencies {
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.hamcrest:hamcrest-all:1.3'
+    testImplementation "io.mockk:mockk:1.8.13.kotlin13"
 
     androidTestImplementation "androidx.test.ext:junit:1.0.0"
     androidTestImplementation 'androidx.test:runner:1.1.0'
@@ -106,7 +108,7 @@ dependencies {
 
     androidTestImplementation 'androidx.arch.core:core-testing:2.0.0'
     androidTestImplementation 'androidx.room:room-testing:2.1.0-alpha02'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'com.android.support.constraint:constraint-layout:2.0.0-alpha2'
 }
 
 repositories {

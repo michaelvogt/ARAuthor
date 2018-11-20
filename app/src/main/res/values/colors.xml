@@ -16,12 +16,12 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 -->
 <resources>
-    <color name="primaryColor">#4caf50</color>
-    <color name="primaryLightColor">#80E27E</color>
-    <color name="primaryDarkColor">#087f23</color>
-    <color name="secondaryColor">#2e7d32</color>
-    <color name="secondaryLightColor">#60AD5E</color>
-    <color name="secondaryDarkColor">#005005</color>
-    <color name="primaryTextColor">#000000</color>
-    <color name="secondaryTextColor">#ffffff</color>
+    <color name="primaryColor">#d50000</color>
+    <color name="primaryLightColor">#FF5131</color>
+    <color name="primaryDarkColor">#9b0000</color>
+    <color name="secondaryColor">#767778</color>
+    <color name="secondaryLightColor">#ffffff</color>
+    <color name="secondaryDarkColor">#ECEFF1</color>
+    <color name="textOnPrimaryColor">#ffffff</color>
+    <color name="textOnSecondaryColor">#000000</color>
 </resources>

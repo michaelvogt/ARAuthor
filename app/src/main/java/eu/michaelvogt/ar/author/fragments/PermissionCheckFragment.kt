@@ -18,15 +18,16 @@
 
 package eu.michaelvogt.ar.author.fragments
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import eu.michaelvogt.ar.author.AuthorActivity
+import androidx.navigation.Navigation
+import com.google.ar.core.ArCoreApk
 import eu.michaelvogt.ar.author.R
-import eu.michaelvogt.ar.author.utils.getPreference
-import eu.michaelvogt.ar.author.utils.setPreference
+import eu.michaelvogt.ar.author.utils.checkPermissions
 import kotlinx.android.synthetic.main.fragment_permission_check.*
 
 class PermissionCheckFragment : Fragment() {
@@ -38,18 +39,17 @@ class PermissionCheckFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val isCheckedPreference = getPreference(
-                activity,
-                resources.getString((R.string.checkbox_use_arcore_key)),
-                resources.getBoolean(R.bool.use_arcore_key_default))
+        capable_arcore_btn.setOnClickListener {
+            if (ArCoreApk.getInstance().requestInstall(activity, true,
+                            ArCoreApk.InstallBehavior.OPTIONAL, ArCoreApk.UserMessageType.USER_ALREADY_INFORMED) == ArCoreApk.InstallStatus.INSTALL_REQUESTED) {
+                capable_arcore_btn.text = resources.getString(R.string.arcore_cap_btn_installing)
+            }
+        }
 
-        use_arcore_check.isChecked = isCheckedPreference
-        capable_arcore_btn.isEnabled = isCheckedPreference
-
-        use_arcore_check.setOnCheckedChangeListener { _, isChecked ->
-            capable_arcore_btn.isEnabled = isChecked
-            setPreference(activity, resources.getString(R.string.checkbox_use_arcore_key), isChecked)
-            (activity as AuthorActivity).checkArcorePermission()
+        req_approved_button.setOnClickListener {
+            val navController = Navigation.findNavController(view)
+            navController.popBackStack(R.id.splash_fragment, false)
+            navController.navigate(R.id.action_to_location_list)
         }
     }
 
@@ -57,6 +57,6 @@ class PermissionCheckFragment : Fragment() {
     fun onResume() {
         super.onResume()
 
-        (activity as AuthorActivity).checkPermissions()
+        checkPermissions(activity as Activity, view!!)
     }
 }

@@ -25,19 +25,34 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import eu.michaelvogt.ar.author.R
-import kotlinx.android.synthetic.main.fragment_intro.*
+import eu.michaelvogt.ar.author.utils.meetsPermissionRequirements
 
+/*
+    Splash screen fragment
 
-class IntroFragment : Fragment() {
+    Functions as gate into the application. As long as the required permissions aren't met, it
+    navigates to the info screen with explanations and access to the permissions settings.
+
+    When all permissions are met, the application is started.
+ */
+class SplashFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_intro, container, false)
+        return inflater.inflate(R.layout.fragment_splash, container, false)
     }
 
-    override
-    fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    /**
+     * Checks if the necessary permissions needed for the applications are granted. If met,
+     * advances into the application, otherwise advances to an intro screen with permission
+     * info.
+     */
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val navController = Navigation.findNavController(view)
-        intro_enter_button.setOnClickListener { navController.navigate(R.id.action_permission_check) }
+        var action = SplashFragmentDirections.actionToLocationList().actionId
+        if (!meetsPermissionRequirements(context)) {
+            action = SplashFragmentDirections.actionToIntro().actionId
+        }
+
+        Navigation.findNavController(view).navigate(action)
     }
 }

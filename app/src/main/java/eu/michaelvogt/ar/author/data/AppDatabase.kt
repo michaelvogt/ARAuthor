@@ -25,7 +25,6 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import androidx.sqlite.db.SupportSQLiteDatabase
 import eu.michaelvogt.ar.author.data.utils.Converters
 import eu.michaelvogt.ar.author.data.utils.DatabaseInitializer
 
@@ -44,7 +43,8 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract fun slideDao(): SlideDao
 
-    private class PopulateDbAsync internal constructor(db: AppDatabase) : AsyncTask<Void, Void, Void>() {
+    // TODO: Replace with proper coroutine
+    class PopulateDbAsync internal constructor(db: AppDatabase, callback: () -> Unit) : AsyncTask<Void, Void, Void>() {
         private val locationDao: LocationDao = db.locationDao()
         private val markerDao: MarkerDao = db.markerDao()
         private val areaDao: AreaDao = db.areaDao()
@@ -55,6 +55,8 @@ abstract class AppDatabase : RoomDatabase() {
         private val eventDetailDao: EventDetailDao = db.eventDetailDao()
 
         private val slideDao: SlideDao = db.slideDao()
+
+        private val mycallback = callback
 
         override fun doInBackground(vararg params: Void): Void? {
             slideDao.deleteAll()
@@ -72,7 +74,7 @@ abstract class AppDatabase : RoomDatabase() {
         }
 
         override fun onPostExecute(result: Void?) {
-
+            mycallback()
         }
     }
 
@@ -89,7 +91,6 @@ abstract class AppDatabase : RoomDatabase() {
                             .databaseBuilder(
                                     context.applicationContext, AppDatabase::class.java, "app_database")
                             .fallbackToDestructiveMigration()
-                            .addCallback(sRoomDatabaseCallback)
                             .build()
                 }
             }
@@ -100,16 +101,6 @@ abstract class AppDatabase : RoomDatabase() {
                 createDatabase(context)
             }
             return INSTANCE
-        }
-
-        private val sRoomDatabaseCallback = object : RoomDatabase.Callback() {
-            override fun onOpen(db: SupportSQLiteDatabase) {
-                super.onOpen(db)
-
-                Log.i("AppDatabase", "Populate database")
-
-                PopulateDbAsync(INSTANCE!!).execute()
-            }
         }
     }
 }

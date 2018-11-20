@@ -18,7 +18,7 @@
 <navigation xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/intro_fragment">
+    app:startDestination="@id/splash_fragment">
 
     <fragment
         android:id="@+id/imagePreviewFragment"
@@ -40,10 +40,6 @@
         <argument
             android:name="light_estimation"
             android:defaultValue="AMBIENT_INTENSITY" />
-        <action
-            android:id="@+id/action_panorama"
-            app:destination="@id/panoramaFragment"
-            app:popUpTo="@+id/imagePreviewFragment" />
     </fragment>
     <fragment
         android:id="@+id/marker_list_fragment"
@@ -56,6 +52,9 @@
         <action
             android:id="@+id/action_edit_marker"
             app:destination="@id/editFragment" />
+        <action
+            android:id="@+id/action_marker_list_fragment_to_area_list_fragment"
+            app:destination="@id/area_list_fragment" />
     </fragment>
     <fragment
         android:id="@+id/editFragment"
@@ -80,9 +79,6 @@
         <argument
             android:name="area_edit_translucency"
             android:defaultValue="1" />
-        <action
-            android:id="@+id/action_edit_marker"
-            app:destination="@id/editFragment" />
     </fragment>
     <fragment
         android:id="@+id/areaPreviewFragment"
@@ -125,11 +121,12 @@
         android:label="Welcome"
         tools:layout="@layout/fragment_intro">
         <action
-            android:id="@+id/action_locationlist"
-            app:destination="@id/location_list_fragment" />
-        <action
             android:id="@+id/action_permission_check"
             app:destination="@id/permission_check_fragment" />
+        <argument
+            android:name="forward"
+            android:defaultValue="true"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/location_list_fragment"
@@ -139,6 +136,13 @@
         <action
             android:id="@+id/action_location_intro"
             app:destination="@+id/locationIntro" />
+        <action
+            android:id="@+id/action_to_intro"
+            app:destination="@id/intro_fragment">
+            <argument
+                android:name="forward"
+                android:defaultValue="false" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/locationIntro"
@@ -158,13 +162,26 @@
         android:id="@+id/permission_check_fragment"
         android:name="eu.michaelvogt.ar.author.fragments.PermissionCheckFragment"
         android:label="Permissions"
-        tools:layout="@layout/fragment_permission_check">
-        <action
-            android:id="@+id/action_locationlist"
-            app:destination="@id/location_list_fragment" />
-    </fragment>
+        tools:layout="@layout/fragment_permission_check" />
     <fragment
         android:id="@+id/preferences_fragment"
         android:name="eu.michaelvogt.ar.author.fragments.PreferencesFragment"
         android:label="PreferencesFragment" />
+    <fragment
+        android:id="@+id/arReplacement"
+        android:name="eu.michaelvogt.ar.author.fragments.ArReplacement"
+        android:label="fragment_ar_replacement"
+        tools:layout="@layout/fragment_ar_replacement" />
+    <fragment
+        android:id="@+id/splash_fragment"
+        android:name="eu.michaelvogt.ar.author.fragments.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash">
+        <action
+            android:id="@+id/action_to_location_list"
+            app:destination="@id/location_list_fragment" />
+        <action
+            android:id="@+id/action_to_intro"
+            app:destination="@id/intro_fragment" />
+    </fragment>
 </navigation>

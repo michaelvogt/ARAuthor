@@ -20,6 +20,7 @@ package eu.michaelvogt.ar.author.data
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
 import eu.michaelvogt.ar.author.utils.NEW_CURRENT_AREA
 import eu.michaelvogt.ar.author.utils.NEW_CURRENT_LOCATION
 import eu.michaelvogt.ar.author.utils.NEW_CURRENT_MARKER
@@ -44,6 +45,8 @@ class AuthorViewModel(application: Application) : AndroidViewModel(application) 
     // TODO: Area title for now. Should be the Area row id
     var currentMainContentId = "Muneoka Background Intro"
 
+
+    var locationLoadTrigger: MutableLiveData<Int> = MutableLiveData()
 
     fun addLocation(location: Location) = repository.insert(location)
 

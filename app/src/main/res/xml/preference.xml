@@ -16,16 +16,4 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <SwitchPreference
-        android:checked="true"
-        android:defaultValue="false"
-        android:key="use_arcore"
-        android:summary="Switch off ARCore support"
-        android:summaryOff="ARCore is switched off"
-        android:summaryOn="ARCore is switched on"
-        android:switchTextOff="ARCore is unavailable"
-        android:switchTextOn="ARCore is available"
-        android:title="Use ARCore" />
-</PreferenceScreen>
+<PreferenceScreen />

@@ -33,6 +33,7 @@ import eu.michaelvogt.ar.author.data.AuthorViewModel
 import eu.michaelvogt.ar.author.data.Location
 import eu.michaelvogt.ar.author.data.MARKERS_AND_TITLES
 import eu.michaelvogt.ar.author.utils.FileUtils
+import kotlinx.android.synthetic.main.fragment_locationintro.*
 
 class LocationIntroFragment : Fragment(), View.OnClickListener {
 
@@ -47,16 +48,14 @@ class LocationIntroFragment : Fragment(), View.OnClickListener {
 
         val viewModel = ViewModelProviders.of(activity!!).get(AuthorViewModel::class.java)
 
-        val contentView = view.findViewById<WebView>(R.id.content_info)
-        contentView.webViewClient = WebViewClientCompat()
-        contentView.settings.builtInZoomControls = true
-        contentView.settings.displayZoomControls = false
-        contentView.settings.javaScriptEnabled = true
+        content_info.webViewClient = WebViewClientCompat()
+        content_info.settings.builtInZoomControls = true
+        content_info.settings.displayZoomControls = false
+        content_info.settings.javaScriptEnabled = true
 
         val locationId = viewModel.currentLocationId
-
         viewModel.getLocation(locationId)
-                .thenAccept { location -> activity!!.runOnUiThread { initWebView(location, contentView) } }
+                .thenAccept { location -> activity!!.runOnUiThread { initWebView(location, content_info) } }
                 .exceptionally { throwable ->
                     Log.e(TAG, "Unable to fetch location $locationId", throwable)
                     null

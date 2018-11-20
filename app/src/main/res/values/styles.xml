@@ -14,13 +14,18 @@
    limitations under the License.
 -->
 <resources>
-
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/primaryColor</item>
-        <item name="colorSecondary">@color/secondaryColor</item>
-
+        <!--<item name="colorPrimaryVariant">@color/primaryLightColor</item>-->
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <!--<item name="colorOnPrimary">@color/textOnPrimaryColor</item>-->
+
+        <item name="colorSecondary">@color/secondaryColor</item>
+        <!--<item name="colorSecondaryVariant">@color/secondaryDarkColor</item>-->
+        <!--<item name="colorOnSecondary">@color/textOnSecondaryColor</item>-->
+
         <item name="android:textViewStyle">@style/NoHyphenationStyle</item>
+        <item name="android:buttonStyle">@style/TextAppearance.MaterialComponents.Button</item>
     </style>
 
     <style name="NoHyphenationStyle" parent="HyphenationStyle">

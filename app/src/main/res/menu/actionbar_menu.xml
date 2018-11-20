@@ -18,6 +18,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item
+        android:id="@+id/actionbar_show_intro"
+        android:title="Show Intro"
+        app:showAsAction="never" />
     <group android:id="@+id/actionbar_group_settings">
         <item
             android:id="@+id/actionbar_preferences"

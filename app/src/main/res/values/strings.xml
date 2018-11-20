@@ -21,45 +21,62 @@
         ARCore from Google. Currently mainly based around the image marker functionality.\n\n
 
         It allows to capture marker images, crop them and try them out on the spot, to make sure
-        the captures images are actually usable for the ARCore recognition engine.\n\n
+        the captured images are actually usable for the ARCore recognition engine.\n\n
 
-        Next step is to provide simple authoring functionality to define areaIds on the marker image
+        Next step is to provide simple authoring functionality to define areas on the marker image
         and place interactive elements to sketch out some scene ideas, that can then be implemented
         for a specific application.\n\n
 
-        When required functionality is available, the functionality of this app will be provided
-        as a browser app.
+        When required functionality is available, this app will be provided as a browser app.
     </string>
+
+    <string name="splash_image_desc">Collage of locations in Iwami Ginzan</string>
 
     <!--Permissions-->
     <string name="req_header">The application needs your approval to access the following features of
         your device.</string>
     <string name="arcore_cap">Augmented reality (AR) functionality is provided using ARCore from
         Google, which can be installed for free from Play store. It allows to place 3D objects
-        into the real world, giving the impression as if they\'re really there.</string>
+        into the real world as if they\'re really there.</string>
     <string name="arcore_cap_not_capable">Unfortunately, your phone isn\'t able to run ArCore.
         AR scenes will be partially available as 3D models.</string>
     <string name="arcore_cap_deactivated">ARCore is deactivated</string>
+    <string name="arcore_cap_unknown">ARCore is deactivated because its status couldn\'t be
+        determined.</string>
+    <string name="arcore_cap_not_installed">ARCore needs to be installed.</string>
+    <string name="arcore_cap_too_old">ARCore needs to be updated</string>
     <string name="arcore_cap_ready">Full augmented reality experience available</string>
 
     <string name="arcore_cap_btn_install">Install ARCore</string>
     <string name="arcore_cap_btn_not_capable">Install ARCore</string>
     <string name="arcore_cap_btn_deactivated">Deactivated</string>
+    <string name="arcore_cap_btn_unknown">Deactivated</string>
+    <string name="arcore_cap_btn_not_installed">Install</string>
+    <string name="arcore_cap_btn_too_old">Update</string>
     <string name="arcore_cap_btn_ready">Ready</string>
+    <string name="arcore_cap_btn_installing">Installing…</string>
 
     <string name="arcore_no_btn_title">Use ARCore</string>
     <string name="camera_req">The camera requirement is needed for the ARCore preview. Image
         processing is handled locally, no images are sent back over the network</string>
+
     <string name="camera_req_btn">Approve camera access</string>
+    <string name="camera_req_btn_approved">Approved</string>
+    <string name="camera_req_btn_unnecessary">Unnecessary</string>
+
     <string name="storage_req">Images and settings are stored in files on the public local storage
         of the device in a folder called \'TouristAR\'. Other locations on the device aren\'t
         accessed
     </string>
     <string name="storage_req_btn">Approve storage access</string>
+    <string name="storage_req_btn_approved">Approved</string>
+
+    <string name="APPROVE_IN_SETTINGS_TITLE">Approve in application settings</string>
 
 
     <!--Preferences-->
     <string name="checkbox_use_arcore_key">use_arcore</string>
+    <string name="show_intro_key">has_seen_intro</string>
 
 
     <string name="marker_import_button">import</string>
@@ -73,4 +90,7 @@
     <string name="button_image_desc">Show product images</string>
     <string name="button_video_desc">Play promo video</string>
     <string name="image_alternative_desc">Interactive image for use in AR scene</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

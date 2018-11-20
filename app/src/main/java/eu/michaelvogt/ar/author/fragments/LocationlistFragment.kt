@@ -23,6 +23,7 @@ import android.util.Log
 import android.view.*
 import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import eu.michaelvogt.ar.author.R
@@ -30,10 +31,7 @@ import eu.michaelvogt.ar.author.data.AuthorViewModel
 import eu.michaelvogt.ar.author.data.Location
 import eu.michaelvogt.ar.author.databinding.FragmentLocationlistBinding
 import eu.michaelvogt.ar.author.fragments.adapters.LocationListAdapter
-import eu.michaelvogt.ar.author.utils.CardMenuHandler
-import eu.michaelvogt.ar.author.utils.ItemClickListener
-import eu.michaelvogt.ar.author.utils.NEW_CURRENT_AREA
-import eu.michaelvogt.ar.author.utils.NEW_CURRENT_MARKER
+import eu.michaelvogt.ar.author.utils.*
 
 class LocationlistFragment : Fragment(), ItemClickListener {
     private lateinit var viewModel: AuthorViewModel
@@ -41,8 +39,7 @@ class LocationlistFragment : Fragment(), ItemClickListener {
 
     private lateinit var binder: FragmentLocationlistBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
 
         binder = FragmentLocationlistBinding.inflate(inflater, container, false)
@@ -61,7 +58,7 @@ class LocationlistFragment : Fragment(), ItemClickListener {
         binder.locationList.adapter = adapter
         adapter.setItemClickListener(this)
 
-        setLocations()
+        viewModel.locationLoadTrigger.observe(this, Observer { setLocations() })
     }
 
     override
@@ -77,6 +74,11 @@ class LocationlistFragment : Fragment(), ItemClickListener {
 
         Navigation.findNavController(view!!).navigate(R.id.action_location_intro)
     }
+
+
+    private fun showIntroPreference() = getPreference(activity,
+            resources.getString(R.string.show_intro_key),
+            resources.getBoolean(R.bool.show_intro_default))
 
     private fun setLocations() {
         viewModel.getAllLocations()

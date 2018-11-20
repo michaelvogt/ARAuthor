@@ -80,12 +80,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:fontFamily="serif"
                 android:text="@{marker.title}"
-                android:textAlignment="viewStart"
-                android:textAppearance="@android:style/TextAppearance.Material.Title"
-                android:textSize="24sp"
-                android:textStyle="bold"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintStart_toEndOf="@+id/marker_image"
                 card_view:layout_constraintTop_toTopOf="parent" />

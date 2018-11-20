@@ -1,4 +1,4 @@
-/*
+<!--
     ARTester - AR for tourists by tourists
     Copyright (C) 2018  Michael Vogt
 
@@ -14,10 +14,21 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/
+-->
 
-package eu.michaelvogt.ar.author.utils
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/secondaryColor"
+    tools:context=".fragments.SplashFragment">
 
-interface NodeCallback {
-    fun createImageComparatorCover()
-}
+    <ImageView
+        android:id="@+id/splash_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/splash_image_desc"
+        android:scaleType="fitXY"
+        android:src="@drawable/logo" />
+
+</FrameLayout>
