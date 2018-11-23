@@ -16,28 +16,16 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="Edit">
-        <group
-            android:id="@+id/menu_edit_group"
-            android:checkableBehavior="none">
-            <item
-                android:id="@id/location_list_fragment"
-                android:icon="@drawable/ic_account_balance_black_24dp"
-                android:title="Locations" />
-            <item
-                android:id="@id/marker_list_fragment"
-                android:icon="@android:drawable/ic_menu_report_image"
-                android:title="Marker" />
-            <item
-                android:id="@id/area_list_fragment"
-                android:icon="@android:drawable/ic_menu_report_image"
-                android:title="Area" />
-        </group>
-    </item>
-    <group android:id="@+id/menu_ar_group">
-        <item
-            android:id="@+id/bottom_ar"
-            android:icon="@drawable/ic_ar_icon"
-            android:title="AR" />
-    </group>
+    <item
+        android:id="@id/location_list_fragment"
+        android:icon="@drawable/ic_account_balance_black_24dp"
+        android:title="Locations" />
+    <item
+        android:id="@id/marker_list_fragment"
+        android:icon="@android:drawable/ic_menu_report_image"
+        android:title="Marker" />
+    <item
+        android:id="@id/area_list_fragment"
+        android:icon="@android:drawable/ic_menu_report_image"
+        android:title="Area" />
 </menu>

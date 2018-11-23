@@ -34,15 +34,17 @@
         <TextView
             android:id="@+id/textView"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="17dp"
             android:layout_marginEnd="8dp"
             android:text="@string/location_info_label"
+            android:textAppearance="@android:style/TextAppearance.Material.Headline"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/info_button"
             app:layout_constraintEnd_toStartOf="@+id/info_button"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/info_button" />
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <ImageButton

@@ -33,6 +33,8 @@ import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import com.google.ar.core.ArCoreApk
 import eu.michaelvogt.ar.author.R
+import kotlinx.android.synthetic.main.activity_author.*
+import kotlinx.android.synthetic.main.fragment_permission_check.*
 
 private lateinit var deniedPermissions: ArrayList<String>
 
@@ -106,12 +108,12 @@ fun checkPermissions(activity: Activity, view: View) {
             }
             PackageManager.PERMISSION_GRANTED -> {
                 permissionApproved(CAMERA_PERMISSION,
-                        cameraBtn, activity.resources.getString(R.string.camera_req_btn_approved))
+                        cameraBtn, activity.getString(R.string.camera_req_btn_approved))
             }
         }
     } else {
         permissionUnnecessary(CAMERA_PERMISSION,
-                cameraBtn, activity.resources.getString(R.string.camera_req_btn_unnecessary))
+                cameraBtn, activity.getString(R.string.camera_req_btn_unnecessary))
     }
 
     val storageBtn = view.findViewById<Button>(R.id.storage_req_btn)
@@ -130,13 +132,33 @@ fun checkPermissions(activity: Activity, view: View) {
     }
 }
 
-private fun setupArcoreCheck(activity: Activity, statusResId: Int, titleResId: Int, isButtonEnabled: Boolean) {
-    val statusField = activity.findViewById<TextView>(R.id.capable_arcore_status)
-    statusField.text = activity.resources.getString(statusResId)
+fun handleRequestPermissionsResult(activity: Activity, requestCode: Int, grantResults: IntArray) {
+    when (requestCode) {
+        CAMERA_PERMISSION_CODE -> {
+            when {
+                grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED ->
+                    permissionApproved(CAMERA_PERMISSION, activity.camera_req_btn, activity.getString(R.string.camera_req_btn_approved))
+                else -> {
+                    permissionDenied(activity, CAMERA_PERMISSION, activity.camera_req_btn, CAMERA_PERMISSION_CODE)
+                }
+            }
+        }
 
-    val arcoreBtn = activity.findViewById<Button>(R.id.capable_arcore_btn)
-    arcoreBtn.text = activity.resources.getString(titleResId)
-    arcoreBtn.isEnabled = isButtonEnabled
+        STORAGE_PERMISSION_CODE -> {
+            when {
+                grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED ->
+                    permissionApproved(STORAGE_PERMISSION, activity.storage_req_btn, activity.getString(R.string.storage_req_btn_approved))
+                else -> {
+                    permissionDenied(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE, activity.storage_req_btn, STORAGE_PERMISSION_CODE)
+                }
+            }
+        }
+
+        else ->
+            throw IllegalArgumentException("Unhandled permision request result")
+    }
+
+    checkPermissions(activity, activity.app_layout)
 }
 
 fun permissionsApproved(activity: Activity) {
@@ -155,18 +177,27 @@ fun permissionDenied(activity: Activity, permission: String, button: Button, cod
     deniedPermissions.add(permission)
 
     if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
-        button.text = activity.resources.getString(R.string.APPROVE_IN_SETTINGS_TITLE)
+        button.text = activity.getString(R.string.APPROVE_IN_SETTINGS_TITLE)
         button.setOnClickListener { openAppSettings(activity) }
     } else {
         button.setOnClickListener { ActivityCompat.requestPermissions(activity, arrayOf(permission), code) }
     }
 }
 
-private fun permissionUnnecessary(permission: String, button: Button, title: String) {
+fun permissionUnnecessary(permission: String, button: Button, title: String) {
     deniedPermissions.remove(permission)
 
     button.text = title
     button.isEnabled = false
+}
+
+private fun setupArcoreCheck(activity: Activity, statusResId: Int, titleResId: Int, isButtonEnabled: Boolean) {
+    val statusField = activity.findViewById<TextView>(R.id.capable_arcore_status)
+    statusField.text = activity.getString(statusResId)
+
+    val arcoreBtn = activity.findViewById<Button>(R.id.capable_arcore_btn)
+    arcoreBtn.text = activity.getString(titleResId)
+    arcoreBtn.isEnabled = isButtonEnabled
 }
 
 private fun openAppSettings(activity: Activity) {

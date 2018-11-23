@@ -20,11 +20,14 @@
 
 package eu.michaelvogt.ar.author.utils
 
+import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.util.Log
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseMethod
 import com.google.ar.sceneform.math.Vector3
+import eu.michaelvogt.ar.author.R
 import eu.michaelvogt.ar.author.fragments.AreaEditCard
 
 @InverseMethod("floatFromString")
@@ -51,7 +54,14 @@ fun setImage(view: ImageView, url: String, placeholder: Drawable) {
     if (url.isEmpty()) {
         view.setImageDrawable(placeholder)
     } else {
-        view.setImageBitmap(ImageUtils.decodeSampledBitmapFromImagePath(url, 100, 100))
+        val bitmap: Bitmap
+        try {
+            bitmap = ImageUtils.decodeSampledBitmapFromImagePath(url, 100, 100)
+            view.setImageBitmap(bitmap)
+        } catch (e: IllegalStateException) {
+            Log.i("ViewConverters", "Image not found", e)
+            view.setImageResource(R.drawable.touristar_logo)
+        }
     }
 }
 

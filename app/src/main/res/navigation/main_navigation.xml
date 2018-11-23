@@ -21,34 +21,10 @@
     app:startDestination="@id/splash_fragment">
 
     <fragment
-        android:id="@+id/imagePreviewFragment"
-        android:name="eu.michaelvogt.ar.author.fragments.ImagePreviewFragment"
-        android:label="Preview"
-        tools:layout="@layout/fragment_imagepreview">
-        <argument
-            android:name="plane_finding_mode"
-            android:defaultValue="HORIZONTAL_AND_VERTICAL" />
-        <argument
-            android:name="update_mode"
-            android:defaultValue="LATEST_CAMERA_IMAGE" />
-        <argument
-            android:name="discovery_controller"
-            android:defaultValue="0" />
-        <argument
-            android:name="focus_mode"
-            android:defaultValue="AUTO" />
-        <argument
-            android:name="light_estimation"
-            android:defaultValue="AMBIENT_INTENSITY" />
-    </fragment>
-    <fragment
         android:id="@+id/marker_list_fragment"
         android:name="eu.michaelvogt.ar.author.fragments.MarkerListFragment"
         android:label="Markers"
         tools:layout="@layout/fragment_markerlist">
-        <action
-            android:id="@+id/action_test_markers"
-            app:destination="@id/imagePreviewFragment" />
         <action
             android:id="@+id/action_edit_marker"
             app:destination="@id/editFragment" />
@@ -64,30 +40,18 @@
         <action
             android:id="@+id/action_crop_marker_image"
             app:destination="@id/cropFragment" />
-        <action
-            android:id="@+id/action_marker_preview"
-            app:destination="@id/markerPreviewFragment" />
     </fragment>
     <fragment
         android:id="@+id/area_list_fragment"
         android:name="eu.michaelvogt.ar.author.fragments.AreaEditFragment"
         android:label="Edit area"
         tools:layout="@layout/fragment_area_edit">
+        <argument
+            android:name="area_edit_translucency"
+            android:defaultValue="1" />
         <action
-            android:id="@+id/action_test_area_placement"
-            app:destination="@id/areaPreviewFragment" />
-        <argument
-            android:name="area_edit_translucency"
-            android:defaultValue="1" />
-    </fragment>
-    <fragment
-        android:id="@+id/areaPreviewFragment"
-        android:name="eu.michaelvogt.ar.author.fragments.AreaPreviewFragment"
-        android:label="Area preview"
-        tools:layout="@layout/fragment_areapreview">
-        <argument
-            android:name="area_edit_translucency"
-            android:defaultValue="1" />
+            android:id="@+id/action_to_areaEdit"
+            app:destination="@id/area_edit_fragment" />
     </fragment>
     <fragment
         android:id="@+id/cropFragment"
@@ -134,9 +98,6 @@
         android:label="Locations"
         tools:layout="@layout/fragment_locationlist">
         <action
-            android:id="@+id/action_location_intro"
-            app:destination="@+id/locationIntro" />
-        <action
             android:id="@+id/action_to_intro"
             app:destination="@id/intro_fragment">
             <argument
@@ -152,13 +113,14 @@
         </action>
     </fragment>
     <fragment
-        android:id="@+id/locationIntro"
-        android:name="eu.michaelvogt.ar.author.fragments.LocationIntroFragment"
-        android:label="Location info"
-        tools:layout="@layout/fragment_locationintro">
-        <action
-            android:id="@+id/action_preview_markers"
-            app:destination="@+id/imagePreviewFragment" />
+        android:id="@+id/web_view_fragment"
+        android:name="eu.michaelvogt.ar.author.fragments.WebViewFragment"
+        android:label="Web View"
+        tools:layout="@layout/fragment_web_view">
+        <argument
+            android:name="content_url"
+            android:defaultValue="-1"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/panoramaFragment"
@@ -175,7 +137,7 @@
         android:name="eu.michaelvogt.ar.author.fragments.PreferencesFragment"
         android:label="PreferencesFragment" />
     <fragment
-        android:id="@+id/arReplacement"
+        android:id="@+id/ar_replacement_fragment"
         android:name="eu.michaelvogt.ar.author.fragments.ArReplacement"
         android:label="fragment_ar_replacement"
         tools:layout="@layout/fragment_ar_replacement" />
@@ -200,4 +162,8 @@
             android:defaultValue="-1L"
             app:argType="long" />
     </fragment>
+    <fragment
+        android:id="@+id/area_edit_fragment"
+        android:name="eu.michaelvogt.ar.author.fragments.AreaEditFragment"
+        android:label="AreaEditFragment" />
 </navigation>

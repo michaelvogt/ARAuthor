@@ -26,6 +26,10 @@
         <item
             android:id="@+id/actionbar_preferences"
             android:title="@string/actionbar_preferences" />
+        <item
+            android:id="@+id/actionbar_about"
+            android:title="@string/actionbar_about"
+            app:showAsAction="never" />
     </group>
     <group android:id="@+id/actionbar_group_feedback">
         <item

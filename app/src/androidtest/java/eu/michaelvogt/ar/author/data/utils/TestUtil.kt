@@ -5,11 +5,11 @@ import java.util.*
 
 object TestUtil {
     fun location1(name: String = "home"): Location {
-        return Location(name, "thumb", "intro")
+        return Location(name, "desc", "thumb", "intro")
     }
 
     fun location2(name: String = "office"): Location {
-        return Location(name, "thumb", "intro")
+        return Location(name, "desc", "thumb", "intro")
     }
 
     fun locations(name1: String = "home", name2: String = "office"): Array<Location> {

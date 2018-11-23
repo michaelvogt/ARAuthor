@@ -20,6 +20,7 @@
     <color name="primaryLightColor">#FF5131</color>
     <color name="primaryDarkColor">#9b0000</color>
     <color name="secondaryColor">#767778</color>
+    <color name="secondaryTranslucentColor">#dd767778</color>
     <color name="secondaryLightColor">#ffffff</color>
     <color name="secondaryDarkColor">#ECEFF1</color>
     <color name="textOnPrimaryColor">#ffffff</color>

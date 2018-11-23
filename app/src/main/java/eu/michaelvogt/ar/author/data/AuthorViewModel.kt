@@ -45,10 +45,9 @@ class AuthorViewModel(application: Application) : AndroidViewModel(application) 
     // TODO: Area title for now. Should be the Area row id
     var currentMainContentId = "Muneoka Background Intro"
 
-
     var locationLoadTrigger: MutableLiveData<Int> = MutableLiveData()
 
-    fun addLocation(location: Location) = repository.insert(location)
+    fun insertLocation(location: Location) = repository.insert(location)
 
     fun getLocation(uid: Long): CompletableFuture<Location> = repository.getLocation(uid)
 

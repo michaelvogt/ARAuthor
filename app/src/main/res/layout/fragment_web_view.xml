@@ -22,9 +22,7 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.LocationIntroFragment">
-
-    <!-- TODO: Update blank fragment layout -->
+    tools:context=".fragments.WebViewFragment">
 
     <WebView
         android:id="@+id/content_info"

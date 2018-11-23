@@ -91,7 +91,7 @@ class AreaEditFragment : Fragment() {
     private fun handleTest(view: View) {
         val bundle = Bundle()
         bundle.putInt("area_edit_translucency", if (useTranslucentSwitch.isChecked) 1 else 0)
-        Navigation.findNavController(view).navigate(R.id.action_test_area_placement, bundle)
+        Navigation.findNavController(view).navigate(R.id.markerPreviewFragment, bundle)
     }
 
     fun handleSave(): Boolean {

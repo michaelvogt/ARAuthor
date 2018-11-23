@@ -30,6 +30,8 @@ class Location(
         @field:ColumnInfo(name = "name")
         var name: String,
 
+        var description: String?,
+
         @field:ColumnInfo(name = "thumb_path")
         var thumbPath: String?,
 
@@ -51,6 +53,7 @@ class Location(
         other as Location
 
         if (name != other.name) return false
+        if (description != other.description) return false
         if (thumbPath != other.thumbPath) return false
         if (introHtmlPath != other.introHtmlPath) return false
         if (uId != other.uId) return false
@@ -60,6 +63,7 @@ class Location(
 
     override fun hashCode(): Int {
         var result = name.hashCode()
+        result = 31 * result + (description?.hashCode() ?: 0)
         result = 31 * result + (thumbPath?.hashCode() ?: 0)
         result = 31 * result + (introHtmlPath?.hashCode() ?: 0)
         result = 31 * result + uId.toInt()

@@ -18,44 +18,62 @@
 
 package eu.michaelvogt.ar.author.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
-import androidx.webkit.WebViewClientCompat
 import eu.michaelvogt.ar.author.R
 import eu.michaelvogt.ar.author.data.AuthorViewModel
-import eu.michaelvogt.ar.author.data.Location
 import eu.michaelvogt.ar.author.data.MARKERS_AND_TITLES
+import eu.michaelvogt.ar.author.utils.AppWebViewClient
 import eu.michaelvogt.ar.author.utils.FileUtils
-import kotlinx.android.synthetic.main.fragment_locationintro.*
+import kotlinx.android.synthetic.main.fragment_web_view.*
 
-class LocationIntroFragment : Fragment(), View.OnClickListener {
+class WebViewFragment : Fragment(), View.OnClickListener {
+    private lateinit var viewModel: AuthorViewModel
 
     override
     fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_locationintro, container, false)
+        return inflater.inflate(R.layout.fragment_web_view, container, false)
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     override
     fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val viewModel = ViewModelProviders.of(activity!!).get(AuthorViewModel::class.java)
+        viewModel = ViewModelProviders.of(activity!!).get(AuthorViewModel::class.java)
 
-        content_info.webViewClient = WebViewClientCompat()
+        content_info.webViewClient = AppWebViewClient()
         content_info.settings.builtInZoomControls = true
         content_info.settings.displayZoomControls = false
         content_info.settings.javaScriptEnabled = true
 
+        val content = WebViewFragmentArgs.fromBundle(arguments).contentUrl
+        when (content) {
+            R.string.about_key -> content_info.loadUrl(getString(R.string.about_url))
+            R.string.location_intro_key -> initLocationIntro()
+            else -> content_info.loadUrl(getString(R.string.error_url))
+        }
+    }
+
+    override
+    fun onClick(view: View) {
+        Navigation.findNavController(view).navigate(R.id.markerPreviewFragment)
+    }
+
+    private fun initLocationIntro() {
         val locationId = viewModel.currentLocationId
         viewModel.getLocation(locationId)
-                .thenAccept { location -> activity!!.runOnUiThread { initWebView(location, content_info) } }
+                .thenAccept {
+                    val path = FileUtils.getFullPuplicFolderLocalUrl(it.introHtmlPath)
+                    activity!!.runOnUiThread { content_info.loadUrl(path) }
+                }
                 .exceptionally { throwable ->
                     Log.e(TAG, "Unable to fetch location $locationId", throwable)
                     null
@@ -69,25 +87,10 @@ class LocationIntroFragment : Fragment(), View.OnClickListener {
                     Log.e(TAG, "Unable to fetch markers for location $locationId", throwable)
                     null
                 }
-    }
 
-    private fun initWebView(location: Location, contentView: WebView) {
-        var path: String? = null
-        try {
-            path = FileUtils.getFullPuplicFolderLocalUrl(location.introHtmlPath)
-        } catch (e: Exception) {
-            Log.e(TAG, "Not able to load location intro of " + location.name, e)
-        }
-
-        contentView.loadUrl(path)
-    }
-
-    override
-    fun onClick(view: View) {
-        Navigation.findNavController(view).navigate(R.id.action_preview_markers)
     }
 
     companion object {
-        private val TAG = LocationIntroFragment::class.java.simpleName
+        private val TAG = WebViewFragment::class.java.simpleName
     }
 }

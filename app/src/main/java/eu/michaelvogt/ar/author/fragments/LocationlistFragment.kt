@@ -20,7 +20,9 @@ package eu.michaelvogt.ar.author.fragments
 
 import android.os.Bundle
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -31,21 +33,15 @@ import eu.michaelvogt.ar.author.data.AuthorViewModel
 import eu.michaelvogt.ar.author.data.Location
 import eu.michaelvogt.ar.author.databinding.FragmentLocationlistBinding
 import eu.michaelvogt.ar.author.fragments.adapters.LocationListAdapter
-import eu.michaelvogt.ar.author.utils.CardMenuHandler
-import eu.michaelvogt.ar.author.utils.ItemClickListener
-import eu.michaelvogt.ar.author.utils.NEW_CURRENT_AREA
-import eu.michaelvogt.ar.author.utils.NEW_CURRENT_MARKER
+import eu.michaelvogt.ar.author.utils.*
 import kotlinx.android.synthetic.main.fragment_locationlist.*
 
 class LocationlistFragment : Fragment(), ItemClickListener {
     private lateinit var viewModel: AuthorViewModel
     private lateinit var adapter: LocationListAdapter
-
     private lateinit var binder: FragmentLocationlistBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        setHasOptionsMenu(true)
-
         binder = FragmentLocationlistBinding.inflate(inflater, container, false)
         return binder.root
     }
@@ -62,16 +58,9 @@ class LocationlistFragment : Fragment(), ItemClickListener {
         adapter.setItemClickListener(this)
         binder.locationList.adapter = adapter
 
-        info_button.setOnClickListener {
-            // TODO: Show location info overlay
-        }
+        info_button.setOnClickListener { showLocationInfo(this) }
 
         viewModel.locationLoadTrigger.observe(this, Observer { setLocations() })
-    }
-
-    override
-    fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater!!.inflate(R.menu.actionbar_locationlist_menu, menu)
     }
 
     override
@@ -80,7 +69,9 @@ class LocationlistFragment : Fragment(), ItemClickListener {
         viewModel.currentMarkerId = NEW_CURRENT_MARKER
         viewModel.currentAreaId = NEW_CURRENT_AREA
 
-        Navigation.findNavController(view!!).navigate(LocationlistFragmentDirections.actionToIntro())
+        val bundle = Bundle()
+        bundle.putInt("content_url", R.string.location_intro_key)
+        Navigation.findNavController(view!!).navigate(R.id.web_view_fragment, bundle)
     }
 
     private fun setLocations() {

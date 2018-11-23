@@ -107,6 +107,11 @@ public class FileUtils {
     return fileNames;
   }
 
+  public static String getRelativePath(String path) {
+    // TODO: Needs improvement
+    return path.replace("/document//storage/emulated/0", "");
+  }
+
   public static void saveImageToExternalStorage(Bitmap bitmap, String imagePath) {
     try {
       OutputStream stream = new FileOutputStream(FileUtils.getFullPuplicFolderFile(imagePath));

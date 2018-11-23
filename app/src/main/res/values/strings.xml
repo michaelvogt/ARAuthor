@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="app_name">AR Author</string>
+    <string name="app_name">Tourist AR</string>
     <string name="app_intro">This app is a playground for Augmented Reality functionality around
         ARCore from Google. Currently mainly based around the image marker functionality.\n\n
 
@@ -77,7 +77,10 @@
     <!--Menus-->
     <string name="actionbar_show_intro">Show Intro</string>
     <string name="actionbar_preferences">Preferences</string>
+    <string name="actionbar_about">About</string>
     <string name="actionbar_feedback">Feedback</string>
+
+    <string name="actionbar_location_delete">Delete Location</string>
 
     <string name="menu_location_edit">Edit</string>
 
@@ -89,16 +92,26 @@
 
     <!--Locations-->
     <string name="location_image_desc">Image representing the location of this card</string>
-    <string name="location_info_button_desc">Button to open info about locations</string>
-    <string name="location_info_label">What are locations, what are they used for</string>
     <string name="location_menu_desc">Location item menu</string>
-    <string name="location_edit_header">Edit location header</string>
+    <string name="location_edit_header">Location</string>
 
-    <string name="location_edit_hint_name">Location Name</string>
+    <string name="location_edit_hint_name">Name</string>
+    <string name="location_edit_hint_desc">Description</string>
     <string name="location_edit_hint_thumb">Thumb Path</string>
+    <string name="location_edit_thumb_desc">Button to select a location thumbnail file</string>
     <string name="location_edit_hint_intro">Intro Path</string>
+    <string name="location_edit_intro_desc">Intro Path</string>
     <string name="location_edit_save">Save Location</string>
     <string name="location_edit_cancel">Cancel</string>
+
+    <string name="location_info_button_desc">Button to open info about locations</string>
+    <string name="location_info_label">Locations</string>
+    <string name="location_info_primary">Location</string>
+    <string name="location_info_secondary">More or less just an organisational structure to combine
+        several AR scenes together for easy access. This can be a statue in your neighbourhood or
+        a tour through a historical town.\n\n
+        You can create your own location through the + button below.
+    </string>
 
 
     <string name="marker_import_button">import</string>

@@ -98,7 +98,7 @@ class MarkerEditFragment : Fragment() {
         val bundle = Bundle()
         bundle.putString("plane_finding_mode", "VERTICAL")
         bundle.putInt("discovery_controller", 1)
-        Navigation.findNavController(view).navigate(R.id.action_marker_preview, bundle)
+        Navigation.findNavController(view).navigate(R.id.markerPreviewFragment, bundle)
     }
 
     private fun handleSave() {

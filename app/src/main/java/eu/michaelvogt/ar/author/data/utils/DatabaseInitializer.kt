@@ -38,6 +38,7 @@ class DatabaseInitializer private constructor(
     fun run() {
         var locationId = insertLocation(
                 "石見銀山",
+                "",
                 "Touristar/iwamiginzan/images/igk_machinami.jpg",
                 "Touristar/iwamiginzan/intro.html")
 
@@ -447,6 +448,7 @@ class DatabaseInitializer private constructor(
 
         locationId = insertLocation(
                 "箱館",
+                "",
                 "Touristar/hakodate/images/goryokakumainhall.jpg",
                 "Touristar/hakodate/intro.html")
 
@@ -525,12 +527,13 @@ class DatabaseInitializer private constructor(
 
         locationId = insertLocation(
                 "中島",
+                "",
                 "Touristar/hiroshima/images/P_20180724_101817_vHDR_On.jpg",
                 "Touristar/hiroshima/intro.html")
     }
 
-    private fun insertLocation(name: String, thumbPath: String, introHtmlPath: String): Long {
-        return locationDao.insert(Location(name, thumbPath, introHtmlPath))
+    private fun insertLocation(name: String, description: String, thumbPath: String, introHtmlPath: String): Long {
+        return locationDao.insert(Location(name, description, thumbPath, introHtmlPath))
     }
 
     private fun insertMarkerForLocation(locationId: Long, title: String): Long {

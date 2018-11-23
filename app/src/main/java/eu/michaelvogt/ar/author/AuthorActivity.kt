@@ -18,24 +18,24 @@
 
 package eu.michaelvogt.ar.author
 
-import android.Manifest
-import android.content.pm.PackageManager
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.Navigation
 import com.google.ar.core.ArCoreApk
 import eu.michaelvogt.ar.author.data.AppDatabase
 import eu.michaelvogt.ar.author.data.AuthorViewModel
 import eu.michaelvogt.ar.author.fragments.LocationlistFragmentDirections
-import eu.michaelvogt.ar.author.utils.*
+import eu.michaelvogt.ar.author.utils.AppNavigatedListener
+import eu.michaelvogt.ar.author.utils.BottomSheetNav
+import eu.michaelvogt.ar.author.utils.MenuSelectedListener
+import eu.michaelvogt.ar.author.utils.handleRequestPermissionsResult
 import kotlinx.android.synthetic.main.activity_author.*
-import kotlinx.android.synthetic.main.fragment_permission_check.*
 
 /**
  * Single activity of the application. Navigation is done through the Navigation Jetpack
@@ -49,34 +49,19 @@ class AuthorActivity : AppCompatActivity() {
      */
     override
     fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_author)
 
-        navController = Navigation.findNavController(this, R.id.nav_host_fragment)
+        val viewModel = ViewModelProviders.of(this).get(AuthorViewModel::class.java)
+        val database = AppDatabase.getDatabase(applicationContext)
+        AppDatabase.PopulateDbAsync(database!!) { viewModel.locationLoadTrigger.setValue(0) }.execute()
 
         setSupportActionBar(bottom_nav)
 
-        navController.addOnNavigatedListener { _, destination ->
-            handleBottomAppbarVisibility(destination)
-
-            val fab = findViewById<View>(R.id.bottom_nav_fab)   // Can't be replaced by generated id
-
-            when (destination.id) {
-                R.id.location_list_fragment -> {
-                    fab.setOnClickListener {
-                        navController.navigate(LocationlistFragmentDirections.actionToLocationEdit())
-                    }
-                }
-                else -> {
-                    fab.visibility = View.GONE
-                    fab.setOnClickListener(null)
-                }
-            }
-        }
-
-        val database = AppDatabase.getDatabase(applicationContext)
-        val viewModel = ViewModelProviders.of(this).get(AuthorViewModel::class.java)
-        AppDatabase.PopulateDbAsync(database!!) { viewModel.locationLoadTrigger.setValue(0) }.execute()
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment)
+        navController.addOnNavigatedListener(AppNavigatedListener(this))
 
         // Pre-Determine the availability of ARCore on the device, to have immediate access when needed
         ArCoreApk.getInstance().checkAvailability(this)
@@ -102,6 +87,19 @@ class AuthorActivity : AppCompatActivity() {
                 true
             }
             R.id.actionbar_feedback -> {
+                val intent = Intent(Intent.ACTION_SENDTO)
+                intent.data = Uri.parse("""
+                            mailto:${Uri.encode("ar@michaelvogt.eu")}
+                            ?subject=${Uri.encode("Tourist AR Feedback")}
+                            &body=${Uri.encode(getVersionAndDevice())}
+                        """.trimIndent())
+                startActivity(Intent.createChooser(intent, "Choose an email client"))
+                true
+            }
+            R.id.actionbar_about -> {
+                val bundle = Bundle()
+                bundle.putInt("content_url", R.string.about_key)
+                navController.navigate(R.id.web_view_fragment, bundle)
                 true
             }
             R.id.actionbar_preferences -> {
@@ -124,49 +122,12 @@ class AuthorActivity : AppCompatActivity() {
     fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        when (requestCode) {
-            CAMERA_PERMISSION_CODE -> {
-                when {
-                    grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED ->
-                        permissionApproved(CAMERA_PERMISSION, camera_req_btn, resources.getString(R.string.camera_req_btn_approved))
-                    else -> {
-                        permissionDenied(this, CAMERA_PERMISSION, camera_req_btn, CAMERA_PERMISSION_CODE)
-                    }
-                }
-            }
-
-            STORAGE_PERMISSION_CODE -> {
-                when {
-                    grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED ->
-                        permissionApproved(STORAGE_PERMISSION, storage_req_btn, resources.getString(R.string.storage_req_btn_approved))
-                    else -> {
-                        permissionDenied(this, Manifest.permission.WRITE_EXTERNAL_STORAGE, storage_req_btn, STORAGE_PERMISSION_CODE)
-                    }
-                }
-            }
-        }
-
-        checkPermissions(this, app_layout)
+        handleRequestPermissionsResult(this, requestCode, grantResults)
     }
 
-    /**
-     * The bottom app bar isn't required on every screen. This is handled globally here.
-     */
-    private fun handleBottomAppbarVisibility(destination: NavDestination) {
-        val fab = findViewById<View>(R.id.bottom_nav_fab)   // Can't be replaced by generated id
-
-        when (destination.id) {
-            R.id.intro_fragment,
-            R.id.permission_check_fragment,
-            R.id.splash_fragment -> {
-                bottom_nav.visibility = View.GONE
-                fab.visibility = View.GONE
-            }
-            else -> {
-                bottom_nav.visibility = View.VISIBLE
-                fab.visibility = View.VISIBLE
-            }
-        }
+    private fun getVersionAndDevice(): String? {
+        return "Version: ${BuildConfig.VERSION_NAME}<${BuildConfig.VERSION_CODE}>\n" +
+                "Device: ${android.os.Build.MANUFACTURER} ${android.os.Build.MODEL}"
     }
 
     /**

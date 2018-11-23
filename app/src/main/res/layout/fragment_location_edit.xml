@@ -44,6 +44,8 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:text="@string/location_edit_header"
+                android:textAppearance="@android:style/TextAppearance.Material.Headline"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -64,11 +66,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/location_edit_hint_name"
+                    android:inputType="text"
                     android:text="@={location.name}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/location_edit_thumb"
+                android:id="@+id/location_edit_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -81,18 +84,48 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/location_edit_hint_thumb"
-                    android:text="@={location.thumbPath}" />
+                    android:hint="@string/location_edit_hint_desc"
+                    android:inputType="textMultiLine"
+                    android:text="@={location.description}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/location_edit_intro"
-                android:layout_width="match_parent"
+                android:id="@+id/location_edit_thumb"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/location_edit_thumb_select"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/location_edit_desc">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/location_edit_hint_thumb"
+                    android:text="@={location.thumbPath}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageButton
+                android:id="@+id/location_edit_thumb_select"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="@string/location_edit_thumb_desc"
+                android:src="@android:drawable/ic_menu_upload"
+                app:layout_constraintBottom_toBottomOf="@+id/location_edit_thumb"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/location_edit_intro"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toStartOf="@+id/location_edit_intro_select"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/location_edit_thumb">
 
@@ -102,6 +135,16 @@
                     android:hint="@string/location_edit_hint_intro"
                     android:text="@={location.introHtmlPath}" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageButton
+                android:id="@+id/location_edit_intro_select"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="@string/location_edit_intro_desc"
+                android:src="@android:drawable/ic_menu_upload"
+                app:layout_constraintBottom_toBottomOf="@+id/location_edit_intro"
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <Button
                 android:id="@+id/location_edit_save_button"

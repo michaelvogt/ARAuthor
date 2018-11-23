@@ -28,6 +28,14 @@
         <item name="android:buttonStyle">@style/TextAppearance.MaterialComponents.Button</item>
     </style>
 
+    <style name="AppTheme.Launcher">
+        <item name="android:windowBackground">@drawable/launch_screen</item>
+    </style>
+
+    <style name="MaterialTabTargetPromptTheme">
+        <item name="mttp_backgroundColour">@color/secondaryTranslucentColor</item>
+    </style>
+
     <style name="NoHyphenationStyle" parent="HyphenationStyle">
         <item name="android:hyphenationFrequency">none</item>
     </style>

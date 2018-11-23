@@ -73,7 +73,7 @@ class MarkerEditFragmentAreas : Fragment(), ItemClickListener {
 
     private fun navigateToEdit(areaId: Long) {
         viewModel.currentAreaId = areaId
-        Navigation.findNavController(view!!).navigate(R.id.action_test_area_placement)
+        Navigation.findNavController(view!!).navigate(R.id.markerPreviewFragment)
     }
 
     // Called from layout

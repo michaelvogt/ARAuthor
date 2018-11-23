@@ -42,7 +42,7 @@ class PermissionCheckFragment : Fragment() {
         capable_arcore_btn.setOnClickListener {
             if (ArCoreApk.getInstance().requestInstall(activity, true,
                             ArCoreApk.InstallBehavior.OPTIONAL, ArCoreApk.UserMessageType.USER_ALREADY_INFORMED) == ArCoreApk.InstallStatus.INSTALL_REQUESTED) {
-                capable_arcore_btn.text = resources.getString(R.string.arcore_cap_btn_installing)
+                capable_arcore_btn.text = getString(R.string.arcore_cap_btn_installing)
             }
         }
 

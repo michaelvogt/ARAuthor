@@ -33,3 +33,6 @@ const val CAMERA_PERMISSION = Manifest.permission.CAMERA
 
 const val STORAGE_PERMISSION_CODE = 1
 const val STORAGE_PERMISSION = Manifest.permission.WRITE_EXTERNAL_STORAGE
+
+const val PATH_SELECT_THUMB_CODE = 2
+const val PATH_SELECT_LOCATION_INTRO_CODE = 3
