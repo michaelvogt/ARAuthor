@@ -22,13 +22,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
 import eu.michaelvogt.ar.author.R
 import kotlinx.android.synthetic.main.fragment_intro.*
 
 
-class IntroFragment : Fragment() {
+class IntroFragment : AppFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_intro, container, false)
     }
@@ -37,9 +35,15 @@ class IntroFragment : Fragment() {
     fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val navController = Navigation.findNavController(view)
         intro_enter_button.setOnClickListener {
             navController.navigate(IntroFragmentDirections.actionToPermissionCheck())
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        hideFab()
+        hideBottomBar()
     }
 }

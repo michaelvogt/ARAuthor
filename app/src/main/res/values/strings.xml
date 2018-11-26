@@ -76,18 +76,39 @@
 
     <!--Menus-->
     <string name="actionbar_show_intro">Show Intro</string>
+    <string name="actionbar_location_list_title">Locations</string>
+    <string name="actionbar_marker_list_title">Markers</string>
+    <string name="actionbar_area_list_title">Areas</string>
     <string name="actionbar_preferences">Preferences</string>
     <string name="actionbar_about">About</string>
     <string name="actionbar_feedback">Feedback</string>
 
     <string name="actionbar_location_delete">Delete Location</string>
+    <string name="actionbar_marker_delete">Delete Marker</string>
+
+    <string name="actionbar_markerlist_load_title">Load</string>
+    <string name="actionbar_markerlist_ar_title">Load</string>
 
     <string name="menu_location_edit">Edit</string>
 
+    <!--Fragment labels-->
+    <string name="navigation_splash_label">AR Author</string>
+    <string name="navigation_welcome_label">Welcome</string>
+    <string name="navigation_location_list_label">Locations</string>
+    <string name="navigation_location_edit_label">Edit Location</string>
+    <string name="navigation_marker_list_label">Markers</string>
+    <string name="navigation_marker_edit_label">Edit Marker</string>
+    <string name="navigation_marker_preview_label">Marker preview</string>
+    <string name="navigation_area_list_label">Areas</string>
+    <string name="navigation_area_edit_label">Edit Area</string>
+    <string name="navigation_crop_image_label">Crop image</string>
+    <string name="navigation_web_view_label">Web View</string>
+    <string name="navigation_panorama_view_label">Panorama</string>
+    <string name="navigation_permission_view_label">Permissions</string>
+    <string name="navigation_preference_view_label">Preferences</string>
+    <string name="navigation_ar_replacement_view_label">Simulated AR</string>
 
     <!--Preferences-->
-    <string name="checkbox_use_arcore_key">use_arcore</string>
-    <string name="show_intro_key">has_seen_intro</string>
 
 
     <!--Locations-->
@@ -106,6 +127,7 @@
 
     <string name="location_info_button_desc">Button to open info about locations</string>
     <string name="location_info_label">Locations</string>
+    <string name="location_info_title">Info</string>
     <string name="location_info_primary">Location</string>
     <string name="location_info_secondary">More or less just an organisational structure to combine
         several AR scenes together for easy access. This can be a statue in your neighbourhood or
@@ -114,13 +136,44 @@
     </string>
 
 
-    <string name="marker_import_button">import</string>
-    <string name="marker_capture_button">capture</string>
+    <!--Markers-->
+    <string name="marker_info_label">Markers</string>
+    <string name="marker_info_title">Info</string>
+    <string name="marker_info_button_desc">Button to open info about Markers</string>
+
+    <string name="marker_info_primary">Marker</string>
+    <string name="marker_info_secondary">Markers are needed to define the current location, needed
+        to overlay the correct informationon top of the camera image.\n\nA good marker contains
+        many distinct features and has a square shape.
+    </string>
 
     <string name="marker_image">Marker Image</string>
     <string name="marker_image_desc">Marker image for ARCore</string>
+    <string name="marker_image_back_desc">Visual background for Marker image</string>
+
+    <string name="marker_edit_tab_marker">Marker</string>
+    <string name="marker_edit_tab_info">Info</string>
+    <string name="marker_edit_tab_area">Area</string>
+
+    <string name="marker_edit_button_crop">Crop</string>
+    <string name="marker_edit_button_import">import</string>
+    <string name="marker_edit_button_capture">capture</string>
+
+    <string name="marker_edit_title">Title</string>
+    <string name="marker_edit_location">Location</string>
+    <string name="marker_edit_widthinm">Width in m</string>
+    <string name="marker_edit_check_vistual_background">Show virtual background</string>
+
+    <string name="marker_edit_info_intro">Introduction</string>
+    <string name="marker_edit_info_object_type">Select Objecttype</string>
+    <string name="marker_edit_info_built_in">Built in</string>
+
+    <string name="marker_edit_area_Button_add">Add Area</string>
+
+
     <string name="area_image">Marker Image</string>
-    <string name="area_image_desc">Marker image for ARCore</string>
+    <string name="area_background_image_desc">Background for Area icon for selected Marker</string>
+    <string name="area_image_desc">Area icon for selected Marker</string>
     <string name="button_grab_desc">Grab AR content to device</string>
     <string name="button_image_desc">Show product images</string>
     <string name="button_video_desc">Play promo video</string>

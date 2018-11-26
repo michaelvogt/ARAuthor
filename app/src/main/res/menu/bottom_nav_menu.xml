@@ -17,15 +17,31 @@
 -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@id/location_list_fragment"
-        android:icon="@drawable/ic_account_balance_black_24dp"
-        android:title="Locations" />
-    <item
-        android:id="@id/marker_list_fragment"
-        android:icon="@android:drawable/ic_menu_report_image"
-        android:title="Marker" />
-    <item
-        android:id="@id/area_list_fragment"
-        android:icon="@android:drawable/ic_menu_report_image"
-        android:title="Area" />
+        android:id="@+id/actionbar_show_intro"
+        android:title="@string/actionbar_show_intro" />
+    <group android:id="@+id/navigation_content">
+        <item
+            android:id="@id/location_list_fragment"
+            android:icon="@drawable/ic_account_balance_black_24dp"
+            android:title="@string/actionbar_location_list_title" />
+        <item
+            android:id="@id/marker_list_fragment"
+            android:icon="@android:drawable/ic_menu_report_image"
+            android:title="@string/actionbar_marker_list_title" />
+        <item
+            android:id="@id/area_list_fragment"
+            android:icon="@android:drawable/ic_menu_report_image"
+            android:title="@string/actionbar_area_list_title" />
+    </group>
+    <group android:id="@+id/navigation_general">
+        <item
+            android:id="@+id/actionbar_preferences"
+            android:title="@string/actionbar_preferences" />
+        <item
+            android:id="@+id/actionbar_about"
+            android:title="@string/actionbar_about" />
+        <item
+            android:id="@+id/actionbar_feedback"
+            android:title="@string/actionbar_feedback" />
+    </group>
 </menu>

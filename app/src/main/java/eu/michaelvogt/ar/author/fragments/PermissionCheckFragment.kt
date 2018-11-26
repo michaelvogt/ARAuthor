@@ -23,14 +23,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
 import com.google.ar.core.ArCoreApk
 import eu.michaelvogt.ar.author.R
 import eu.michaelvogt.ar.author.utils.checkPermissions
 import kotlinx.android.synthetic.main.fragment_permission_check.*
 
-class PermissionCheckFragment : Fragment() {
+class PermissionCheckFragment : AppFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_permission_check, container, false)
@@ -47,7 +45,6 @@ class PermissionCheckFragment : Fragment() {
         }
 
         req_approved_button.setOnClickListener {
-            val navController = Navigation.findNavController(view)
             navController.popBackStack(R.id.splash_fragment, false)
             navController.navigate(R.id.action_to_location_list)
         }
@@ -57,6 +54,8 @@ class PermissionCheckFragment : Fragment() {
     fun onResume() {
         super.onResume()
 
+        hideFab()
+        hideBottomBar()
         checkPermissions(activity as Activity, view!!)
     }
 }

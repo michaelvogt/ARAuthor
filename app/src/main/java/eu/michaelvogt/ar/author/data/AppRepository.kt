@@ -21,7 +21,6 @@ package eu.michaelvogt.ar.author.data
 import android.util.Log
 import eu.michaelvogt.ar.author.utils.NEW_CURRENT_LOCATION
 import eu.michaelvogt.ar.author.utils.NEW_CURRENT_MARKER
-import org.jetbrains.anko.doAsync
 import java.util.*
 import java.util.concurrent.CompletableFuture
 
@@ -50,40 +49,38 @@ class AppRepository internal constructor(db: AppDatabase?) {
         slideDao = db.slideDao()
     }
 
-    fun insert(location: Location) {
-        doAsync(exceptionHandler = { throwable -> handleException(throwable) }) {
-            locationDao.insert(location)
-        }
+    fun insert(location: Location): CompletableFuture<Long> {
+        return CompletableFuture.supplyAsync { locationDao.insert(location) }
     }
 
-    fun insert(marker: Marker) {
-        doAsync(exceptionHandler = { throwable -> handleException(throwable) }) {
-            markerDao.insert(marker)
-        }
+    fun insert(marker: Marker): CompletableFuture<Long> {
+        return CompletableFuture.supplyAsync { markerDao.insert(marker) }
     }
 
-    fun insert(area: Area) {
-        doAsync(exceptionHandler = { throwable -> handleException(throwable) }) {
-            areaDao.insert(area)
-        }
+    fun insert(area: Area): CompletableFuture<Long> {
+        return CompletableFuture.supplyAsync { areaDao.insert(area) }
     }
 
 
-    fun update(location: Location) {
-        doAsync { locationDao.update(location) }
+    fun update(location: Location): CompletableFuture<Unit> {
+        return CompletableFuture.supplyAsync { locationDao.update(location) }
     }
 
-    fun update(marker: Marker) {
-        doAsync { markerDao.update(marker) }
+    fun update(marker: Marker): CompletableFuture<Unit> {
+        return CompletableFuture.supplyAsync { markerDao.update(marker) }
     }
 
-    fun update(area: Area) {
-        doAsync { areaDao.update(area) }
+    fun update(area: Area): CompletableFuture<Unit> {
+        return CompletableFuture.supplyAsync { areaDao.update(area) }
     }
 
 
-    fun deleteLocation(location: Location): CompletableFuture<Unit>? {
+    fun delete(location: Location): CompletableFuture<Unit>? {
         return CompletableFuture.supplyAsync { locationDao.delete(location) }
+    }
+
+    fun delete(marker: Marker): CompletableFuture<Unit>? {
+        return CompletableFuture.supplyAsync { markerDao.delete(marker) }
     }
 
 

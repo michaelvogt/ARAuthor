@@ -21,23 +21,29 @@ package eu.michaelvogt.ar.author.fragments
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.PopupMenu
-import androidx.fragment.app.Fragment
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.Navigation
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import eu.michaelvogt.ar.author.R
-import eu.michaelvogt.ar.author.data.AuthorViewModel
 import eu.michaelvogt.ar.author.data.Location
 import eu.michaelvogt.ar.author.databinding.FragmentLocationlistBinding
 import eu.michaelvogt.ar.author.fragments.adapters.LocationListAdapter
 import eu.michaelvogt.ar.author.utils.*
 import kotlinx.android.synthetic.main.fragment_locationlist.*
 
-class LocationlistFragment : Fragment(), ItemClickListener {
-    private lateinit var viewModel: AuthorViewModel
+/**
+ * View to list the [Location]s provided by the view model.
+ *
+ * Tab on a list item navigates to the web view, which loads the content of the URL stored in
+ * [Location.introHtmlPath].
+ *
+ * Events
+ */
+class LocationlistFragment : AppFragment(), CardMenuListener {
     private lateinit var adapter: LocationListAdapter
     private lateinit var binder: FragmentLocationlistBinding
 
@@ -50,17 +56,31 @@ class LocationlistFragment : Fragment(), ItemClickListener {
     fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProviders.of(activity!!).get(AuthorViewModel::class.java)
-
         binder.locationList.setHasFixedSize(true)
 
-        adapter = LocationListAdapter(context, HandleLocationMenu())
-        adapter.setItemClickListener(this)
+        viewModel.locationLoadTrigger.observe(this, Observer { setLocations() })
+
+        adapter = LocationListAdapter(context, this, R.menu.menu_location_popup)
         binder.locationList.adapter = adapter
 
-        info_button.setOnClickListener { showLocationInfo(this) }
+        val appBarConfiguration = AppBarConfiguration.Builder(R.id.location_list_fragment).build()
+        NavigationUI.setupWithNavController(top_toolbar, navController, appBarConfiguration)
 
-        viewModel.locationLoadTrigger.observe(this, Observer { setLocations() })
+        setupToolbar(R.menu.toolbar_locationlist_menu, Toolbar.OnMenuItemClickListener {
+            InfoPrompt.showLocationInfo(this,
+                    R.id.toolbar_location_info, R.string.location_info_primary, R.string.location_info_secondary)
+        })
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        setupFab(android.R.drawable.ic_input_add, View.OnClickListener {
+            viewModel.currentLocationId = NEW_CURRENT_LOCATION
+            navController.navigate(LocationlistFragmentDirections.actionToLocationEdit())
+        })
+
+        showBottomBar()
     }
 
     override
@@ -71,7 +91,17 @@ class LocationlistFragment : Fragment(), ItemClickListener {
 
         val bundle = Bundle()
         bundle.putInt("content_url", R.string.location_intro_key)
-        Navigation.findNavController(view!!).navigate(R.id.web_view_fragment, bundle)
+        navController.navigate(R.id.web_view_fragment, bundle)
+    }
+
+    override
+    fun onMenuClick(view: View, item: MenuItem, location: Location) {
+        when (item.itemId) {
+            R.id.menu_location_edit -> {
+                viewModel.currentLocationId = location.uId
+                navController.navigate(LocationlistFragmentDirections.actionToLocationEdit().actionId)
+            }
+        }
     }
 
     private fun setLocations() {
@@ -81,26 +111,6 @@ class LocationlistFragment : Fragment(), ItemClickListener {
                     Log.e(TAG, "Unable to fetch all locations.", throwable)
                     null
                 }
-    }
-
-    private inner class HandleLocationMenu : CardMenuHandler {
-        override fun onMenuClick(view: View, location: Location) {
-            val popupMenu = PopupMenu(context!!, view)
-            val menuInflater = popupMenu.menuInflater
-            menuInflater.inflate(R.menu.menu_location_popup, popupMenu.menu)
-            popupMenu.setOnMenuItemClickListener { item ->
-                when (item.itemId) {
-                    R.id.menu_location_edit -> {
-                        val locationId = LocationlistFragmentDirections.actionToLocationEdit().setLocationId(location.uId).arguments
-                        Navigation.findNavController(view).navigate(LocationlistFragmentDirections.actionToLocationEdit().actionId, locationId)
-                        true
-                    }
-                    else -> false
-                }
-            }
-
-            popupMenu.show()
-        }
     }
 
     companion object {

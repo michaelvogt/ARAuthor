@@ -18,10 +18,19 @@
 
 package eu.michaelvogt.ar.author.utils
 
+import android.view.MenuItem
+import android.view.View
+import eu.michaelvogt.ar.author.data.Location
+
 interface ItemClickListener {
     fun onItemClicked(uId: Long)
 }
 
 interface MenuSelectedListener {
     fun onMenuSelected(id: Int)
+}
+
+interface CardMenuListener {
+    fun onMenuClick(view: View, item: MenuItem, location: Location)
+    fun onItemClicked(uId: Long)
 }

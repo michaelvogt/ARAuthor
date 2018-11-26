@@ -24,9 +24,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
+import androidx.navigation.ui.NavigationUI
 import eu.michaelvogt.ar.author.R
 import eu.michaelvogt.ar.author.data.AuthorViewModel
 import eu.michaelvogt.ar.author.data.MARKERS_AND_TITLES
@@ -34,8 +34,7 @@ import eu.michaelvogt.ar.author.utils.AppWebViewClient
 import eu.michaelvogt.ar.author.utils.FileUtils
 import kotlinx.android.synthetic.main.fragment_web_view.*
 
-class WebViewFragment : Fragment(), View.OnClickListener {
-    private lateinit var viewModel: AuthorViewModel
+class WebViewFragment : AppFragment(), View.OnClickListener {
 
     override
     fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -54,12 +53,21 @@ class WebViewFragment : Fragment(), View.OnClickListener {
         content_info.settings.displayZoomControls = false
         content_info.settings.javaScriptEnabled = true
 
+        NavigationUI.setupWithNavController(top_toolbar, navController)
+
         val content = WebViewFragmentArgs.fromBundle(arguments).contentUrl
         when (content) {
             R.string.about_key -> content_info.loadUrl(getString(R.string.about_url))
             R.string.location_intro_key -> initLocationIntro()
             else -> content_info.loadUrl(getString(R.string.error_url))
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        hideFab()
+        hideBottomBar()
     }
 
     override

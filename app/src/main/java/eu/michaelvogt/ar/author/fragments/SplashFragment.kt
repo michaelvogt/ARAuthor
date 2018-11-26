@@ -22,8 +22,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
 import eu.michaelvogt.ar.author.R
 import eu.michaelvogt.ar.author.utils.meetsPermissionRequirements
 
@@ -35,7 +33,7 @@ import eu.michaelvogt.ar.author.utils.meetsPermissionRequirements
 
     When all permissions are met, the application is started.
  */
-class SplashFragment : Fragment() {
+class SplashFragment : AppFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_splash, container, false)
     }
@@ -53,6 +51,13 @@ class SplashFragment : Fragment() {
             action = SplashFragmentDirections.actionToIntro().actionId
         }
 
-        Navigation.findNavController(view).navigate(action)
+        navController.navigate(action)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        hideFab()
+        hideBottomBar()
     }
 }

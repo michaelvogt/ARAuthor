@@ -28,10 +28,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.content.FileProvider
-import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
 import eu.michaelvogt.ar.author.R
-import eu.michaelvogt.ar.author.data.AuthorViewModel
 import eu.michaelvogt.ar.author.data.Marker
 import eu.michaelvogt.ar.author.databinding.FragmentMarkerEditMarkerBinding
 import eu.michaelvogt.ar.author.utils.FileUtils
@@ -41,10 +38,12 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class MarkerEditFragmentMarker : Fragment() {
+/**
+ * Fragment to edit data related to the visual element of the [Marker]
+ */
+class MarkerEditFragmentMarker : AppFragment() {
     private lateinit var editMarker: Marker
     private lateinit var markerImage: ImageView
-    private lateinit var viewModel: AuthorViewModel
 
     override
     fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -70,23 +69,19 @@ class MarkerEditFragmentMarker : Fragment() {
         this.editMarker = marker
     }
 
-    private fun setViewModel(viewModel: AuthorViewModel) {
-        this.viewModel = viewModel
-    }
-
-    fun onCropClick(view: View) {
+    fun onCropClick(@Suppress("UNUSED_PARAMETER") view: View) {
         viewModel.cropMarker = editMarker
-        Navigation.findNavController(view).navigate(R.id.action_crop_marker_image)
+        navController.navigate(R.id.action_to_crop_marker_image)
     }
 
-    fun onImportClick(view: View) {
+    fun onImportClick(@Suppress("UNUSED_PARAMETER") view: View) {
         val photoPickerIntent = Intent(Intent.ACTION_PICK)
         photoPickerIntent.type = "image/*"
         startActivityForResult(photoPickerIntent, REQUEST_PICK_IMAGE)
     }
 
 
-    fun onCaptureClick(view: View) {
+    fun onCaptureClick(@Suppress("UNUSED_PARAMETER") view: View) {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 
         if (takePictureIntent.resolveActivity(activity!!.packageManager) != null) {
@@ -112,7 +107,7 @@ class MarkerEditFragmentMarker : Fragment() {
 
     @Throws(IOException::class)
     private fun createImageFile(filePrefix: String, path: String): File {
-        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.JAPANESE).format(Date())
         val imageFileName = filePrefix + timeStamp + "_"
         val storageDir = FileUtils.getFullPuplicFolderFile(path)
         val image = File.createTempFile(imageFileName, ".jpg", storageDir)
@@ -163,9 +158,8 @@ class MarkerEditFragmentMarker : Fragment() {
         private const val REQUEST_IMAGE_CAPTURE = 1
         private const val REQUEST_PICK_IMAGE = 2
 
-        fun instantiate(marker: Marker, viewModel: AuthorViewModel): MarkerEditFragmentMarker {
+        fun instantiate(marker: Marker): MarkerEditFragmentMarker {
             val fragmentMarker = MarkerEditFragmentMarker()
-            fragmentMarker.setViewModel(viewModel)
             fragmentMarker.setMarker(marker)
             return fragmentMarker
         }

@@ -79,7 +79,7 @@ class Marker {
     var isShowBackground: Boolean = false
 
     @Ignore
-    constructor() : this( 0,"")
+    constructor() : this(0, "")
 
     constructor(locationId: Long,
                 title: String,
@@ -134,6 +134,11 @@ class Marker {
         isTitle = title
     }
 
+    // Needed for 2-way databinding
+    fun setIsShowBackground(value: Boolean) {
+        isShowBackground = value
+    }
+
     override fun toString(): String {
         return "Marker(uId=$uId, locationId=$locationId, thumbPath='$thumbPath', markerImagePath='$markerImagePath', backgroundImagePath=$backgroundImagePath, title='$title', intro=$intro, isTitle=$isTitle, location=$location, widthInM=$widthInM, size=$size, zeroPoint=$zeroPoint, isShowBackground=$isShowBackground)"
     }
@@ -161,7 +166,7 @@ class Marker {
         return true
     }
 
-    override fun hashCode() : Int {
+    override fun hashCode(): Int {
         var result = uId
         result = 31 * result + locationId
         result = 31 * result + thumbPath.hashCode()

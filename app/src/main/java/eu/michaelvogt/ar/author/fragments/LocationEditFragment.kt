@@ -21,13 +21,13 @@ package eu.michaelvogt.ar.author.fragments
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
-import android.view.*
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.appcompat.widget.Toolbar
+import androidx.navigation.ui.NavigationUI
 import eu.michaelvogt.ar.author.R
-import eu.michaelvogt.ar.author.data.AuthorViewModel
 import eu.michaelvogt.ar.author.data.Location
 import eu.michaelvogt.ar.author.databinding.FragmentLocationEditBinding
 import eu.michaelvogt.ar.author.utils.FileUtils
@@ -36,20 +36,17 @@ import eu.michaelvogt.ar.author.utils.PATH_SELECT_THUMB_CODE
 import kotlinx.android.synthetic.main.fragment_location_edit.*
 
 /**
- * Fragment to edit a location
+ * Fragment to edit a [Location]
  */
-class LocationEdit : Fragment() {
+class LocationEditFragment : AppFragment() {
     private lateinit var binder: FragmentLocationEditBinding
-    private lateinit var viewModel: AuthorViewModel
-    private lateinit var navController: NavController
+    private lateinit var fabListener: View.OnClickListener
 
     private var locationId: Long = -1L
     private var location: Location = Location("New Location", "", "", "")
 
     override
     fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        setHasOptionsMenu(true)
-
         binder = FragmentLocationEditBinding.inflate(inflater, container, false)
         return binder.root
     }
@@ -58,55 +55,57 @@ class LocationEdit : Fragment() {
     fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        locationId = LocationEditArgs.fromBundle(arguments).locationId
+        locationId = viewModel.currentLocationId
 
-        navController = Navigation.findNavController(view)
-        viewModel = ViewModelProviders.of(activity!!).get(AuthorViewModel::class.java)
-
-        if (locationId != -1L) {
-            viewModel.getLocation(locationId).thenAccept {
-                location = it
-                binder.location = location
-            }
-
-            location_edit_save_button.setOnClickListener {
-                viewModel.updateLocation(location)
-                navController.popBackStack()
+        if (locationId == -1L) {
+            binder.location = location
+            fabListener = View.OnClickListener {
+                viewModel.insertLocation(location).thenAccept {
+                    activity!!.runOnUiThread { navController.popBackStack() }
+                }.exceptionally {
+                    Log.e(TAG, "Unable to insert new location $locationId")
+                    null
+                }
             }
         } else {
-            binder.location = location
-            location_edit_save_button.setOnClickListener {
-                viewModel.insertLocation(location)
-                navController.popBackStack()
+            viewModel.getLocation(locationId).thenAccept {
+                location = it
+                binder.location = it
+            }
+
+            fabListener = View.OnClickListener {
+                viewModel.updateLocation(location).thenAccept {
+                    activity!!.runOnUiThread { navController.popBackStack() }
+                }.exceptionally {
+                    Log.e(TAG, "Unable to update location $locationId")
+                    null
+                }
             }
         }
 
-        location_edit_cancel_button.setOnClickListener {
-            navController.popBackStack()
-        }
+        NavigationUI.setupWithNavController(top_toolbar, navController)
 
-        binder.locationEditThumbSelect.setOnClickListener { handleImageSelection("image/*", PATH_SELECT_THUMB_CODE) }
-        binder.locationEditIntroSelect.setOnClickListener { handleImageSelection("text/html", PATH_SELECT_LOCATION_INTRO_CODE) }
+        binder.locationEditThumbSelect
+                .setOnClickListener { handleImageSelection("image/*", PATH_SELECT_THUMB_CODE) }
+        binder.locationEditIntroSelect
+                .setOnClickListener { handleImageSelection("text/html", PATH_SELECT_LOCATION_INTRO_CODE) }
     }
 
-    override
-    fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        if (locationId != -1L) {
-            inflater!!.inflate(R.menu.actionbar_locationedit_menu, menu)
-        }
-    }
+    override fun onResume() {
+        super.onResume()
 
-    override
-    fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item!!.itemId) {
-            R.id.actionbar_location_delete -> {
-                viewModel
-                        .deleteLocation(location)!!
-                        .thenAccept { activity!!.runOnUiThread { navController.popBackStack() } }
+        setupFab(android.R.drawable.ic_menu_save, fabListener)
+        setupBottomNav(R.menu.actionbar_locationedit_menu, Toolbar.OnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.actionbar_location_delete -> {
+                    viewModel.deleteLocation(location)!!.thenAccept {
+                        activity!!.runOnUiThread { navController.popBackStack() }
+                    }
+                    true
+                }
+                else -> false
             }
-        }
-
-        return false
+        })
     }
 
     override
@@ -132,5 +131,9 @@ class LocationEdit : Fragment() {
         intent.type = mimeType
         intent.action = Intent.ACTION_OPEN_DOCUMENT
         startActivityForResult(intent, code)
+    }
+
+    companion object {
+        private val TAG = LocationEditFragment::class.java.simpleName
     }
 }

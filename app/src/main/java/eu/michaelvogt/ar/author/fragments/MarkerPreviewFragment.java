@@ -57,7 +57,7 @@ public class MarkerPreviewFragment extends PreviewFragment {
     arFragment.setOnTapArPlaneListener(this::onTapArPlane);
 
     view.findViewById(R.id.listmarker_fab).setOnClickListener(
-        Navigation.createNavigateOnClickListener(R.id.editFragment)
+        Navigation.createNavigateOnClickListener(R.id.edit_fragment)
     );
   }
 

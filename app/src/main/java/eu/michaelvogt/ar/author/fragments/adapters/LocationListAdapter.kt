@@ -21,22 +21,23 @@ package eu.michaelvogt.ar.author.fragments.adapters
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import eu.michaelvogt.ar.author.data.Location
 import eu.michaelvogt.ar.author.databinding.CardLocationBinding
-import eu.michaelvogt.ar.author.utils.CardMenuHandler
-import eu.michaelvogt.ar.author.utils.ItemClickListener
+import eu.michaelvogt.ar.author.utils.CardMenuListener
 
 /**
  * Adapter for the list of Locations
  */
-class LocationListAdapter(context: Context?, private val locationMenuHandler: CardMenuHandler) :
-        RecyclerView.Adapter<LocationListAdapter.ViewHolder>() {
+class LocationListAdapter(
+        private val context: Context?,
+        private val listener: CardMenuListener,
+        private val menuId: Int)
+    : RecyclerView.Adapter<LocationListAdapter.ViewHolder>() {
 
     private var locations: List<Location> = emptyList()
     private val inflater: LayoutInflater = LayoutInflater.from(context)
-
-    private var listener: ItemClickListener? = null
 
     fun setLocations(locations: List<Location>) {
         this.locations = locations
@@ -57,23 +58,25 @@ class LocationListAdapter(context: Context?, private val locationMenuHandler: Ca
     override
     fun getItemCount(): Int = locations.size
 
-    fun setItemClickListener(listener: ItemClickListener) {
-        this.listener = listener
-    }
-
     inner class ViewHolder(val binder: CardLocationBinding) : RecyclerView.ViewHolder(binder.root) {
         init {
             binder.root.setOnClickListener {
-                if (listener != null) {
-                    if (adapterPosition != RecyclerView.NO_POSITION) {
-                        val locationId = locations[adapterPosition].uId
-                        listener!!.onItemClicked(locationId)
-                    }
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    val locationId = locations[adapterPosition].uId
+                    listener.onItemClicked(locationId)
                 }
             }
 
             binder.locationMenu.setOnClickListener { view ->
-                locationMenuHandler.onMenuClick(view, locations[adapterPosition])
+                val popupMenu = PopupMenu(context!!, view)
+                val menuInflater = popupMenu.menuInflater
+                menuInflater.inflate(menuId, popupMenu.menu)
+                popupMenu.setOnMenuItemClickListener { item ->
+                    listener.onMenuClick(view, item, locations[adapterPosition])
+                    true
+                }
+
+                popupMenu.show()
             }
         }
     }

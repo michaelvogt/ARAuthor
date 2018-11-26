@@ -28,8 +28,21 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/marker_edit_areas_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/marker_edit_area_chip_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/marker_edit_area_Button_add"
+
+            app:chipIcon="@android:drawable/ic_input_add"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/areas_list"
@@ -40,26 +53,13 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:scrollbars="vertical"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/marker_edit_area_chip_add"
             tools:listitem="@layout/card_area">
 
         </androidx.recyclerview.widget.RecyclerView>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/areas_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:onClick="@{handler::onAddArea}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_add" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

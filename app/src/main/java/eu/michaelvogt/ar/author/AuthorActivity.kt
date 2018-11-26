@@ -18,11 +18,7 @@
 
 package eu.michaelvogt.ar.author
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
@@ -30,10 +26,7 @@ import androidx.navigation.Navigation
 import com.google.ar.core.ArCoreApk
 import eu.michaelvogt.ar.author.data.AppDatabase
 import eu.michaelvogt.ar.author.data.AuthorViewModel
-import eu.michaelvogt.ar.author.fragments.LocationlistFragmentDirections
-import eu.michaelvogt.ar.author.utils.AppNavigatedListener
-import eu.michaelvogt.ar.author.utils.BottomSheetNav
-import eu.michaelvogt.ar.author.utils.MenuSelectedListener
+import eu.michaelvogt.ar.author.utils.AppNavigationListener
 import eu.michaelvogt.ar.author.utils.handleRequestPermissionsResult
 import kotlinx.android.synthetic.main.activity_author.*
 
@@ -58,60 +51,15 @@ class AuthorActivity : AppCompatActivity() {
         val database = AppDatabase.getDatabase(applicationContext)
         AppDatabase.PopulateDbAsync(database!!) { viewModel.locationLoadTrigger.setValue(0) }.execute()
 
-        setSupportActionBar(bottom_nav)
-
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
-        navController.addOnNavigatedListener(AppNavigatedListener(this))
+        navController.addOnNavigatedListener(AppNavigationListener(this, null))
 
-        // Pre-Determine the availability of ARCore on the device, to have immediate access when needed
+        // Handler for navigation menu selections
+        bottom_nav.setNavigationOnClickListener(AppNavigationListener(this, navController))
+
+        // Pre-Determine the availability of ARCore on the device,
+        // to have immediate access when needed
         ArCoreApk.getInstance().checkAvailability(this)
-    }
-
-    /**
-     * Provide the application menu items, shown on the right side of the bottom app bar.
-     */
-    override
-    fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.actionbar_menu, menu)
-        return true
-    }
-
-    /**
-     * Handle selections of the application menu
-     */
-    override
-    fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                handleNavigationMenu()
-                true
-            }
-            R.id.actionbar_feedback -> {
-                val intent = Intent(Intent.ACTION_SENDTO)
-                intent.data = Uri.parse("""
-                            mailto:${Uri.encode("ar@michaelvogt.eu")}
-                            ?subject=${Uri.encode("Tourist AR Feedback")}
-                            &body=${Uri.encode(getVersionAndDevice())}
-                        """.trimIndent())
-                startActivity(Intent.createChooser(intent, "Choose an email client"))
-                true
-            }
-            R.id.actionbar_about -> {
-                val bundle = Bundle()
-                bundle.putInt("content_url", R.string.about_key)
-                navController.navigate(R.id.web_view_fragment, bundle)
-                true
-            }
-            R.id.actionbar_preferences -> {
-                navController.navigate(R.id.preferences_fragment)
-                true
-            }
-            R.id.actionbar_show_intro -> {
-                navController.navigate(LocationlistFragmentDirections.actionToIntro())
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
     }
 
     /**
@@ -123,27 +71,5 @@ class AuthorActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         handleRequestPermissionsResult(this, requestCode, grantResults)
-    }
-
-    private fun getVersionAndDevice(): String? {
-        return "Version: ${BuildConfig.VERSION_NAME}<${BuildConfig.VERSION_CODE}>\n" +
-                "Device: ${android.os.Build.MANUFACTURER} ${android.os.Build.MODEL}"
-    }
-
-    /**
-     * Handle selections from the navigation menu, shown on the left side of the bottom app bar
-     */
-    private fun handleNavigationMenu() {
-        val bottomSheetNav = BottomSheetNav()
-        bottomSheetNav.show(supportFragmentManager, bottomSheetNav.tag)
-        bottomSheetNav.setMenuSelectedListener(object : MenuSelectedListener {
-            override fun onMenuSelected(id: Int) {
-                when (id) {
-                    R.id.location_list_fragment -> navController.navigate(R.id.location_list_fragment)
-                    R.id.marker_list_fragment -> navController.navigate(R.id.marker_list_fragment)
-                    R.id.area_list_fragment -> navController.navigate(R.id.area_list_fragment)
-                }
-            }
-        })
     }
 }

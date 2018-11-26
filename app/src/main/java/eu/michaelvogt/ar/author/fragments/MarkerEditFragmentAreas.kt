@@ -25,9 +25,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import eu.michaelvogt.ar.author.R
 import eu.michaelvogt.ar.author.data.AuthorViewModel
 import eu.michaelvogt.ar.author.data.GROUPS_ALL
 import eu.michaelvogt.ar.author.databinding.FragmentMarkerEditAreasBinding
@@ -37,10 +35,12 @@ import eu.michaelvogt.ar.author.utils.NEW_CURRENT_AREA
 import eu.michaelvogt.ar.author.utils.NEW_CURRENT_MARKER
 import kotlinx.android.synthetic.main.fragment_marker_edit_areas.*
 
-class MarkerEditFragmentAreas : Fragment(), ItemClickListener {
+/**
+ * Fragment with the list of the [Area]s related to a [Marker]
+ */
+class MarkerEditFragmentAreas : AppFragment(), ItemClickListener {
 
     private var markerId = NEW_CURRENT_MARKER
-    private lateinit var viewModel: AuthorViewModel
 
     override
     fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -63,6 +63,10 @@ class MarkerEditFragmentAreas : Fragment(), ItemClickListener {
         adapter.setItemClickListener(this)
         areas_list.adapter = adapter
 
+        marker_edit_area_chip_add.setOnClickListener {
+            navigateToEdit(NEW_CURRENT_AREA)
+        }
+
         viewModel.getAreasForMarker(markerId, GROUPS_ALL)
                 .thenAccept { areas -> activity!!.runOnUiThread { adapter.setAreas(areas) } }
                 .exceptionally { throwable ->
@@ -71,20 +75,15 @@ class MarkerEditFragmentAreas : Fragment(), ItemClickListener {
                 }
     }
 
-    private fun navigateToEdit(areaId: Long) {
-        viewModel.currentAreaId = areaId
-        Navigation.findNavController(view!!).navigate(R.id.markerPreviewFragment)
-    }
-
-    // Called from layout
-    fun onAddArea(view: View) {
-        navigateToEdit(NEW_CURRENT_AREA)
-    }
-
     // Called from adapter
     override
     fun onItemClicked(uId: Long) {
         navigateToEdit(uId)
+    }
+
+    private fun navigateToEdit(areaId: Long) {
+        viewModel.currentAreaId = areaId
+        navController.navigate(MarkerEditFragmentDirections.actionToAreaEdit())
     }
 
     private fun setMarkerId(markerId: Long) {

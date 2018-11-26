@@ -29,8 +29,10 @@ import eu.michaelvogt.ar.author.R
 import eu.michaelvogt.ar.author.data.Marker
 import eu.michaelvogt.ar.author.databinding.FragmentMarkerEditInfoBinding
 
-class MarkerEditFragmentInfo : Fragment() {
-    private lateinit var binder: FragmentMarkerEditInfoBinding
+/**
+ * Fragment to edit data related to the object represented by this [Marker]
+ */
+class MarkerEditFragmentInfo : AppFragment() {
     private lateinit var marker: Marker
 
     override

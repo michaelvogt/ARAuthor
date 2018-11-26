@@ -1,4 +1,4 @@
-<!--
+/*
     ARTester - AR for tourists by tourists
     Copyright (C) 2018  Michael Vogt
 
@@ -14,20 +14,20 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
--->
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+*/
 
-    <group>
-        <item
-            android:id="@+id/actionbar_markerlist_load"
-            android:icon="@android:drawable/ic_menu_upload"
-            android:title="@string/actionbar_markerlist_load_title"
-            app:showAsAction="ifRoom" />
-        <item
-            android:id="@+id/actionbar_markerlist_ar"
-            android:icon="@drawable/ic_ar_icon"
-            android:title="@string/actionbar_markerlist_ar_title"
-            app:showAsAction="ifRoom" />
-    </group>
-</menu>
+package eu.michaelvogt.ar.author.fragments
+
+import eu.michaelvogt.ar.author.*
+
+class MarkerEditScreen : ScopedActions(idMatcher(R.id.marker_edit_layout)) {
+    fun inToolbar(action: ToolbarActions.() -> Actions) =
+            ToolbarActions(idMatcher(R.id.top_toolbar)).action()
+
+    fun inDelete(action: UiActions.() -> Actions) =
+            UiActions(idMatcher(R.id.actionbar_markeredit_delete)).action()
+
+    companion object {
+        const val title = "Edit Marker"
+    }
+}

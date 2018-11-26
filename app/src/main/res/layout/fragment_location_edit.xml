@@ -28,24 +28,23 @@
     </data>
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/location_edit_scroller"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/location_edit_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".fragments.LocationEdit">
+            tools:context=".fragments.LocationEditFragment">
 
-            <TextView
-                android:id="@+id/location_edit_header"
-                android:layout_width="0dp"
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/top_toolbar"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:text="@string/location_edit_header"
-                android:textAppearance="@android:style/TextAppearance.Material.Headline"
-                android:textStyle="bold"
+                android:background="?attr/colorPrimary"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarTheme"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -55,14 +54,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/location_edit_header">
+                app:layout_constraintTop_toBottomOf="@+id/top_toolbar">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/location_edit_name_field"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/location_edit_hint_name"
@@ -82,6 +82,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/location_edit_name">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/location_edit_desc_field"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/location_edit_hint_desc"
@@ -102,6 +103,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/location_edit_desc">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/location_edit_thumb_field"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/location_edit_hint_thumb"
@@ -130,6 +132,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/location_edit_thumb">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/location_edit_intro_field"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/location_edit_hint_intro"
@@ -145,27 +148,6 @@
                 android:src="@android:drawable/ic_menu_upload"
                 app:layout_constraintBottom_toBottomOf="@+id/location_edit_intro"
                 app:layout_constraintEnd_toEndOf="parent" />
-
-            <Button
-                android:id="@+id/location_edit_save_button"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/bottom_button_height"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="8dp"
-                android:text="@string/location_edit_save"
-                app:layout_constraintEnd_toStartOf="@+id/location_edit_cancel_button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/location_edit_intro" />
-
-            <Button
-                android:id="@+id/location_edit_cancel_button"
-                android:layout_width="@dimen/button_cancel_width"
-                android:layout_height="@dimen/bottom_button_height"
-                android:layout_marginEnd="8dp"
-                android:text="@string/location_edit_cancel"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/location_edit_save_button" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

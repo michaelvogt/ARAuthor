@@ -20,28 +20,35 @@ package eu.michaelvogt.ar.author.fragments
 
 import android.os.Bundle
 import android.util.Log
-import android.view.*
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.Navigation
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.appcompat.widget.Toolbar
+import androidx.navigation.ui.NavigationUI
 import eu.michaelvogt.ar.author.R
-import eu.michaelvogt.ar.author.data.AuthorViewModel
 import eu.michaelvogt.ar.author.data.MARKERS_AND_TITLES
 import eu.michaelvogt.ar.author.databinding.FragmentMarkerlistBinding
 import eu.michaelvogt.ar.author.fragments.adapters.MarkerListAdapter
+import eu.michaelvogt.ar.author.utils.InfoPrompt
 import eu.michaelvogt.ar.author.utils.ItemClickListener
 import eu.michaelvogt.ar.author.utils.NEW_CURRENT_MARKER
+import eu.michaelvogt.ar.author.utils.notDoneYet
+import kotlinx.android.synthetic.main.fragment_markerlist.*
 
-class MarkerListFragment : Fragment(), ItemClickListener {
-
-    private lateinit var viewModel: AuthorViewModel
+/**
+ * View to list the [Marker]s of a [Location].
+ *
+ * A marker is currently necessary as a way ti find out where the camera is currently located at.
+ * As soon as the ARCloud is available, they should be replaced by its localisations feature.
+ *
+ * A tab on a list item opens the pages to edit the data of that marker. A new marker can be
+ * created through a FAB.
+ */
+class MarkerListFragment : AppFragment(), ItemClickListener {
     private lateinit var binder: FragmentMarkerlistBinding
 
     override
-    fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                     savedInstanceState: Bundle?): View? {
-        setHasOptionsMenu(true)
-
+    fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binder = FragmentMarkerlistBinding.inflate(inflater, container, false)
         return binder.root
     }
@@ -50,13 +57,16 @@ class MarkerListFragment : Fragment(), ItemClickListener {
     fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProviders.of(activity!!).get(AuthorViewModel::class.java)
         val locationId = viewModel.currentLocationId
 
         binder.markerList.setHasFixedSize(false)
 
-//        val layoutManager = LinearLayoutManager(context)
-//        binder.markerList.layoutManager = layoutManager
+        NavigationUI.setupWithNavController(top_toolbar, navController)
+
+        setupToolbar(R.menu.toolbar_markerlist_menu, Toolbar.OnMenuItemClickListener {
+            InfoPrompt.showLocationInfo(this, R.id.toolbar_marker_info,
+                    R.string.marker_info_primary, R.string.marker_info_secondary)
+        })
 
         val adapter = MarkerListAdapter(context)
         binder.markerList.adapter = adapter
@@ -69,42 +79,32 @@ class MarkerListFragment : Fragment(), ItemClickListener {
                 }
 
         adapter.setItemClickListener(this)
-
-//        val bottomNav = activity!!.findViewById<View>(R.id.bottom_nav)
-//        val item = (bottomNav as BottomNavigationView).menu.findItem(R.id.bottom_ar)
-//        item.setOnMenuItemClickListener {
-//            Navigation.findNavController(view).navigate(R.id.action_test_markers)
-//            true
-//        }
     }
 
-    override
-    fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        if (activity == null) return
-        inflater!!.inflate(R.menu.actionbar_markerlist_menu, menu)
-    }
+    override fun onResume() {
+        super.onResume()
 
-    override
-    fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item!!.itemId) {
-            R.id.actionbar_markerlist_load -> {
-                Log.i(TAG, "Load markers")
-                return true
+        setupBottomNav(R.menu.actionbar_markerlist_menu, Toolbar.OnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.actionbar_markerlist_load,
+                R.id.actionbar_markerlist_ar -> {
+                    notDoneYet(activity!!)
+                    true
+                }
+                else -> false
             }
-            R.id.actionbar_markerlist_new -> {
-                viewModel.currentMarkerId = NEW_CURRENT_MARKER
-                Navigation.findNavController(view!!).navigate(R.id.action_edit_marker)
-                return true
-            }
-        }
+        })
 
-        return super.onOptionsItemSelected(item)
+        setupFab(android.R.drawable.ic_input_add, View.OnClickListener {
+            viewModel.currentMarkerId = NEW_CURRENT_MARKER
+            navController.navigate(MarkerListFragmentDirections.actionEditMarker())
+        })
     }
 
     override
     fun onItemClicked(uId: Long) {
         viewModel.currentMarkerId = uId
-        Navigation.findNavController(view!!).navigate(R.id.action_edit_marker)
+        navController.navigate(R.id.action_edit_marker)
     }
 
     companion object {

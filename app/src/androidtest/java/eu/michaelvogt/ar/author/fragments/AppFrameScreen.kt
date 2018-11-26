@@ -16,12 +16,14 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author.utils
+package eu.michaelvogt.ar.author.fragments
 
-import android.view.View
+import eu.michaelvogt.ar.author.*
 
-import eu.michaelvogt.ar.author.data.Location
+class AppFrameScreen : ScopedActions(idMatcher(R.id.app_layout)) {
+    fun inBottomBar(action: BottomBarActions.() -> Actions) =
+            BottomBarActions(idMatcher(R.id.bottom_nav)).action()
 
-interface CardMenuHandler {
-    fun onMenuClick(view: View, location: Location)
+    fun inFabItem(action: UiActions.() -> Actions) =
+            UiActions(idMatcher(R.id.bottom_nav_fab)).action()
 }

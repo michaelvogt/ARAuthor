@@ -55,14 +55,16 @@ class AuthorViewModel(application: Application) : AndroidViewModel(application) 
 
     fun updateLocation(location: Location) = repository.update(location)
 
-    fun deleteLocation(location: Location): CompletableFuture<Unit>? = repository.deleteLocation(location)
+    fun deleteLocation(location: Location): CompletableFuture<Unit>? = repository.delete(location)
 
 
-    fun addMarker(marker: Marker) = repository.insert(marker)
+    fun insertMarker(marker: Marker) = repository.insert(marker)
 
     fun getMarker(uId: Long): CompletableFuture<Marker> = repository.getMarker(uId)
 
     fun updateMarker(marker: Marker) = repository.update(marker)
+
+    fun deleteMarker(marker: Marker): CompletableFuture<Unit>? = repository.delete(marker)
 
     fun getMarkersForLocation(locationId: Long, withTitles: Array<Int>):
             CompletableFuture<List<Marker>> = repository.getMarkersForLocation(locationId, withTitles)

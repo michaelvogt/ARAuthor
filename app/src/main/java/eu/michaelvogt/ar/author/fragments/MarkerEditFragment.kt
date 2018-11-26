@@ -20,23 +20,27 @@ package eu.michaelvogt.ar.author.fragments
 
 import android.os.Bundle
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.Navigation
+import androidx.navigation.ui.NavigationUI
 import androidx.viewpager.widget.ViewPager
 import eu.michaelvogt.ar.author.R
-import eu.michaelvogt.ar.author.data.AuthorViewModel
 import eu.michaelvogt.ar.author.data.Marker
+import kotlinx.android.synthetic.main.fragment_marker_edit.*
+import java.util.concurrent.CompletableFuture
 
 
-class MarkerEditFragment : Fragment() {
-
+/**
+ * Fragment to edit a [Marker]
+ */
+class MarkerEditFragment : AppFragment() {
     private var editMarkerId: Long = 0
     private lateinit var editMarker: Marker
-    private lateinit var viewModel: AuthorViewModel
 
     override
     fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -48,7 +52,6 @@ class MarkerEditFragment : Fragment() {
     fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProviders.of(activity!!).get(AuthorViewModel::class.java)
         editMarkerId = viewModel.currentMarkerId
         val cropMarker = viewModel.cropMarker
 
@@ -70,49 +73,54 @@ class MarkerEditFragment : Fragment() {
                         null
                     }
         }
+
+        NavigationUI.setupWithNavController(top_toolbar, navController)
     }
 
-    override
-    fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater!!.inflate(R.menu.actionbar_editmarker_menu, menu)
-    }
+    override fun onResume() {
+        super.onResume()
 
-    override
-    fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return when (item!!.itemId) {
-            R.id.actionbar_editmarker_save -> {
-                handleSave()
-                true
+        var future: CompletableFuture<*>
+
+        setupFab(android.R.drawable.ic_menu_save, View.OnClickListener {
+            if (editMarkerId == -1L) {
+                editMarker.locationId = viewModel.currentLocationId
+                future = viewModel.insertMarker(editMarker)
+            } else {
+                future = viewModel.updateMarker(editMarker)
             }
-            else -> super.onOptionsItemSelected(item)
-        }
+
+            future.thenAccept {
+                activity!!.runOnUiThread { navController.popBackStack() }
+            }
+        })
+
+        setupBottomNav(R.menu.actionbar_markeredit_menu, Toolbar.OnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.actionbar_markeredit_delete -> {
+                    viewModel.deleteMarker(editMarker)!!
+                            .thenAccept { activity!!.runOnUiThread { navController.popBackStack() } }
+                    true
+                }
+                else -> false
+            }
+        })
     }
 
     private fun finishSetup() {
-        val tabAdapter = TabAdapter(childFragmentManager, editMarker)
+        val tabAdapter = TabAdapter(childFragmentManager)
         val tabPager = view!!.findViewById<ViewPager>(R.id.editmarker_pager)
         tabPager.adapter = tabAdapter
     }
 
-    private fun handleAr(view: View) {
-        val bundle = Bundle()
-        bundle.putString("plane_finding_mode", "VERTICAL")
-        bundle.putInt("discovery_controller", 1)
-        Navigation.findNavController(view).navigate(R.id.markerPreviewFragment, bundle)
-    }
+//    private fun handleAr(view: View) {
+//        val bundle = Bundle()
+//        bundle.putString("plane_finding_mode", "VERTICAL")
+//        bundle.putInt("discovery_controller", 1)
+//        navController.navigate(R.id.markerPreviewFragment, bundle)
+//    }
 
-    private fun handleSave() {
-        if (editMarkerId == -1L) {
-            editMarker.locationId = viewModel.currentLocationId
-            viewModel.addMarker(editMarker)
-        } else {
-            viewModel.updateMarker(editMarker)
-        }
-
-        Navigation.findNavController(view!!).popBackStack()
-    }
-
-    private inner class TabAdapter internal constructor(fragmentManager: FragmentManager, editIndex: Marker) : FragmentPagerAdapter(fragmentManager) {
+    private inner class TabAdapter internal constructor(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
         private val tabTitles = arrayOf("Marker", "Info", "Areas")
 
         override fun getCount(): Int {
@@ -125,7 +133,7 @@ class MarkerEditFragment : Fragment() {
 
         override fun getItem(position: Int): Fragment {
             return when (position) {
-                0 -> MarkerEditFragmentMarker.instantiate(editMarker, viewModel)
+                0 -> MarkerEditFragmentMarker.instantiate(editMarker)
                 1 -> MarkerEditFragmentInfo.instantiate(editMarker)
                 2 -> MarkerEditFragmentAreas.instantiate(editMarkerId)
                 else -> throw IllegalArgumentException("Requested edit marker tab doesn't exist: $position")

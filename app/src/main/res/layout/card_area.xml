@@ -17,7 +17,8 @@
 -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto">
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -43,19 +44,35 @@
             android:layout_height="116dp">
 
             <ImageView
-                android:id="@+id/area_image"
+                android:id="@+id/area_image_background"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:contentDescription="@string/area_image_desc"
+                android:contentDescription="@string/area_background_image_desc"
                 android:scaleType="centerCrop"
 
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintStart_toStartOf="parent"
                 card_view:layout_constraintTop_toTopOf="parent"
                 card_view:srcCompat="@android:drawable/picture_frame" />
+
+            <ImageView
+                android:id="@+id/area_image"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="24dp"
+                android:contentDescription="@string/area_image_desc"
+
+                card_view:layout_constraintBottom_toBottomOf="@+id/area_image_background"
+                card_view:layout_constraintEnd_toEndOf="@+id/area_image_background"
+                card_view:layout_constraintStart_toStartOf="@+id/area_image_background"
+                card_view:layout_constraintTop_toTopOf="@+id/area_image_background"
+                tools:srcCompat="@sample/models" />
 
             <TextView
                 android:id="@+id/area_title"
@@ -68,10 +85,10 @@
                 android:textAlignment="center"
                 android:textAppearance="@android:style/TextAppearance.Material.Title"
                 android:textSize="14sp"
-                android:textStyle="bold"
 
+                android:textStyle="bold"
                 card_view:layout_constraintEnd_toEndOf="parent"
-                card_view:layout_constraintStart_toEndOf="@+id/area_image"
+                card_view:layout_constraintStart_toEndOf="@+id/area_image_background"
                 card_view:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,36 +15,42 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 -->
-<navigation xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     app:startDestination="@id/splash_fragment">
 
     <fragment
         android:id="@+id/marker_list_fragment"
         android:name="eu.michaelvogt.ar.author.fragments.MarkerListFragment"
-        android:label="Markers"
+        android:label="@string/navigation_marker_list_label"
         tools:layout="@layout/fragment_markerlist">
         <action
             android:id="@+id/action_edit_marker"
-            app:destination="@id/editFragment" />
+            app:destination="@id/edit_fragment" />
         <action
-            android:id="@+id/action_marker_list_fragment_to_area_list_fragment"
+            android:id="@+id/action_to_area_list"
             app:destination="@id/area_list_fragment" />
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="https://www.touristar.app/marker/list" />
     </fragment>
     <fragment
-        android:id="@+id/editFragment"
+        android:id="@+id/edit_fragment"
         android:name="eu.michaelvogt.ar.author.fragments.MarkerEditFragment"
-        android:label="Edit Marker"
+        android:label="@string/navigation_marker_edit_label"
         tools:layout="@layout/fragment_marker_edit">
         <action
-            android:id="@+id/action_crop_marker_image"
+            android:id="@+id/action_to_crop_marker_image"
             app:destination="@id/cropFragment" />
+        <action
+            android:id="@+id/action_to_area_edit"
+            app:destination="@id/area_edit_fragment" />
     </fragment>
     <fragment
         android:id="@+id/area_list_fragment"
         android:name="eu.michaelvogt.ar.author.fragments.AreaEditFragment"
-        android:label="Edit area"
+        android:label="@string/navigation_area_list_label"
         tools:layout="@layout/fragment_area_edit">
         <argument
             android:name="area_edit_translucency"
@@ -56,12 +62,12 @@
     <fragment
         android:id="@+id/cropFragment"
         android:name="eu.michaelvogt.ar.author.fragments.CropFragment"
-        android:label="Crop image"
+        android:label="@string/navigation_crop_image_label"
         tools:layout="@layout/fragment_crop" />
     <fragment
         android:id="@+id/markerPreviewFragment"
         android:name="eu.michaelvogt.ar.author.fragments.MarkerPreviewFragment"
-        android:label="Marker preview"
+        android:label="@string/navigation_marker_preview_label"
         tools:layout="@layout/fragment_markerpreview">
         <argument
             android:name="plane_finding_mode"
@@ -82,7 +88,7 @@
     <fragment
         android:id="@+id/intro_fragment"
         android:name="eu.michaelvogt.ar.author.fragments.IntroFragment"
-        android:label="Welcome"
+        android:label="@string/navigation_welcome_label"
         tools:layout="@layout/fragment_intro">
         <action
             android:id="@+id/action_to_permission_check"
@@ -95,7 +101,7 @@
     <fragment
         android:id="@+id/location_list_fragment"
         android:name="eu.michaelvogt.ar.author.fragments.LocationlistFragment"
-        android:label="Locations"
+        android:label="@string/navigation_location_list_label"
         tools:layout="@layout/fragment_locationlist">
         <action
             android:id="@+id/action_to_intro"
@@ -115,7 +121,7 @@
     <fragment
         android:id="@+id/web_view_fragment"
         android:name="eu.michaelvogt.ar.author.fragments.WebViewFragment"
-        android:label="Web View"
+        android:label="@string/navigation_web_view_label"
         tools:layout="@layout/fragment_web_view">
         <argument
             android:name="content_url"
@@ -125,26 +131,26 @@
     <fragment
         android:id="@+id/panoramaFragment"
         android:name="eu.michaelvogt.ar.author.fragments.PanoramaFragment"
-        android:label="Panorama"
+        android:label="@string/navigation_panorama_view_label"
         tools:layout="@layout/fragment_panorama" />
     <fragment
         android:id="@+id/permission_check_fragment"
         android:name="eu.michaelvogt.ar.author.fragments.PermissionCheckFragment"
-        android:label="Permissions"
+        android:label="@string/navigation_permission_view_label"
         tools:layout="@layout/fragment_permission_check" />
     <fragment
         android:id="@+id/preferences_fragment"
         android:name="eu.michaelvogt.ar.author.fragments.PreferencesFragment"
-        android:label="PreferencesFragment" />
+        android:label="@string/navigation_preference_view_label" />
     <fragment
         android:id="@+id/ar_replacement_fragment"
         android:name="eu.michaelvogt.ar.author.fragments.ArReplacement"
-        android:label="fragment_ar_replacement"
+        android:label="@string/navigation_ar_replacement_view_label"
         tools:layout="@layout/fragment_ar_replacement" />
     <fragment
         android:id="@+id/splash_fragment"
         android:name="eu.michaelvogt.ar.author.fragments.SplashFragment"
-        android:label="fragment_splash"
+        android:label="@string/navigation_splash_label"
         tools:layout="@layout/fragment_splash">
         <action
             android:id="@+id/action_to_location_list"
@@ -155,15 +161,10 @@
     </fragment>
     <fragment
         android:id="@+id/location_edit_fragment"
-        android:name="eu.michaelvogt.ar.author.fragments.LocationEdit"
-        android:label="LocationEdit">
-        <argument
-            android:name="locationId"
-            android:defaultValue="-1L"
-            app:argType="long" />
-    </fragment>
+        android:name="eu.michaelvogt.ar.author.fragments.LocationEditFragment"
+        android:label="@string/navigation_location_edit_label" />
     <fragment
         android:id="@+id/area_edit_fragment"
         android:name="eu.michaelvogt.ar.author.fragments.AreaEditFragment"
-        android:label="AreaEditFragment" />
+        android:label="@string/navigation_area_edit_label" />
 </navigation>

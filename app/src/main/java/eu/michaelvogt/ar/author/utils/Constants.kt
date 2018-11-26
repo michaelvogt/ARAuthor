@@ -21,6 +21,7 @@
 package eu.michaelvogt.ar.author.utils
 
 import android.Manifest
+import eu.michaelvogt.ar.author.BuildConfig
 
 const val NEW_CURRENT_LOCATION = -1L
 const val NEW_CURRENT_MARKER = -1L
@@ -36,3 +37,11 @@ const val STORAGE_PERMISSION = Manifest.permission.WRITE_EXTERNAL_STORAGE
 
 const val PATH_SELECT_THUMB_CODE = 2
 const val PATH_SELECT_LOCATION_INTRO_CODE = 3
+
+/**
+ * Constructs a string with the current version of the app and the model of the phone.
+ */
+val versionAndDeviceString: String by lazy {
+    "Version: ${BuildConfig.VERSION_NAME}<${BuildConfig.VERSION_CODE}>\n" +
+            "Device: ${android.os.Build.MANUFACTURER} ${android.os.Build.MODEL}"
+}
