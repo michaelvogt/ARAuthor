@@ -18,16 +18,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <group>
-        <item
-            android:id="@+id/actionbar_markerlist_load"
-            android:icon="@android:drawable/ic_menu_upload"
-            android:title="@string/actionbar_markerlist_load_title"
-            app:showAsAction="ifRoom" />
-        <item
-            android:id="@+id/actionbar_markerlist_ar"
-            android:icon="@drawable/ic_ar_icon"
-            android:title="@string/actionbar_markerlist_ar_title"
-            app:showAsAction="ifRoom" />
-    </group>
+    <item
+        android:id="@+id/actionbar_markerlist_load"
+        android:icon="@android:drawable/ic_menu_upload"
+        android:title="@string/actionbar_markerlist_load_title"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/actionbar_markerlist_ar"
+        android:icon="@drawable/ic_ar_icon"
+        android:title="@string/actionbar_markerlist_ar_title"
+        app:showAsAction="ifRoom" />
 </menu>

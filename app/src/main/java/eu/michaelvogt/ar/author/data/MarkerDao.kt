@@ -20,6 +20,7 @@ package eu.michaelvogt.ar.author.data
 
 import androidx.room.Dao
 import androidx.room.Query
+import eu.michaelvogt.ar.author.data.tuples.ListMarker
 
 @Dao
 interface MarkerDao : BaseDao<Marker> {
@@ -27,8 +28,20 @@ interface MarkerDao : BaseDao<Marker> {
     @Query("SELECT * FROM markers")
     fun getAll(): List<Marker>
 
+    @Query("SELECT u_id as markerId, title, intro, image_path as imagePath FROM markers WHERE group_id=:groupId")
+    fun getAllForGroup(groupId: Long): List<ListMarker>
+
+    @Query("SELECT u_id as markerId, title, intro, image_path as imagePath FROM markers WHERE group_id IS NULL")
+    fun getAllWithoutGroup(): List<ListMarker>
+
+    @Query("SELECT u_id as markerId, title, intro, image_path as imagePath FROM markers WHERE location_id=:locationId")
+    fun getAllWithoutGroupForLocation(locationId: Long): List<ListMarker>
+
     @Query("SELECT * FROM markers WHERE markers.u_id=:uId")
     fun get(uId: Long): Marker
+
+    @Query("SELECT markers.u_id FROM markers INNER JOIN title_groups ON markers.group_id=title_groups.u_id WHERE markers.title like '看板' AND title_groups.name like '宗岡家'")
+    fun getIdFromGroup(): Long
 
     @Query("SELECT COUNT(*) FROM markers")
     fun getSize(): Int
@@ -36,8 +49,11 @@ interface MarkerDao : BaseDao<Marker> {
     @Query("SELECT * FROM markers WHERE title LIKE :title")
     fun findMarkerByTitle(title: String): Marker
 
-    @Query("SELECT * FROM markers WHERE location_id=:locationId AND is_title IN (:titles)")
-    fun findMarkersForLocation(locationId: Long, titles: Array<Int>): List<Marker>
+    @Query("SELECT u_id as markerId, title, intro, image_path as imagePath FROM markers WHERE location_id=:locationId AND group_id=:groupId")
+    fun getGroupForLocation(locationId: Long, groupId: Long): List<ListMarker>
+
+    @Query("SELECT * FROM markers WHERE location_id=:locationId")
+    fun findMarkersForLocation(locationId: Long): List<Marker>
 
     @Query("DELETE FROM markers")
     fun deleteAll()

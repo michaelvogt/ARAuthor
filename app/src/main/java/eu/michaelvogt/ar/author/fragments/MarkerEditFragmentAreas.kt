@@ -24,9 +24,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import eu.michaelvogt.ar.author.data.AuthorViewModel
 import eu.michaelvogt.ar.author.data.GROUPS_ALL
 import eu.michaelvogt.ar.author.databinding.FragmentMarkerEditAreasBinding
 import eu.michaelvogt.ar.author.fragments.adapters.AreaListAdapter
@@ -53,8 +51,6 @@ class MarkerEditFragmentAreas : AppFragment(), ItemClickListener {
     fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProviders.of(activity!!).get(AuthorViewModel::class.java)
-
         val mLayoutManager = LinearLayoutManager(context)
         areas_list.layoutManager = mLayoutManager
         areas_list.setHasFixedSize(true)
@@ -68,7 +64,7 @@ class MarkerEditFragmentAreas : AppFragment(), ItemClickListener {
         }
 
         viewModel.getAreasForMarker(markerId, GROUPS_ALL)
-                .thenAccept { areas -> activity!!.runOnUiThread { adapter.setAreas(areas) } }
+                .thenAccept { activity!!.runOnUiThread { adapter.setAreas(it) } }
                 .exceptionally { throwable ->
                     Log.e(TAG, "Unable to fetch areas for marker $markerId", throwable)
                     null

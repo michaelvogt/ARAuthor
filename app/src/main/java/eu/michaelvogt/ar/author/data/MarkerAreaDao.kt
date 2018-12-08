@@ -35,6 +35,9 @@ interface MarkerAreaDao : BaseDao<MarkerArea> {
     @Query("SELECT * FROM areas INNER JOIN marker_areas ON areas.u_id = marker_areas.area_id WHERE marker_areas.marker_id=:markerId AND areas.`group` IN (:groups)")
     fun getAreasForMarker(markerId: Long, groups: Array<Int>): List<Area>
 
+    @Query("DELETE FROM marker_areas WHERE area_id=:areaId")
+    fun deleteAreaRelations(areaId: Long)
+
     @Query("DELETE FROM marker_areas")
     fun deleteAll()
 }

@@ -141,7 +141,7 @@ class LocationListTest {
                 }
             }
 
-            // Save new location
+            // Save new place
             inAppFrame {
                 inFabItem { click() }
             }

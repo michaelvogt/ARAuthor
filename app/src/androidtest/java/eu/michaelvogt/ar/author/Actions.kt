@@ -22,7 +22,8 @@ import org.hamcrest.Matchers
 annotation class ActionsMarker
 
 /**
- * Marker Interface to enforce correct method selection in IDE tab completion and context compile time scope enforcement
+ * Marker Interface to enforce correct method selection in IDE tab completion and context compile
+ * time scope enforcement
  */
 @ActionsMarker
 interface Actions
@@ -63,7 +64,7 @@ abstract class ScopedActions(protected val matcher: () -> Matcher<View>) : Actio
         return NoActions
     }
 
-    protected fun onView(): ViewInteraction = Espresso.onView(allOf(matcher(), ViewMatchers.isDisplayed()))
+    protected fun onView(): ViewInteraction = Espresso.onView(matcher())
 }
 
 /**
@@ -144,9 +145,13 @@ open class EditTextActions(matcher: () -> Matcher<View>) : UiActions(matcher) {
 }
 
 open class TextInputLayoutActions(private val layoutId: Int) : UiActions(idMatcher(layoutId)) {
-    fun inEdit(action: EditTextActions.() -> Actions): Actions {
-        return EditTextActions { editMatcher(layoutId) }.run(action)
-    }
+    fun inEdit(action: EditTextActions.() -> Actions): Actions =
+            EditTextActions { editMatcher(layoutId) }.action()
+}
+
+open class ListTextInputLayoutActions(itemMatcher: () -> Matcher<View>, private val inputLayoutId: Int) : UiActions(idMatcher(inputLayoutId, itemMatcher)) {
+    fun inEdit(action: EditTextActions.() -> Actions): Actions =
+            EditTextActions { editMatcher(inputLayoutId) }.action()
 }
 
 open class BarActions(matcher: () -> Matcher<View>) : UiActions(matcher) {
@@ -157,6 +162,18 @@ open class BarActions(matcher: () -> Matcher<View>) : UiActions(matcher) {
 
     fun hasNoAction(): Actions {
         onView().check(matches(not(EspressoMatchers.hasAction())))
+        return NoActions
+    }
+}
+
+open class TabBarActions(matcher: () -> Matcher<View>) : UiActions(matcher) {
+    fun swipeLeft(): Actions {
+        onView().perform(ViewActions.swipeLeft())
+        return NoActions
+    }
+
+    fun swipeRight(): Actions {
+        onView().perform(ViewActions.swipeRight())
         return NoActions
     }
 }
@@ -190,6 +207,26 @@ open class ToolbarActions(matcher: () -> Matcher<View>) : BarActions(matcher) {
     }
 }
 
+open class AreaEditCardActions(val cardMatcher: () -> Matcher<View>) : UiActions(cardMatcher) {
+    fun inTitle(action: UiActions.() -> Actions) =
+            UiActions(idMatcher(R.id.area_card_title)).action()
+
+    fun inValue(action: UiActions.() -> Actions) =
+            UiActions(idMatcher(R.id.area_card_values)).action()
+
+    fun inEditX(action: ListTextInputLayoutActions.() -> Actions) =
+            ListTextInputLayoutActions(cardMatcher, R.id.area_card_x).action()
+
+    fun inEditY(action: TextInputLayoutActions.() -> Actions) =
+            TextInputLayoutActions(R.id.area_card_y).action()
+
+    fun inEditZ(action: TextInputLayoutActions.() -> Actions) =
+            TextInputLayoutActions(R.id.area_card_z).action()
+
+    fun inEditW(action: TextInputLayoutActions.() -> Actions) =
+            TextInputLayoutActions(R.id.area_card_w).action()
+}
+
 open class ScrollViewActions(matcher: () -> Matcher<View>) : ScopedActions(matcher) {
     fun scrollTo(): Actions {
         onView().perform(NestedScrollToAction())
@@ -197,9 +234,9 @@ open class ScrollViewActions(matcher: () -> Matcher<View>) : ScopedActions(match
     }
 }
 
-open class ListItemActions(matcher: () -> Matcher<View>) : UiActions(matcher) {
+open class ListItemActions(val itemMatcher: () -> Matcher<View>) : UiActions(itemMatcher) {
     fun inItemButton(action: UiActions.() -> Actions) =
-            UiActions { allOf(isDescendantOfA(matcher()), isA(ImageButton::class.java)) as Matcher<View> }.action()
+            UiActions { allOf(isDescendantOfA(itemMatcher()), isA(ImageButton::class.java)) as Matcher<View> }.action()
 }
 
 open class List(private val recyclerId: Int) : ScrollViewActions(idMatcher(recyclerId)) {

@@ -21,7 +21,7 @@
 
         <variable
             name="marker"
-            type="eu.michaelvogt.ar.author.data.Marker" />
+            type="eu.michaelvogt.ar.author.data.tuples.ListMarker" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

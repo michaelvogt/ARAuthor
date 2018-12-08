@@ -21,6 +21,7 @@ package eu.michaelvogt.ar.author.data
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import eu.michaelvogt.ar.author.data.tuples.ListMarker
 import eu.michaelvogt.ar.author.utils.NEW_CURRENT_AREA
 import eu.michaelvogt.ar.author.utils.NEW_CURRENT_LOCATION
 import eu.michaelvogt.ar.author.utils.NEW_CURRENT_MARKER
@@ -53,21 +54,28 @@ class AuthorViewModel(application: Application) : AndroidViewModel(application) 
 
     fun getAllLocations(): CompletableFuture<List<Location>> = repository.allLocations()
 
+    fun getLocationNames(): CompletableFuture<List<Location>> = repository.getLocationNames()
+
     fun updateLocation(location: Location) = repository.update(location)
 
-    fun deleteLocation(location: Location): CompletableFuture<Unit>? = repository.delete(location)
+    fun deleteLocation(location: Location): CompletableFuture<Unit> = repository.delete(location)
 
 
     fun insertMarker(marker: Marker) = repository.insert(marker)
 
     fun getMarker(uId: Long): CompletableFuture<Marker> = repository.getMarker(uId)
 
+    fun getMarkerIdFromGroup(markerTitle: String, groupName: String) = repository.getMarkerIdFromGroup(markerTitle, groupName)
+
     fun updateMarker(marker: Marker) = repository.update(marker)
 
-    fun deleteMarker(marker: Marker): CompletableFuture<Unit>? = repository.delete(marker)
+    fun deleteMarker(marker: Marker): CompletableFuture<Unit> = repository.delete(marker)
 
-    fun getMarkersForLocation(locationId: Long, withTitles: Array<Int>):
-            CompletableFuture<List<Marker>> = repository.getMarkersForLocation(locationId, withTitles)
+    fun getMarkersForLocation(locationId: Long): CompletableFuture<List<Marker>> =
+            repository.getMarkersForLocation(locationId)
+
+    fun getMarkerGroupsForLocation(locationId: Long): List<ListMarker> =
+            repository.getMarkerGroupsForLocation(locationId)
 
     fun clearCropMarker() {
         cropMarker = null
@@ -77,11 +85,17 @@ class AuthorViewModel(application: Application) : AndroidViewModel(application) 
             CompletableFuture<List<Area>> = repository.getAreasForMarker(markerId, group)
 
 
+    fun getAllAreas(): CompletableFuture<List<Area>> = repository.allAreas()
+
     fun getAreaVisual(uId: Long):
             CompletableFuture<AreaVisual> = repository.getAreaVisual(uId)
 
     fun getAreaVisualsForMarker(uId: Long, group: Array<Int> = GROUPS_ALL):
             CompletableFuture<ArrayList<AreaVisual>> = repository.getAreaVisualsForMarker(uId, group)
 
+    fun insertArea(area: Area) = repository.insert(area)
+
     fun updateArea(area: Area) = repository.update(area)
+
+    fun deleteAreaVisual(areaVisual: AreaVisual): CompletableFuture<Unit> = repository.delete(areaVisual)
 }

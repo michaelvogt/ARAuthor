@@ -43,7 +43,7 @@ class LocationEditFragment : AppFragment() {
     private lateinit var fabListener: View.OnClickListener
 
     private var locationId: Long = -1L
-    private var location: Location = Location("New Location", "", "", "")
+    private var location: Location = Location("New Location", "", "", "", "")
 
     override
     fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -98,7 +98,7 @@ class LocationEditFragment : AppFragment() {
         setupBottomNav(R.menu.actionbar_locationedit_menu, Toolbar.OnMenuItemClickListener {
             when (it.itemId) {
                 R.id.actionbar_location_delete -> {
-                    viewModel.deleteLocation(location)!!.thenAccept {
+                    viewModel.deleteLocation(location).thenAccept {
                         activity!!.runOnUiThread { navController.popBackStack() }
                     }
                     true

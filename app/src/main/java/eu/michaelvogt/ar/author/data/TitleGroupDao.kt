@@ -15,7 +15,22 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+package eu.michaelvogt.ar.author.data
 
-package eu.michaelvogt.ar.author.fragments.adapters
+import androidx.room.Dao
+import androidx.room.Query
 
-class ListHeader(var title: String?)
+@Dao
+interface TitleGroupDao : BaseDao<TitleGroup> {
+    @Query("SELECT * FROM title_groups")
+    fun getAll(): List<TitleGroup>
+
+    @Query("SELECT * FROM title_groups WHERE title_groups.u_id=:uId")
+    fun get(uId: Long): TitleGroup
+
+    @Query("SELECT COUNT(*) FROM title_groups")
+    fun getSize(): Int
+
+    @Query("DELETE FROM title_groups")
+    fun deleteAll()
+}

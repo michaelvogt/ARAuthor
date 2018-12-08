@@ -29,6 +29,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.navigation.ui.NavigationUI
 import androidx.viewpager.widget.ViewPager
+import com.google.android.material.snackbar.Snackbar
 import eu.michaelvogt.ar.author.R
 import eu.michaelvogt.ar.author.data.Marker
 import kotlinx.android.synthetic.main.fragment_marker_edit.*
@@ -57,6 +58,8 @@ class MarkerEditFragment : AppFragment() {
 
         if (editMarkerId == -1L) {
             editMarker = Marker()
+            editMarker.locationId = viewModel.currentLocationId
+
             if (cropMarker != null) {
                 editMarker = cropMarker
                 viewModel.clearCropMarker()
@@ -80,11 +83,15 @@ class MarkerEditFragment : AppFragment() {
     override fun onResume() {
         super.onResume()
 
-        var future: CompletableFuture<*>
-
         setupFab(android.R.drawable.ic_menu_save, View.OnClickListener {
+            // TODO: Decide on correct validation strategy
+            if (editMarker.locationId <= 0) {
+                Snackbar.make(view!!, "@string/marker_edit_error_select_location", Snackbar.LENGTH_SHORT).show()
+                return@OnClickListener
+            }
+
+            val future: CompletableFuture<*>
             if (editMarkerId == -1L) {
-                editMarker.locationId = viewModel.currentLocationId
                 future = viewModel.insertMarker(editMarker)
             } else {
                 future = viewModel.updateMarker(editMarker)
@@ -92,13 +99,16 @@ class MarkerEditFragment : AppFragment() {
 
             future.thenAccept {
                 activity!!.runOnUiThread { navController.popBackStack() }
+            }.exceptionally {
+                Log.e(TAG, "Unable to insert/update marker $editMarkerId", it)
+                null
             }
         })
 
         setupBottomNav(R.menu.actionbar_markeredit_menu, Toolbar.OnMenuItemClickListener {
             when (it.itemId) {
                 R.id.actionbar_markeredit_delete -> {
-                    viewModel.deleteMarker(editMarker)!!
+                    viewModel.deleteMarker(editMarker)
                             .thenAccept { activity!!.runOnUiThread { navController.popBackStack() } }
                     true
                 }

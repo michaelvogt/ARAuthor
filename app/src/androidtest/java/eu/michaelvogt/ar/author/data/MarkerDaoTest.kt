@@ -31,9 +31,11 @@ import org.junit.runner.RunWith
 class MarkerDaoTest : DaoTest() {
     private lateinit var  markerDao: MarkerDao
     private lateinit var locationDao: LocationDao
+    private lateinit var titleGroupDao: TitleGroupDao
 
     @Before
     fun setUp() {
+        titleGroupDao = db.titleGroupDao()
         markerDao = db.markerDao()
         locationDao = db.locationDao()
     }
@@ -81,14 +83,15 @@ class MarkerDaoTest : DaoTest() {
     @Test
     fun getWithOrWithoutTitles() {
         val locationId = locationDao.insert(TestUtil.location1())
+        val titleGroupId = titleGroupDao.insert(TestUtil.titleGroup())
 
-        markerDao.insert(TestUtil.markerTitle(locationId))
-        markerDao.insertAll(TestUtil.marker(locationId))
+        markerDao.insert(TestUtil.marker(locationId, titleGroupId))
+        markerDao.insert(TestUtil.marker(locationId))
 
-        val withTitle = markerDao.findMarkersForLocation(locationId, arrayOf(0, 1))
-        val withoutTitle = markerDao.findMarkersForLocation(locationId, arrayOf(0))
+        val withGroup = markerDao.getAllForGroup(titleGroupId)
+        val withoutGroup = markerDao.getAllWithoutGroup()
 
-        Assert.assertThat<Int>(withTitle.size, IsEqual.equalTo(2))
-        Assert.assertThat<Int>(withoutTitle.size, IsEqual.equalTo(1))
+        Assert.assertThat<Int>(withGroup.size, IsEqual.equalTo(1))
+        Assert.assertThat<Int>(withoutGroup.size, IsEqual.equalTo(1))
     }
 }

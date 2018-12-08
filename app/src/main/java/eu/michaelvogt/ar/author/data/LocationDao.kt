@@ -26,6 +26,9 @@ interface LocationDao : BaseDao<Location> {
     @Query("SELECT * from locations ORDER BY name ASC")
     fun getAll(): List<Location>
 
+    @Query("SELECT u_id, name from locations ORDER BY name ASC")
+    fun getNames(): List<Location>
+
     @Query("SELECT COUNT(*) FROM locations")
     fun getSize(): Int
 

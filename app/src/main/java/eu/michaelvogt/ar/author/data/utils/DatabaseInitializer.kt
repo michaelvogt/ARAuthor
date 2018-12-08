@@ -31,6 +31,7 @@ class DatabaseInitializer private constructor(
         private val markerDao: MarkerDao,
         private val areaDao: AreaDao,
         private val markerAreaDao: MarkerAreaDao,
+        private val titleGroupDao: TitleGroupDao,
         private val visualDetailDao: VisualDetailDao,
         private val slideDao: SlideDao,
         private val eventDetailDao: EventDetailDao) {
@@ -44,8 +45,8 @@ class DatabaseInitializer private constructor(
 
         Log.i(DatabaseInitializer.TAG, "Location 石見銀山 $locationId inserted")
 
-        insertMarkerForLocation(locationId, "城上神社")
-        var markerId = insertMarkerForLocation(locationId,
+        var groupId = insertTitleGroup("城上神社")
+        var markerId = insertMarkerForLocation(locationId, groupId,
                 "看板",
                 "/Touristar/Markers/IMG_20180522_105701.jpg",
                 "",
@@ -54,10 +55,9 @@ class DatabaseInitializer private constructor(
                 0.6f,
                 Vector3.zero(),
                 Vector3(1.4f, 0.005f, 0.715f),
-                false,
                 false)
 
-        markerId = insertMarkerForLocation(locationId,
+        markerId = insertMarkerForLocation(locationId, groupId,
                 "鳴き龍",
                 "/Touristar/Markers/P_20180806_132544_vHDR_On.jpg",
                 "",
@@ -66,10 +66,9 @@ class DatabaseInitializer private constructor(
                 0f,
                 Vector3.zero(),
                 Vector3.zero(),
-                false,
                 false)
 
-        markerId = insertMarkerForLocation(locationId,
+        markerId = insertMarkerForLocation(locationId, groupId,
                 "亀石",
                 "/Touristar/Markers/IMG_20180522_105416.jpg",
                 "",
@@ -78,11 +77,10 @@ class DatabaseInitializer private constructor(
                 0.5f,
                 Vector3.zero(),
                 Vector3(1.364f, 0.005f, 0.715f),
-                false,
                 false)
 
-        insertMarkerForLocation(locationId, "陣屋")
-        markerId = insertMarkerForLocation(locationId,
+        groupId = insertTitleGroup("陣屋")
+        markerId = insertMarkerForLocation(locationId, groupId,
                 "中央看板",
                 "/Touristar/Markers/IMG_20180423_132914.jpg",
                 "",
@@ -91,10 +89,9 @@ class DatabaseInitializer private constructor(
                 0.81f,
                 Vector3.zero(),
                 Vector3(1.80f, 0.005f, 0.98f),
-                false,
                 false)
 
-        markerId = insertMarkerForLocation(locationId,
+        markerId = insertMarkerForLocation(locationId, groupId,
                 "左側看板",
                 "/Touristar/Markers/IMG_20180423_132802.jpg",
                 "",
@@ -103,10 +100,9 @@ class DatabaseInitializer private constructor(
                 0.655f,
                 Vector3.zero(),
                 Vector3(1.67f, 0.005f, 0.743f),
-                false,
                 false)
 
-        markerId = insertMarkerForLocation(locationId,
+        markerId = insertMarkerForLocation(locationId, groupId,
                 "奥場",
                 "/Touristar/Markers/P_20180806_135120_vHDR_On.jpg",
                 "",
@@ -115,12 +111,11 @@ class DatabaseInitializer private constructor(
                 0f,
                 Vector3.zero(),
                 Vector3.zero(),
-                false,
                 false)
 
 
-        insertMarkerForLocation(locationId, "熊谷家")
-        markerId = insertMarkerForLocation(locationId,
+        groupId = insertTitleGroup("熊谷家")
+        markerId = insertMarkerForLocation(locationId, groupId,
                 "看板",
                 "/Touristar/Markers/IMG_20180522_115942.jpg",
                 "",
@@ -129,12 +124,11 @@ class DatabaseInitializer private constructor(
                 0.32f,
                 Vector3.zero(),
                 Vector3(0.6f, 0.005f, 0.4f),
-                false,
                 false)
 
 
-        insertMarkerForLocation(locationId, "おかけ")
-        markerId = insertMarkerForLocation(locationId,
+        groupId = insertTitleGroup("おかけ")
+        markerId = insertMarkerForLocation(locationId, groupId,
                 "テンプ",
                 "/Touristar/Markers/P_20180801_112411_vHDR_On.jpg",
                 "",
@@ -143,12 +137,11 @@ class DatabaseInitializer private constructor(
                 0f,
                 Vector3.zero(),
                 Vector3.zero(),
-                false,
                 false)
 
 
-        insertMarkerForLocation(locationId, "川島家")
-        markerId = insertMarkerForLocation(locationId,
+        groupId = insertTitleGroup("川島家")
+        markerId = insertMarkerForLocation(locationId, groupId,
                 "名板",
                 "/Touristar/Markers/P_20180804_182308_vHDR_On.jpg",
                 "",
@@ -157,12 +150,11 @@ class DatabaseInitializer private constructor(
                 0f,
                 Vector3.zero(),
                 Vector3(0.29f, 0.005f, 1.018f),
-                false,
                 false)
 
 
-        insertMarkerForLocation(locationId, "宗岡家")
-        markerId = insertMarkerForLocation(locationId,
+        groupId = insertTitleGroup("宗岡家")
+        markerId = insertMarkerForLocation(locationId, groupId,
                 "看板",
                 "/Touristar/Markers/P_20180804_175049_vHDR_On.jpg",
                 "/Touristar/iwamiginzan/muneokake/boardbackground.jpg",
@@ -171,8 +163,7 @@ class DatabaseInitializer private constructor(
                 0.435f,
                 Vector3.zero(),
                 Vector3(0.945f, 0.005f, 0.632f),
-                true,
-                false)
+                true)
 
         var areaId = insertAreaForMarker(markerId,
                 "Muneoka Background Image",
@@ -339,8 +330,8 @@ class DatabaseInitializer private constructor(
         )
 
 
-        insertMarkerForLocation(locationId, "金森家")
-        insertMarkerForLocation(locationId,
+        groupId = insertTitleGroup("金森家")
+        insertMarkerForLocation(locationId, groupId,
                 "看板",
                 "/Touristar/Markers/P_20180804_175413_vHDR_On.jpg",
                 "",
@@ -349,12 +340,11 @@ class DatabaseInitializer private constructor(
                 0.36f,
                 Vector3.zero(),
                 Vector3(0.6f, 0.005f, 0.4f),
-                false,
                 false)
 
 
-        insertMarkerForLocation(locationId, "五百羅漢")
-        insertMarkerForLocation(locationId,
+        groupId = insertTitleGroup("五百羅漢")
+        insertMarkerForLocation(locationId, groupId,
                 "入り口",
                 "/Touristar/Markers/P_20180804_180510_vHDR_On.jpg",
                 "",
@@ -363,10 +353,9 @@ class DatabaseInitializer private constructor(
                 0f,
                 Vector3.zero(),
                 Vector3.zero(),
-                false,
                 false)
 
-        insertMarkerForLocation(locationId,
+        insertMarkerForLocation(locationId, groupId,
                 "１",
                 "/Touristar/Markers/P_20180804_180605_vHDR_On.jpg",
                 "",
@@ -375,10 +364,9 @@ class DatabaseInitializer private constructor(
                 0f,
                 Vector3.zero(),
                 Vector3.zero(),
-                false,
                 false)
 
-        insertMarkerForLocation(locationId,
+        insertMarkerForLocation(locationId, groupId,
                 "２",
                 "/Touristar/Markers/P_20180804_180654_vHDR_On.jpg",
                 "",
@@ -387,10 +375,9 @@ class DatabaseInitializer private constructor(
                 0f,
                 Vector3.zero(),
                 Vector3.zero(),
-                false,
                 false)
 
-        insertMarkerForLocation(locationId,
+        insertMarkerForLocation(locationId, groupId,
                 "３",
                 "/Touristar/Markers/P_20180804_180746_vHDR_On.jpg",
                 "",
@@ -399,12 +386,11 @@ class DatabaseInitializer private constructor(
                 0f,
                 Vector3.zero(),
                 Vector3.zero(),
-                false,
                 false)
 
 
-        insertMarkerForLocation(locationId, "豊坂神社")
-        insertMarkerForLocation(locationId,
+        groupId = insertTitleGroup("豊坂神社")
+        insertMarkerForLocation(locationId, groupId,
                 "看板",
                 "/Touristar/Markers/P_20180806_141327_vHDR_On.jpg",
                 "",
@@ -413,12 +399,11 @@ class DatabaseInitializer private constructor(
                 0.45f,
                 Vector3.zero(),
                 Vector3(0.6f, 0.005f, 0.4f),
-                false,
                 false)
 
 
-        insertMarkerForLocation(locationId, "佐毘売神社")
-        insertMarkerForLocation(locationId,
+        groupId = insertTitleGroup("佐毘売神社")
+        insertMarkerForLocation(locationId, groupId,
                 "看板",
                 "/Touristar/Markers/P_20180806_143800_vHDR_On.jpg",
                 "",
@@ -427,12 +412,11 @@ class DatabaseInitializer private constructor(
                 0.535f,
                 Vector3.zero(),
                 Vector3(1.02f, 0.005f, 0.685f),
-                false,
                 false)
 
 
-        insertMarkerForLocation(locationId, "谷地区")
-        insertMarkerForLocation(locationId,
+        groupId = insertTitleGroup("谷地区")
+        insertMarkerForLocation(locationId, groupId,
                 "看板",
                 "/Touristar/Markers/P_20180806_144336_vHDR_On.jpg",
                 "",
@@ -442,7 +426,6 @@ class DatabaseInitializer private constructor(
                 1.04f,
                 Vector3.zero(),
                 Vector3(1.35f, 0.005f, 0.965f),
-                false,
                 false)
 
 
@@ -454,8 +437,8 @@ class DatabaseInitializer private constructor(
 
         Log.i(DatabaseInitializer.TAG, "Location 箱館 $locationId inserted")
 
-        insertMarkerForLocation(locationId, "箱館")
-        markerId = insertMarkerForLocation(locationId,
+        groupId = insertTitleGroup("箱館")
+        markerId = insertMarkerForLocation(locationId, groupId,
                 "奉行菅",
                 "/Touristar/Markers/office_front.jpg",
                 "",
@@ -464,8 +447,7 @@ class DatabaseInitializer private constructor(
                 0.9f,
                 Vector3.zero(),
                 Vector3(),
-                true,
-                false)
+                true)
 
         insertAreaForMarker(markerId,
                 "Magistrate Office Building",
@@ -533,19 +515,19 @@ class DatabaseInitializer private constructor(
     }
 
     private fun insertLocation(name: String, description: String, thumbPath: String, introHtmlPath: String): Long {
-        return locationDao.insert(Location(name, description, thumbPath, introHtmlPath))
+        return locationDao.insert(Location(name, "", description, thumbPath, introHtmlPath))
     }
 
-    private fun insertMarkerForLocation(locationId: Long, title: String): Long {
-        return markerDao.insert(Marker(locationId, title, isTitle = true))
+    private fun insertTitleGroup(title: String): Long {
+        return titleGroupDao.insert(TitleGroup(title))
     }
 
-    private fun insertMarkerForLocation(locationId: Long, title: String, markerImagePath: String,
-                                        backgroundImagePath: String, intro: String, location: String,
-                                        widthInM: Float, zeroPoint: Vector3, size: Vector3,
-                                        showBackground: Boolean, isTitle: Boolean): Long {
-        return markerDao.insert(Marker(locationId, title, markerImagePath,
-                backgroundImagePath, intro, location, widthInM, zeroPoint, size, showBackground, isTitle))
+    private fun insertMarkerForLocation(locationId: Long, groupId: Long, title: String,
+                                        markerImagePath: String, backgroundImagePath: String,
+                                        intro: String, location: String, widthInM: Float,
+                                        zeroPoint: Vector3, size: Vector3, showBackground: Boolean): Long {
+        return markerDao.insert(Marker(locationId, groupId, title, markerImagePath,
+                backgroundImagePath, intro, location, widthInM, zeroPoint, size, showBackground))
     }
 
     private fun insertAreaForMarker(
@@ -582,13 +564,15 @@ class DatabaseInitializer private constructor(
 
         fun runner(
                 locationDao: LocationDao, markerDao: MarkerDao, areaDao: AreaDao,
-                markerAreaDao: MarkerAreaDao, visualDetailDao: VisualDetailDao,
-                slideDao: SlideDao, eventDetailDao: EventDetailDao): DatabaseInitializer {
+                markerAreaDao: MarkerAreaDao, titleGroupDao: TitleGroupDao,
+                visualDetailDao: VisualDetailDao, slideDao: SlideDao,
+                eventDetailDao: EventDetailDao): DatabaseInitializer {
 
             Log.i(TAG, "Start database initialisation")
 
             return DatabaseInitializer(
-                    locationDao, markerDao, areaDao, markerAreaDao, visualDetailDao, slideDao, eventDetailDao)
+                    locationDao, markerDao, areaDao, markerAreaDao, titleGroupDao, visualDetailDao,
+                    slideDao, eventDetailDao)
         }
     }
 }

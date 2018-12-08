@@ -5,11 +5,11 @@ import java.util.*
 
 object TestUtil {
     fun location1(name: String = "home"): Location {
-        return Location(name, "desc", "thumb", "intro")
+        return Location(name, "desc", "db", "thumb", "intro")
     }
 
     fun location2(name: String = "office"): Location {
-        return Location(name, "desc", "thumb", "intro")
+        return Location(name, "desc", "db", "thumb", "intro")
     }
 
     fun locations(name1: String = "home", name2: String = "office"): Array<Location> {
@@ -17,16 +17,21 @@ object TestUtil {
     }
 
 
-    fun markerTitle(locationId: Long, title: String = "inside"): Marker {
-        return Marker(locationId, title, isTitle = true)
+    fun markerTitle(locationId: Long, groupId: Long?, title: String = "inside"): Marker {
+        return Marker(locationId, groupId, title)
     }
 
-    fun marker(locationId: Long, title: String = "board"): Marker {
-        return Marker(locationId, title, isTitle = false)
+    fun marker(locationId: Long, groupId: Long? = null, title: String = "board"): Marker {
+        return Marker(locationId, groupId, title)
     }
 
-    fun markers(locationId: Long, title1: String = "inside", title2: String = "board"): Array<Marker> {
-        return arrayOf(markerTitle(locationId, title1), marker(locationId, title2))
+    fun markers(locationId: Long, groupId: Long? = null, title1: String = "inside", title2: String = "board"): Array<Marker> {
+        return arrayOf(markerTitle(locationId, groupId, title1), marker(locationId, null, title2))
+    }
+
+
+    fun titleGroup(name: String = "title"): TitleGroup {
+        return TitleGroup(name)
     }
 
 

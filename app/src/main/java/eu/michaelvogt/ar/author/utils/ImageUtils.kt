@@ -23,22 +23,18 @@ import android.graphics.BitmapFactory
 
 object ImageUtils {
 
-    fun decodeSampledBitmapFromImagePath(
-            path: String, reqWidth: Int, reqHeight: Int): Bitmap {
-
-        val picturePath = FileUtils.getFullPuplicFolderPath(path)
-
+    fun decodeSampledBitmapFromImagePath(path: String, reqWidth: Int, reqHeight: Int): Bitmap {
         // First decode with inJustDecodeBounds=true to check dimensions
         val options = BitmapFactory.Options()
         options.inJustDecodeBounds = true
-        BitmapFactory.decodeFile(picturePath, options)
+        BitmapFactory.decodeFile(path, options)
 
         // Calculate inSampleSize
         options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight)
 
         // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false
-        return BitmapFactory.decodeFile(picturePath, options)
+        return BitmapFactory.decodeFile(path, options)
     }
 
     private fun calculateInSampleSize(

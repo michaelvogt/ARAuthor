@@ -17,36 +17,222 @@
 -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:cardview="http://schemas.android.com/apk/res-auto">
 
     <data>
+
+        <variable
+            name="handler"
+            type="eu.michaelvogt.ar.author.fragments.support.AreaCardEditHandler" />
 
         <variable
             name="area"
             type="eu.michaelvogt.ar.author.data.Area" />
     </data>
 
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:isScrollContainer="true"
-        android:scrollbars="vertical">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/top_areaedit_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            tools:context=".fragments.AreaEditFragment">
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            cardview:layout_constraintEnd_toEndOf="parent"
+            cardview:layout_constraintStart_toStartOf="parent"
+            cardview:layout_constraintTop_toTopOf="parent" />
 
-            <eu.michaelvogt.ar.author.fragments.AreaEditCard
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            android:isScrollContainer="true"
+            android:scrollbars="vertical"
+            cardview:layout_constraintBottom_toBottomOf="parent"
+            cardview:layout_constraintEnd_toEndOf="parent"
+            cardview:layout_constraintStart_toStartOf="parent"
+            cardview:layout_constraintTop_toBottomOf="@+id/top_areaedit_toolbar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/area_edit_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                card_view:title="Position"
-                card_view:values="@{area.position}" />
+                android:orientation="vertical">
 
-        </LinearLayout>
+                <eu.michaelvogt.ar.author.fragments.AreaEditCard
+                    android:id="@+id/areaEditTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:onClick="@{handler::handleClick}"
 
-    </ScrollView>
+                    cardview:layout_constraintEnd_toEndOf="parent"
+                    cardview:layout_constraintHorizontal_bias="0.0"
+                    cardview:layout_constraintStart_toStartOf="parent"
+                    cardview:layout_constraintTop_toTopOf="parent"
+                    cardview:title="Title"
+                    cardview:values="@={area.title}" />
+
+                <eu.michaelvogt.ar.author.fragments.AreaEditCard
+                    android:id="@+id/areaEditPosition"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:onClick="@{handler::handleClick}"
+
+                    cardview:converter="@string/display_converter_from_vector3"
+                    cardview:layout_constraintEnd_toEndOf="parent"
+                    cardview:layout_constraintHorizontal_bias="0.0"
+                    cardview:layout_constraintStart_toStartOf="parent"
+                    cardview:layout_constraintTop_toBottomOf="@+id/areaEditTitle"
+                    cardview:title="Position"
+                    cardview:values="@={area.position}" />
+
+                <eu.michaelvogt.ar.author.fragments.AreaEditCard
+                    android:id="@+id/areaEditSize"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:onClick="@{handler::handleClick}"
+
+                    cardview:converter="@string/display_converter_from_vector3"
+                    cardview:layout_constraintEnd_toEndOf="parent"
+                    cardview:layout_constraintHorizontal_bias="0.0"
+                    cardview:layout_constraintStart_toStartOf="parent"
+                    cardview:layout_constraintTop_toBottomOf="@+id/areaEditPosition"
+                    cardview:title="Size"
+                    cardview:values="@={area.size}" />
+
+                <eu.michaelvogt.ar.author.fragments.AreaEditCard
+                    android:id="@+id/areaEditRotation"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:onClick="@{handler::handleClick}"
+
+                    cardview:converter="@string/display_converter_from_quaternion"
+                    cardview:layout_constraintEnd_toEndOf="parent"
+                    cardview:layout_constraintHorizontal_bias="0.0"
+                    cardview:layout_constraintStart_toStartOf="parent"
+                    cardview:layout_constraintTop_toBottomOf="@+id/areaEditSize"
+                    cardview:title="Rotation"
+                    cardview:values="@={area.rotation}" />
+
+                <eu.michaelvogt.ar.author.fragments.AreaEditCard
+                    android:id="@+id/areaEditScale"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:onClick="@{handler::handleClick}"
+
+                    cardview:converter="@string/display_converter_from_vector3"
+                    cardview:layout_constraintEnd_toEndOf="parent"
+                    cardview:layout_constraintHorizontal_bias="0.0"
+                    cardview:layout_constraintStart_toStartOf="parent"
+                    cardview:layout_constraintTop_toBottomOf="@+id/areaEditRotation"
+                    cardview:title="Scale"
+                    cardview:values="@={area.scale}" />
+
+                <eu.michaelvogt.ar.author.fragments.AreaEditCard
+                    android:id="@+id/areaEditZeropoint"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:onClick="@{handler::handleClick}"
+
+                    cardview:converter="@string/display_converter_from_vector3"
+                    cardview:layout_constraintEnd_toEndOf="parent"
+                    cardview:layout_constraintHorizontal_bias="0.0"
+                    cardview:layout_constraintStart_toStartOf="parent"
+                    cardview:layout_constraintTop_toBottomOf="@+id/areaEditScale"
+                    cardview:title="Zero Point"
+                    cardview:values="@={area.zeroPoint}" />
+
+                <eu.michaelvogt.ar.author.fragments.AreaEditCard
+                    android:id="@+id/areaEditCoordType"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:onClick="@{handler::handleClick}"
+
+                    cardview:converter="@string/display_converter_from_selection"
+                    cardview:layout_constraintEnd_toEndOf="parent"
+                    cardview:layout_constraintHorizontal_bias="0.0"
+                    cardview:layout_constraintStart_toStartOf="parent"
+                    cardview:layout_constraintTop_toBottomOf="@+id/areaEditZeropoint"
+                    cardview:title="Coordinate Type"
+                    cardview:values="@={area.coordType}" />
+
+                <eu.michaelvogt.ar.author.fragments.AreaEditCard
+                    android:id="@+id/areaEditObjectType"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:onClick="@{handler::handleClick}"
+
+                    cardview:converter="@string/display_converter_from_selection"
+                    cardview:layout_constraintEnd_toEndOf="parent"
+                    cardview:layout_constraintHorizontal_bias="0.0"
+                    cardview:layout_constraintStart_toStartOf="parent"
+                    cardview:layout_constraintTop_toBottomOf="@+id/areaEditCoordType"
+                    cardview:title="Object Type"
+                    cardview:values="@={area.objectType}" />
+
+                <eu.michaelvogt.ar.author.fragments.AreaEditCard
+                    android:id="@+id/areaEditUsageType"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:onClick="@{handler::handleClick}"
+
+                    cardview:converter="@string/display_converter_from_selection"
+                    cardview:layout_constraintEnd_toEndOf="parent"
+                    cardview:layout_constraintHorizontal_bias="0.0"
+                    cardview:layout_constraintStart_toStartOf="parent"
+                    cardview:layout_constraintTop_toBottomOf="@+id/areaEditObjectType"
+                    cardview:title="Usage Type"
+                    cardview:values="@={area.usageType}" />
+
+                <eu.michaelvogt.ar.author.fragments.AreaEditCard
+                    android:id="@+id/areaEditGroup"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:onClick="@{handler::handleClick}"
+
+                    cardview:converter="@string/display_converter_from_selection"
+                    cardview:layout_constraintEnd_toEndOf="parent"
+                    cardview:layout_constraintHorizontal_bias="0.0"
+                    cardview:layout_constraintStart_toStartOf="parent"
+                    cardview:layout_constraintTop_toBottomOf="@+id/areaEditUsageType"
+                    cardview:title="Group"
+                    cardview:values="@={area.group}" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -48,7 +48,7 @@ import eu.michaelvogt.ar.author.data.EventDetail;
 import eu.michaelvogt.ar.author.data.EventDetailKt;
 import eu.michaelvogt.ar.author.data.Slide;
 import eu.michaelvogt.ar.author.fragments.ImagePreviewFragment;
-import eu.michaelvogt.ar.author.fragments.adapters.Slider;
+import eu.michaelvogt.ar.author.fragments.support.Slider;
 import eu.michaelvogt.ar.author.utils.ToggleSlideTextHandler;
 
 public class AuthorAnchorNode extends AnchorNode {
@@ -81,8 +81,6 @@ public class AuthorAnchorNode extends AnchorNode {
     if (hitTestResult.getNode() == null) {
       return false;
     }
-
-    Log.i(TAG, "Touch Event catched from " + hitTestResult.getNode().getName());
 
     if (motionEvent.getActionMasked() == MotionEvent.ACTION_UP) {
       Node node = hitTestResult.getNode();
@@ -151,14 +149,15 @@ public class AuthorAnchorNode extends AnchorNode {
         .thenAccept(areaVisual -> {
           Node background = findInHierarchy(node -> node.getName().equals(AreaVisualKt.BACKGROUNDAREATITLE));
 
-          AreaNodeBuilder.builder(context, areaVisual)
-              .setScene(getScene())
-              .build()
-              .thenAccept(node -> node.setParent(background))
-              .exceptionally(throwable -> {
-                Log.e(TAG, "Unable to zoom area.", throwable);
-                return null;
-              });
+          ((FragmentActivity) context).runOnUiThread(() ->
+              AreaNodeBuilder.builder(context, areaVisual)
+                  .setScene(getScene())
+                  .build()
+                  .thenAccept(node -> node.setParent(background))
+                  .exceptionally(throwable -> {
+                    Log.e(TAG, "Unable to zoom area.", throwable);
+                    return null;
+                  }));
         })
         .exceptionally(throwable -> {
           Log.e(TAG, "Unable to fetch area visual " + areaId, throwable);

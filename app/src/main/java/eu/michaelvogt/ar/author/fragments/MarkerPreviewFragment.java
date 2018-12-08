@@ -57,7 +57,7 @@ public class MarkerPreviewFragment extends PreviewFragment {
     arFragment.setOnTapArPlaneListener(this::onTapArPlane);
 
     view.findViewById(R.id.listmarker_fab).setOnClickListener(
-        Navigation.createNavigateOnClickListener(R.id.edit_fragment)
+        Navigation.createNavigateOnClickListener(R.id.marker_list_fragment)
     );
   }
 
@@ -70,7 +70,9 @@ public class MarkerPreviewFragment extends PreviewFragment {
         Anchor anchor = hitResult.createAnchor();
 
         this.viewModel.getMarker(viewModel.getCurrentMarkerId())
-            .thenAccept(marker -> buildMarkerScene(anchor, marker, marker.getSize().x, marker.getSize().z))
+            .thenAccept(marker ->
+                getActivity().runOnUiThread(() -> buildMarkerScene(anchor, marker, marker.getSize().x, marker.getSize().z))
+            )
             .exceptionally(throwable -> {
               Log.e(TAG, "Unable to fetch marker " + viewModel.getCurrentMarkerId(), throwable);
               return null;

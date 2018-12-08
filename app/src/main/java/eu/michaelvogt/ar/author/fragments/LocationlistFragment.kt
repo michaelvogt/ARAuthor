@@ -40,8 +40,6 @@ import kotlinx.android.synthetic.main.fragment_locationlist.*
  *
  * Tab on a list item navigates to the web view, which loads the content of the URL stored in
  * [Location.introHtmlPath].
- *
- * Events
  */
 class LocationlistFragment : AppFragment(), CardMenuListener {
     private lateinit var adapter: LocationListAdapter
@@ -67,7 +65,7 @@ class LocationlistFragment : AppFragment(), CardMenuListener {
         NavigationUI.setupWithNavController(top_toolbar, navController, appBarConfiguration)
 
         setupToolbar(R.menu.toolbar_locationlist_menu, Toolbar.OnMenuItemClickListener {
-            InfoPrompt.showLocationInfo(this,
+            InfoPrompt.showOverlayInfo(this,
                     R.id.toolbar_location_info, R.string.location_info_primary, R.string.location_info_secondary)
         })
     }

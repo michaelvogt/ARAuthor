@@ -19,8 +19,10 @@
 package eu.michaelvogt.ar.author.data
 
 import android.util.Log
+import eu.michaelvogt.ar.author.data.tuples.ListMarker
 import eu.michaelvogt.ar.author.utils.NEW_CURRENT_LOCATION
 import eu.michaelvogt.ar.author.utils.NEW_CURRENT_MARKER
+import org.jetbrains.anko.doAsyncResult
 import java.util.*
 import java.util.concurrent.CompletableFuture
 
@@ -30,6 +32,7 @@ class AppRepository internal constructor(db: AppDatabase?) {
     private val areaDao: AreaDao
 
     private val markerAreaDao: MarkerAreaDao
+    private val titleGroupDao: TitleGroupDao
 
     private val visualDetailDao: VisualDetailDao
     private val eventDetailDao: EventDetailDao
@@ -42,6 +45,7 @@ class AppRepository internal constructor(db: AppDatabase?) {
         markerDao = db.markerDao()
         areaDao = db.areaDao()
         markerAreaDao = db.markerAreaDao()
+        titleGroupDao = db.titleGroupDao()
 
         visualDetailDao = db.visualDetailDao()
         eventDetailDao = db.eventDetailDao()
@@ -75,14 +79,32 @@ class AppRepository internal constructor(db: AppDatabase?) {
     }
 
 
-    fun delete(location: Location): CompletableFuture<Unit>? {
+    fun delete(location: Location): CompletableFuture<Unit> {
         return CompletableFuture.supplyAsync { locationDao.delete(location) }
     }
 
-    fun delete(marker: Marker): CompletableFuture<Unit>? {
+    fun delete(marker: Marker): CompletableFuture<Unit> {
         return CompletableFuture.supplyAsync { markerDao.delete(marker) }
     }
 
+    fun delete(area: Area): CompletableFuture<Unit> {
+        return CompletableFuture.supplyAsync { areaDao.delete(area) }
+    }
+
+    fun delete(areaVisual: AreaVisual): CompletableFuture<Unit> {
+        return CompletableFuture.supplyAsync {
+            markerAreaDao.deleteAreaRelations(areaVisual.area.uId)
+            areaDao.delete(areaVisual.area)
+
+            areaVisual.events.forEach(action = { index, eventDetail ->
+                eventDetailDao.delete(eventDetail)
+            })
+
+            areaVisual.details.forEach { index, visualDetail ->
+                visualDetailDao.delete(visualDetail)
+            }
+        }
+    }
 
     // Location
     fun getLocation(uId: Long): CompletableFuture<Location> {
@@ -91,6 +113,10 @@ class AppRepository internal constructor(db: AppDatabase?) {
 
     fun allLocations(): CompletableFuture<List<Location>> {
         return CompletableFuture.supplyAsync { locationDao.getAll() }
+    }
+
+    fun getLocationNames(): CompletableFuture<List<Location>> {
+        return CompletableFuture.supplyAsync { locationDao.getNames() }
     }
 
 
@@ -103,11 +129,53 @@ class AppRepository internal constructor(db: AppDatabase?) {
         return CompletableFuture.supplyAsync { markerDao.getAll() }
     }
 
-    fun getMarkersForLocation(locationId: Long, withTitles: Array<Int>): CompletableFuture<List<Marker>> {
+    fun getMarkersForLocation(locationId: Long): CompletableFuture<List<Marker>> {
         return when (locationId) {
             NEW_CURRENT_LOCATION -> CompletableFuture.supplyAsync { markerDao.getAll() }
-            else -> CompletableFuture.supplyAsync { markerDao.findMarkersForLocation(locationId, withTitles) }
+            else -> CompletableFuture.supplyAsync { markerDao.findMarkersForLocation(locationId) }
         }
+    }
+
+    fun getMarkerGroupsForLocation(locationId: Long): List<ListMarker> {
+        var listMarkers: List<ListMarker> = emptyList()
+
+        val groups = CompletableFuture<List<ListMarker>>().doAsyncResult { titleGroupDao.getAll() }.get()
+
+        // Get the markers added to groups
+        groups.forEach {
+            val markers = CompletableFuture<List<ListMarker>>().doAsyncResult {
+                when (locationId) {
+                    NEW_CURRENT_LOCATION -> markerDao.getAllForGroup(it.uId)
+                    else -> markerDao.getGroupForLocation(locationId, it.uId)
+                }
+            }.get()
+
+            if (markers.isNotEmpty()) {
+                listMarkers += ListMarker(0L, it.name, isTitle = true)
+                listMarkers += markers
+            }
+        }
+
+        // Get the markers not added to a group
+        val markers = CompletableFuture<List<ListMarker>>().doAsyncResult {
+            when (locationId) {
+                NEW_CURRENT_LOCATION -> markerDao.getAllWithoutGroup()
+                else -> markerDao.getAllWithoutGroupForLocation(locationId)
+            }
+        }.get()
+
+        if (markers.isNotEmpty()) {
+            if (groups.isNotEmpty())
+                listMarkers += ListMarker(0L, "@string/repo_marker_name_no_group", isTitle = true)
+
+            listMarkers += markers
+        }
+
+        return listMarkers
+    }
+
+    fun getMarkerIdFromGroup(markerTitle: String, groupName: String): CompletableFuture<Long> {
+        return CompletableFuture.supplyAsync { markerDao.getIdFromGroup() }
     }
 
 
@@ -118,6 +186,10 @@ class AppRepository internal constructor(db: AppDatabase?) {
 
     internal fun getAreaWithTitle(title: String): CompletableFuture<Area> {
         return CompletableFuture.supplyAsync { areaDao.findAreaByTitle(title) }
+    }
+
+    fun allAreas(): CompletableFuture<List<Area>> {
+        return CompletableFuture.supplyAsync { areaDao.getAll() }
     }
 
     fun getAreasForMarker(markerId: Long, group: Array<Int> = GROUPS_ALL): CompletableFuture<List<Area>> {

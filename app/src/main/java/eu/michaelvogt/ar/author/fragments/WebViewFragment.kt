@@ -24,13 +24,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import eu.michaelvogt.ar.author.R
-import eu.michaelvogt.ar.author.data.AuthorViewModel
-import eu.michaelvogt.ar.author.data.MARKERS_AND_TITLES
 import eu.michaelvogt.ar.author.utils.AppWebViewClient
+import eu.michaelvogt.ar.author.utils.AppWebViewJs
 import eu.michaelvogt.ar.author.utils.FileUtils
 import kotlinx.android.synthetic.main.fragment_web_view.*
 
@@ -46,12 +44,15 @@ class WebViewFragment : AppFragment(), View.OnClickListener {
     fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProviders.of(activity!!).get(AuthorViewModel::class.java)
+        with(content_info) {
+            webViewClient = AppWebViewClient()
+            settings.builtInZoomControls = true
+            settings.displayZoomControls = false
+            settings.javaScriptCanOpenWindowsAutomatically = false
+            settings.javaScriptEnabled = true
 
-        content_info.webViewClient = AppWebViewClient()
-        content_info.settings.builtInZoomControls = true
-        content_info.settings.displayZoomControls = false
-        content_info.settings.javaScriptEnabled = true
+            addJavascriptInterface(AppWebViewJs(activity, navController, viewModel), "Android")
+        }
 
         NavigationUI.setupWithNavController(top_toolbar, navController)
 
@@ -72,7 +73,7 @@ class WebViewFragment : AppFragment(), View.OnClickListener {
 
     override
     fun onClick(view: View) {
-        Navigation.findNavController(view).navigate(R.id.markerPreviewFragment)
+        Navigation.findNavController(view).navigate(R.id.marker_preview_fragment)
     }
 
     private fun initLocationIntro() {
@@ -89,13 +90,12 @@ class WebViewFragment : AppFragment(), View.OnClickListener {
 
         // Due to the way the AR images database needs to be initialized, and the markers are
         // delivered asynchronously from the data database, the markers need to be cached beforehand
-        viewModel.getMarkersForLocation(locationId, MARKERS_AND_TITLES)
+        viewModel.getMarkersForLocation(locationId)
                 .thenAccept { locations -> activity!!.runOnUiThread { viewModel.markersCache = locations } }
                 .exceptionally { throwable ->
                     Log.e(TAG, "Unable to fetch markers for location $locationId", throwable)
                     null
                 }
-
     }
 
     companion object {

@@ -24,11 +24,14 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.FileProvider
 import eu.michaelvogt.ar.author.R
+import eu.michaelvogt.ar.author.data.Location
 import eu.michaelvogt.ar.author.data.Marker
 import eu.michaelvogt.ar.author.databinding.FragmentMarkerEditMarkerBinding
 import eu.michaelvogt.ar.author.utils.FileUtils
@@ -44,11 +47,14 @@ import java.util.*
 class MarkerEditFragmentMarker : AppFragment() {
     private lateinit var editMarker: Marker
     private lateinit var markerImage: ImageView
+    private lateinit var binder: FragmentMarkerEditMarkerBinding
+    private lateinit var capturePhotoPath: String
+    private lateinit var locationNames: List<Location>
 
     override
     fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                      savedInstanceState: Bundle?): View? {
-        val binder = FragmentMarkerEditMarkerBinding.inflate(inflater, container, false)
+        binder = FragmentMarkerEditMarkerBinding.inflate(inflater, container, false)
         binder.handler = this
         binder.marker = editMarker
         return binder.root
@@ -60,8 +66,19 @@ class MarkerEditFragmentMarker : AppFragment() {
 
         markerImage = view.findViewById(R.id.image_marker)
         if (editMarker.hasImage()) {
-            markerImage.setImageBitmap(ImageUtils.decodeSampledBitmapFromImagePath(
-                    editMarker.markerImagePath, 300, 300))
+            val imagePath = editMarker.markerImagePath
+
+            if (imagePath.isNotEmpty() && File(imagePath).exists()) {
+                val fullPath = FileUtils.getFullPuplicFolderPath(imagePath)
+                val bitmap = ImageUtils.decodeSampledBitmapFromImagePath(fullPath, 300, 300)
+                markerImage.setImageBitmap(bitmap)
+            } else {
+                markerImage.setImageResource(R.drawable.ic_launcher)
+            }
+        }
+
+        viewModel.getLocationNames().thenAccept {
+            locationNames = it
         }
     }
 
@@ -112,15 +129,16 @@ class MarkerEditFragmentMarker : AppFragment() {
         val storageDir = FileUtils.getFullPuplicFolderFile(path)
         val image = File.createTempFile(imageFileName, ".jpg", storageDir)
 
-        editMarker.markerImagePath = path + image.name
+        capturePhotoPath = path + image.name
         return image
     }
 
     override
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            markerImage.setImageBitmap(ImageUtils.decodeSampledBitmapFromImagePath(
-                    editMarker.markerImagePath, 100, 100))
+            val fullPath = FileUtils.getFullPuplicFolderPath(capturePhotoPath)
+            markerImage.setImageBitmap(ImageUtils.decodeSampledBitmapFromImagePath(fullPath, 100, 100))
+            editMarker.markerImagePath = capturePhotoPath
         } else if (requestCode == REQUEST_PICK_IMAGE && resultCode == RESULT_OK) {
             val selectedImage = data!!.data
             val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
@@ -146,12 +164,35 @@ class MarkerEditFragmentMarker : AppFragment() {
                     e.printStackTrace()
                 }
 
+                val fullPath = FileUtils.getFullPuplicFolderPath(photoPath)
                 markerImage.setImageBitmap(ImageUtils.decodeSampledBitmapFromImagePath(
-                        photoPath, 100, 100))
+                        fullPath, 100, 100))
 
                 editMarker.markerImagePath = photoPath
             }
         }
+        binder.invalidateAll()
+    }
+
+    fun onShowLocationPopup(view: View) {
+        val popup = PopupMenu(context!!, view)
+        locationNames.forEach { popup.menu.add(Menu.NONE, it.uId.toInt(), Menu.NONE, it.name) }
+
+        popup.setOnMenuItemClickListener {
+            binder.markerEditMenuLocation.text = it.title
+            true
+        }
+        popup.show()
+    }
+
+    fun getSelectLocation(): String {
+        return locationNames.find { it.uId == editMarker.locationId }?.name
+                ?: resources.getString(R.string.marker_edit_select_location)
+    }
+
+    fun setSelectLocation(selectLocation: String) {
+        editMarker.locationId = locationNames.find { it.name == selectLocation }
+                ?.uId ?: -1
     }
 
     companion object {

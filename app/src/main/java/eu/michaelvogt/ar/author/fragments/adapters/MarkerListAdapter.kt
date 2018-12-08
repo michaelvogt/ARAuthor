@@ -22,13 +22,13 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import eu.michaelvogt.ar.author.data.Marker
+import eu.michaelvogt.ar.author.data.tuples.ListMarker
 import eu.michaelvogt.ar.author.databinding.CardHeaderBinding
 import eu.michaelvogt.ar.author.databinding.CardMarkerBinding
 import eu.michaelvogt.ar.author.utils.ItemClickListener
 
 class MarkerListAdapter(context: Context?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var markers: List<Marker> = emptyList()
+    private var markers: List<ListMarker> = emptyList()
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
     private var listener: ItemClickListener? = null
@@ -37,7 +37,7 @@ class MarkerListAdapter(context: Context?) : RecyclerView.Adapter<RecyclerView.V
         this.listener = listener
     }
 
-    fun setMarkers(markers: List<Marker>) {
+    fun setMarkers(markers: List<ListMarker>) {
         this.markers = markers
         notifyDataSetChanged()
     }
@@ -65,7 +65,7 @@ class MarkerListAdapter(context: Context?) : RecyclerView.Adapter<RecyclerView.V
 
     override
     fun getItemViewType(position: Int): Int {
-        return if (markers[position].isTitle()) TYPE_HEADER else TYPE_ITEM
+        return if (markers[position].isTitle == true) TYPE_HEADER else TYPE_ITEM
     }
 
     override
@@ -79,7 +79,7 @@ class MarkerListAdapter(context: Context?) : RecyclerView.Adapter<RecyclerView.V
                 if (listener != null) {
                     val position = adapterPosition
                     if (position != RecyclerView.NO_POSITION) {
-                        val uId = markers[position].uId
+                        val uId = markers[position].markerId
                         listener!!.onItemClicked(uId)
                     }
                 }

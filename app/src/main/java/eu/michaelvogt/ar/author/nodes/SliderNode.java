@@ -34,7 +34,7 @@ import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.AreaVisual;
 import eu.michaelvogt.ar.author.data.VisualDetail;
 import eu.michaelvogt.ar.author.data.VisualDetailKt;
-import eu.michaelvogt.ar.author.fragments.adapters.Slider;
+import eu.michaelvogt.ar.author.fragments.support.Slider;
 import eu.michaelvogt.ar.author.utils.SlideCallback;
 import eu.michaelvogt.ar.author.utils.ToggleSlideTextHandler;
 

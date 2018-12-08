@@ -82,7 +82,7 @@ public class ImagePreviewFragment extends PreviewFragment {
         Anchor anchor = image.createAnchor(image.getCenterPose());
         viewModel.getMarker(Integer.parseInt(image.getName()))
             .thenAccept(marker ->
-                buildMarkerScene(anchor, marker, image.getExtentX(), image.getExtentZ()))
+                getActivity().runOnUiThread(() -> buildMarkerScene(anchor, marker, image.getExtentX(), image.getExtentZ())))
             .exceptionally(throwable -> {
               Log.e(TAG, "Unable to fetch marker " + image.getName(), throwable);
               return null;

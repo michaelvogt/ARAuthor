@@ -132,11 +132,9 @@ class AreaVisual {
         get() = area.scale
 
     var details: SparseArray<VisualDetail>
-        get() = details.clone()
         private set
 
     var events: SparseArray<EventDetail>
-        get() = events.clone()
         private set
 
     fun hasDetail(type: Int): Boolean = details.indexOfKey(type) >= 0

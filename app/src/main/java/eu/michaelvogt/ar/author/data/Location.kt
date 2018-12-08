@@ -32,6 +32,9 @@ class Location(
 
         var description: String?,
 
+        @field:ColumnInfo(name = "db_path")
+        var dbPath: String?,
+
         @field:ColumnInfo(name = "thumb_path")
         var thumbPath: String?,
 

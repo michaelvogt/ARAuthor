@@ -9,6 +9,7 @@ import com.google.android.material.textfield.TextInputEditText
 import eu.michaelvogt.ar.author.EspressoMatchers.nthChildOf
 import eu.michaelvogt.ar.author.fragments.*
 import org.hamcrest.CoreMatchers
+import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.Matcher
 
 /**
@@ -23,6 +24,9 @@ class TestCase {
 
     fun inMarkerList(action: MarkerListScreen.() -> Actions) = MarkerListScreen().action()
     fun inMarkerEdit(action: MarkerEditScreen.() -> Actions) = MarkerEditScreen().action()
+
+    fun inAreaList(action: AreaListScreen.() -> Actions) = AreaListScreen().action()
+    fun inAreaEdit(action: AreaEditScreen.() -> Actions) = AreaEditScreen().action()
 }
 
 fun testcase(action: TestCase.() -> Actions) {
@@ -30,6 +34,7 @@ fun testcase(action: TestCase.() -> Actions) {
 }
 
 internal fun idMatcher(@IdRes resId: Int) = { ViewMatchers.withId(resId) }
+internal fun idMatcher(@IdRes resId: Int, matcher: () -> Matcher<View>) = { allOf(ViewMatchers.withId(resId), matcher()) }
 internal fun indexMatcher(@IdRes resId: Int, index: Int) = { nthChildOf(withId(resId), index) }
 internal fun textMatcher(text: String) = { ViewMatchers.withText(text) }
 internal fun editMatcher(@IdRes inputLayoutId: Int) =

@@ -1,0 +1,4 @@
+
+function openArView() {
+    Android.openArView()
+}

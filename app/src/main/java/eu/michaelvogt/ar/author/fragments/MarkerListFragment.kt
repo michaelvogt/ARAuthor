@@ -19,14 +19,12 @@
 package eu.michaelvogt.ar.author.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.ui.NavigationUI
 import eu.michaelvogt.ar.author.R
-import eu.michaelvogt.ar.author.data.MARKERS_AND_TITLES
 import eu.michaelvogt.ar.author.databinding.FragmentMarkerlistBinding
 import eu.michaelvogt.ar.author.fragments.adapters.MarkerListAdapter
 import eu.michaelvogt.ar.author.utils.InfoPrompt
@@ -64,24 +62,20 @@ class MarkerListFragment : AppFragment(), ItemClickListener {
         NavigationUI.setupWithNavController(top_toolbar, navController)
 
         setupToolbar(R.menu.toolbar_markerlist_menu, Toolbar.OnMenuItemClickListener {
-            InfoPrompt.showLocationInfo(this, R.id.toolbar_marker_info,
+            InfoPrompt.showOverlayInfo(this, R.id.toolbar_marker_info,
                     R.string.marker_info_primary, R.string.marker_info_secondary)
         })
 
         val adapter = MarkerListAdapter(context)
         binder.markerList.adapter = adapter
 
-        viewModel.getMarkersForLocation(locationId, MARKERS_AND_TITLES)
-                .thenAccept { markers -> activity!!.runOnUiThread { adapter.setMarkers(markers) } }
-                .exceptionally { throwable ->
-                    Log.e(TAG, "Unable to fetch markers for location $locationId", throwable)
-                    null
-                }
-
+        val markers = viewModel.getMarkerGroupsForLocation(locationId)
+        adapter.setMarkers(markers)
         adapter.setItemClickListener(this)
     }
 
-    override fun onResume() {
+    override
+    fun onResume() {
         super.onResume()
 
         setupBottomNav(R.menu.actionbar_markerlist_menu, Toolbar.OnMenuItemClickListener {
@@ -104,7 +98,7 @@ class MarkerListFragment : AppFragment(), ItemClickListener {
     override
     fun onItemClicked(uId: Long) {
         viewModel.currentMarkerId = uId
-        navController.navigate(R.id.action_edit_marker)
+        navController.navigate(MarkerListFragmentDirections.actionEditMarker())
     }
 
     companion object {

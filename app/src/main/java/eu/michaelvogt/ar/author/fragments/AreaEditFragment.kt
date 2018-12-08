@@ -18,34 +18,43 @@
 
 package eu.michaelvogt.ar.author.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Switch
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.Navigation
+import androidx.appcompat.widget.Toolbar
+import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintSet
+import androidx.navigation.ui.NavigationUI
+import androidx.transition.Slide
+import androidx.transition.Transition
+import androidx.transition.TransitionListenerAdapter
+import androidx.transition.TransitionManager
 import eu.michaelvogt.ar.author.R
-import eu.michaelvogt.ar.author.data.Area
 import eu.michaelvogt.ar.author.data.AreaVisual
-import eu.michaelvogt.ar.author.data.AuthorViewModel
 import eu.michaelvogt.ar.author.databinding.FragmentAreaEditBinding
+import eu.michaelvogt.ar.author.fragments.support.AreaCardEditHandler
+import kotlinx.android.synthetic.main.card_area_edit.view.*
+import kotlinx.android.synthetic.main.fragment_area_edit.*
 
-class AreaEditFragment : Fragment() {
+class AreaEditFragment : AppFragment(), AreaCardEditHandler {
     private lateinit var binding: FragmentAreaEditBinding
 
     private lateinit var useTranslucentSwitch: Switch
-    private lateinit var viewModel: AuthorViewModel
     private lateinit var areaVisual: AreaVisual
 
-    // Temporary objects to hold user edits before button save is pressed
-    private lateinit var editArea: Area
+    private var openedId: Int = 0
+    private lateinit var constraintClosed: ConstraintSet
+    private lateinit var constraintOpened: ConstraintSet
 
     override
     fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        setHasOptionsMenu(true)
-
         binding = FragmentAreaEditBinding.inflate(inflater, container, false)
+        binding.handler = this
         return binding.root
     }
 
@@ -53,64 +62,105 @@ class AreaEditFragment : Fragment() {
     fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProviders.of(activity!!).get(AuthorViewModel::class.java)
-
         val areaId = viewModel.currentAreaId
         viewModel.getAreaVisual(areaId)
-                .thenAccept { areaVisual -> this.activity!!.runOnUiThread { finishSetup(view, areaVisual) } }
+                .thenAccept { areaVisual ->
+                    this.activity!!.runOnUiThread {
+                        this.areaVisual = areaVisual
+                        binding.area = areaVisual.area
+                        binding.notifyChange()
+                    }
+                }
                 .exceptionally { throwable ->
                     Log.e(TAG, "Unable to create area and set data.", throwable)
                     null
                 }
+
+        constraintClosed = ConstraintSet()
+        constraintClosed.clone(context, R.layout.card_area_edit_close)
+
+        constraintOpened = ConstraintSet()
+
+        NavigationUI.setupWithNavController(top_areaedit_toolbar, navController)
     }
 
     override
-    fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater!!.inflate(R.menu.actionbar_areaedit_menu, menu)
+    fun onResume() {
+        super.onResume()
+
+        setupFab(android.R.drawable.ic_menu_save, View.OnClickListener {
+            // TODO: Save complete AreaVisual
+            if (areaVisual.area.uId != 0L) {
+                viewModel.updateArea(areaVisual.area).thenAccept {
+                    activity!!.runOnUiThread { navController.popBackStack() }
+                }
+            } else {
+                viewModel.insertArea(areaVisual.area).thenAccept {
+                    activity!!.runOnUiThread { navController.popBackStack() }
+                }
+            }
+        })
+
+        setupBottomNav(R.menu.actionbar_areaedit_menu, Toolbar.OnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.actionbar_areaedit_delete ->
+                    viewModel.deleteAreaVisual(areaVisual).thenAccept {
+                        activity!!.runOnUiThread { navController.popBackStack() }
+                    }.exceptionally { throwable ->
+                        Log.e(TAG, "Could not delete Area Visual ${areaVisual.title}", throwable)
+                        null
+                    }
+            }
+            true
+        })
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return when (item?.itemId) {
-            R.id.actionbar_areaedit_delete -> handleDelete()
-            R.id.actionbar_areaedit_save -> handleSave()
-            else -> super.onOptionsItemSelected(item)
+    override
+    fun handleClick(view: View) {
+        Log.i(TAG, "click at ${view.resources.getResourceEntryName(view.id)}")
+
+        // TODO: Find the correct transition.
+        // With Auto the text field content isn't displayed
+        val transition = Slide()
+        transition.duration = 300
+        transition.addListener(object : TransitionListenerAdapter() {
+            override fun onTransitionEnd(transition: Transition) {
+                // TODO: Find out why the keyboard isn't opened when focusing the field
+                if (openedId != -1) view.area_card_x.requestFocus()
+            }
+        })
+
+        TransitionManager.beginDelayedTransition(view as ViewGroup, transition)
+
+        if (openedId > 0) {
+            val openView = activity?.findViewById<CardView>(openedId)
+            constraintClosed.applyTo(openView?.area_card_edit_layout)
+            view.area_card_scene.pause()
         }
-    }
 
-    private fun finishSetup(view: View, areaVisual: AreaVisual) {
-        this.areaVisual = areaVisual
-        this.editArea = Area(areaVisual.area)
+        if (openedId == view.id) {
+            openedId = -1
+            hideKeyboard()
+        } else {
+            constraintOpened.clone(context, R.layout.card_area_edit_open)
+            (view as AreaEditCard).adaptForConverter(constraintOpened)
 
-//        useTranslucentSwitch = view.findViewById(R.id.area_edit_display_translucent)
-//        useTranslucentSwitch.isChecked = arguments!!.getInt("area_edit_translucency") == 1
-
-        binding.area = editArea
-        binding.notifyChange()
+            constraintOpened.applyTo(view.area_card_edit_layout)
+            view.area_card_scene.resume()
+            view.setAreaPreviewModel()
+            openedId = view.id
+        }
     }
 
     private fun handleTest(view: View) {
         val bundle = Bundle()
         bundle.putInt("area_edit_translucency", if (useTranslucentSwitch.isChecked) 1 else 0)
-        Navigation.findNavController(view).navigate(R.id.markerPreviewFragment, bundle)
+        navController.navigate(R.id.marker_preview_fragment, bundle)
     }
 
-    fun handleSave(): Boolean {
-        val area = areaVisual.area
-        area.position = editArea.position
-        area.rotation = editArea.rotation
-        area.scale = editArea.scale
-        viewModel.updateArea(area)
-
-        val bundle = Bundle()
-        bundle.putInt("area_edit_translucency", if (useTranslucentSwitch.isChecked) 1 else 0)
-        Navigation.findNavController(view!!).navigate(R.id.action_edit_marker, bundle)
-
-        return true
-    }
-
-    private fun handleDelete(): Boolean {
-        // TODO: Implement
-        return true
+    private fun hideKeyboard() {
+        val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 
     companion object {

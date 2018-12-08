@@ -19,14 +19,36 @@
 package eu.michaelvogt.ar.author.utils
 
 import android.util.Log
+import android.webkit.JavascriptInterface
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
+import androidx.fragment.app.FragmentActivity
+import androidx.navigation.NavController
 import androidx.webkit.WebResourceErrorCompat
 import androidx.webkit.WebViewClientCompat
+import eu.michaelvogt.ar.author.R
+import eu.michaelvogt.ar.author.data.AuthorViewModel
 
 class AppWebViewClient : WebViewClientCompat() {
     override fun onReceivedError(view: WebView, request: WebResourceRequest, error: WebResourceErrorCompat) {
         Log.e("AppWebViewClient", "Error received for ${request.url}: error: ${error.description}")
         view.loadUrl("file:///android_asset/errorpage.html")
+    }
+}
+
+class AppWebViewJs(
+        private val activity: FragmentActivity?,
+        private val navController: NavController,
+        private val viewModel: AuthorViewModel) {
+
+    @JavascriptInterface
+    fun openArView() {
+        viewModel.getMarkerIdFromGroup("看板", "宗岡家").thenAccept {
+            viewModel.currentMarkerId = it
+            activity?.runOnUiThread { navController.navigate(R.id.marker_preview_fragment) }
+        }.exceptionally {
+            Log.e("AppViewJs", "Marker with title 看板 from group name 宗岡家 not found", it)
+            null
+        }
     }
 }

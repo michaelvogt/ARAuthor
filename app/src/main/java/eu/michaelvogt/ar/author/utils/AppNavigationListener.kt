@@ -24,19 +24,21 @@ import android.os.Bundle
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import eu.michaelvogt.ar.author.R
+import eu.michaelvogt.ar.author.data.AuthorViewModel
 import kotlinx.android.synthetic.main.activity_author.*
 
 class AppNavigationListener(val activity: AppCompatActivity, private val navController: NavController?)
-    : NavController.OnNavigatedListener, View.OnClickListener {
+    : NavController.OnDestinationChangedListener, View.OnClickListener {
 
     /**
      * Setup application UI based on fragment navigated to
      */
     override
-    fun onNavigated(controller: NavController, destination: NavDestination) {
+    fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
         // Make sure the bottom app bar is scrolled up
         activity.bottom_nav.animate().translationY(0f).interpolator = DecelerateInterpolator(2f)
         activity.bottom_nav.menu.clear()
@@ -46,16 +48,27 @@ class AppNavigationListener(val activity: AppCompatActivity, private val navCont
      * Handle selections from the navigation menu, shown on the left side of the bottom app bar
      */
     override
-    fun onClick(v: View?) {
+    fun onClick(view: View?) {
         val bottomSheetNav = BottomSheetNav()
+        val viewModel = ViewModelProviders.of(activity).get(AuthorViewModel::class.java)
+
         bottomSheetNav.show(activity.supportFragmentManager, bottomSheetNav.tag)
         bottomSheetNav.setMenuSelectedListener(object : MenuSelectedListener {
             override fun onMenuSelected(id: Int) {
                 when (id) {
                     R.id.actionbar_show_intro -> navController?.navigate(R.id.intro_fragment)
-                    R.id.location_list_fragment -> navController?.navigate(R.id.location_list_fragment)
-                    R.id.marker_list_fragment -> navController?.navigate(R.id.marker_list_fragment)
-                    R.id.area_list_fragment -> navController?.navigate(R.id.area_list_fragment)
+                    R.id.location_list_fragment -> {
+                        viewModel.currentLocationId = NEW_CURRENT_LOCATION
+                        navController?.navigate(R.id.location_list_fragment)
+                    }
+                    R.id.marker_list_fragment -> {
+                        viewModel.currentMarkerId = NEW_CURRENT_MARKER
+                        navController?.navigate(R.id.marker_list_fragment)
+                    }
+                    R.id.area_list_fragment -> {
+                        viewModel.currentAreaId = NEW_CURRENT_AREA
+                        navController?.navigate(R.id.area_list_fragment)
+                    }
                     R.id.actionbar_preferences -> navController?.navigate(R.id.preferences_fragment)
                     R.id.actionbar_feedback -> {
                         val intent = Intent(Intent.ACTION_SENDTO)

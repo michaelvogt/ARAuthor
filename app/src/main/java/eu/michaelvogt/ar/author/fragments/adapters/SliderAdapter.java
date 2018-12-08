@@ -48,7 +48,7 @@ public class SliderAdapter extends PagerAdapter {
   private NodeCallback slideCallback;
   private final Context context;
 
-  SliderAdapter(Context context, List<Slide> slides, NodeCallback slideCallback) {
+  public SliderAdapter(Context context, List<Slide> slides, NodeCallback slideCallback) {
     this.context = context;
     this.slides = slides;
     this.slideCallback = slideCallback;

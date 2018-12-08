@@ -74,7 +74,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:enabled="false"
                 android:onClick="@{handler::onImportClick}"
                 android:text="@string/marker_edit_button_import"
                 app:layout_constraintEnd_toStartOf="@+id/button_crop"
@@ -96,16 +95,38 @@
                 app:layout_constraintStart_toEndOf="@+id/button_import"
                 app:layout_constraintTop_toBottomOf="@+id/image_marker" />
 
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="300dp" />
+
+            <Button
+                android:id="@+id/marker_edit_menu_location"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:onClick="@{handler::onShowLocationPopup}"
+                android:text="@={handler.selectLocation}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guideline" />
+
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/edit_title"
+                android:id="@+id/marker_edit_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button_import">
+                app:layout_constraintTop_toBottomOf="@+id/marker_edit_menu_location">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -115,7 +136,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/edit_location"
+                android:id="@+id/marker_edit_place"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -123,17 +144,17 @@
                 android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_title">
+                app:layout_constraintTop_toBottomOf="@+id/marker_edit_title">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/marker_edit_location"
-                    android:text="@={marker.location}" />
+                    android:hint="@string/marker_edit_place"
+                    android:text="@={marker.place}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/edit_width"
+                android:id="@+id/marker_edit_width"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -141,7 +162,7 @@
                 android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_location">
+                app:layout_constraintTop_toBottomOf="@+id/marker_edit_place">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -150,9 +171,8 @@
                     android:text="@={ViewConverters.floatToString(marker.widthInM)}" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!--TODO: Make 2-way binding work-->
             <CheckBox
-                android:id="@+id/edit_show_background"
+                android:id="@+id/marker_edit_show_background"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_marginStart="8dp"
@@ -162,7 +182,7 @@
                 android:text="@string/marker_edit_check_vistual_background"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_width" />
+                app:layout_constraintTop_toBottomOf="@+id/marker_edit_width" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

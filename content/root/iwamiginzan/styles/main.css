@@ -1,0 +1,13 @@
+img#header {
+  width: 100%;
+}
+
+button.start_ar {
+  width: 100%;
+  max-width: 496px;
+  padding: 5px;
+}
+
+button.start_ar img {
+  width: inherit;
+}

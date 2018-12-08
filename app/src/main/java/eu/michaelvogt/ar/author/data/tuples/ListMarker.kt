@@ -16,7 +16,17 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author.data.tuples;
+package eu.michaelvogt.ar.author.data.tuples
 
-public class ListMarker {
-}
+/**
+ * Database select result type for [Marker] list layout
+ *
+ * In the list in the layout, Markers of the same place are grouped, which is displayed by a header
+ * view. This type is used for these list headers and Marker views.
+ */
+data class ListMarker(
+        val markerId: Long,
+        val title: String,
+        val imagePath: String = "",
+        val intro: String? = "",
+        val isTitle: Boolean? = false)

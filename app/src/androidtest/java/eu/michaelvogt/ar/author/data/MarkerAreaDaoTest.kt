@@ -135,8 +135,8 @@ class MarkerAreaDaoTest : DaoTest() {
     private fun insertSampleItems(): List<Long> {
         val locationId = locationDao.insert(TestUtil.location1())
 
-        val markerId1 = markerDao.insert(TestUtil.marker(locationId, "entrance"))
-        val markerId2 = markerDao.insert(TestUtil.marker(locationId, "exit"))
+        val markerId1 = markerDao.insert(TestUtil.marker(locationId, null, "entrance"))
+        val markerId2 = markerDao.insert(TestUtil.marker(locationId, null, "exit"))
 
         val areaId1 = areaDao.insert(TestUtil.area1("floor plan"))
         val areaId2 = areaDao.insert(TestUtil.area1("explanation", group = GROUP_START))

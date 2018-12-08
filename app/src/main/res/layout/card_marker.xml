@@ -23,7 +23,7 @@
 
         <variable
             name="marker"
-            type="eu.michaelvogt.ar.author.data.Marker" />
+            type="eu.michaelvogt.ar.author.data.tuples.ListMarker" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -31,9 +31,10 @@
         android:id="@+id/marker_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
         android:layout_marginTop="3dp"
+        android:layout_marginEnd="3dp"
         android:layout_marginBottom="3dp"
-        card_view:cardBackgroundColor="@android:color/background_light"
         card_view:cardCornerRadius="2dp"
         card_view:cardElevation="2dp"
         card_view:cardUseCompatPadding="false">
@@ -49,10 +50,10 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
+                android:contentDescription="@string/marker_image_back_desc"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintStart_toStartOf="parent"
                 card_view:layout_constraintTop_toTopOf="parent"
-                android:contentDescription="@string/marker_image_back_desc"
                 card_view:srcCompat="@android:drawable/picture_frame" />
 
             <ImageView
@@ -66,7 +67,7 @@
                 android:layout_marginBottom="26dp"
                 android:contentDescription="@string/marker_image_desc"
                 android:scaleType="centerCrop"
-                card_view:imageUrl="@{marker.markerImagePath}"
+                card_view:imageUrl="@{marker.imagePath}"
                 card_view:layout_constraintBottom_toBottomOf="@+id/marker_back"
                 card_view:layout_constraintEnd_toEndOf="@+id/marker_back"
                 card_view:layout_constraintStart_toStartOf="@+id/marker_back"

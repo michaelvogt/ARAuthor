@@ -44,7 +44,7 @@
         app:layout_constraintTop_toBottomOf="@+id/top_toolbar">
 
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/editmarker_tabs"
+            android:id="@+id/editmarker_tabbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_scrollFlags="scroll|enterAlways"
@@ -52,27 +52,24 @@
             app:tabMode="fixed">
 
             <com.google.android.material.tabs.TabItem
+                android:id="@+id/editmarker_tab_marker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/marker_edit_tab_marker" />
 
             <com.google.android.material.tabs.TabItem
+                android:id="@+id/editmarker_tab_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/marker_edit_tab_info" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/editmarker_tab_area"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/marker_edit_tab_area" />
 
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/marker_edit_tab_info" />
         </com.google.android.material.tabs.TabLayout>
     </androidx.viewpager.widget.ViewPager>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

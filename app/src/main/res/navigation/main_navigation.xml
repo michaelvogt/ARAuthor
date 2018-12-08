@@ -38,8 +38,7 @@
     <fragment
         android:id="@+id/edit_fragment"
         android:name="eu.michaelvogt.ar.author.fragments.MarkerEditFragment"
-        android:label="@string/navigation_marker_edit_label"
-        tools:layout="@layout/fragment_marker_edit">
+        android:label="@string/navigation_marker_edit_label">
         <action
             android:id="@+id/action_to_crop_marker_image"
             app:destination="@id/cropFragment" />
@@ -49,12 +48,9 @@
     </fragment>
     <fragment
         android:id="@+id/area_list_fragment"
-        android:name="eu.michaelvogt.ar.author.fragments.AreaEditFragment"
+        android:name="eu.michaelvogt.ar.author.fragments.AreaListFragment"
         android:label="@string/navigation_area_list_label"
-        tools:layout="@layout/fragment_area_edit">
-        <argument
-            android:name="area_edit_translucency"
-            android:defaultValue="1" />
+        tools:layout="@layout/fragment_area_list">
         <action
             android:id="@+id/action_to_areaEdit"
             app:destination="@id/area_edit_fragment" />
@@ -65,7 +61,7 @@
         android:label="@string/navigation_crop_image_label"
         tools:layout="@layout/fragment_crop" />
     <fragment
-        android:id="@+id/markerPreviewFragment"
+        android:id="@+id/marker_preview_fragment"
         android:name="eu.michaelvogt.ar.author.fragments.MarkerPreviewFragment"
         android:label="@string/navigation_marker_preview_label"
         tools:layout="@layout/fragment_markerpreview">

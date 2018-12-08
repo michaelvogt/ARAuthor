@@ -19,5 +19,6 @@
     <declare-styleable name="AreaEditCard">
         <attr name="title" format="string" />
         <attr name="values" format="string" />
+        <attr name="converter" format="string" />
     </declare-styleable>
 </resources>

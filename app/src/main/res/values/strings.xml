@@ -15,6 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 -->
+
 <resources>
     <string name="app_name">Tourist AR</string>
     <string name="app_intro">This app is a playground for Augmented Reality functionality around
@@ -87,9 +88,11 @@
     <string name="actionbar_marker_delete">Delete Marker</string>
 
     <string name="actionbar_markerlist_load_title">Load</string>
-    <string name="actionbar_markerlist_ar_title">Load</string>
+    <string name="actionbar_markerlist_ar_title">AR</string>
 
     <string name="menu_location_edit">Edit</string>
+
+    <string name="actionbar_area_delete">Delete Area</string>
 
     <!--Fragment labels-->
     <string name="navigation_splash_label">AR Author</string>
@@ -159,8 +162,9 @@
     <string name="marker_edit_button_import">import</string>
     <string name="marker_edit_button_capture">capture</string>
 
+    <string name="marker_edit_select_location">Select Location</string>
     <string name="marker_edit_title">Title</string>
-    <string name="marker_edit_location">Location</string>
+    <string name="marker_edit_place">Place</string>
     <string name="marker_edit_widthinm">Width in m</string>
     <string name="marker_edit_check_vistual_background">Show virtual background</string>
 
@@ -171,13 +175,36 @@
     <string name="marker_edit_area_Button_add">Add Area</string>
 
 
+    <!--Areas-->
+    <string name="area_info_primary">Area</string>
+    <string name="area_info_secondary">Content is displayed to the user through areas</string>
+    <string name="area_info_title">Info</string>
+    <string name="actionbar_arealist_load_title">Load</string>
+    <string name="actionbar_arealist_ar_title">AR</string>
     <string name="area_image">Marker Image</string>
     <string name="area_background_image_desc">Background for Area icon for selected Marker</string>
     <string name="area_image_desc">Area icon for selected Marker</string>
+    <string name="area_card_labelx">X</string>
+    <string name="area_card_labely">Y</string>
+    <string name="area_card_labelz">Z</string>
+    <string name="area_card_labelw">W</string>
+
+    <string name="area_card_accept_desc">Accept changes of Card</string>
+
+
     <string name="button_grab_desc">Grab AR content to device</string>
     <string name="button_image_desc">Show product images</string>
     <string name="button_video_desc">Play promo video</string>
     <string name="image_alternative_desc">Interactive image for use in AR scene</string>
+
+    <string name="repo_marker_name_no_group">Without Group</string>
+
+    <!--Error messages-->
+    <string name="marker_edit_error_select_location">Please select a Location</string>
+
+    <string name="display_converter_from_vector3">displayFromVector3</string>
+    <string name="display_converter_from_quaternion">displayFromQuaternion</string>
+    <string name="display_converter_from_selection">displayFromSelection</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

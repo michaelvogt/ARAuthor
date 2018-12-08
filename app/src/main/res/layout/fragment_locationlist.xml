@@ -30,7 +30,6 @@
         android:layout_height="match_parent"
         tools:context=".fragments.LocationlistFragment">
 
-
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/top_toolbar"
             android:layout_width="0dp"

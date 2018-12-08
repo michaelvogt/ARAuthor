@@ -6,7 +6,7 @@ import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetSequence
 
 object InfoPrompt {
-    fun showLocationInfo(fragment: Fragment, target: Int, title: Int, info: Int): Boolean {
+    fun showOverlayInfo(fragment: Fragment, target: Int, title: Int, info: Int): Boolean {
         MaterialTapTargetPrompt.Builder(fragment, R.style.MaterialTabTargetPromptTheme)
                 .setTarget(target)
                 .setPrimaryText(title)

@@ -17,10 +17,14 @@
 -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <item
-        android:id="@+id/actionbar_area_new"
-        android:icon="@android:drawable/ic_menu_add"
-        android:title="New"
+        android:id="@+id/actionbar_arealist_load"
+        android:icon="@android:drawable/ic_menu_upload"
+        android:title="@string/actionbar_arealist_load_title"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/actionbar_arealist_ar"
+        android:icon="@drawable/ic_ar_icon"
+        android:title="@string/actionbar_arealist_ar_title"
         app:showAsAction="ifRoom" />
 </menu>

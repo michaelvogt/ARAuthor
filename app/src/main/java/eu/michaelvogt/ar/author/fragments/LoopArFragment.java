@@ -33,6 +33,7 @@ import androidx.lifecycle.ViewModelProviders;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
 import eu.michaelvogt.ar.author.data.Marker;
 import eu.michaelvogt.ar.author.nodes.AuthorAnchorNode;
+import eu.michaelvogt.ar.author.utils.FileUtils;
 import eu.michaelvogt.ar.author.utils.ImageUtils;
 
 public class LoopArFragment extends ArFragment {
@@ -45,7 +46,6 @@ public class LoopArFragment extends ArFragment {
   String lightEstimation;
 
   Bitmap bitmap;
-  String location = "";
 
   @Override
   protected Config getSessionConfiguration(Session session) {
@@ -57,21 +57,17 @@ public class LoopArFragment extends ArFragment {
       if (markers != null) {
         for (Marker marker : markers) {
           try {
-            if (marker.isTitle()) {
-              location = marker.getTitle();
+            String path = FileUtils.getFullPuplicFolderPath(marker.getMarkerImagePath());
+            bitmap = ImageUtils.INSTANCE.decodeSampledBitmapFromImagePath(path, Marker.MIN_SIZE, Marker.MIN_SIZE);
+            if (bitmap != null) {
+              int index = marker.getWidthInM() <= 0
+                  ? imagedb.addImage(String.valueOf(marker.getUId()), bitmap)
+                  : imagedb.addImage(String.valueOf(marker.getUId()), bitmap, marker.getWidthInM());
+              Log.d(TAG, "marker - " + marker.getTitle() + "(" + index + ")" + " imported");
             } else {
-              bitmap = ImageUtils.INSTANCE.decodeSampledBitmapFromImagePath(
-                  marker.getMarkerImagePath(), Marker.MIN_SIZE, Marker.MIN_SIZE);
-              if (bitmap != null) {
-                int index = marker.getWidthInM() <= 0
-                    ? imagedb.addImage(String.valueOf(marker.getUId()), bitmap)
-                    : imagedb.addImage(String.valueOf(marker.getUId()), bitmap, marker.getWidthInM());
-                Log.d(TAG, "marker " + location + " - " + marker.getTitle() + "(" + index + ")" + " imported");
-              } else {
-                Log.d(TAG, "marker " + location + " - " + marker.getTitle() + " NOT imported");
-                Snackbar.make(getView(), "marker " + marker.getTitle() + " NOT imported",
-                    Snackbar.LENGTH_SHORT).show();
-              }
+              Log.d(TAG, "marker - " + marker.getTitle() + " NOT imported");
+              Snackbar.make(getView(), "marker " + marker.getTitle() + " NOT imported",
+                  Snackbar.LENGTH_SHORT).show();
             }
           } catch (Exception ex) {
             Log.e(TAG, "Something bad happened", ex);

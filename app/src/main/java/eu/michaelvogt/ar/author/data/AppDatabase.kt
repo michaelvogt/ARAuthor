@@ -29,7 +29,7 @@ import eu.michaelvogt.ar.author.data.utils.Converters
 import eu.michaelvogt.ar.author.data.utils.DatabaseInitializer
 
 @Database(entities = [Location::class, Marker::class, Area::class, MarkerArea::class,
-    VisualDetail::class, EventDetail::class, Slide::class], version = 9)
+    VisualDetail::class, EventDetail::class, Slide::class, TitleGroup::class], version = 14)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun locationDao(): LocationDao
@@ -37,6 +37,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun areaDao(): AreaDao
 
     abstract fun markerAreaDao(): MarkerAreaDao
+    abstract fun titleGroupDao(): TitleGroupDao
 
     abstract fun visualDetailDao(): VisualDetailDao
     abstract fun eventDetailDao(): EventDetailDao
@@ -50,6 +51,7 @@ abstract class AppDatabase : RoomDatabase() {
         private val areaDao: AreaDao = db.areaDao()
 
         private val markerAreaDao: MarkerAreaDao = db.markerAreaDao()
+        private val titleGroupDao: TitleGroupDao = db.titleGroupDao()
 
         private val visualDetailDao: VisualDetailDao = db.visualDetailDao()
         private val eventDetailDao: EventDetailDao = db.eventDetailDao()
@@ -66,8 +68,9 @@ abstract class AppDatabase : RoomDatabase() {
             areaDao.deleteAll()
             markerDao.deleteAll()
             locationDao.deleteAll()
+            titleGroupDao.deleteAll()
 
-            DatabaseInitializer.runner(locationDao, markerDao, areaDao, markerAreaDao,
+            DatabaseInitializer.runner(locationDao, markerDao, areaDao, markerAreaDao, titleGroupDao,
                     visualDetailDao, slideDao, eventDetailDao).run()
 
             return null

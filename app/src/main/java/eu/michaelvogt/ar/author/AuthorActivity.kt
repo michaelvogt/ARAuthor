@@ -52,7 +52,7 @@ class AuthorActivity : AppCompatActivity() {
         AppDatabase.PopulateDbAsync(database!!) { viewModel.locationLoadTrigger.setValue(0) }.execute()
 
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
-        navController.addOnNavigatedListener(AppNavigationListener(this, null))
+        navController.addOnDestinationChangedListener(AppNavigationListener(this, null))
 
         // Handler for navigation menu selections
         bottom_nav.setNavigationOnClickListener(AppNavigationListener(this, navController))
@@ -71,5 +71,9 @@ class AuthorActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         handleRequestPermissionsResult(this, requestCode, grantResults)
+    }
+
+    companion object {
+        private var TAG = AuthorActivity::class.java.simpleName
     }
 }
