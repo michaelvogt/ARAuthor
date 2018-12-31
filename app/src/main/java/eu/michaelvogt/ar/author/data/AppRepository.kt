@@ -22,6 +22,7 @@ import android.util.Log
 import eu.michaelvogt.ar.author.data.tuples.ListMarker
 import eu.michaelvogt.ar.author.utils.NEW_CURRENT_LOCATION
 import eu.michaelvogt.ar.author.utils.NEW_CURRENT_MARKER
+import org.jetbrains.anko.collections.forEach
 import org.jetbrains.anko.doAsyncResult
 import java.util.*
 import java.util.concurrent.CompletableFuture
@@ -96,6 +97,7 @@ class AppRepository internal constructor(db: AppDatabase?) {
             markerAreaDao.deleteAreaRelations(areaVisual.area.uId)
             areaDao.delete(areaVisual.area)
 
+            // TODO: Fix when ktx works
             areaVisual.events.forEach(action = { index, eventDetail ->
                 eventDetailDao.delete(eventDetail)
             })

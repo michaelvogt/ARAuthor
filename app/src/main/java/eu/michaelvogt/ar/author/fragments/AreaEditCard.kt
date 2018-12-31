@@ -38,6 +38,7 @@ import com.google.ar.sceneform.rendering.ShapeFactory
 import eu.michaelvogt.ar.author.R
 import eu.michaelvogt.ar.author.utils.DisplayStringFunctions
 import kotlinx.android.synthetic.main.card_area_edit.view.*
+import org.jetbrains.anko.collections.forEach
 
 class AreaEditCard(context: Context, attributes: AttributeSet) : CardView(context, attributes) {
     private var converterName: String?
@@ -204,6 +205,7 @@ class AreaEditCard(context: Context, attributes: AttributeSet) : CardView(contex
 
     fun setSValue(id: Int, value: SparseArray<String>) {
         area_card_s.removeAllViews()
+        // TODO: Fix when ktx works
         value.forEach { index, title ->
             val button = RadioButton(context)
             button.text = title
