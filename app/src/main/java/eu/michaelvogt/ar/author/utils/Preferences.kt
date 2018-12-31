@@ -32,12 +32,12 @@ class Preferences {
 
         fun getPreference(context: Context?, @StringRes key: Int, default: Boolean): Boolean {
             val keyString = getKeyString(context, key)
-            return defaultPreferences(context)?.getBoolean(keyString, true) ?: false
+            return defaultPreferences(context)?.getBoolean(keyString, default) ?: default
         }
 
         fun getPreference(context: Context, @StringRes key: Int, default: String): String {
             val keyString = getKeyString(context, key)
-            return defaultPreferences(context)?.getString(keyString, default) ?: "Default"
+            return defaultPreferences(context)?.getString(keyString, default) ?: default
         }
 
         private fun getKeyString(context: Context?, key: Int): String {
