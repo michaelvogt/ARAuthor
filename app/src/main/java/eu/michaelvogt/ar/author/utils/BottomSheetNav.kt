@@ -31,12 +31,17 @@ class BottomSheetNav : BottomSheetDialogFragment() {
 
     override
     fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.bottomsheet_nav, container, false)
+        val allowEditPref = Preferences.getPreference(context, R.string.allow_edit_pref, false)
+        val layout = if (allowEditPref) R.layout.bottomsheet_nav else R.layout.bottomsheet_noedit_nav
+
+        return inflater.inflate(layout, container, false)
     }
 
     override
     fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
 
         bottomNavigationView.setNavigationItemSelectedListener {
             listener.onMenuSelected(it.itemId)

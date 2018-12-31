@@ -37,7 +37,7 @@ import androidx.navigation.Navigation;
 import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.AuthorViewModel;
 
-public class MarkerPreviewFragment extends PreviewFragment {
+public class TabPreviewFragment extends PreviewFragment {
   private static final String TAG = ImagePreviewFragment.class.getSimpleName();
 
   private boolean isSceneDropped;
@@ -45,16 +45,16 @@ public class MarkerPreviewFragment extends PreviewFragment {
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
-    return inflater.inflate(R.layout.fragment_markerpreview, container, false);
+    return inflater.inflate(R.layout.fragment_tabpreview, container, false);
   }
 
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
 
-    arFragment.getPlaneDiscoveryController().show();
-    arFragment.hasMarker = true;
-    arFragment.setOnTapArPlaneListener(this::onTapArPlane);
+    getArFragment().getPlaneDiscoveryController().show();
+    getArFragment().hasMarker = false;
+    getArFragment().setOnTapArPlaneListener(this::onTapArPlane);
 
     view.findViewById(R.id.listmarker_fab).setOnClickListener(
         Navigation.createNavigateOnClickListener(R.id.marker_list_fragment)
@@ -69,7 +69,7 @@ public class MarkerPreviewFragment extends PreviewFragment {
         AuthorViewModel viewModel = ViewModelProviders.of(getActivity()).get(AuthorViewModel.class);
         Anchor anchor = hitResult.createAnchor();
 
-        this.viewModel.getMarker(viewModel.getCurrentMarkerId())
+        this.getViewModel().getMarker(viewModel.getCurrentMarkerId())
             .thenAccept(marker ->
                 getActivity().runOnUiThread(() -> buildMarkerScene(anchor, marker, marker.getSize().x, marker.getSize().z))
             )

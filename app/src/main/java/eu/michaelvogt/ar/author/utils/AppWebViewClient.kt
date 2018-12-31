@@ -36,6 +36,7 @@ class AppWebViewClient : WebViewClientCompat() {
     }
 }
 
+
 class AppWebViewJs(
         private val activity: FragmentActivity?,
         private val navController: NavController,
@@ -45,7 +46,14 @@ class AppWebViewJs(
     fun openArView() {
         viewModel.getMarkerIdFromGroup("看板", "宗岡家").thenAccept {
             viewModel.currentMarkerId = it
-            activity?.runOnUiThread { navController.navigate(R.id.marker_preview_fragment) }
+
+            activity?.runOnUiThread {
+                val importMarkersPref = Preferences.getPreference(activity, R.string.import_marker_images_pref, false)
+                if (importMarkersPref)
+                    navController.navigate(R.id.image_preview_fragment)
+                else
+                    navController.navigate(R.id.touch_preview_fragment)
+            }
         }.exceptionally {
             Log.e("AppViewJs", "Marker with title 看板 from group name 宗岡家 not found", it)
             null

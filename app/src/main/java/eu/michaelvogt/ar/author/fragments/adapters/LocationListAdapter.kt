@@ -20,12 +20,15 @@ package eu.michaelvogt.ar.author.fragments.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
+import eu.michaelvogt.ar.author.R
 import eu.michaelvogt.ar.author.data.Location
 import eu.michaelvogt.ar.author.databinding.CardLocationBinding
 import eu.michaelvogt.ar.author.utils.CardMenuListener
+import eu.michaelvogt.ar.author.utils.Preferences
 
 /**
  * Adapter for the list of Locations
@@ -53,10 +56,16 @@ class LocationListAdapter(
     override
     fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binder.location = locations[position]
+        holder.binder.handler = this
     }
 
     override
     fun getItemCount(): Int = locations.size
+
+    fun isEditEnabled(): Int {
+        val allowEditPref = Preferences.getPreference(context, R.string.allow_edit_pref, false)
+        return if (allowEditPref) View.VISIBLE else View.GONE
+    }
 
     inner class ViewHolder(val binder: CardLocationBinding) : RecyclerView.ViewHolder(binder.root) {
         init {

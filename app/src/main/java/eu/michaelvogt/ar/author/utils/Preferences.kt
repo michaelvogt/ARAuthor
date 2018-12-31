@@ -19,18 +19,33 @@
 package eu.michaelvogt.ar.author.utils
 
 import android.content.Context
-import androidx.fragment.app.FragmentActivity
+import android.content.SharedPreferences
+import androidx.annotation.StringRes
+import androidx.preference.PreferenceManager
 
-fun setPreference(activity: FragmentActivity?, key: String, value: Boolean) {
-    defaultPreferences(activity).edit().putBoolean(key, value).apply()
+class Preferences {
+    companion object {
+        fun setPreference(context: Context, @StringRes key: Int, value: Boolean) {
+            val keyString = getKeyString(context, key)
+            defaultPreferences(context)!!.edit().putBoolean(keyString, value).apply()
+        }
+
+        fun getPreference(context: Context?, @StringRes key: Int, default: Boolean): Boolean {
+            val keyString = getKeyString(context, key)
+            return defaultPreferences(context)?.getBoolean(keyString, true) ?: false
+        }
+
+        fun getPreference(context: Context, @StringRes key: Int, default: String): String {
+            val keyString = getKeyString(context, key)
+            return defaultPreferences(context)?.getString(keyString, default) ?: "Default"
+        }
+
+        private fun getKeyString(context: Context?, key: Int): String {
+            return context?.resources?.getString(key) ?: ""
+        }
+
+        private fun defaultPreferences(context: Context?): SharedPreferences? {
+            return PreferenceManager.getDefaultSharedPreferences(context)
+        }
+    }
 }
-
-fun getPreference(activity: FragmentActivity?, key: String, default: Boolean): Boolean {
-    return defaultPreferences(activity).getBoolean(key, true)
-}
-
-fun getPreference(activity: FragmentActivity?, key: String, default: String): String? {
-    return defaultPreferences(activity).getString(key, default)
-}
-
-private fun defaultPreferences(activity: FragmentActivity?) = activity!!.getPreferences(Context.MODE_PRIVATE)

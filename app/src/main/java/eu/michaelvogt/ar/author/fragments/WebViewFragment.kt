@@ -73,7 +73,7 @@ class WebViewFragment : AppFragment(), View.OnClickListener {
 
     override
     fun onClick(view: View) {
-        Navigation.findNavController(view).navigate(R.id.marker_preview_fragment)
+        Navigation.findNavController(view).navigate(R.id.image_preview_fragment)
     }
 
     private fun initLocationIntro() {

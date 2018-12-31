@@ -45,20 +45,18 @@ public class LoopArFragment extends ArFragment {
   String focusMode;
   String lightEstimation;
 
-  Bitmap bitmap;
-
   @Override
   protected Config getSessionConfiguration(Session session) {
     AuthorViewModel viewModel = ViewModelProviders.of(getActivity()).get(AuthorViewModel.class);
     AugmentedImageDatabase imagedb = new AugmentedImageDatabase(session);
 
-    if (!hasMarker) {
+    if (hasMarker) {
       List<Marker> markers = viewModel.getMarkersCache();
       if (markers != null) {
         for (Marker marker : markers) {
           try {
             String path = FileUtils.getFullPuplicFolderPath(marker.getMarkerImagePath());
-            bitmap = ImageUtils.INSTANCE.decodeSampledBitmapFromImagePath(path, Marker.MIN_SIZE, Marker.MIN_SIZE);
+            Bitmap bitmap = ImageUtils.INSTANCE.decodeSampledBitmapFromImagePath(path, Marker.MIN_SIZE, Marker.MIN_SIZE);
             if (bitmap != null) {
               int index = marker.getWidthInM() <= 0
                   ? imagedb.addImage(String.valueOf(marker.getUId()), bitmap)

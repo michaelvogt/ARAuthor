@@ -101,7 +101,8 @@
     <string name="navigation_location_edit_label">Edit Location</string>
     <string name="navigation_marker_list_label">Markers</string>
     <string name="navigation_marker_edit_label">Edit Marker</string>
-    <string name="navigation_marker_preview_label">Marker preview</string>
+    <string name="navigation_image_preview_label">Marker preview</string>
+    <string name="navigation_touch_preview_label">Touch preview</string>
     <string name="navigation_area_list_label">Areas</string>
     <string name="navigation_area_edit_label">Edit Area</string>
     <string name="navigation_crop_image_label">Crop image</string>
@@ -205,6 +206,9 @@
     <string name="display_converter_from_vector3">displayFromVector3</string>
     <string name="display_converter_from_quaternion">displayFromQuaternion</string>
     <string name="display_converter_from_selection">displayFromSelection</string>
+
+    <string name="allow_edit_pref">allow_edit</string>
+    <string name="import_marker_images_pref">import_marker_images</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

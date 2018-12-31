@@ -61,10 +61,10 @@
         android:label="@string/navigation_crop_image_label"
         tools:layout="@layout/fragment_crop" />
     <fragment
-        android:id="@+id/marker_preview_fragment"
-        android:name="eu.michaelvogt.ar.author.fragments.MarkerPreviewFragment"
-        android:label="@string/navigation_marker_preview_label"
-        tools:layout="@layout/fragment_markerpreview">
+        android:id="@+id/image_preview_fragment"
+        android:name="eu.michaelvogt.ar.author.fragments.ImagePreviewFragment"
+        android:label="@string/navigation_image_preview_label"
+        tools:layout="@layout/fragment_imagepreview">
         <argument
             android:name="plane_finding_mode"
             android:defaultValue="HORIZONTAL_AND_VERTICAL" />
@@ -163,4 +163,25 @@
         android:id="@+id/area_edit_fragment"
         android:name="eu.michaelvogt.ar.author.fragments.AreaEditFragment"
         android:label="@string/navigation_area_edit_label" />
+    <fragment
+        android:id="@+id/touch_preview_fragment"
+        android:name="eu.michaelvogt.ar.author.fragments.TabPreviewFragment"
+        android:label="@string/navigation_touch_preview_label"
+        tools:layout="@layout/fragment_tabpreview">
+        <argument
+            android:name="discovery_controller"
+            android:defaultValue="0" />
+        <argument
+            android:name="focus_mode"
+            android:defaultValue="AUTO" />
+        <argument
+            android:name="light_estimation"
+            android:defaultValue="AMBIENT_INTENSITY" />
+        <argument
+            android:name="plane_finding_mode"
+            android:defaultValue="HORIZONTAL_AND_VERTICAL" />
+        <argument
+            android:name="update_mode"
+            android:defaultValue="LATEST_CAMERA_IMAGE" />
+    </fragment>
 </navigation>

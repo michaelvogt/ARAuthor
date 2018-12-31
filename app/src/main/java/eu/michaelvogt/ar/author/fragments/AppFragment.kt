@@ -9,7 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import eu.michaelvogt.ar.author.R
 import eu.michaelvogt.ar.author.data.AuthorViewModel
+import eu.michaelvogt.ar.author.utils.Preferences
 import kotlinx.android.synthetic.main.activity_author.*
 import kotlinx.android.synthetic.main.fragment_locationlist.*
 
@@ -31,6 +33,11 @@ open class AppFragment : Fragment() {
     }
 
     fun setupFab(@DrawableRes iconRes: Int, listener: View.OnClickListener) {
+        if (!Preferences.getPreference(context, R.string.allow_edit_pref, false)) {
+            hideFab()
+            return
+        }
+
         val fab = activity!!.bottom_nav_fab
 
         (fab as View).visibility = View.VISIBLE
@@ -51,9 +58,11 @@ open class AppFragment : Fragment() {
     }
 
     fun setupBottomNav(@MenuRes actionbarMenuId: Int, listener: Toolbar.OnMenuItemClickListener) {
-        activity!!.bottom_nav.visibility = View.VISIBLE
-        activity!!.bottom_nav.replaceMenu(actionbarMenuId)
-        activity!!.bottom_nav.setOnMenuItemClickListener(listener)
+        with(activity!!.bottom_nav) {
+            visibility = View.VISIBLE
+            replaceMenu(actionbarMenuId)
+            setOnMenuItemClickListener(listener)
+        }
     }
 
     fun showBottomBar() {

@@ -44,7 +44,7 @@ class Area {
     var usageType: Int = TYPE_DEFAULT
 
     @ColumnInfo(name = "coord_type")
-    var coordType: Int = -1
+    var coordType: Int = 1
 
     @ColumnInfo(name = "zero_point")
     var zeroPoint: Vector3 = Vector3.zero()

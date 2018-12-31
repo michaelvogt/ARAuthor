@@ -42,8 +42,8 @@ const val KIND_CONTENT = 0
 const val KIND_UI = 1
 const val KIND_BACKGROUND = 2
 
-const val COORDINATE_LOCAL = -1
-const val COORDINATE_GLOBAL = -2
+const val COORDINATE_LOCAL = 1
+const val COORDINATE_GLOBAL = 2
 
 const val ICON_3DOBJECT = R.drawable.ic_account_balance_black_24dp
 const val ICON_FLATOVERLAY = R.drawable.ic_collections_black_24dp

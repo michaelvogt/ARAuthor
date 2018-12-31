@@ -163,6 +163,8 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
 
+            android:background="@android:color/white"
+            android:foregroundGravity="left"
             android:visibility="gone"
             cardview:layout_constraintEnd_toEndOf="parent"
             cardview:layout_constraintStart_toStartOf="parent"

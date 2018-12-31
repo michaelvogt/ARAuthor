@@ -16,4 +16,39 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 -->
 
-<PreferenceScreen />
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="General settings">
+
+    <PreferenceCategory
+        android:key="app_settings"
+        android:title="App settings">
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:icon="@drawable/ic_edit_black_24dp"
+            android:key="@string/allow_edit_pref"
+            android:persistent="true"
+            android:summary="Enable access to edit features"
+            android:summaryOff="Edit features are off"
+            android:summaryOn="Edit features are on"
+            android:switchTextOff="Edit disabled"
+            android:switchTextOn="Edit enables"
+            android:title="Allow Edit" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="ar_settings"
+        android:title="AR settings">
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:icon="@drawable/ic_ar_icon"
+            android:key="@string/import_marker_images_pref"
+            android:persistent="true"
+            android:summary="Populate the Marker database"
+            android:summaryOff="Markers aren't imported"
+            android:summaryOn="Markers are imported"
+            android:title="Import Marker Images" />
+    </PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>

@@ -19,11 +19,39 @@
 package eu.michaelvogt.ar.author.fragments
 
 import android.os.Bundle
+import android.view.View
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.preference.PreferenceFragmentCompat
 import eu.michaelvogt.ar.author.R
+import kotlinx.android.synthetic.main.activity_author.*
 
 class PreferencesFragment : PreferenceFragmentCompat() {
-    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+    private lateinit var navController: NavController
+
+    override
+    fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.preference, rootKey)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        navController = Navigation.findNavController(view)
+    }
+
+    override
+    fun onResume() {
+        super.onResume()
+
+        activity!!.bottom_nav.visibility = View.GONE
+
+        with(activity!!.bottom_nav_fab) {
+            (this as View).visibility = View.VISIBLE
+            setImageResource(R.drawable.ic_arrow_back_black_24dp)
+            setOnClickListener {
+                navController.popBackStack()
+            }
+        }
     }
 }

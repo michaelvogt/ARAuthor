@@ -155,7 +155,7 @@ class AreaEditFragment : AppFragment(), AreaCardEditHandler {
     private fun handleTest(view: View) {
         val bundle = Bundle()
         bundle.putInt("area_edit_translucency", if (useTranslucentSwitch.isChecked) 1 else 0)
-        navController.navigate(R.id.marker_preview_fragment, bundle)
+        navController.navigate(R.id.image_preview_fragment, bundle)
     }
 
     private fun hideKeyboard() {

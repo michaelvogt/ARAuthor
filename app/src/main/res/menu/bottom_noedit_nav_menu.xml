@@ -1,0 +1,50 @@
+<!--
+    ARTester - AR for tourists by tourists
+    Copyright (C) 2018  Michael Vogt
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/actionbar_show_intro"
+        android:title="@string/actionbar_show_intro" />
+    <group android:id="@+id/navigation_content">
+        <item
+            android:id="@id/location_list_fragment"
+            android:icon="@drawable/ic_account_balance_black_24dp"
+            android:title="@string/actionbar_location_list_title"
+            android:visible="false" />
+        <item
+            android:id="@id/marker_list_fragment"
+            android:icon="@android:drawable/ic_menu_report_image"
+            android:title="@string/actionbar_marker_list_title"
+            android:visible="false" />
+        <item
+            android:id="@id/area_list_fragment"
+            android:icon="@android:drawable/ic_menu_report_image"
+            android:title="@string/actionbar_area_list_title"
+            android:visible="false" />
+    </group>
+    <group android:id="@+id/navigation_general">
+        <item
+            android:id="@+id/actionbar_preferences"
+            android:title="@string/actionbar_preferences" />
+        <item
+            android:id="@+id/actionbar_about"
+            android:title="@string/actionbar_about" />
+        <item
+            android:id="@+id/actionbar_feedback"
+            android:title="@string/actionbar_feedback" />
+    </group>
+</menu>

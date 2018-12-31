@@ -209,6 +209,13 @@ class AreaEditCard(context: Context, attributes: AttributeSet) : CardView(contex
             button.text = title
             button.id = index
             button.isChecked = id == index
+
+            // Propably better to inflate from XML
+            button.setBackgroundColor(resources.getColor(android.R.color.white, null))
+            val layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+            layoutParams.bottomMargin = 10
+            button.layoutParams = layoutParams
+
             area_card_s.addView(button)
         }
 
