@@ -29,7 +29,7 @@ import eu.michaelvogt.ar.author.data.utils.Converters
 import eu.michaelvogt.ar.author.data.utils.DatabaseInitializer
 
 @Database(entities = [Location::class, Marker::class, Area::class, MarkerArea::class,
-    VisualDetail::class, EventDetail::class, Slide::class, TitleGroup::class], version = 14)
+    VisualDetail::class, EventDetail::class, Slide::class, TitleGroup::class], version = 15)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun locationDao(): LocationDao
@@ -63,17 +63,25 @@ abstract class AppDatabase : RoomDatabase() {
 
         override
         fun doInBackground(vararg params: Void): Void? {
+            // Delete all but 'my location' locations from the db until app is developed further
+            // TODO: implement migration
             slideDao.deleteAll()
             eventDetailDao.deleteAll()
             visualDetailDao.deleteAll()
             markerAreaDao.deleteAll()
             areaDao.deleteAll()
             markerDao.deleteAll()
-            locationDao.deleteAll()
+            locationDao.deleteAllExceptMyLocation()
             titleGroupDao.deleteAll()
 
-            DatabaseInitializer.runner(locationDao, markerDao, areaDao, markerAreaDao, titleGroupDao,
-                    visualDetailDao, slideDao, eventDetailDao).run(importDatabase)
+            if (locationDao.findMyLocation() == null) {
+                locationDao.insert(Location.getMyLocation())
+            }
+
+            if (importDatabase) {
+                DatabaseInitializer.runner(locationDao, markerDao, areaDao, markerAreaDao, titleGroupDao,
+                        visualDetailDao, slideDao, eventDetailDao).run()
+            }
 
             return null
         }

@@ -26,7 +26,7 @@ interface LocationDao : BaseDao<Location> {
     @Query("SELECT * from locations ORDER BY name ASC")
     fun getAll(): List<Location>
 
-    @Query("SELECT u_id, name from locations ORDER BY name ASC")
+    @Query("SELECT u_id, name, is_my_location from locations ORDER BY name ASC")
     fun getNames(): List<Location>
 
     @Query("SELECT COUNT(*) FROM locations")
@@ -38,6 +38,12 @@ interface LocationDao : BaseDao<Location> {
     @Query("DELETE FROM locations")
     fun deleteAll()
 
+    @Query("DELETE FROM locations WHERE is_my_location = 0")
+    fun deleteAllExceptMyLocation()
+
     @Query("Select * from locations where name like :name")
     fun findLocationByName(name: String): Location?
+
+    @Query("SELECT * from  locations where is_my_location = 1")
+    fun findMyLocation(): Location?
 }

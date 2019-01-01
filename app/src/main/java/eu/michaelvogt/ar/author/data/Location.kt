@@ -39,7 +39,11 @@ class Location(
         var thumbPath: String?,
 
         @field:ColumnInfo(name = "intro_html_path")
-        var introHtmlPath: String?) {
+        var introHtmlPath: String?,
+
+        @field:ColumnInfo(name = "is_my_location")
+        var isMyLocation: Boolean = false) {
+
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "u_id")
@@ -78,11 +82,12 @@ class Location(
     companion object {
         fun getMyLocation(): Location {
             return Location(
-                    "My Location",
+                    "My location",
                     "Default location for testing",
                     "",
-                    "android_asset/location/mylocationthumb.jpg",
-                    "file:///android_asset/location/mylocationintro.html")
+                    "file:///android_asset/location/mylocationthumb.jpg",
+                    "file:///android_asset/location/mylocationintro.html",
+                    true)
         }
     }
 }

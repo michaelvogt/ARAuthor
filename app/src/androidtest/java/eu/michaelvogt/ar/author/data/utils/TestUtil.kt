@@ -4,12 +4,12 @@ import eu.michaelvogt.ar.author.data.*
 import java.util.*
 
 object TestUtil {
-    fun location1(name: String = "home"): Location {
-        return Location(name, "desc", "db", "thumb", "intro")
+    fun location1(name: String = "home", isMyLocation: Boolean = false): Location {
+        return Location(name, "desc", "db", "thumb", "intro", isMyLocation)
     }
 
-    fun location2(name: String = "office"): Location {
-        return Location(name, "desc", "db", "thumb", "intro")
+    fun location2(name: String = "office", isMyLocation: Boolean = false): Location {
+        return Location(name, "desc", "db", "thumb", "intro", isMyLocation)
     }
 
     fun locations(name1: String = "home", name2: String = "office"): Array<Location> {
