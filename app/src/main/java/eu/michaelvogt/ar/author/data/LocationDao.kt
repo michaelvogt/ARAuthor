@@ -23,21 +23,27 @@ import androidx.room.Query
 
 @Dao
 interface LocationDao : BaseDao<Location> {
-    @Query("SELECT * from locations ORDER BY name ASC")
+    @Query("SELECT * FROM locations ORDER BY name ASC")
     fun getAll(): List<Location>
 
-    @Query("SELECT u_id, name from locations ORDER BY name ASC")
+    @Query("SELECT u_id, name, is_default_location FROM locations ORDER BY name ASC")
     fun getNames(): List<Location>
 
     @Query("SELECT COUNT(*) FROM locations")
     fun getSize(): Int
 
-    @Query("SELECT * from locations where u_id=:uId")
+    @Query("SELECT * FROM locations WHERE u_id=:uId")
     fun get(uId: Long): Location
 
     @Query("DELETE FROM locations")
     fun deleteAll()
 
-    @Query("Select * from locations where name like :name")
+    @Query("DELETE FROM locations WHERE is_default_location = 0")
+    fun deleteAllExceptMyLocation()
+
+    @Query("SELECT * FROM locations WHERE name LIKE :name")
     fun findLocationByName(name: String): Location?
+
+    @Query("SELECT * FROM  locations WHERE is_default_location = 1")
+    fun findDefaultLocation(): Location?
 }

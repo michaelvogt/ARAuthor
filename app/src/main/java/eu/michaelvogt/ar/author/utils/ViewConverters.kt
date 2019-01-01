@@ -59,8 +59,8 @@ fun booleanFromString(value: String): Boolean {
 fun setImage(view: ImageView, url: String, placeholder: Drawable) {
     if (url.isEmpty()) {
         view.setImageDrawable(placeholder)
-    } else if (url.startsWith("android_asset/")) {
-        val asset = view.resources.assets.open(url.removePrefix("android_asset/"))
+    } else if (url.startsWith("file:///android_asset/")) {
+        val asset = view.resources.assets.open(url.removePrefix("file:///android_asset/"))
         view.setImageDrawable(Drawable.createFromStream(asset, null))
     } else {
         val bitmap: Bitmap

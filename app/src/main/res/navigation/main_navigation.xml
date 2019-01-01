@@ -179,7 +179,7 @@
             android:defaultValue="AMBIENT_INTENSITY" />
         <argument
             android:name="plane_finding_mode"
-            android:defaultValue="HORIZONTAL_AND_VERTICAL" />
+            android:defaultValue="HORIZONTAL" />
         <argument
             android:name="update_mode"
             android:defaultValue="LATEST_CAMERA_IMAGE" />

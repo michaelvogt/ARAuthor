@@ -60,4 +60,32 @@ class LocationDaoTest : DaoTest() {
         location1.uId = byName!!.uId
         assertThat<Location>(byName, equalTo(location1))
     }
+
+    @Test
+    fun deleteAllExceptMyLocation() {
+        val location1 = TestUtil.location1(isMyLocation = true)
+        val location2 = TestUtil.location2(isMyLocation = false)
+
+        dao!!.insertAll(location1, location2)
+
+        assertThat(dao!!.getAll().size, equalTo(2))
+
+        dao!!.deleteAllExceptMyLocation()
+
+        assertThat(dao!!.getAll().size, equalTo(1))
+    }
+
+    @Test
+    fun findMyLocation() {
+        val location1 = TestUtil.location1("mylocation", true)
+        val location2 = TestUtil.location2("location", false)
+
+        dao!!.insertAll(location1, location2)
+
+        assertThat(dao!!.getAll().size, equalTo(2))
+
+        val myLocation = dao!!.findDefaultLocation()
+
+        assertThat(myLocation!!.name, equalTo("mylocation"))
+    }
 }

@@ -179,10 +179,13 @@ class AreaVisual {
     }
 
     companion object {
-        fun getDefaultArea(backgroundHeight: Float, backgroundWidth: Float): AreaVisual {
-            return AreaVisual(TYPE_DEFAULT, KIND_CONTENT, DEFAULTAREATITLE, R.raw.default_model,
-                    Vector3.zero(), Vector3.one(), COORDINATE_LOCAL, Vector3(-backgroundWidth / 2, 0f, -backgroundHeight / 2),
-                    Quaternion(Vector3(0f, 1f, 0f), 180f), Vector3.one())
+        fun getDefaultAreaVisual(backgroundHeight: Float, backgroundWidth: Float): AreaVisual {
+            val areaVisual = AreaVisual(TYPE_DEFAULT, KIND_CONTENT, DEFAULTAREATITLE, R.raw.butterfly,
+                    Vector3.zero(), Vector3.one(), COORDINATE_LOCAL, Vector3(0f, -0.5f, -1f),
+                    Quaternion.identity(), Vector3.one())
+            areaVisual.details.put(KEY_RESOURCE,
+                    VisualDetail(0, TYPE_DETAIL_ALL, KEY_RESOURCE, R.raw.butterfly))
+            return areaVisual
         }
 
         fun getBackgroundArea(marker: Marker, path: String): AreaVisual {
