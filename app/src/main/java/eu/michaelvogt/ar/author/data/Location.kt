@@ -45,7 +45,8 @@ class Location(
     @ColumnInfo(name = "u_id")
     var uId: Long = 0
 
-    override fun toString(): String {
+    override
+    fun toString(): String {
         return "Location(name='$name', thumbPath=$thumbPath, introHtmlPath=$introHtmlPath, uId=$uId)"
     }
 
@@ -64,7 +65,8 @@ class Location(
         return true
     }
 
-    override fun hashCode(): Int {
+    override
+    fun hashCode(): Int {
         var result = name.hashCode()
         result = 31 * result + (description?.hashCode() ?: 0)
         result = 31 * result + (thumbPath?.hashCode() ?: 0)
@@ -73,5 +75,14 @@ class Location(
         return result
     }
 
-
+    companion object {
+        fun getMyLocation(): Location {
+            return Location(
+                    "My Location",
+                    "Default location for testing",
+                    "",
+                    "android_asset/location/mylocationthumb.jpg",
+                    "file:///android_asset/location/mylocationintro.html")
+        }
+    }
 }

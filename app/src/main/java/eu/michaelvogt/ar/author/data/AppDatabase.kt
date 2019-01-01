@@ -45,7 +45,10 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun slideDao(): SlideDao
 
     // TODO: Replace with proper coroutine
-    class PopulateDbAsync internal constructor(db: AppDatabase, callback: () -> Unit) : AsyncTask<Void, Void, Void>() {
+    class PopulateDbAsync internal constructor(
+            db: AppDatabase,
+            val importDatabase: Boolean,
+            val callback: () -> Unit) : AsyncTask<Void, Void, Void>() {
         private val locationDao: LocationDao = db.locationDao()
         private val markerDao: MarkerDao = db.markerDao()
         private val areaDao: AreaDao = db.areaDao()
@@ -58,9 +61,8 @@ abstract class AppDatabase : RoomDatabase() {
 
         private val slideDao: SlideDao = db.slideDao()
 
-        private val mycallback = callback
-
-        override fun doInBackground(vararg params: Void): Void? {
+        override
+        fun doInBackground(vararg params: Void): Void? {
             slideDao.deleteAll()
             eventDetailDao.deleteAll()
             visualDetailDao.deleteAll()
@@ -71,13 +73,14 @@ abstract class AppDatabase : RoomDatabase() {
             titleGroupDao.deleteAll()
 
             DatabaseInitializer.runner(locationDao, markerDao, areaDao, markerAreaDao, titleGroupDao,
-                    visualDetailDao, slideDao, eventDetailDao).run()
+                    visualDetailDao, slideDao, eventDetailDao).run(importDatabase)
 
             return null
         }
 
-        override fun onPostExecute(result: Void?) {
-            mycallback()
+        override
+        fun onPostExecute(result: Void?) {
+            callback()
         }
     }
 

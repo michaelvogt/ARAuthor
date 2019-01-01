@@ -51,4 +51,19 @@
             android:title="Import Marker Images" />
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:key="db_settings"
+        android:title="Database settings">
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:icon="@drawable/ic_big_database"
+            android:key="@string/import_default_database_pref"
+            android:persistent="true"
+            android:summary="Populate the database with default data"
+            android:summaryOff="Data isn't imported"
+            android:summaryOn="Data is imported"
+            android:title="Import default data" />
+    </PreferenceCategory>
+
 </androidx.preference.PreferenceScreen>

@@ -57,7 +57,7 @@ class LocationDaoTest : DaoTest() {
         dao!!.insert(location1)
         val byName = dao!!.findLocationByName(location1.name)
 
-        location1.uId = byName.uId
+        location1.uId = byName!!.uId
         assertThat<Location>(byName, equalTo(location1))
     }
 }

@@ -209,6 +209,7 @@
 
     <string name="allow_edit_pref">allow_edit</string>
     <string name="import_marker_images_pref">import_marker_images</string>
+    <string name="import_default_database_pref">import_default_database</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

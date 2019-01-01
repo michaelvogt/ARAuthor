@@ -39,5 +39,5 @@ interface LocationDao : BaseDao<Location> {
     fun deleteAll()
 
     @Query("Select * from locations where name like :name")
-    fun findLocationByName(name: String): Location
+    fun findLocationByName(name: String): Location?
 }

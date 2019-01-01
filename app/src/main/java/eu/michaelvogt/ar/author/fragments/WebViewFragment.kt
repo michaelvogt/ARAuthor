@@ -80,7 +80,10 @@ class WebViewFragment : AppFragment(), View.OnClickListener {
         val locationId = viewModel.currentLocationId
         viewModel.getLocation(locationId)
                 .thenAccept {
-                    val path = FileUtils.getFullPuplicFolderLocalUrl(it.introHtmlPath)
+                    var path = it.introHtmlPath
+                    if (!it.introHtmlPath!!.startsWith("file:///android_asset/")) {
+                        path = FileUtils.getFullPuplicFolderLocalUrl(it.introHtmlPath)
+                    }
                     activity!!.runOnUiThread { content_info.loadUrl(path) }
                 }
                 .exceptionally { throwable ->
