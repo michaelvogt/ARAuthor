@@ -27,6 +27,7 @@ import com.google.ar.core.ArCoreApk
 import eu.michaelvogt.ar.author.data.AppDatabase
 import eu.michaelvogt.ar.author.data.AuthorViewModel
 import eu.michaelvogt.ar.author.utils.AppNavigationListener
+import eu.michaelvogt.ar.author.utils.Preferences
 import eu.michaelvogt.ar.author.utils.handleRequestPermissionsResult
 import kotlinx.android.synthetic.main.activity_author.*
 
@@ -49,7 +50,8 @@ class AuthorActivity : AppCompatActivity() {
 
         val viewModel = ViewModelProviders.of(this).get(AuthorViewModel::class.java)
         val database = AppDatabase.getDatabase(applicationContext)
-        AppDatabase.PopulateDbAsync(database!!) { viewModel.locationLoadTrigger.setValue(0) }.execute()
+        val importDatabase = Preferences.getPreference(this, R.string.import_default_database_pref, false)
+        AppDatabase.PopulateDbAsync(database!!, importDatabase) { viewModel.locationLoadTrigger.setValue(0) }.execute()
 
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         navController.addOnDestinationChangedListener(AppNavigationListener(this, null))

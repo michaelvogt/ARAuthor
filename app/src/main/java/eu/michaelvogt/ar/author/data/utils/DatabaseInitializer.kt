@@ -37,6 +37,7 @@ class DatabaseInitializer private constructor(
         private val eventDetailDao: EventDetailDao) {
 
     fun run() {
+        // TODO: Load db from json file
         var locationId = insertLocation(
                 "石見銀山",
                 "",
@@ -545,7 +546,7 @@ class DatabaseInitializer private constructor(
         markerAreaDao.insert(MarkerArea(markerId, areaId))
     }
 
-    private fun insertVisualDetail(areaId: Long, type: Int, key: Int, value: Any) : Long {
+    private fun insertVisualDetail(areaId: Long, type: Int, key: Int, value: Any): Long {
         return visualDetailDao.insert(VisualDetail(areaId, type, key, value))
     }
 

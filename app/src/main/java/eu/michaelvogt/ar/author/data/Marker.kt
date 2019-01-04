@@ -193,7 +193,12 @@ class Marker {
 
     companion object {
         const val MIN_SIZE = 300
+
+        /**
+         * Simple in-memory representation of a [Marker]. Not meant to be saved to DB
+         */
+        fun getDefaultMarker(): Marker {
+            return Marker(0, null, "My Marker")
+        }
     }
-
-
 }

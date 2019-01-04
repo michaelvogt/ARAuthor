@@ -39,13 +39,18 @@ class Location(
         var thumbPath: String?,
 
         @field:ColumnInfo(name = "intro_html_path")
-        var introHtmlPath: String?) {
+        var introHtmlPath: String?,
+
+        @field:ColumnInfo(name = "is_default_location")
+        var isDefaultLocation: Boolean = false) {
+
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "u_id")
     var uId: Long = 0
 
-    override fun toString(): String {
+    override
+    fun toString(): String {
         return "Location(name='$name', thumbPath=$thumbPath, introHtmlPath=$introHtmlPath, uId=$uId)"
     }
 
@@ -64,7 +69,8 @@ class Location(
         return true
     }
 
-    override fun hashCode(): Int {
+    override
+    fun hashCode(): Int {
         var result = name.hashCode()
         result = 31 * result + (description?.hashCode() ?: 0)
         result = 31 * result + (thumbPath?.hashCode() ?: 0)
@@ -73,5 +79,15 @@ class Location(
         return result
     }
 
-
+    companion object {
+        fun getDefaultLocation(): Location {
+            return Location(
+                    "My location",
+                    "Default location for testing",
+                    "",
+                    "file:///android_asset/location/images/mylocationthumb.jpg",
+                    "file:///android_asset/location/mylocationintro.html",
+                    true)
+        }
+    }
 }

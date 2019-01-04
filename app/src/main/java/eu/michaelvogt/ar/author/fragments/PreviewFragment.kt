@@ -46,7 +46,8 @@ open class PreviewFragment : AppFragment() {
     protected var handledImages: MutableMap<String, Node?> = HashMap()
     protected var cameraFacingNodes: MutableList<Node> = ArrayList()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override
+    fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         container = view as ViewGroup
         viewModel = ViewModelProviders.of(activity!!).get(AuthorViewModel::class.java)
 
@@ -100,7 +101,7 @@ open class PreviewFragment : AppFragment() {
                         areaVisuals.forEach { areaVisual -> buildArea(anchorNode, areaVisual, null) }
                     } else {
                         // Build a default area for demo purposes
-                        buildArea(anchorNode, AreaVisual.getDefaultArea(backgroundHeight, backgroundWidth), null)
+                        buildArea(anchorNode, AreaVisual.getDefaultAreaVisual(backgroundHeight, backgroundWidth), null)
                     }
                 }.exceptionally { throwable ->
                     Log.e(TAG, "Unable to build Areas: $markerId", throwable)
@@ -118,7 +119,7 @@ open class PreviewFragment : AppFragment() {
 
                         fn?.accept(node)
 
-                        if ((node as AreaNode).isCameraFacing) {
+                        if (node is AreaNode && node.isCameraFacing) {
                             cameraFacingNodes.add(node)
                         }
 

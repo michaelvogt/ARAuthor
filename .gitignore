@@ -1,4 +1,4 @@
-Android Studio configuration.
+# Android Studio configuration.
 *.iml
 .idea/
 
@@ -15,3 +15,7 @@ local.properties
 # shiryou
 igk_*
 srk_*
+
+# 3D models
+*.sfa
+*.sfb

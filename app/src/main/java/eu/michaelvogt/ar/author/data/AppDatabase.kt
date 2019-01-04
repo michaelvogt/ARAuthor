@@ -29,7 +29,7 @@ import eu.michaelvogt.ar.author.data.utils.Converters
 import eu.michaelvogt.ar.author.data.utils.DatabaseInitializer
 
 @Database(entities = [Location::class, Marker::class, Area::class, MarkerArea::class,
-    VisualDetail::class, EventDetail::class, Slide::class, TitleGroup::class], version = 14)
+    VisualDetail::class, EventDetail::class, Slide::class, TitleGroup::class], version = 16)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun locationDao(): LocationDao
@@ -45,7 +45,10 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun slideDao(): SlideDao
 
     // TODO: Replace with proper coroutine
-    class PopulateDbAsync internal constructor(db: AppDatabase, callback: () -> Unit) : AsyncTask<Void, Void, Void>() {
+    class PopulateDbAsync internal constructor(
+            db: AppDatabase,
+            val importDatabase: Boolean,
+            val callback: () -> Unit) : AsyncTask<Void, Void, Void>() {
         private val locationDao: LocationDao = db.locationDao()
         private val markerDao: MarkerDao = db.markerDao()
         private val areaDao: AreaDao = db.areaDao()
@@ -58,26 +61,34 @@ abstract class AppDatabase : RoomDatabase() {
 
         private val slideDao: SlideDao = db.slideDao()
 
-        private val mycallback = callback
-
-        override fun doInBackground(vararg params: Void): Void? {
+        override
+        fun doInBackground(vararg params: Void): Void? {
+            // Delete all but 'my location' locations from the db until app is developed further
+            // TODO: implement migration
             slideDao.deleteAll()
             eventDetailDao.deleteAll()
             visualDetailDao.deleteAll()
             markerAreaDao.deleteAll()
             areaDao.deleteAll()
             markerDao.deleteAll()
-            locationDao.deleteAll()
+            locationDao.deleteAllExceptMyLocation()
             titleGroupDao.deleteAll()
 
-            DatabaseInitializer.runner(locationDao, markerDao, areaDao, markerAreaDao, titleGroupDao,
-                    visualDetailDao, slideDao, eventDetailDao).run()
+            if (locationDao.findDefaultLocation() == null) {
+                locationDao.insert(Location.getDefaultLocation())
+            }
+
+            if (importDatabase) {
+                DatabaseInitializer.runner(locationDao, markerDao, areaDao, markerAreaDao, titleGroupDao,
+                        visualDetailDao, slideDao, eventDetailDao).run()
+            }
 
             return null
         }
 
-        override fun onPostExecute(result: Void?) {
-            mycallback()
+        override
+        fun onPostExecute(result: Void?) {
+            callback()
         }
     }
 
