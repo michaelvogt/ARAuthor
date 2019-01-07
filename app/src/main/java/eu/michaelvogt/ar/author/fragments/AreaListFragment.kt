@@ -31,7 +31,6 @@ import eu.michaelvogt.ar.author.databinding.FragmentAreaListBinding
 import eu.michaelvogt.ar.author.fragments.adapters.AreaListAdapter
 import eu.michaelvogt.ar.author.utils.InfoPrompt
 import eu.michaelvogt.ar.author.utils.ItemClickListener
-import eu.michaelvogt.ar.author.utils.NEW_CURRENT_AREA
 import eu.michaelvogt.ar.author.utils.notDoneYet
 import kotlinx.android.synthetic.main.fragment_area_list.*
 
@@ -86,17 +85,19 @@ class AreaListFragment : AppFragment(), ItemClickListener {
             when (it.itemId) {
                 R.id.actionbar_arealist_load,
                 R.id.actionbar_arealist_ar -> {
-                    notDoneYet(activity!!)
+                    notDoneYet(activity!!, "AR Scene")
                     true
                 }
                 else -> false
             }
         })
 
-        setupFab(android.R.drawable.ic_input_add, View.OnClickListener {
-            viewModel.currentAreaId = NEW_CURRENT_AREA
-            navController.navigate(AreaListFragmentDirections.actionToAreaEdit())
-        })
+        // Temporary hide Area creation, until input of Area details is decided
+        hideFab()
+//        setupFab(android.R.drawable.ic_input_add, View.OnClickListener {
+//            viewModel.currentAreaId = NEW_CURRENT_AREA
+//            navController.navigate(AreaListFragmentDirections.actionToAreaEdit())
+//        })
     }
 
     override

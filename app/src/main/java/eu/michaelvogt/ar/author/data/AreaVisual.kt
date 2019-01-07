@@ -180,11 +180,11 @@ class AreaVisual {
 
     companion object {
         fun getDefaultAreaVisual(backgroundHeight: Float, backgroundWidth: Float): AreaVisual {
-            val areaVisual = AreaVisual(TYPE_DEFAULT, KIND_CONTENT, DEFAULTAREATITLE, R.raw.butterfly,
-                    Vector3.zero(), Vector3.one(), COORDINATE_LOCAL, Vector3(0f, -0.5f, -1f),
-                    Quaternion.identity(), Vector3.one())
+            val areaVisual = AreaVisual(TYPE_DEFAULT, KIND_CONTENT, DEFAULTAREATITLE, R.raw.big_old_house,
+                    Vector3.zero(), Vector3.one(), COORDINATE_LOCAL, Vector3(0f, 0f, 0f),
+                    Quaternion.identity(), Vector3(0.07f, 0.07f, 0.07f))
             areaVisual.details.put(KEY_RESOURCE,
-                    VisualDetail(0, TYPE_DETAIL_ALL, KEY_RESOURCE, R.raw.butterfly))
+                    VisualDetail(0, TYPE_DETAIL_ALL, KEY_RESOURCE, R.raw.big_old_house))
             return areaVisual
         }
 

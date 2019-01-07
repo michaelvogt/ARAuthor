@@ -86,7 +86,9 @@ class MarkerEditFragment : AppFragment() {
         setupFab(android.R.drawable.ic_menu_save, View.OnClickListener {
             // TODO: Decide on correct validation strategy
             if (editMarker.locationId <= 0) {
-                Snackbar.make(view!!, "@string/marker_edit_error_select_location", Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(view!!,
+                        resources.getString(R.string.marker_edit_error_select_location),
+                        Snackbar.LENGTH_SHORT).show()
                 return@OnClickListener
             }
 

@@ -160,7 +160,7 @@ sceneform.asset('sampledata/models/compare.obj',
         'sampledata/models/compare.sfa',
         'src/main/res/raw/compare')
 
-sceneform.asset('sampledata/models/butterfly/butterfly_001.obj',
+sceneform.asset('sampledata/models/big_old_house.obj',
         'default',
-        'sampledata/models/butterfly/butterfly_001.sfa',
-        'src/main/res/raw/butterfly')
+        'sampledata/models/big_old_house.sfa',
+        'src/main/res/raw/big_old_house')

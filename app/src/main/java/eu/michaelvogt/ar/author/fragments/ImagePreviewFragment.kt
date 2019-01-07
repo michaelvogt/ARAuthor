@@ -24,20 +24,23 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.Navigation
+import com.google.ar.core.Anchor
 import com.google.ar.core.AugmentedImage
 import com.google.ar.core.TrackingState
+import com.google.ar.core.exceptions.NotTrackingException
 import com.google.ar.sceneform.FrameTime
 import eu.michaelvogt.ar.author.R
-import eu.michaelvogt.ar.author.utils.Preferences
+import kotlinx.android.synthetic.main.fragment_tabpreview.*
 
 class ImagePreviewFragment : PreviewFragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override
+    fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_imagepreview, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override
+    fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         arFragment.planeDiscoveryController.hide()
@@ -45,21 +48,20 @@ class ImagePreviewFragment : PreviewFragment() {
 
         arFragment.hasMarker = true
         arFragment.arSceneView.scene.addOnUpdateListener { this.onUpdateFrame(it) }
-
-        view.findViewById<View>(R.id.listmarker_fab).setOnClickListener {
-            Navigation.findNavController(view).popBackStack()
-        }
     }
 
-    override fun onResume() {
+    override
+    fun onResume() {
         super.onResume()
 
-        val allowEditPref = Preferences.getPreference(context, R.string.allow_edit_pref, false)
-        val fab = view!!.findViewById<View>(R.id.listmarker_fab)
-        fab.visibility = if (allowEditPref) View.VISIBLE else View.GONE
+        hideBottomBar()
+        hideFab()
+
+        listmarker_fab.setOnClickListener { navController.popBackStack() }
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration?) {
+    override
+    fun onConfigurationChanged(newConfig: Configuration?) {
         super.onConfigurationChanged(newConfig)
 
         arFragment.changeGrabbedOrientation(newConfig!!.orientation)
@@ -73,9 +75,16 @@ class ImagePreviewFragment : PreviewFragment() {
 
         for (image in updatedAugmentedImages) {
             val trackingState = arFragment.arSceneView.arFrame.camera.trackingState
-            if (trackingState == TrackingState.TRACKING && !handledImages.containsKey(image.name)) {
-                handledImages[image.name] = null
-                val anchor = image.createAnchor(image.centerPose)
+            if (trackingState == TrackingState.TRACKING && !handledImages.contains(image.name)) {
+                handledImages.plus(image.name)
+                val anchor: Anchor?
+                try {
+                    anchor = image.createAnchor(image.centerPose)
+                } catch (e: NotTrackingException) {
+                    Log.e("ImagePreviewFragment", "Couldn't create anchor", e)
+                    break
+                }
+
                 viewModel.getMarker(Integer.parseInt(image.name).toLong())
                         .thenAccept { marker -> activity!!.runOnUiThread { buildMarkerScene(anchor, marker, image.extentX, image.extentZ) } }
                         .exceptionally { throwable ->
@@ -83,7 +92,7 @@ class ImagePreviewFragment : PreviewFragment() {
                             null
                         }
             } else if (image.trackingState == TrackingState.STOPPED) {
-                handledImages.remove(image.name)
+                handledImages.minus(image.name)
             }
         }
     }

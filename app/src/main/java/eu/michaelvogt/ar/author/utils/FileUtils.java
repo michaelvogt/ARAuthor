@@ -36,7 +36,6 @@ import static android.os.Environment.getExternalStorageDirectory;
 
 public class FileUtils {
   public static final String MARKERS_PATH = "/Touristar/Markers/";
-  public static final String HIDAKA_PATH = "/Touristar/Hidaka/";
 
   public static File getFullPuplicFolderFile(String path) {
     return new File(getExternalStorageDirectory(), path);
@@ -48,6 +47,11 @@ public class FileUtils {
 
   public static String getFullPuplicFolderLocalUrl(String path) {
     return "file://" + getFullPuplicFolderFile(path).getAbsolutePath();
+  }
+
+  public static boolean publicPathExists(String path) {
+    String fullPath = getFullPuplicFolderPath(path);
+    return new File(fullPath).exists();
   }
 
   public static String readTextFile(String path) throws IOException {

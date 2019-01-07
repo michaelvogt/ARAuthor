@@ -45,40 +45,40 @@ class Marker {
     var uId: Long = 0
 
     @ColumnInfo(name = "location_id")
-    var locationId: Long = -1
+    var locationId: Long
 
     @ColumnInfo(name = "group_id")
-    var groupId: Long? = null
+    var groupId: Long?
 
     @ColumnInfo(name = "thumb_path")
-    var thumbPath: String = ""
+    var thumbPath: String
 
     @ColumnInfo(name = "image_path")
-    var markerImagePath: String = ""
+    var markerImagePath: String
 
     @ColumnInfo(name = "background_image_path")
-    var backgroundImagePath: String = ""
+    var backgroundImagePath: String
 
     @ColumnInfo(name = "title")
-    var title: String = ""
+    var title: String
 
     @ColumnInfo(name = "intro")
-    var intro: String? = null
+    var intro: String?
 
     @ColumnInfo(name = "place")
-    var place: String? = null
+    var place: String?
 
     @ColumnInfo(name = "width_in_m")
-    var widthInM = -1f
+    var widthInM: Float
 
     @ColumnInfo(name = "size")
-    var size: Vector3 = Vector3.one()
+    var size: Vector3
 
     @ColumnInfo(name = "zero_point")
-    var zeroPoint: Vector3 = Vector3.zero()
+    var zeroPoint: Vector3
 
     @ColumnInfo(name = "show_background")
-    var isShowBackground: Boolean = false
+    var isShowBackground: Boolean
 
     @Ignore
     constructor() : this(0, null, "New Marker")
@@ -87,10 +87,10 @@ class Marker {
                 groupId: Long?,
                 title: String,
                 markerImagePath: String = "",
-                backgroundImagePath: String = "",
+                backgroundImagePath: String = "/android_asset/location/images/mylocationback.webp",
                 intro: String? = null,
                 place: String = "",
-                widthInM: Float = -1f,
+                widthInM: Float = 0.2f,     // ARCore crashes when width isn't set
                 zeroPoint: Vector3 = Vector3.zero(),
                 size: Vector3 = Vector3.one(),
                 isShowBackground: Boolean = false) {

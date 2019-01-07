@@ -55,8 +55,6 @@ class MarkerListFragment : AppFragment(), ItemClickListener {
     fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val locationId = viewModel.currentLocationId
-
         binder.markerList.setHasFixedSize(false)
 
         NavigationUI.setupWithNavController(top_toolbar, navController)
@@ -69,7 +67,7 @@ class MarkerListFragment : AppFragment(), ItemClickListener {
         val adapter = MarkerListAdapter(context)
         binder.markerList.adapter = adapter
 
-        val markers = viewModel.getMarkerGroupsForLocation(locationId)
+        val markers = viewModel.getMarkerGroupsForLocation(viewModel.currentLocationId)
         adapter.setMarkers(markers)
         adapter.setItemClickListener(this)
     }
@@ -80,9 +78,12 @@ class MarkerListFragment : AppFragment(), ItemClickListener {
 
         setupBottomNav(R.menu.actionbar_markerlist_menu, Toolbar.OnMenuItemClickListener {
             when (it.itemId) {
-                R.id.actionbar_markerlist_load,
+                R.id.actionbar_markerlist_load -> {
+                    notDoneYet(activity!!, "Load Markers")
+                    true
+                }
                 R.id.actionbar_markerlist_ar -> {
-                    notDoneYet(activity!!)
+                    navController.navigate(R.id.image_preview_fragment)
                     true
                 }
                 else -> false
@@ -93,6 +94,8 @@ class MarkerListFragment : AppFragment(), ItemClickListener {
             viewModel.currentMarkerId = NEW_CURRENT_MARKER
             navController.navigate(MarkerListFragmentDirections.actionEditMarker())
         })
+
+        viewModel.updateMarkerCache(activity!!, viewModel.currentLocationId)
     }
 
     override

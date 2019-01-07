@@ -81,7 +81,7 @@ class WebViewFragment : AppFragment(), View.OnClickListener {
         viewModel.getLocation(locationId)
                 .thenAccept {
                     var path = it.introHtmlPath
-                    if (!it.introHtmlPath!!.startsWith("file:///android_asset/")) {
+                    if (!it.introHtmlPath!!.startsWith(getString(R.string.file_prefix))) {
                         path = FileUtils.getFullPuplicFolderLocalUrl(it.introHtmlPath)
                     }
                     activity!!.runOnUiThread { content_info.loadUrl(path) }
@@ -91,14 +91,7 @@ class WebViewFragment : AppFragment(), View.OnClickListener {
                     null
                 }
 
-        // Due to the way the AR images database needs to be initialized, and the markers are
-        // delivered asynchronously from the data database, the markers need to be cached beforehand
-        viewModel.getMarkersForLocation(locationId)
-                .thenAccept { locations -> activity!!.runOnUiThread { viewModel.markersCache = locations } }
-                .exceptionally { throwable ->
-                    Log.e(TAG, "Unable to fetch markers for location $locationId", throwable)
-                    null
-                }
+        viewModel.updateMarkerCache(activity!!, locationId)
     }
 
     companion object {

@@ -14,14 +14,16 @@
    limitations under the License.
 -->
 <resources>
-    <bool name="use_arcore_key_default">true</bool>
-    <bool name="show_intro_default">false</bool>
+    <string name="file_prefix">file://</string>
 
     <!--Web view content keys-->
     <string name="about_key">about</string>
-    <string name="about_url">"file:///android_asset/aboutpage.html"</string>
+    <string name="about_url">"/android_asset/aboutpage.html"</string>
 
-    <string name="error_url">"file:///android_asset/errorpage.html"</string>
+    <string name="error_url">"/android_asset/errorpage.html"</string>
 
     <string name="location_intro_key">location_intro</string>
+
+
+    <string name="default_background">/android_asset/location/images/mylocationback.webp</string>
 </resources>

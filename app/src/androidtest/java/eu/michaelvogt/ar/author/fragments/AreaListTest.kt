@@ -72,7 +72,7 @@ class AreaListTest {
                     hasNavigation()
                 }
 
-                inFabItem { isDisplayed() }
+                inFabItem { isNotDisplayed() }
             }
         }
     }

@@ -18,7 +18,9 @@
 
 package eu.michaelvogt.ar.author.data
 
+import android.app.Activity
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import eu.michaelvogt.ar.author.data.tuples.ListMarker
@@ -83,6 +85,19 @@ class AuthorViewModel(application: Application) : AndroidViewModel(application) 
 
     fun getAreasForMarker(markerId: Long, group: Array<Int> = GROUPS_ALL):
             CompletableFuture<List<Area>> = repository.getAreasForMarker(markerId, group)
+
+    /**
+     * Due to the way the AR images database needs to be initialized, and the markers are
+     * delivered asynchronously from the data database, the markers need to be cached beforehand
+     */
+    fun updateMarkerCache(activity: Activity, locationId: Long) {
+        getMarkersForLocation(locationId)
+                .thenAccept { markers -> activity.runOnUiThread { markersCache = markers } }
+                .exceptionally { throwable ->
+                    Log.e("viewmodel", "Unable to fetch markers for location $locationId", throwable)
+                    null
+                }
+    }
 
 
     fun getAllAreas(): CompletableFuture<List<Area>> = repository.allAreas()
