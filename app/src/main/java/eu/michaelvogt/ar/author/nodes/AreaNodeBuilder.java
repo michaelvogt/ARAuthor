@@ -62,7 +62,7 @@ public class AreaNodeBuilder {
       case AreaVisualKt.TYPE_3DOBJECTONPLANE:
         return null;
       case AreaVisualKt.TYPE_BACKGROUNDONIMAGE:
-        return ImageNode.builder(context, areaVisual).setRenderPriority(AreaNode.RENDER_FIRST).build();
+        return ImageNode.Companion.builder(context, areaVisual).setRenderPriority(AreaNode.RENDER_FIRST).build();
       case AreaVisualKt.TYPE_SLIDESONIMAGE:
         return SliderNode.builder(context, areaVisual).setScene(scene).build();
       case AreaVisualKt.TYPE_INTERACTIVEOVERLAY:
@@ -72,9 +72,9 @@ public class AreaNodeBuilder {
       case AreaVisualKt.TYPE_TEXTONIMAGE:
         return TextNode.builder(context, areaVisual).setRenderPriority(5).build();
       case AreaVisualKt.TYPE_IMAGEONIMAGE:
-        return ImageNode.builder(context, areaVisual).build();
+        return ImageNode.Companion.builder(context, areaVisual).build();
       case AreaVisualKt.TYPE_ROTATIONBUTTON:
-        return ImageNode.builder(context, areaVisual).setIsCameraFacing(true).build();
+        return ImageNode.Companion.builder(context, areaVisual).setIsCameraFacing(true).build();
       case AreaVisualKt.TYPE_COMPARATORONIMAGE:
         return ComparisonNode.builder(context, areaVisual).build();
       default:

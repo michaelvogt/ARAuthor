@@ -44,10 +44,11 @@
         android:clickable="true"
         android:focusable="true"
         app:backgroundTint="@android:color/darker_gray"
+        app:elevation="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_edit" />
+        app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/grab_container"

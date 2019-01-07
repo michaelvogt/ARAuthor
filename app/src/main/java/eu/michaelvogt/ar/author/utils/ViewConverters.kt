@@ -44,7 +44,25 @@ fun floatToString(value: Float): String {
     }
 }
 
-fun floatFromString(value: String): Float = value.toFloat()
+/**
+ * Convert [String] value to [Float]
+ *
+ * It is assumed that the value parameter is provided from user entry into a number field. The
+ * [NumberFormatException] should then be ok to ignore, returning '0' as result.
+ *
+ * @param   String  value entered by user into number field
+ * @return  Float   the converted value when conversion succeeds, 0 (zero) otherwise
+ */
+fun floatFromString(value: String): Float {
+    var float = 0f
+    try {
+        float = value.toFloat()
+    } catch (e: NumberFormatException) {
+        // Ignored
+    }
+
+    return float
+}
 
 @InverseMethod("booleanFromString")
 fun stringFromBoolean(value: Boolean): String {
@@ -59,8 +77,8 @@ fun booleanFromString(value: String): Boolean {
 fun setImage(view: ImageView, url: String, placeholder: Drawable) {
     if (url.isEmpty()) {
         view.setImageDrawable(placeholder)
-    } else if (url.startsWith("file:///android_asset/")) {
-        val asset = view.resources.assets.open(url.removePrefix("file:///android_asset/"))
+    } else if (url.startsWith(ImageUtils.assetPathPrefix)) {
+        val asset = view.resources.assets.open(url.removePrefix(ImageUtils.assetPathPrefix))
         view.setImageDrawable(Drawable.createFromStream(asset, null))
     } else {
         val bitmap: Bitmap

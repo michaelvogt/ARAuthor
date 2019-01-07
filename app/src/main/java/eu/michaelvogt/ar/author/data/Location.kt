@@ -85,7 +85,7 @@ class Location(
                     "My location",
                     "Default location for testing",
                     "",
-                    "file:///android_asset/location/images/mylocationthumb.jpg",
+                    "/android_asset/location/images/mylocationthumb.webp",
                     "file:///android_asset/location/mylocationintro.html",
                     true)
         }

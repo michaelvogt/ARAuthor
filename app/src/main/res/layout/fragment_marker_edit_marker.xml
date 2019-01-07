@@ -39,7 +39,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/marker_edit_marker_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="70dp">
 
             <ImageView
                 android:id="@+id/image_marker"
@@ -168,21 +169,42 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/marker_edit_widthinm"
+                    android:inputType="number|numberDecimal"
                     android:text="@={ViewConverters.floatToString(marker.widthInM)}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <CheckBox
                 android:id="@+id/marker_edit_show_background"
                 android:layout_width="0dp"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 android:checked="@={marker.isShowBackground}"
-                android:text="@string/marker_edit_check_vistual_background"
+                android:onClick="@{handler::onIsShowBackgroundClick}"
+                android:text="@string/marker_edit_check_visual_background"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/marker_edit_width" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/marker_edit_virtual_background"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/marker_edit_show_background">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/marker_edit_visual_background_image"
+                    android:text="@={marker.backgroundImagePath}" />
+            </com.google.android.material.textfield.TextInputLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

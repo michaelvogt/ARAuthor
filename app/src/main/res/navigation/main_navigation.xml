@@ -67,7 +67,7 @@
         tools:layout="@layout/fragment_imagepreview">
         <argument
             android:name="plane_finding_mode"
-            android:defaultValue="HORIZONTAL_AND_VERTICAL" />
+            android:defaultValue="DISABLED" />
         <argument
             android:name="update_mode"
             android:defaultValue="LATEST_CAMERA_IMAGE" />

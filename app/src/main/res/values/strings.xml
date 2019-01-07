@@ -167,7 +167,8 @@
     <string name="marker_edit_title">Title</string>
     <string name="marker_edit_place">Place</string>
     <string name="marker_edit_widthinm">Width in m</string>
-    <string name="marker_edit_check_vistual_background">Show virtual background</string>
+    <string name="marker_edit_check_visual_background">Show Virtual Background</string>
+    <string name="marker_edit_visual_background_image">Virtual Background Image</string>
 
     <string name="marker_edit_info_intro">Introduction</string>
     <string name="marker_edit_info_object_type">Select Objecttype</string>

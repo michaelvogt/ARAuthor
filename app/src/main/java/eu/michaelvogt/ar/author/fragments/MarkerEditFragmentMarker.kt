@@ -27,7 +27,6 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.FileProvider
 import eu.michaelvogt.ar.author.R
@@ -36,6 +35,7 @@ import eu.michaelvogt.ar.author.data.Marker
 import eu.michaelvogt.ar.author.databinding.FragmentMarkerEditMarkerBinding
 import eu.michaelvogt.ar.author.utils.FileUtils
 import eu.michaelvogt.ar.author.utils.ImageUtils
+import kotlinx.android.synthetic.main.fragment_marker_edit_marker.*
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -46,7 +46,6 @@ import java.util.*
  */
 class MarkerEditFragmentMarker : AppFragment() {
     private lateinit var editMarker: Marker
-    private lateinit var markerImage: ImageView
     private lateinit var binder: FragmentMarkerEditMarkerBinding
     private lateinit var capturePhotoPath: String
     private lateinit var locationNames: List<Location>
@@ -64,26 +63,23 @@ class MarkerEditFragmentMarker : AppFragment() {
     fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        markerImage = view.findViewById(R.id.image_marker)
         if (editMarker.hasImage()) {
             val imagePath = editMarker.markerImagePath
 
-            if (imagePath.isNotEmpty() && File(imagePath).exists()) {
+            if (imagePath.isNotEmpty() && FileUtils.publicPathExists(imagePath)) {
                 val fullPath = FileUtils.getFullPuplicFolderPath(imagePath)
                 val bitmap = ImageUtils.decodeSampledBitmapFromImagePath(fullPath, 300, 300)
-                markerImage.setImageBitmap(bitmap)
+                image_marker.setImageBitmap(bitmap)
             } else {
-                markerImage.setImageResource(R.drawable.ic_launcher)
+                image_marker.setImageResource(R.drawable.ic_launcher)
             }
         }
 
         viewModel.getLocationNames().thenAccept {
             locationNames = it
         }
-    }
 
-    private fun setMarker(marker: Marker) {
-        this.editMarker = marker
+        onIsShowBackgroundClick(view)
     }
 
     fun onCropClick(@Suppress("UNUSED_PARAMETER") view: View) {
@@ -107,23 +103,28 @@ class MarkerEditFragmentMarker : AppFragment() {
             try {
                 photoFile = createImageFile("marker_", FileUtils.MARKERS_PATH)
             } catch (ex: IOException) {
-                Log.d("MarkerEditFragment", ex.localizedMessage)
+                Log.d(TAG, "Couldn't create image file", ex)
             }
 
             // Continue only if the File was successfully created
             if (photoFile != null) {
                 activity!!.packageManager
                 val photoURI = FileProvider.getUriForFile(context!!,
-                        "eu.michaelvogt.ar.author.fileprovider",
-                        photoFile)
+                        "eu.michaelvogt.ar.author.fileprovider", photoFile)
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
             }
         }
     }
 
+    fun onIsShowBackgroundClick(view: View) {
+        marker_edit_virtual_background.editText?.isEnabled = marker_edit_show_background.isChecked
+    }
+
     @Throws(IOException::class)
     private fun createImageFile(filePrefix: String, path: String): File {
+        File(FileUtils.getFullPuplicFolderPath(FileUtils.MARKERS_PATH)).mkdirs()
+
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.JAPANESE).format(Date())
         val imageFileName = filePrefix + timeStamp + "_"
         val storageDir = FileUtils.getFullPuplicFolderFile(path)
@@ -137,7 +138,8 @@ class MarkerEditFragmentMarker : AppFragment() {
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             val fullPath = FileUtils.getFullPuplicFolderPath(capturePhotoPath)
-            markerImage.setImageBitmap(ImageUtils.decodeSampledBitmapFromImagePath(fullPath, 100, 100))
+            // TODO: Trigger scan to add this picture to the gallery
+            image_marker.setImageBitmap(ImageUtils.decodeSampledBitmapFromImagePath(fullPath, 100, 100))
             editMarker.markerImagePath = capturePhotoPath
         } else if (requestCode == REQUEST_PICK_IMAGE && resultCode == RESULT_OK) {
             val selectedImage = data!!.data
@@ -160,13 +162,12 @@ class MarkerEditFragmentMarker : AppFragment() {
                     FileUtils.copyFile(sourceFile, FileUtils.getFullPuplicFolderFile(photoPath))
                 } catch (e: IOException) {
                     photoPath = ""
-                    markerImage.setImageResource(R.drawable.ic_launcher)
+                    image_marker.setImageResource(R.drawable.ic_launcher)
                     e.printStackTrace()
                 }
 
                 val fullPath = FileUtils.getFullPuplicFolderPath(photoPath)
-                markerImage.setImageBitmap(ImageUtils.decodeSampledBitmapFromImagePath(
-                        fullPath, 100, 100))
+                image_marker.setImageBitmap(ImageUtils.decodeSampledBitmapFromImagePath(fullPath, 100, 100))
 
                 editMarker.markerImagePath = photoPath
             }
@@ -191,11 +192,16 @@ class MarkerEditFragmentMarker : AppFragment() {
     }
 
     fun setSelectLocation(selectLocation: String) {
-        editMarker.locationId = locationNames.find { it.name == selectLocation }
-                ?.uId ?: -1
+        editMarker.locationId = locationNames.find { it.name == selectLocation }?.uId ?: -1
+    }
+
+    private fun setMarker(marker: Marker) {
+        this.editMarker = marker
     }
 
     companion object {
+        val TAG = MarkerEditFragmentMarker::class.java.simpleName
+
         private const val REQUEST_IMAGE_CAPTURE = 1
         private const val REQUEST_PICK_IMAGE = 2
 

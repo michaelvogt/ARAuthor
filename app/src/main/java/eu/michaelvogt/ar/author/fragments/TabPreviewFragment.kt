@@ -23,13 +23,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.Navigation
 import com.google.ar.core.HitResult
 import com.google.ar.core.Plane
 import com.google.ar.core.TrackingState
 import eu.michaelvogt.ar.author.R
 import eu.michaelvogt.ar.author.data.Marker
-import eu.michaelvogt.ar.author.utils.Preferences
 import kotlinx.android.synthetic.main.fragment_tabpreview.*
 
 class TabPreviewFragment : PreviewFragment() {
@@ -49,20 +47,16 @@ class TabPreviewFragment : PreviewFragment() {
         arFragment.setOnTapArPlaneListener { hitResult, plane, _ ->
             onTapArPlane(hitResult, plane)
         }
-
-        listmarker_fab.setOnClickListener(
-                Navigation.createNavigateOnClickListener(R.id.marker_list_fragment)
-        )
     }
 
-    override fun onResume() {
+    override
+    fun onResume() {
         super.onResume()
 
         hideBottomBar()
         hideFab()
 
-        val allowEdit = Preferences.getPreference(context, R.string.allow_edit_pref, false)
-        (listmarker_fab as View).visibility = if (allowEdit) View.VISIBLE else View.GONE
+        listmarker_fab.setOnClickListener { navController.popBackStack() }
     }
 
     private fun onTapArPlane(hitResult: HitResult, plane: Plane) {

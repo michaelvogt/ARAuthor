@@ -22,7 +22,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProviders
 import com.google.ar.core.Anchor
 import com.google.ar.core.exceptions.CameraNotAvailableException
 import com.google.ar.sceneform.FrameTime
@@ -30,7 +29,10 @@ import com.google.ar.sceneform.Node
 import com.google.ar.sceneform.math.Quaternion
 import com.google.ar.sceneform.math.Vector3
 import eu.michaelvogt.ar.author.R
-import eu.michaelvogt.ar.author.data.*
+import eu.michaelvogt.ar.author.data.AreaVisual
+import eu.michaelvogt.ar.author.data.GROUP_ALL
+import eu.michaelvogt.ar.author.data.GROUP_START
+import eu.michaelvogt.ar.author.data.Marker
 import eu.michaelvogt.ar.author.nodes.AreaNode
 import eu.michaelvogt.ar.author.nodes.AreaNodeBuilder
 import eu.michaelvogt.ar.author.nodes.AuthorAnchorNode
@@ -43,13 +45,14 @@ open class PreviewFragment : AppFragment() {
     protected lateinit var container: ViewGroup
     protected lateinit var arFragment: LoopArFragment
 
-    protected var handledImages: MutableMap<String, Node?> = HashMap()
+    protected var handledImages: List<String> = emptyList()
     protected var cameraFacingNodes: MutableList<Node> = ArrayList()
 
     override
     fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         container = view as ViewGroup
-        viewModel = ViewModelProviders.of(activity!!).get(AuthorViewModel::class.java)
 
         arFragment = childFragmentManager.findFragmentById(R.id.ar_fragment) as LoopArFragment
         arFragment.arSceneView.scene.addOnUpdateListener { this.onUpdateFrame(it) }
