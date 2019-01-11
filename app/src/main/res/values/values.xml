@@ -15,6 +15,7 @@
 -->
 <resources>
     <string name="file_prefix">file://</string>
+    <string name="asset_prefix">file://</string>
 
     <!--Web view content keys-->
     <string name="about_key">about</string>

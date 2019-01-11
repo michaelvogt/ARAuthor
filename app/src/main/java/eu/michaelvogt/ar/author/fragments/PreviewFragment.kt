@@ -73,18 +73,10 @@ open class PreviewFragment : AppFragment() {
             val lookRotation = Quaternion.lookRotation(direction, Vector3.up())
             node.worldRotation = lookRotation
         }
-
-        //    if (modelPoseOnPlaneListeners.size() != 0) {
-        //      for (ModelPoseOnPlaneListener listener : modelPoseOnPlaneListeners) {
-        //        if (listener.onPlane()) {
-        //          modelPoseOnPlaneListeners.remove(listener);
-        //        }
-        //      }
-        //    }
     }
 
     protected fun buildMarkerScene(anchor: Anchor, marker: Marker, backgroundWidth: Float, backgroundHeight: Float) {
-        val anchorNode = AuthorAnchorNode(anchor, context, container, EventCallback())
+        val anchorNode = AuthorAnchorNode(anchor, context!!, container, EventCallback())
         anchorNode.setParent(arFragment.arSceneView.scene)
 
         if (marker.isShowBackground) {
@@ -115,8 +107,8 @@ open class PreviewFragment : AppFragment() {
     private fun buildArea(anchorNode: Node, areaVisual: AreaVisual, fn: Consumer<Node>?) {
         this.activity!!.runOnUiThread {
             AreaNodeBuilder
-                    .builder(activity, areaVisual)
-                    .build()!!
+                    .builder(context!!, areaVisual)
+                    .build()
                     .thenAccept { node ->
                         node.setParent(anchorNode)
 

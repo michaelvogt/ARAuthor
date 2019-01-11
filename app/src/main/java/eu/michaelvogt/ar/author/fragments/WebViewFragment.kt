@@ -58,9 +58,9 @@ class WebViewFragment : AppFragment(), View.OnClickListener {
 
         val content = WebViewFragmentArgs.fromBundle(arguments).contentUrl
         when (content) {
-            R.string.about_key -> content_info.loadUrl(getString(R.string.about_url))
+            R.string.about_key -> content_info.loadUrl("file://" + getString(R.string.about_url))
             R.string.location_intro_key -> initLocationIntro()
-            else -> content_info.loadUrl(getString(R.string.error_url))
+            else -> content_info.loadUrl("file://" + getString(R.string.error_url))
         }
     }
 
