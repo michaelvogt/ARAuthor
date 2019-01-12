@@ -58,9 +58,9 @@ class WebViewFragment : AppFragment(), View.OnClickListener {
 
         val content = WebViewFragmentArgs.fromBundle(arguments).contentUrl
         when (content) {
-            R.string.about_key -> content_info.loadUrl(getString(R.string.about_url))
+            R.string.about_key -> content_info.loadUrl(getString(R.string.file_prefix) + getString(R.string.about_url))
             R.string.location_intro_key -> initLocationIntro()
-            else -> content_info.loadUrl(getString(R.string.error_url))
+            else -> content_info.loadUrl(getString(R.string.file_prefix) + getString(R.string.error_url))
         }
     }
 
@@ -80,9 +80,10 @@ class WebViewFragment : AppFragment(), View.OnClickListener {
         val locationId = viewModel.currentLocationId
         viewModel.getLocation(locationId)
                 .thenAccept {
-                    var path = it.introHtmlPath
-                    if (!it.introHtmlPath!!.startsWith(getString(R.string.file_prefix))) {
-                        path = FileUtils.getFullPuplicFolderLocalUrl(it.introHtmlPath)
+                    val path = if (it.introHtmlPath!!.startsWith(getString(R.string.asset_prefix))) {
+                        getString(R.string.file_prefix) + it.introHtmlPath
+                    } else {
+                        FileUtils.getFullPuplicFolderLocalUrl(it.introHtmlPath)
                     }
                     activity!!.runOnUiThread { content_info.loadUrl(path) }
                 }

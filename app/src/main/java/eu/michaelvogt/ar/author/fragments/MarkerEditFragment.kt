@@ -133,7 +133,7 @@ class MarkerEditFragment : AppFragment() {
 //    }
 
     private inner class TabAdapter internal constructor(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
-        private val tabTitles = arrayOf("Marker", "Info", "Areas")
+        private val tabTitles = arrayOf("Marker", "Info", "Area")
 
         override fun getCount(): Int {
             return NUM_TABS

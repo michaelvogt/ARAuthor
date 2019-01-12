@@ -159,7 +159,7 @@ class MarkerEditFragmentMarker : AppFragment() {
                 try {
                     val sourceFile = File(imagePath)
                     photoPath = FileUtils.MARKERS_PATH + sourceFile.name
-                    FileUtils.copyFile(sourceFile, FileUtils.getFullPuplicFolderFile(photoPath))
+                    FileUtils.copyFiles(sourceFile, FileUtils.getFullPuplicFolderFile(photoPath))
                 } catch (e: IOException) {
                     photoPath = ""
                     image_marker.setImageResource(R.drawable.ic_launcher)
