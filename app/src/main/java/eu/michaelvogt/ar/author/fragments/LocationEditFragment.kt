@@ -18,6 +18,7 @@
 
 package eu.michaelvogt.ar.author.fragments
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -34,6 +35,8 @@ import eu.michaelvogt.ar.author.utils.FileUtils
 import eu.michaelvogt.ar.author.utils.PATH_SELECT_LOCATION_INTRO_CODE
 import eu.michaelvogt.ar.author.utils.PATH_SELECT_THUMB_CODE
 import kotlinx.android.synthetic.main.fragment_location_edit.*
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 /**
  * Fragment to edit a [Location]
@@ -110,14 +113,39 @@ class LocationEditFragment : AppFragment() {
 
     override
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        val path = FileUtils.getRelativePath(data?.data?.path)
+        // Deduplicate code
+        if (requestCode == PATH_SELECT_THUMB_CODE && resultCode == Activity.RESULT_OK) {
+            data?.data?.also {
+                doAsync {
+                    val parcelFileDescriptor = activity!!.contentResolver.openFileDescriptor(it, "r")
+                    val fileDescriptor = parcelFileDescriptor!!.fileDescriptor
 
-        when (requestCode) {
-            PATH_SELECT_THUMB_CODE ->
-                setRelativePath(binder.locationEditThumb.editText?.text, path)
+                    val outPath = "${FileUtils.THUMBS_PATH}${location.name.replace(" ", "_")}thumb.webp"
+                    FileUtils.copyFiles(fileDescriptor, FileUtils.getFullPuplicFolderFile(outPath))
 
-            PATH_SELECT_LOCATION_INTRO_CODE ->
-                setRelativePath(binder.locationEditIntro.editText?.text, path)
+                    parcelFileDescriptor.close()
+
+                    uiThread {
+                        setRelativePath(binder.locationEditThumb.editText?.text, outPath)
+                    }
+                }
+            }
+        } else if (requestCode == PATH_SELECT_LOCATION_INTRO_CODE && resultCode == Activity.RESULT_OK) {
+            data?.data?.also {
+                doAsync {
+                    val parcelFileDescriptor = activity!!.contentResolver.openFileDescriptor(it, "r")
+                    val fileDescriptor = parcelFileDescriptor!!.fileDescriptor
+
+                    val outPath = "${FileUtils.INTROS_PATH}${location.name.replace(" ", "_")}intro.html"
+                    FileUtils.copyFiles(fileDescriptor, FileUtils.getFullPuplicFolderFile(outPath))
+
+                    parcelFileDescriptor.close()
+
+                    uiThread {
+                        setRelativePath(binder.locationEditIntro.editText?.text, outPath)
+                    }
+                }
+            }
         }
     }
 
@@ -127,9 +155,10 @@ class LocationEditFragment : AppFragment() {
     }
 
     private fun handleImageSelection(mimeType: String, code: Int) {
-        val intent = Intent()
-        intent.type = mimeType
-        intent.action = Intent.ACTION_OPEN_DOCUMENT
+        val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = mimeType
+        }
         startActivityForResult(intent, code)
     }
 

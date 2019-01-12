@@ -51,6 +51,8 @@ class SplashFragment : AppFragment() {
             action = SplashFragmentDirections.actionToIntro().actionId
         }
 
+        // Crash with back navigation.
+        // https://github.com/googlesamples/android-architecture-components/issues/446
         navController.navigate(action)
     }
 

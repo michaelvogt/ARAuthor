@@ -24,6 +24,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.ui.NavigationUI
+import com.google.android.material.snackbar.Snackbar
 import eu.michaelvogt.ar.author.R
 import eu.michaelvogt.ar.author.databinding.FragmentMarkerlistBinding
 import eu.michaelvogt.ar.author.fragments.adapters.MarkerListAdapter
@@ -44,6 +45,7 @@ import kotlinx.android.synthetic.main.fragment_markerlist.*
  */
 class MarkerListFragment : AppFragment(), ItemClickListener {
     private lateinit var binder: FragmentMarkerlistBinding
+    private lateinit var adapter: MarkerListAdapter
 
     override
     fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -64,7 +66,7 @@ class MarkerListFragment : AppFragment(), ItemClickListener {
                     R.string.marker_info_primary, R.string.marker_info_secondary)
         })
 
-        val adapter = MarkerListAdapter(context)
+        adapter = MarkerListAdapter(context)
         binder.markerList.adapter = adapter
 
         val markers = viewModel.getMarkerGroupsForLocation(viewModel.currentLocationId)
@@ -83,6 +85,12 @@ class MarkerListFragment : AppFragment(), ItemClickListener {
                     true
                 }
                 R.id.actionbar_markerlist_ar -> {
+                    if (adapter.itemCount < 1) {
+                        Snackbar.make(view!!,
+                                resources.getString(R.string.marker_list_error_create_marker),
+                                Snackbar.LENGTH_SHORT).show()
+                        return@OnMenuItemClickListener true
+                    }
                     navController.navigate(R.id.image_preview_fragment)
                     true
                 }
