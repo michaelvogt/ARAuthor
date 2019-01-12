@@ -15,6 +15,7 @@
 -->
 <resources>
     <string name="file_prefix">file://</string>
+    <string name="asset_prefix">/android_asset/</string>
 
     <!--Web view content keys-->
     <string name="about_key">about</string>
@@ -26,4 +27,7 @@
 
 
     <string name="default_background">/android_asset/location/images/mylocationback.webp</string>
+    <string name="default_locationthumb">/android_asset/location/images/mylocationthumb.webp</string>
+    <string name="default_locationintro">/android_asset/location/mylocationintro.html</string>
+    <string name="default_marker">/android_asset/location/images/mymarker.webp</string>
 </resources>
