@@ -145,20 +145,6 @@ repositories {
     maven { url "https://kotlin.bintray.com/kotlinx" }
 }
 
-sceneform.asset('sampledata/models/monarch.obj',
-        'sampledata/models/default_model.mat',
-        'sampledata/models/monarch.sfa',
-        'src/main/res/raw/default_model')
-
-sceneform.asset('sampledata/models/slide.obj',
-        'sampledata/models/slide.mat',
-        'sampledata/models/slide.sfa',
-        'src/main/res/raw/slide')
-
-sceneform.asset('sampledata/models/compare.obj',
-        'sampledata/models/compare.mat',
-        'sampledata/models/compare.sfa',
-        'src/main/res/raw/compare')
 
 sceneform.asset('sampledata/models/big_old_house.obj',
         'default',

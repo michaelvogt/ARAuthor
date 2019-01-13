@@ -16,20 +16,26 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author.nodes;
+package eu.michaelvogt.ar.author.nodes
 
-import android.content.Context;
+import android.view.MotionEvent
 
-import com.google.ar.sceneform.rendering.ViewRenderable;
+import com.google.ar.sceneform.Node
 
-import java.util.concurrent.CompletableFuture;
+import eu.michaelvogt.ar.author.data.EventDetail
 
-import eu.michaelvogt.ar.author.R;
+interface EventHandler {
 
-public class InfoPanel {
-  public CompletableFuture<ViewRenderable> build(Context context) {
-    return ViewRenderable.builder()
-        .setView(context, R.layout.panel_interactive)
-        .build();
-  }
+    val children: Iterable<Node>
+    /**
+     * Node wants to handle a certain event
+     *
+     *
+     * AnchorNode has received a touch event, which gets then distributed to all Nodes that
+     * implement this interface.
+     *
+     * @param eventDetail   int context detail for the fired event
+     * @param motionEvent MotionEvent of the fired event
+     */
+    fun handleEvent(eventDetail: EventDetail, motionEvent: MotionEvent)
 }

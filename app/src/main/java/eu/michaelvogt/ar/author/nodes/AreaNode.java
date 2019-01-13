@@ -4,18 +4,12 @@ import android.content.Context;
 
 import com.google.ar.sceneform.Node;
 
-import eu.michaelvogt.ar.author.R;
 import eu.michaelvogt.ar.author.data.AreaVisual;
 import eu.michaelvogt.ar.author.data.AreaVisualKt;
 
 public class AreaNode extends Node {
   public static final int RENDER_FIRST = 0;
   public static final int RENDER_LAST = 7;
-
-  // TODO: Remove when Sceneform supports creation of custom materials #196
-  public static final int CUSTOM_MATERIAL_TEMP = R.raw.default_model;
-  public static final int SLIDE_MATERIAL_TEMP = R.raw.slide;
-  public static final int COMPARISON_MATERIAL_TEMP = R.raw.compare;
 
   protected Context context;
   protected final AreaVisual areaVisual;

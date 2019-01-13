@@ -26,7 +26,6 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import eu.michaelvogt.ar.author.data.utils.Converters
-import eu.michaelvogt.ar.author.data.utils.DatabaseInitializer
 
 @Database(entities = [Location::class, Marker::class, Area::class, MarkerArea::class,
     VisualDetail::class, EventDetail::class, Slide::class, TitleGroup::class], version = 16)
@@ -47,7 +46,6 @@ abstract class AppDatabase : RoomDatabase() {
     // TODO: Replace with proper coroutine
     class PopulateDbAsync internal constructor(
             db: AppDatabase,
-            val importDatabase: Boolean,
             val callback: () -> Unit) : AsyncTask<Void, Void, Void>() {
         private val locationDao: LocationDao = db.locationDao()
         private val markerDao: MarkerDao = db.markerDao()
@@ -76,11 +74,6 @@ abstract class AppDatabase : RoomDatabase() {
 
             if (locationDao.findDefaultLocation() == null) {
                 locationDao.insert(Location.getDefaultLocation())
-            }
-
-            if (importDatabase) {
-                DatabaseInitializer.runner(locationDao, markerDao, areaDao, markerAreaDao, titleGroupDao,
-                        visualDetailDao, slideDao, eventDetailDao).run()
             }
 
             return null

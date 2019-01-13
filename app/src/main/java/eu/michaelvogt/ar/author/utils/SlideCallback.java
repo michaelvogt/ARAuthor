@@ -63,7 +63,7 @@ public class SlideCallback implements NodeCallback {
 //        .setImagePath(comparisionData.getContentPath())
 //        .setSecondaryImagePath(comparisionData.getSecondaryPaths().get(0)));
 
-    AreaNodeBuilder.builder(context, comparisionArea)
+    AreaNodeBuilder.Companion.builder(context, comparisionArea)
         .build()
         .thenAccept(node -> {
           Node mainContent = scene.findInHierarchy(node1 -> node1.getName().equals(viewModel.getCurrentMainContentId()));
