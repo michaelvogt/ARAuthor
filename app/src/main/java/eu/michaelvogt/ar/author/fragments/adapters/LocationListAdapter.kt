@@ -22,7 +22,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import eu.michaelvogt.ar.author.R
 import eu.michaelvogt.ar.author.data.Location
@@ -35,8 +34,7 @@ import eu.michaelvogt.ar.author.utils.Preferences
  */
 class LocationListAdapter(
         private val context: Context?,
-        private val listener: CardMenuListener,
-        private val menuId: Int)
+        private val listener: CardMenuListener)
     : RecyclerView.Adapter<LocationListAdapter.ViewHolder>() {
 
     private var locations: List<Location> = emptyList()
@@ -76,16 +74,8 @@ class LocationListAdapter(
                 }
             }
 
-            binder.locationMenu.setOnClickListener { view ->
-                val popupMenu = PopupMenu(context!!, view)
-                val menuInflater = popupMenu.menuInflater
-                menuInflater.inflate(menuId, popupMenu.menu)
-                popupMenu.setOnMenuItemClickListener { item ->
-                    listener.onMenuClick(view, item, locations[adapterPosition])
-                    true
-                }
-
-                popupMenu.show()
+            binder.locationMenu.setOnClickListener {
+                listener.onMenuClick(it, locations[adapterPosition])
             }
         }
     }
