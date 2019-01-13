@@ -171,6 +171,7 @@ fun setInteger(view: AreaEditCard, int: Int) {
             put(KIND_BACKGROUND, "Background")
         }
         R.id.areaEditObjectType -> SparseArray<String>().apply {
+            // TODO: GEt the object types from available areas
             put(TYPE_DEFAULT, "Default")
             put(TYPE_3DOBJECTONIMAGE, "3D Objects on Image")
             put(TYPE_3DOBJECTONPLANE, "3D Object on Plane")

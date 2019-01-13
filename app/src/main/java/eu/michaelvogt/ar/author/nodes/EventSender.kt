@@ -16,20 +16,21 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author.nodes;
+package eu.michaelvogt.ar.author.nodes
 
-import android.util.SparseArray;
+import android.util.SparseArray
 
-import eu.michaelvogt.ar.author.data.EventDetail;
+import eu.michaelvogt.ar.author.data.EventDetail
 
-public interface EventSender {
+interface EventSender {
 
-  /**
-   * Touch event was received at the AnchorNode from this Node
-   * <p>
-   * Define here which event types should be distributed to the child Nodes of this AnchorNode.
-   *
-   * @return List<Integer>  type constant as defined in Event
-   */
-  SparseArray<EventDetail> getEventDetails();
+    /**
+     * Touch event was received at the AnchorNode from this Node
+     *
+     *
+     * Define here which event types should be distributed to the child Nodes of this AnchorNode.
+     *
+     * @return List<Integer>  type constant as defined in Event
+    </Integer> */
+    val eventDetails: SparseArray<EventDetail>
 }
