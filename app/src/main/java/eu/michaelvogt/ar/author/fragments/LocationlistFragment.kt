@@ -21,7 +21,6 @@ package eu.michaelvogt.ar.author.fragments
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
@@ -58,7 +57,7 @@ class LocationlistFragment : AppFragment(), CardMenuListener {
 
         viewModel.locationLoadTrigger.observe(this, Observer { setLocations() })
 
-        adapter = LocationListAdapter(context, this, R.menu.menu_location_popup)
+        adapter = LocationListAdapter(context, this)
         binder.locationList.adapter = adapter
 
         val appBarConfiguration = AppBarConfiguration.Builder(R.id.location_list_fragment).build()
@@ -93,13 +92,9 @@ class LocationlistFragment : AppFragment(), CardMenuListener {
     }
 
     override
-    fun onMenuClick(view: View, item: MenuItem, location: Location) {
-        when (item.itemId) {
-            R.id.menu_location_edit -> {
-                viewModel.currentLocationId = location.uId
-                navController.navigate(LocationlistFragmentDirections.actionToLocationEdit().actionId)
-            }
-        }
+    fun onMenuClick(view: View, location: Location) {
+        viewModel.currentLocationId = location.uId
+        navController.navigate(LocationlistFragmentDirections.actionToLocationEdit().actionId)
     }
 
     private fun setLocations() {

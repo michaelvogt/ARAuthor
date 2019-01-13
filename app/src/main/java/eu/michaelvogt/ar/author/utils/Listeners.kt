@@ -18,7 +18,6 @@
 
 package eu.michaelvogt.ar.author.utils
 
-import android.view.MenuItem
 import android.view.View
 import eu.michaelvogt.ar.author.data.Location
 
@@ -31,6 +30,6 @@ interface MenuSelectedListener {
 }
 
 interface CardMenuListener {
-    fun onMenuClick(view: View, item: MenuItem, location: Location)
+    fun onMenuClick(view: View, location: Location)
     fun onItemClicked(uId: Long)
 }
