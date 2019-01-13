@@ -107,6 +107,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/location_edit_hint_thumb"
+                    android:inputType="textMultiLine|textNoSuggestions"
                     android:text="@={location.thumbPath}" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -136,6 +137,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/location_edit_hint_intro"
+                    android:inputType="textMultiLine|textNoSuggestions"
                     android:text="@={location.introHtmlPath}" />
             </com.google.android.material.textfield.TextInputLayout>
 

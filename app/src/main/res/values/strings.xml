@@ -203,6 +203,7 @@
 
     <!--Error messages-->
     <string name="marker_edit_error_select_location">Please select a Location</string>
+    <string name="marker_list_error_create_marker">No Marker to test exists</string>
 
     <string name="display_converter_from_vector3">displayFromVector3</string>
     <string name="display_converter_from_quaternion">displayFromQuaternion</string>
