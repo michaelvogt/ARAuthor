@@ -13,8 +13,8 @@ android {
         // 24 is the minimum since ARCore only works with 24 and higher.
         minSdkVersion 24
         targetSdkVersion 28
-        versionCode 2
-        versionName '0.1 - prototype'
+        versionCode 3
+        versionName '0.2 - prototype'
 
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
@@ -69,7 +69,7 @@ dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation "androidx.constraintlayout:constraintlayout:2.0.0-alpha2"
+    implementation "androidx.constraintlayout:constraintlayout:2.0.0-alpha3"
     implementation 'androidx.fragment:fragment:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation "androidx.preference:preference:1.0.0"
@@ -86,7 +86,7 @@ dependencies {
     implementation "android.arch.navigation:navigation-ui-ktx:$androidx_navigation"
 
 //    implementation "androidx.core:core-ktx:1.0.1"
-    implementation "android.arch.work:work-runtime-ktx:1.0.0-alpha13"
+    implementation "android.arch.work:work-runtime-ktx:1.0.0-beta02"
 
     implementation "androidx.room:room-runtime:$androidx_room"
     implementation "androidx.room:room-migration:$androidx_room"
