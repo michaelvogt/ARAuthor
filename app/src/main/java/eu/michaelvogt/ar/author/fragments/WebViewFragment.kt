@@ -56,7 +56,7 @@ class WebViewFragment : AppFragment(), View.OnClickListener {
 
         NavigationUI.setupWithNavController(top_toolbar, navController)
 
-        val content = WebViewFragmentArgs.fromBundle(arguments).contentUrl
+        val content = WebViewFragmentArgs.fromBundle(arguments!!).contentUrl
         when (content) {
             R.string.about_key -> content_info.loadUrl(getString(R.string.file_prefix) + getString(R.string.about_url))
             R.string.location_intro_key -> initLocationIntro()
