@@ -35,6 +35,7 @@ import eu.michaelvogt.ar.author.R
 import eu.michaelvogt.ar.author.data.*
 import eu.michaelvogt.ar.author.data.utils.Converters
 import eu.michaelvogt.ar.author.fragments.AreaEditCard
+import java.io.FileNotFoundException
 
 @InverseMethod("floatFromString")
 fun floatToString(value: Float): String {
@@ -78,8 +79,13 @@ fun setImage(view: ImageView, url: String, placeholder: Drawable) {
     if (url.isEmpty()) {
         view.setImageDrawable(placeholder)
     } else if (url.startsWith(ImageUtils.assetPathPrefix)) {
-        val asset = view.resources.assets.open(url.removePrefix(ImageUtils.assetPathPrefix))
-        view.setImageDrawable(Drawable.createFromStream(asset, null))
+        try {
+            val asset = view.resources.assets.open(url.removePrefix(ImageUtils.assetPathPrefix))
+            view.setImageDrawable(Drawable.createFromStream(asset, null))
+        } catch (e: FileNotFoundException) {
+            Log.i("ViewConverters", "Image not found", e)
+            view.setImageResource(R.drawable.touristar_logo)
+        }
     } else {
         val bitmap: Bitmap
         try {
