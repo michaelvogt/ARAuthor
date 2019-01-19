@@ -1,0 +1,12 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution"
+    package="eu.michaelvogt.location_iwamiginzan">
+
+    <dist:module
+        dist:instant="false"
+        dist:onDemand="true"
+        dist:title="@string/title_location_iwamiginzan">
+        <dist:fusing dist:include="false" />
+    </dist:module>
+</manifest>
+
