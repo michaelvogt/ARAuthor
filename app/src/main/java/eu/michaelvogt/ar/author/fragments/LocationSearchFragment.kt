@@ -16,24 +16,18 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author.utils
+package eu.michaelvogt.ar.author.fragments
 
+import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import eu.michaelvogt.ar.author.data.Location
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import eu.michaelvogt.ar.author.R
 
-interface CardMenuListener {
-    fun onMenuClick(view: View, location: Location)
-    fun onItemClicked(uId: Long)
-}
+class LocationSearchFragment : Fragment() {
 
-interface ItemClickListener {
-    fun onItemClicked(uId: Long)
-}
-
-interface TextClickListener {
-    fun onTextClicked(id: String)
-}
-
-interface MenuSelectedListener {
-    fun onMenuSelected(id: Int)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_location_search, container, false)
+    }
 }

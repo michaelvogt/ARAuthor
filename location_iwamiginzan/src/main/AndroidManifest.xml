@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
+    xmlns:tools="http://schemas.android.com/tools"
     package="eu.michaelvogt.location_iwamiginzan">
 
     <dist:module
@@ -8,5 +9,9 @@
         dist:title="@string/title_location_iwamiginzan">
         <dist:fusing dist:include="false" />
     </dist:module>
+
+    <application
+        android:hasCode="false"
+        tools:ignore="GoogleAppIndexingWarning"></application>
 </manifest>
 

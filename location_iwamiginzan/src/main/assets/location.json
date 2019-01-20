@@ -1,0 +1,39 @@
+{
+  "location": [
+    {
+      "name": "Iwami Ginzan",
+      "description": "iwami description",
+      "thumbPath": "thumbpath",
+      "introHtmlPath": "intro",
+      "group": {
+        "name": "group",
+        "marker": [
+          {
+            "title": "title",
+            "markerImagePath": "image path",
+            "intro": "intro",
+            "location": "location",
+            "widthInM": "width",
+            "zeroPoint": "zero point",
+            "size": "size",
+            "area": [
+              {
+                "title": "title",
+                "objectType": "object",
+                "usageType": "useage",
+                "group": "group",
+                "resource": "resource",
+                "zeroPoint": "zero",
+                "size": "size",
+                "coordType": "coord",
+                "position": "position",
+                "rotation": "rotation",
+                "scale": "scale"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

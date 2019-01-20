@@ -113,6 +113,9 @@
                 android:name="locationId"
                 android:defaultValue="-1L" />
         </action>
+        <action
+            android:id="@+id/action_location_list_fragment_to_location_search_fragment"
+            app:destination="@id/location_search_fragment" />
     </fragment>
     <fragment
         android:id="@+id/web_view_fragment"
@@ -184,4 +187,8 @@
             android:name="update_mode"
             android:defaultValue="LATEST_CAMERA_IMAGE" />
     </fragment>
+    <fragment
+        android:id="@+id/location_search_fragment"
+        android:name="eu.michaelvogt.ar.author.fragments.LocationSearchFragment"
+        android:label="location_search_fragment" />
 </navigation>

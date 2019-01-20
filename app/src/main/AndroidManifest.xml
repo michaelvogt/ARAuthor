@@ -17,13 +17,15 @@
         android:required="false" />
 
     <application
+        android:allowBackup="false"
+        android:hasCode="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:screenOrientation="portrait"
         android:theme="@style/AppTheme.Launcher"
         android:usesCleartextTraffic="false"
-        android:screenOrientation="portrait"
-        android:allowBackup="false"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:replace="android:hasCode">
 
         <meta-data
             android:name="com.google.ar.core"

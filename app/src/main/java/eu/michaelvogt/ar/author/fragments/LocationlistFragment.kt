@@ -72,7 +72,7 @@ class LocationlistFragment : AppFragment(), CardMenuListener {
     override fun onResume() {
         super.onResume()
 
-        setupFab(android.R.drawable.ic_input_add, View.OnClickListener {
+        setupFab(R.drawable.ic_search_black_24dp, View.OnClickListener {
             viewModel.currentLocationId = NEW_CURRENT_LOCATION
             navController.navigate(LocationlistFragmentDirections.actionToLocationEdit())
         })

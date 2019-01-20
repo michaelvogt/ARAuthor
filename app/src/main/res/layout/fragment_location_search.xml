@@ -25,10 +25,10 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/locationlist_layout"
+        android:id="@+id/locationsearch_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragments.LocationlistFragment">
+        tools:context=".fragments.LocationSearchFragment">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/top_toolbar"
@@ -53,7 +53,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/top_toolbar"
-            tools:listitem="@layout/card_location">
+            tools:listitem="@layout/card_location_search">
 
         </androidx.recyclerview.widget.RecyclerView>
     </androidx.constraintlayout.widget.ConstraintLayout>
