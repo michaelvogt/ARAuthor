@@ -7,27 +7,27 @@
   {
     "name": "Iwami Ginzan",
     "module_id": "location_iwamiginzan",
-    "is_title": false
+    "content_size": "1234MB"
   },
   {
     "name": "Izumo Taisha",
     "module_id": "location_izumotaisha",
-    "is_title": false
+    "content_size": "1234MB"
   },
   {
     "name": "Nara",
     "module_id": "location_nara",
-    "is_title": false
+    "content_size": "1234MB"
   },
   {
     "name": "Hiroshima",
     "module_id": "location_hiroshima",
-    "is_title": false
+    "content_size": "1234MB"
   },
   {
     "name": "Niigata",
     "module_id": "location_niigata",
-    "is_title": false
+    "content_size": "1234MB"
   },
   {
     "name": "Peru",
@@ -37,6 +37,6 @@
   {
     "name": "Machu Picchu",
     "module_id": "location_machupicchu",
-    "is_title": false
+    "content_size": "1234MB"
   }
 ]

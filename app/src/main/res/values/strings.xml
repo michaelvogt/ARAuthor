@@ -118,6 +118,7 @@
     <!--AvailableLocations-->
     <string name="location_image_desc">Image representing the location of this card</string>
     <string name="location_menu_desc">Location item menu</string>
+    <string name="location_load_desc">Location load menu</string>
     <string name="location_edit_header">Location</string>
 
     <string name="location_edit_hint_name">Name</string>

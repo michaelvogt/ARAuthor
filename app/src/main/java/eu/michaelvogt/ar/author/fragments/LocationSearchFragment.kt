@@ -19,6 +19,7 @@
 package eu.michaelvogt.ar.author.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +30,7 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import eu.michaelvogt.ar.author.R
+import eu.michaelvogt.ar.author.data.Location
 import eu.michaelvogt.ar.author.data.tuples.SearchLocation
 import eu.michaelvogt.ar.author.databinding.FragmentLocationSearchBinding
 import eu.michaelvogt.ar.author.fragments.adapters.LocationSearchAdapter
@@ -78,15 +80,24 @@ class LocationSearchFragment : AppFragment(), CardLinkListener {
         super.onResume()
 
         setupFab(android.R.drawable.ic_input_add, View.OnClickListener {
-
+            navController.navigate(LocationSearchFragmentDirections.actionToLocationEdit())
         })
 
         showBottomBar()
     }
 
-    override fun onTextClicked(moduleId: String) {
-        // TODO: Start download of selected module from Play store
+    override fun onTextClicked(searchLocation: SearchLocation) {
+        val location = Location.getPlaceholderLocation(
+                searchLocation.name, searchLocation.module_id, searchLocation.content_size)
+        viewModel.insertLocation(location).thenAccept {
+            activity!!.runOnUiThread { navController.popBackStack() }
+        }.exceptionally {
+            Log.e(TAG, "Unable to insert placeholder location ${searchLocation.name}", it)
+            null
+        }
+    }
 
-        navController.popBackStack()
+    companion object {
+        private var TAG: String = LocationSearchFragment::class.java.simpleName
     }
 }

@@ -97,6 +97,12 @@ class LocationlistFragment : AppFragment(), CardMenuListener {
         navController.navigate(LocationlistFragmentDirections.actionToLocationEdit().actionId)
     }
 
+    override
+    fun onDownloadClicked(moduleId: String) {
+        // TODO: load module from play store
+        println(moduleId)
+    }
+
     private fun setLocations() {
         viewModel.getAllLocations()
                 .thenAccept { locations -> activity!!.runOnUiThread { adapter.setLocations(locations) } }

@@ -20,14 +20,16 @@ package eu.michaelvogt.ar.author.utils
 
 import android.view.View
 import eu.michaelvogt.ar.author.data.Location
+import eu.michaelvogt.ar.author.data.tuples.SearchLocation
 
 interface CardLinkListener {
-    fun onTextClicked(moduleId: String)
+    fun onTextClicked(searchLocation: SearchLocation)
 }
 
 interface CardMenuListener {
     fun onMenuClick(view: View, location: Location)
     fun onItemClicked(uId: Long)
+    fun onDownloadClicked(moduleId: String)
 }
 
 interface ItemClickListener {

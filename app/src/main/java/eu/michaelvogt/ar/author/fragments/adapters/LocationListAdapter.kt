@@ -60,9 +60,9 @@ class LocationListAdapter(
     override
     fun getItemCount(): Int = locations.size
 
-    fun isEditEnabled(): Int {
+    fun isEditEnabled(isLoaded: Boolean): Int {
         val allowEditPref = Preferences.getPreference(context, R.string.allow_edit_pref, false)
-        return if (allowEditPref) View.VISIBLE else View.GONE
+        return if (allowEditPref && isLoaded) View.VISIBLE else View.GONE
     }
 
     inner class ViewHolder(val binder: CardLocationBinding) : RecyclerView.ViewHolder(binder.root) {
@@ -76,6 +76,14 @@ class LocationListAdapter(
 
             binder.locationMenu.setOnClickListener {
                 listener.onMenuClick(it, locations[adapterPosition])
+            }
+
+            binder.locationLoad.setOnClickListener {
+                val moduleId = locations[adapterPosition].moduleId
+
+                if (moduleId != null && moduleId.isNotEmpty()) {
+                    listener.onDownloadClicked(moduleId)
+                }
             }
         }
     }

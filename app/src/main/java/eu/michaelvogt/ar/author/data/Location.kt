@@ -42,8 +42,15 @@ class Location(
         var introHtmlPath: String?,
 
         @field:ColumnInfo(name = "is_default_location")
-        var isDefaultLocation: Boolean = false) {
+        var isDefaultLocation: Boolean = false,
 
+        @field:ColumnInfo(name = "content_size")
+        var contentSize: String? = "?KB",
+
+        var loaded: Boolean? = false,
+
+        @field:ColumnInfo(name = "module_id")
+        var moduleId: String? = "") {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "u_id")
@@ -51,7 +58,12 @@ class Location(
 
     override
     fun toString(): String {
-        return "Location(name='$name', thumbPath=$thumbPath, introHtmlPath=$introHtmlPath, uId=$uId)"
+        return "Location(name='$name', " +
+                "thumbPath=$thumbPath, " +
+                "introHtmlPath=$introHtmlPath, " +
+                "uId=$uId, " +
+                "contentSize=$contentSize, " +
+                "loaded=$loaded)"
     }
 
     override fun equals(other: Any?): Boolean {
@@ -65,6 +77,8 @@ class Location(
         if (thumbPath != other.thumbPath) return false
         if (introHtmlPath != other.introHtmlPath) return false
         if (uId != other.uId) return false
+        if (contentSize != other.contentSize) return false
+        if (loaded != other.loaded) return false
 
         return true
     }
@@ -76,6 +90,8 @@ class Location(
         result = 31 * result + (thumbPath?.hashCode() ?: 0)
         result = 31 * result + (introHtmlPath?.hashCode() ?: 0)
         result = 31 * result + uId.toInt()
+        result = 31 * result + (contentSize?.hashCode() ?: 0)
+        result = 31 * result + (loaded?.hashCode() ?: 0)
         return result
     }
 
@@ -87,7 +103,32 @@ class Location(
                     "",
                     "/android_asset/location/images/mylocationthumb.webp",
                     "/android_asset/location/mylocationintro.html",
+                    true,
+                    "",
                     true)
+        }
+
+        fun getNewLocation(): Location {
+            return Location(
+                    "New location",
+                    "Default location for testing",
+                    "",
+                    "",
+                    "",
+                    loaded = true)
+        }
+
+        fun getPlaceholderLocation(name: String, moduleId: String, contentSize: String): Location {
+            return Location(
+                    name,
+                    "",
+                    "",
+                    "",
+                    "",
+                    false,
+                    contentSize,
+                    false,
+                    moduleId)
         }
     }
 }

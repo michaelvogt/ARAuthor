@@ -22,6 +22,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="handler"
             type="eu.michaelvogt.ar.author.fragments.adapters.LocationListAdapter" />
@@ -91,12 +93,26 @@
                 android:layout_marginEnd="8dp"
                 android:background="#7fff"
                 android:contentDescription="@string/location_menu_desc"
-                android:visibility="@{handler.isEditEnabled()}"
+                android:visibility="@{handler.isEditEnabled(location.loaded)}"
 
                 card_view:layout_constraintBottom_toBottomOf="@+id/location_title"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintTop_toTopOf="@+id/location_title"
                 card_view:srcCompat="@drawable/ic_edit_black_24dp" />
+
+            <ImageButton
+                android:id="@+id/location_load"
+                android:layout_width="44dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="8dp"
+                android:background="#7fff"
+                android:contentDescription="@string/location_load_desc"
+                android:visibility="@{location.loaded ? View.GONE : View.VISIBLE}"
+
+                card_view:layout_constraintBottom_toBottomOf="@+id/location_title"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintTop_toTopOf="@+id/location_title"
+                card_view:srcCompat="@drawable/ic_file_download_black_24dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
