@@ -1,42 +1,66 @@
 [
   {
     "name": "Japan",
+    "description": "",
     "module_id": "",
-    "is_title": true
+    "is_title": true,
+    "thumb_path": "",
+    "intro_html_path": ""
   },
   {
     "name": "Iwami Ginzan",
+    "description": "World heritage silver mine area",
     "module_id": "location_iwamiginzan",
-    "is_title": false
+    "content_size": "1234MB",
+    "thumb_path": "location/images/iwamiginzanthumb.webp",
+    "intro_html_path": "location/iwamiginzan.html"
   },
   {
     "name": "Izumo Taisha",
+    "description": "",
     "module_id": "location_izumotaisha",
-    "is_title": false
+    "content_size": "1234MB",
+    "thumb_path": "",
+    "intro_html_path": ""
   },
   {
     "name": "Nara",
+    "description": "",
     "module_id": "location_nara",
-    "is_title": false
+    "content_size": "1234MB",
+    "thumb_path": "",
+    "intro_html_path": ""
   },
   {
     "name": "Hiroshima",
+    "description": "",
     "module_id": "location_hiroshima",
-    "is_title": false
+    "content_size": "1234MB",
+    "thumb_path": "",
+    "intro_html_path": ""
   },
   {
     "name": "Niigata",
+    "description": "",
     "module_id": "location_niigata",
-    "is_title": false
+    "content_size": "1234MB",
+    "thumb_path": "",
+    "intro_html_path": ""
   },
   {
     "name": "Peru",
+    "description": "",
     "module_id": "",
-    "is_title": true
+    "is_title": true,
+    "thumb_path": "",
+    "intro_html_path": ""
   },
   {
     "name": "Machu Picchu",
+    "description": "",
     "module_id": "location_machupicchu",
-    "is_title": false
+    "content_size": "1234MB",
+    "thumb_path": "",
+    "intro_html_path": ""
   }
 ]

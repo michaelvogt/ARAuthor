@@ -28,7 +28,7 @@ import androidx.room.TypeConverters
 import eu.michaelvogt.ar.author.data.utils.Converters
 
 @Database(entities = [Location::class, Marker::class, Area::class, MarkerArea::class,
-    VisualDetail::class, EventDetail::class, Slide::class, TitleGroup::class], version = 16)
+    VisualDetail::class, EventDetail::class, Slide::class, TitleGroup::class], version = 21)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun locationDao(): LocationDao

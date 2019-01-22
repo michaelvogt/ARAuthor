@@ -61,6 +61,10 @@ class AppRepository internal constructor(db: AppDatabase?) {
         return CompletableFuture.supplyAsync { locationDao.insert(location) }
     }
 
+    fun insert(group: TitleGroup): CompletableFuture<Long> {
+        return CompletableFuture.supplyAsync { titleGroupDao.insert(group) }
+    }
+
     fun insert(marker: Marker): CompletableFuture<Long> {
         return CompletableFuture.supplyAsync { markerDao.insert(marker) }
     }
@@ -118,10 +122,6 @@ class AppRepository internal constructor(db: AppDatabase?) {
 
     fun allLocations(): CompletableFuture<List<Location>> {
         return CompletableFuture.supplyAsync { locationDao.getAll() }
-    }
-
-    fun getAvailableLocations(context: Context, request: StringRequest) {
-        RequestQueueSingleton.getInstance(context.applicationContext).addToRequestQueue(request)
     }
 
     fun getLocationNames(): CompletableFuture<List<Location>> {
@@ -227,6 +227,11 @@ class AppRepository internal constructor(db: AppDatabase?) {
         }
     }
 
+    fun insertMarkerArea(markerArea: MarkerArea): CompletableFuture<Long> {
+        return CompletableFuture.supplyAsync { markerAreaDao.insert(markerArea) }
+    }
+
+
     private fun setupAreaVisual(area: Area): AreaVisual {
         val details = visualDetailDao.getForArea(area.uId)
         val events = eventDetailDao.getForArea(area.uId)
@@ -239,5 +244,11 @@ class AppRepository internal constructor(db: AppDatabase?) {
 
     private fun handleException(throwable: Throwable) {
         Log.e(AppRepository::class.simpleName, "Database error", throwable)
+    }
+
+
+    //    Server access
+    fun handleRequest(context: Context, request: StringRequest) {
+        RequestQueueSingleton.getInstance(context.applicationContext).addToRequestQueue(request)
     }
 }

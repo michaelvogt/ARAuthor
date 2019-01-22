@@ -52,36 +52,37 @@ class AuthorViewModel(application: Application) : AndroidViewModel(application) 
 
     var locationLoadTrigger: MutableLiveData<Int> = MutableLiveData()
 
+
     fun insertLocation(location: Location) = repository.insert(location)
 
-    fun getLocation(uid: Long): CompletableFuture<Location> = repository.getLocation(uid)
+    fun getLocation(uid: Long) = repository.getLocation(uid)
 
-    fun getAllLocations(): CompletableFuture<List<Location>> = repository.allLocations()
+    fun getAllLocations() = repository.allLocations()
 
-    fun requestAvailableLocations(context: Context, request: StringRequest) =
-            repository.getAvailableLocations(context, request)
-
-    fun getLocationNames(): CompletableFuture<List<Location>> = repository.getLocationNames()
+    fun getLocationNames() = repository.getLocationNames()
 
     fun updateLocation(location: Location) = repository.update(location)
 
-    fun deleteLocation(location: Location): CompletableFuture<Unit> = repository.delete(location)
+    fun deleteLocation(location: Location) = repository.delete(location)
+
+
+    fun insertTitleGroup(group: TitleGroup) = repository.insert(group)
 
 
     fun insertMarker(marker: Marker) = repository.insert(marker)
 
-    fun getMarker(uId: Long): CompletableFuture<Marker> = repository.getMarker(uId)
+    fun getMarker(uId: Long) = repository.getMarker(uId)
 
     fun getMarkerIdFromGroup(markerTitle: String, groupName: String) = repository.getMarkerIdFromGroup(markerTitle, groupName)
 
     fun updateMarker(marker: Marker) = repository.update(marker)
 
-    fun deleteMarker(marker: Marker): CompletableFuture<Unit> = repository.delete(marker)
+    fun deleteMarker(marker: Marker) = repository.delete(marker)
 
-    fun getMarkersForLocation(locationId: Long): CompletableFuture<List<Marker>> =
+    fun getMarkersForLocation(locationId: Long) =
             repository.getMarkersForLocation(locationId)
 
-    fun getMarkerGroupsForLocation(locationId: Long): List<ListMarker> =
+    fun getMarkerGroupsForLocation(locationId: Long) =
             repository.getMarkerGroupsForLocation(locationId)
 
     fun clearCropMarker() {
@@ -118,4 +119,12 @@ class AuthorViewModel(application: Application) : AndroidViewModel(application) 
     fun updateArea(area: Area) = repository.update(area)
 
     fun deleteAreaVisual(areaVisual: AreaVisual): CompletableFuture<Unit> = repository.delete(areaVisual)
+
+
+    fun insertMarkerArea(markerArea: MarkerArea) = repository.insertMarkerArea(markerArea)
+
+
+    //    Server access
+    fun handleRequest(context: Context, request: StringRequest) =
+            repository.handleRequest(context, request)
 }

@@ -23,5 +23,19 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class SearchLocation(
-        val name: String, val module_id: String, @Optional val is_title: Boolean = false
+        val name: String,
+
+        val description: String,
+
+        val module_id: String,
+
+        val thumb_path: String,
+
+        val intro_html_path: String,
+
+        @Optional
+        val content_size: String = "?KB",
+
+        @Optional
+        val is_title: Boolean = false
 )

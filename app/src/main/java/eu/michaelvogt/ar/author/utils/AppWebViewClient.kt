@@ -43,13 +43,13 @@ class AppWebViewJs(
         private val viewModel: AuthorViewModel) {
 
     @JavascriptInterface
-    fun openArView() {
+    fun openArView(moduleId: String) {
+        // TODO: This looks strange
         viewModel.getMarkerIdFromGroup("看板", "宗岡家").thenAccept {
             viewModel.currentMarkerId = it
 
             activity?.runOnUiThread {
-                val importMarkersPref = Preferences.getPreference(activity, R.string.import_marker_images_pref, false)
-                if (importMarkersPref && viewModel.markersCache?.isNotEmpty() ?: false)
+                if (viewModel.markersCache?.isNotEmpty() ?: false)
                     navController.navigate(R.id.image_preview_fragment)
                 else
                     navController.navigate(R.id.touch_preview_fragment)

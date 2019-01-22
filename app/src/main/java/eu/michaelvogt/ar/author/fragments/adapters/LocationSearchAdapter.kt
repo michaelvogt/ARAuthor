@@ -81,8 +81,7 @@ class LocationSearchAdapter(
                 if (listener != null) {
                     val position = adapterPosition
                     if (position != RecyclerView.NO_POSITION) {
-                        val moduleId = locations[position].module_id
-                        listener.onTextClicked(moduleId)
+                        listener.onTextClicked(locations[position])
                     }
                 }
             }

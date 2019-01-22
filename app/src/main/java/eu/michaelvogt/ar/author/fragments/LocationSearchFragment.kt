@@ -19,6 +19,7 @@
 package eu.michaelvogt.ar.author.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +30,7 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import eu.michaelvogt.ar.author.R
+import eu.michaelvogt.ar.author.data.Location
 import eu.michaelvogt.ar.author.data.tuples.SearchLocation
 import eu.michaelvogt.ar.author.databinding.FragmentLocationSearchBinding
 import eu.michaelvogt.ar.author.fragments.adapters.LocationSearchAdapter
@@ -65,8 +67,8 @@ class LocationSearchFragment : AppFragment(), CardLinkListener {
                     R.string.location_search_primary, R.string.location_search_secondary)
         })
 
-        viewModel.requestAvailableLocations(context!!,
-                StringRequest(Request.Method.GET, resources.getString(R.string.available_locations),
+        viewModel.handleRequest(context!!,
+                StringRequest(Request.Method.GET, getString(R.string.location_content_base_uri) + getString(R.string.available_locations_path),
                         Response.Listener {
                             val locations = JSON.parse(SearchLocation.serializer().list, it)
                             adapter.setLocations(locations)
@@ -78,15 +80,23 @@ class LocationSearchFragment : AppFragment(), CardLinkListener {
         super.onResume()
 
         setupFab(android.R.drawable.ic_input_add, View.OnClickListener {
-
+            navController.navigate(LocationSearchFragmentDirections.actionToLocationEdit())
         })
 
         showBottomBar()
     }
 
-    override fun onTextClicked(moduleId: String) {
-        // TODO: Start download of selected module from Play store
+    override fun onTextClicked(searchLocation: SearchLocation) {
+        val location = Location.getPlaceholderLocation(searchLocation)
+        viewModel.insertLocation(location).thenAccept {
+            activity!!.runOnUiThread { navController.popBackStack() }
+        }.exceptionally {
+            Log.e(TAG, "Unable to insert placeholder location ${searchLocation.name}", it)
+            null
+        }
+    }
 
-        navController.popBackStack()
+    companion object {
+        private var TAG: String = LocationSearchFragment::class.java.simpleName
     }
 }
