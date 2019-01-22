@@ -114,7 +114,7 @@
                 android:defaultValue="-1L" />
         </action>
         <action
-            android:id="@+id/action_location_list_fragment_to_location_search_fragment"
+            android:id="@+id/action_to_location_search"
             app:destination="@id/location_search_fragment" />
     </fragment>
     <fragment
@@ -190,5 +190,5 @@
     <fragment
         android:id="@+id/location_search_fragment"
         android:name="eu.michaelvogt.ar.author.fragments.LocationSearchFragment"
-        android:label="location_search_fragment" />
+        android:label="Select Location" />
 </navigation>

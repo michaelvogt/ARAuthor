@@ -18,10 +18,13 @@
 
 package eu.michaelvogt.ar.author.data
 
+import android.content.Context
 import android.util.Log
+import com.android.volley.toolbox.StringRequest
 import eu.michaelvogt.ar.author.data.tuples.ListMarker
 import eu.michaelvogt.ar.author.utils.NEW_CURRENT_LOCATION
 import eu.michaelvogt.ar.author.utils.NEW_CURRENT_MARKER
+import eu.michaelvogt.ar.author.utils.RequestQueueSingleton
 import org.jetbrains.anko.collections.forEach
 import org.jetbrains.anko.doAsyncResult
 import java.util.*
@@ -115,6 +118,10 @@ class AppRepository internal constructor(db: AppDatabase?) {
 
     fun allLocations(): CompletableFuture<List<Location>> {
         return CompletableFuture.supplyAsync { locationDao.getAll() }
+    }
+
+    fun getAvailableLocations(context: Context, request: StringRequest) {
+        RequestQueueSingleton.getInstance(context.applicationContext).addToRequestQueue(request)
     }
 
     fun getLocationNames(): CompletableFuture<List<Location>> {

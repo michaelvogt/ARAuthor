@@ -25,18 +25,18 @@ import androidx.recyclerview.widget.RecyclerView
 import eu.michaelvogt.ar.author.data.tuples.SearchLocation
 import eu.michaelvogt.ar.author.databinding.CardLocationHeaderBinding
 import eu.michaelvogt.ar.author.databinding.CardLocationSearchBinding
-import eu.michaelvogt.ar.author.utils.TextClickListener
+import eu.michaelvogt.ar.author.utils.CardLinkListener
 
-class LocationSearchAdapter(context: Context?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+/**
+ * Adapter for the list of [Location]s available from the server
+ */
+class LocationSearchAdapter(
+        private val context: Context?,
+        private val listener: CardLinkListener?)
+    : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var locations: List<SearchLocation> = emptyList()
     private val inflater: LayoutInflater = LayoutInflater.from(context)
-
-    private var listener: TextClickListener? = null
-
-    fun setItemClickListener(listener: TextClickListener) {
-        this.listener = listener
-    }
 
     fun setLocations(locations: List<SearchLocation>) {
         this.locations = locations
@@ -67,7 +67,7 @@ class LocationSearchAdapter(context: Context?) : RecyclerView.Adapter<RecyclerVi
 
     override
     fun getItemViewType(position: Int): Int {
-        return if (locations[position].isTitle) LocationSearchAdapter.TYPE_HEADER else LocationSearchAdapter.TYPE_ITEM
+        return if (locations[position].is_title) LocationSearchAdapter.TYPE_HEADER else LocationSearchAdapter.TYPE_ITEM
     }
 
     override
@@ -81,8 +81,8 @@ class LocationSearchAdapter(context: Context?) : RecyclerView.Adapter<RecyclerVi
                 if (listener != null) {
                     val position = adapterPosition
                     if (position != RecyclerView.NO_POSITION) {
-                        val moduleId = locations[position].moduleId
-                        listener!!.onTextClicked(moduleId)
+                        val moduleId = locations[position].module_id
+                        listener.onTextClicked(moduleId)
                     }
                 }
             }

@@ -74,7 +74,7 @@ class LocationlistFragment : AppFragment(), CardMenuListener {
 
         setupFab(R.drawable.ic_search_black_24dp, View.OnClickListener {
             viewModel.currentLocationId = NEW_CURRENT_LOCATION
-            navController.navigate(LocationlistFragmentDirections.actionToLocationEdit())
+            navController.navigate(LocationlistFragmentDirections.actionToLocationSearch())
         })
 
         showBottomBar()

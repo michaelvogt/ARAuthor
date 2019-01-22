@@ -1,4 +1,4 @@
-/*
+<!--
     ARTester - AR for tourists by tourists
     Copyright (C) 2018, 2019  Michael Vogt
 
@@ -14,14 +14,13 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/
+-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-package eu.michaelvogt.ar.author.data.tuples
-
-import kotlinx.serialization.Optional
-import kotlinx.serialization.Serializable
-
-@Serializable
-data class SearchLocation(
-        val name: String, val module_id: String, @Optional val is_title: Boolean = false
-)
+    <item
+        android:id="@+id/toolbar_location_info"
+        android:icon="@android:drawable/ic_dialog_info"
+        android:title="@string/location_info_title"
+        app:showAsAction="always" />
+</menu>

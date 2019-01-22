@@ -21,7 +21,6 @@ package eu.michaelvogt.ar.author
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.ar.core.ArCoreApk
 import eu.michaelvogt.ar.author.data.AppDatabase
@@ -35,7 +34,6 @@ import kotlinx.android.synthetic.main.activity_author.*
  * Architecture component.
  */
 class AuthorActivity : AppCompatActivity() {
-    private lateinit var navController: NavController
 
     /**
      * Do application wide initialisation for UI, database and navigation handler.
@@ -49,9 +47,12 @@ class AuthorActivity : AppCompatActivity() {
 
         val viewModel = ViewModelProviders.of(this).get(AuthorViewModel::class.java)
         val database = AppDatabase.getDatabase(applicationContext)
-        AppDatabase.PopulateDbAsync(database!!) { viewModel.locationLoadTrigger.setValue(0) }.execute()
 
-        navController = Navigation.findNavController(this, R.id.nav_host_fragment)
+        if (database != null) {
+            AppDatabase.PopulateDbAsync(database) { viewModel.locationLoadTrigger.setValue(0) }.execute()
+        }
+
+        val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         navController.addOnDestinationChangedListener(AppNavigationListener(this, null))
 
         // Handler for navigation menu selections

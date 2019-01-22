@@ -23,8 +23,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import eu.michaelvogt.ar.author.data.tuples.ListMarker
-import eu.michaelvogt.ar.author.databinding.CardHeaderBinding
 import eu.michaelvogt.ar.author.databinding.CardMarkerBinding
+import eu.michaelvogt.ar.author.databinding.CardMarkerHeaderBinding
 import eu.michaelvogt.ar.author.utils.ItemClickListener
 
 class MarkerListAdapter(context: Context?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -45,7 +45,7 @@ class MarkerListAdapter(context: Context?) : RecyclerView.Adapter<RecyclerView.V
     override
     fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == TYPE_HEADER) {
-            val headerBinder = CardHeaderBinding.inflate(inflater, parent, false)
+            val headerBinder = CardMarkerHeaderBinding.inflate(inflater, parent, false)
             HeaderHolder(headerBinder)
         } else {
             val markerBinder = CardMarkerBinding.inflate(inflater, parent, false)
@@ -87,7 +87,7 @@ class MarkerListAdapter(context: Context?) : RecyclerView.Adapter<RecyclerView.V
         }
     }
 
-    internal inner class HeaderHolder(val binding: CardHeaderBinding) : RecyclerView.ViewHolder(binding.root)
+    internal inner class HeaderHolder(val binding: CardMarkerHeaderBinding) : RecyclerView.ViewHolder(binding.root)
 
     companion object {
         private const val TYPE_HEADER = 0

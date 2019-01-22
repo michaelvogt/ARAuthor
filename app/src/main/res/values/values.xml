@@ -25,6 +25,7 @@
 
     <string name="location_intro_key">location_intro</string>
 
+    <string name="available_locations">https://rambunctious-cart.glitch.me/available_locations.json</string>
 
     <string name="default_background">/android_asset/location/images/mylocationback.webp</string>
     <string name="default_locationthumb">/android_asset/location/images/mylocationthumb.webp</string>

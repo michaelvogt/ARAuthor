@@ -30,7 +30,7 @@ import eu.michaelvogt.ar.author.utils.CardMenuListener
 import eu.michaelvogt.ar.author.utils.Preferences
 
 /**
- * Adapter for the list of Locations
+ * Adapter for the list of [Location]s available locally
  */
 class LocationListAdapter(
         private val context: Context?,

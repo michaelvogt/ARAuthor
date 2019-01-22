@@ -21,6 +21,10 @@ package eu.michaelvogt.ar.author.utils
 import android.view.View
 import eu.michaelvogt.ar.author.data.Location
 
+interface CardLinkListener {
+    fun onTextClicked(moduleId: String)
+}
+
 interface CardMenuListener {
     fun onMenuClick(view: View, location: Location)
     fun onItemClicked(uId: Long)
@@ -28,10 +32,6 @@ interface CardMenuListener {
 
 interface ItemClickListener {
     fun onItemClicked(uId: Long)
-}
-
-interface TextClickListener {
-    fun onTextClicked(id: String)
 }
 
 interface MenuSelectedListener {

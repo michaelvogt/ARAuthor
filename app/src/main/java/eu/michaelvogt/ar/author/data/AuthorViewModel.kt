@@ -20,9 +20,11 @@ package eu.michaelvogt.ar.author.data
 
 import android.app.Activity
 import android.app.Application
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.android.volley.toolbox.StringRequest
 import eu.michaelvogt.ar.author.data.tuples.ListMarker
 import eu.michaelvogt.ar.author.utils.NEW_CURRENT_AREA
 import eu.michaelvogt.ar.author.utils.NEW_CURRENT_LOCATION
@@ -55,6 +57,9 @@ class AuthorViewModel(application: Application) : AndroidViewModel(application) 
     fun getLocation(uid: Long): CompletableFuture<Location> = repository.getLocation(uid)
 
     fun getAllLocations(): CompletableFuture<List<Location>> = repository.allLocations()
+
+    fun requestAvailableLocations(context: Context, request: StringRequest) =
+            repository.getAvailableLocations(context, request)
 
     fun getLocationNames(): CompletableFuture<List<Location>> = repository.getLocationNames()
 

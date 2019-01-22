@@ -1,9 +1,42 @@
-{
-  "locations": [
-    {
-      "name": "Iwami Ginzan",
-      "module_id": "location_iwamiginzan",
-      "thumb": "thumb"
-    }
-  ]
-}
+[
+  {
+    "name": "Japan",
+    "module_id": "",
+    "is_title": true
+  },
+  {
+    "name": "Iwami Ginzan",
+    "module_id": "location_iwamiginzan",
+    "is_title": false
+  },
+  {
+    "name": "Izumo Taisha",
+    "module_id": "location_izumotaisha",
+    "is_title": false
+  },
+  {
+    "name": "Nara",
+    "module_id": "location_nara",
+    "is_title": false
+  },
+  {
+    "name": "Hiroshima",
+    "module_id": "location_hiroshima",
+    "is_title": false
+  },
+  {
+    "name": "Niigata",
+    "module_id": "location_niigata",
+    "is_title": false
+  },
+  {
+    "name": "Peru",
+    "module_id": "",
+    "is_title": true
+  },
+  {
+    "name": "Machu Picchu",
+    "module_id": "location_machupicchu",
+    "is_title": false
+  }
+]
