@@ -63,6 +63,7 @@ android {
     dataBinding {
         enabled = true
     }
+
     dynamicFeatures = [":location_iwamiginzan"]
 }
 

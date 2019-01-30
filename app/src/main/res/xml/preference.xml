@@ -21,7 +21,7 @@
 
     <PreferenceCategory
         android:key="app_settings"
-        android:title="App settings">
+        android:title="Application settings">
 
         <SwitchPreference
             android:defaultValue="false"
@@ -36,22 +36,20 @@
             android:title="Allow Edit" />
     </PreferenceCategory>
 
-    <!--
-        <PreferenceCategory
-            android:key="ar_settings"
-            android:title="AR settings">
+    <PreferenceCategory
+        android:key="ar_settings"
+        android:title="AR settings">
 
-            <SwitchPreference
-                android:defaultValue="false"
-                android:icon="@drawable/ic_ar_icon"
-                android:key="@string/import_marker_images_pref"
-                android:persistent="true"
-                android:summary="Populate the Marker database"
-                android:summaryOff="Markers aren't imported"
-                android:summaryOn="Markers are imported"
-                android:title="Import Marker Images" />
-        </PreferenceCategory>
-    -->
+        <SwitchPreference
+            android:defaultValue="false"
+            android:icon="@drawable/ic_ar_icon"
+            android:key="@string/import_marker_images_pref"
+            android:persistent="true"
+            android:summary="Populate the Marker database"
+            android:summaryOff="Markers aren't imported"
+            android:summaryOn="Markers are imported"
+            android:title="Import Marker Images" />
+    </PreferenceCategory>
 
     <!--
         <PreferenceCategory

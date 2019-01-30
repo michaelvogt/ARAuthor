@@ -37,5 +37,8 @@ data class SearchLocation(
         val content_size: String = "?KB",
 
         @Optional
-        val is_title: Boolean = false
+        val is_title: Boolean = false,
+
+        @Optional
+        val is_active: Boolean = false
 )

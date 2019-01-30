@@ -153,7 +153,9 @@
         tools:layout="@layout/fragment_splash">
         <action
             android:id="@+id/action_to_location_list"
-            app:destination="@id/location_list_fragment" />
+            app:destination="@id/location_list_fragment"
+            app:launchSingleTop="true"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_to_intro"
             app:destination="@id/intro_fragment" />

@@ -25,7 +25,7 @@
 
     <string name="location_intro_key">location_intro</string>
 
-    <string name="location_content_base_uri">https://rambunctious-cart.glitch.me/</string>
+    <string name="location_content_base_uri">https://touristar.glitch.me/</string>
     <string name="available_locations_path">available_locations.json</string>
 
     <string name="default_background">/android_asset/location/images/mylocationback.webp</string>

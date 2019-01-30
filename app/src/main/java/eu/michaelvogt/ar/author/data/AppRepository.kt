@@ -105,11 +105,11 @@ class AppRepository internal constructor(db: AppDatabase?) {
             areaDao.delete(areaVisual.area)
 
             // TODO: Fix when ktx works
-            areaVisual.events.forEach(action = { index, eventDetail ->
+            areaVisual.events.forEach(action = { _, eventDetail ->
                 eventDetailDao.delete(eventDetail)
             })
 
-            areaVisual.details.forEach { index, visualDetail ->
+            areaVisual.details.forEach { _, visualDetail ->
                 visualDetailDao.delete(visualDetail)
             }
         }

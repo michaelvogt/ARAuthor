@@ -1,0 +1,4 @@
+
+function openIwamiGinzanView() {
+    Android.openArView()
+}

@@ -39,6 +39,7 @@
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
         android:text="@{location.name}"
+        android:enabled="@{location.is_active}"
         tools:text="石見銀山" />
 
 </layout>
