@@ -46,7 +46,9 @@ class LocationEditFragment : AppFragment() {
     private lateinit var fabListener: View.OnClickListener
 
     private var locationId: Long = -1L
-    private var location: Location = Location("New Location", "", "", "", "")
+    private var location: Location = Location.getNewLocation()
+
+    private val popBack = { navController.popBackStack(R.id.location_list_fragment, false) }
 
     override
     fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -64,9 +66,9 @@ class LocationEditFragment : AppFragment() {
             binder.location = location
             fabListener = View.OnClickListener {
                 viewModel.insertLocation(location).thenAccept {
-                    activity!!.runOnUiThread { navController.popBackStack() }
+                    activity?.runOnUiThread { popBack() }
                 }.exceptionally {
-                    Log.e(TAG, "Unable to insert new location $locationId")
+                    Log.e(TAG, "Unable to insert new location $locationId", it)
                     null
                 }
             }
@@ -78,7 +80,7 @@ class LocationEditFragment : AppFragment() {
 
             fabListener = View.OnClickListener {
                 viewModel.updateLocation(location).thenAccept {
-                    activity!!.runOnUiThread { navController.popBackStack() }
+                    activity?.runOnUiThread { popBack() }
                 }.exceptionally {
                     Log.e(TAG, "Unable to update location $locationId")
                     null

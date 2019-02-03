@@ -17,11 +17,12 @@
 // all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.3.11'
-    ext.serialization_version = '0.9.0'
+    ext.kotlin_version = '1.3.20'
+    ext.serialization_version = '0.9.1'
 
-    ext.androidx_navigation = '1.0.0-alpha09'
-    ext.androidx_room = '2.1.0-alpha03'
+    ext.androidx_lifecycle = '2.1.0-alpha01'
+    ext.androidx_navigation = '1.0.0-alpha11'
+    ext.androidx_room = '2.1.0-alpha04'
 
     ext.google_support_version = '28.0.0'
     ext.google_lifecycle_version = '1.1.1'
@@ -35,7 +36,7 @@ buildscript {
         maven { url "https://kotlin.bintray.com/kotlinx" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.0-beta01'
+        classpath 'com.android.tools.build:gradle:3.3.0'
         classpath "com.google.ar.sceneform:plugin:$sceneform_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
@@ -54,4 +55,3 @@ allprojects {
 }
 
 apply plugin: 'kotlin'
-apply plugin: 'kotlinx-serialization'

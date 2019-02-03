@@ -113,6 +113,9 @@
                 android:name="locationId"
                 android:defaultValue="-1L" />
         </action>
+        <action
+            android:id="@+id/action_to_location_search"
+            app:destination="@id/location_search_fragment" />
     </fragment>
     <fragment
         android:id="@+id/web_view_fragment"
@@ -150,7 +153,9 @@
         tools:layout="@layout/fragment_splash">
         <action
             android:id="@+id/action_to_location_list"
-            app:destination="@id/location_list_fragment" />
+            app:destination="@id/location_list_fragment"
+            app:launchSingleTop="true"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_to_intro"
             app:destination="@id/intro_fragment" />
@@ -183,5 +188,13 @@
         <argument
             android:name="update_mode"
             android:defaultValue="LATEST_CAMERA_IMAGE" />
+    </fragment>
+    <fragment
+        android:id="@+id/location_search_fragment"
+        android:name="eu.michaelvogt.ar.author.fragments.LocationSearchFragment"
+        android:label="Select Location">
+        <action
+            android:id="@+id/action_to_location_edit"
+            app:destination="@id/location_edit_fragment" />
     </fragment>
 </navigation>
