@@ -141,6 +141,7 @@
     </string>
     <string name="location_search_primary">Search Location</string>
     <string name="location_search_secondary">location search info</string>
+    <string name="location_search_loaded_check_desc">Button to open info about locations</string>
 
     <string name="locationthumb_placeholder">/android_asset/location/images/placeholderthumb.webp</string>
 

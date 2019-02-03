@@ -128,6 +128,10 @@ class AppRepository internal constructor(db: AppDatabase?) {
         return CompletableFuture.supplyAsync { locationDao.getNames() }
     }
 
+    fun getLoadedLocationModuleIds(): CompletableFuture<List<String>> {
+        return CompletableFuture.supplyAsync { locationDao.getModuleIds() }
+    }
+
 
     // Marker
     fun getMarker(uId: Long): CompletableFuture<Marker> {

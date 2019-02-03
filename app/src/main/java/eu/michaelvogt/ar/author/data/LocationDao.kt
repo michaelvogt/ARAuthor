@@ -29,6 +29,9 @@ interface LocationDao : BaseDao<Location> {
     @Query("SELECT u_id, name, is_default_location FROM locations ORDER BY name ASC")
     fun getNames(): List<Location>
 
+    @Query("SELECT module_id FROM locations")
+    fun getModuleIds(): List<String>
+
     @Query("SELECT COUNT(*) FROM locations")
     fun getSize(): Int
 
