@@ -206,11 +206,36 @@ class LocationlistFragment : AppFragment(), CardMenuListener {
 
     private fun setLocations() {
         viewModel.getAllLocations()
-                .thenAccept { locations -> activity!!.runOnUiThread { adapter.setLocations(locations) } }
+                .thenAccept { locations ->
+                    activity!!.runOnUiThread {
+                        fillMylocation(locations.filter { it.isDefaultLocation })
+                        adapter.setLocations(locations.filter { !it.isDefaultLocation })
+                    }
+                }
                 .exceptionally { throwable ->
                     Log.e(TAG, "Unable to fetch all locations.", throwable)
                     null
                 }
+    }
+
+    private fun fillMylocation(locations: List<Location>) {
+        if (locations.isNotEmpty()) {
+            // Only one 'mylocation' allowed
+            val location = locations[0]
+
+            binder.mylocation.location = location
+            binder.root.setOnClickListener {
+                if (location.isLoaded == true) {
+                    onItemClicked(location.uId)
+                }
+            }
+
+            binder.mylocation.locationMenu.setOnClickListener {
+                onMenuClick(it, location)
+            }
+        } else {
+            mylocation.visibility = View.GONE
+        }
     }
 
     companion object {

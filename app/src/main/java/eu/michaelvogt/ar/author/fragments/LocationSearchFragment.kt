@@ -69,9 +69,14 @@ class LocationSearchFragment : AppFragment(), CardLinkListener {
 
         viewModel.handleRequest(context!!,
                 StringRequest(Request.Method.GET, getString(R.string.location_content_base_uri) + getString(R.string.available_locations_path),
-                        Response.Listener {
-                            val locations = JSON.parse(SearchLocation.serializer().list, it)
-                            adapter.setLocations(locations)
+                        Response.Listener { response ->
+                            val locations = JSON.parse(SearchLocation.serializer().list, response)
+                            viewModel.getLoadedLocationModuleIds().thenAccept {
+                                activity!!.runOnUiThread { adapter.setLocations(locations, it) }
+                            }.exceptionally {
+                                Log.e(TAG, "Unable to load the module ids", it)
+                                null
+                            }
                         },
                         Response.ErrorListener { println(it) }))
     }
