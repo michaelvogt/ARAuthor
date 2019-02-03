@@ -60,6 +60,8 @@ class AuthorViewModel(application: Application) : AndroidViewModel(application) 
 
     fun getLocationNames() = repository.getLocationNames()
 
+    fun getLoadedLocationModuleIds() = repository.getLoadedLocationModuleIds()
+
     fun updateLocation(location: Location) = repository.update(location)
 
     fun deleteLocation(location: Location) = repository.delete(location)

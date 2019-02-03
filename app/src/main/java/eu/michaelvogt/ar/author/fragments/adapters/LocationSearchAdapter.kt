@@ -20,6 +20,7 @@ package eu.michaelvogt.ar.author.fragments.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import eu.michaelvogt.ar.author.data.tuples.SearchLocation
@@ -36,10 +37,13 @@ class LocationSearchAdapter(
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var locations: List<SearchLocation> = emptyList()
+    private var moduleIds: List<String> = emptyList()
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
-    fun setLocations(locations: List<SearchLocation>) {
+    fun setLocations(locations: List<SearchLocation>, moduleIds: List<String>) {
         this.locations = locations
+        this.moduleIds = moduleIds
+
         notifyDataSetChanged()
     }
 
@@ -60,7 +64,10 @@ class LocationSearchAdapter(
         if (holder is HeaderHolder) {       // yes, I know
             holder.binding.location = location
         } else {
-            (holder as LocationSearchHolder).binding.location = location
+            with(holder as LocationSearchHolder) {
+                binding.location = location
+                binding.handler = this@LocationSearchAdapter
+            }
         }
     }
 
@@ -75,13 +82,17 @@ class LocationSearchAdapter(
         return locations.size
     }
 
+    fun isLoadedVisibility(moduleId: String): Int {
+        return if (moduleIds.contains(moduleId)) View.VISIBLE else View.GONE
+    }
+
     internal inner class LocationSearchHolder(val binding: CardLocationSearchBinding) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.root.setOnClickListener {
-                if (listener != null) {
-                    val position = adapterPosition
-                    if (position != RecyclerView.NO_POSITION) {
-                        listener.onTextClicked(locations[position])
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    val location = locations[adapterPosition]
+                    if (listener != null && location.is_active && !moduleIds.contains(location.module_id)) {
+                        listener.onTextClicked(location)
                     }
                 }
             }

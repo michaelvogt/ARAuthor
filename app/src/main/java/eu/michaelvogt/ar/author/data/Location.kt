@@ -100,7 +100,7 @@ class Location(
         fun getDefaultLocation(): Location {
             return Location(
                     "My location",
-                    "Default location for testing",
+                    "Your current location",
                     "",
                     "/android_asset/location/images/mylocationthumb.webp",
                     "/android_asset/location/mylocationintro.html",
