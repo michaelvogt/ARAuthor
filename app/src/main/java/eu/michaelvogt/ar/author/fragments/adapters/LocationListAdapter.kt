@@ -30,7 +30,7 @@ import eu.michaelvogt.ar.author.utils.CardMenuListener
 import eu.michaelvogt.ar.author.utils.Preferences
 
 /**
- * Adapter for the list of Locations
+ * Adapter for the list of [Location]s available locally
  */
 class LocationListAdapter(
         private val context: Context?,
@@ -60,15 +60,15 @@ class LocationListAdapter(
     override
     fun getItemCount(): Int = locations.size
 
-    fun isEditEnabled(): Int {
+    fun isEditEnabled(isLoaded: Boolean): Int {
         val allowEditPref = Preferences.getPreference(context, R.string.allow_edit_pref, false)
-        return if (allowEditPref) View.VISIBLE else View.GONE
+        return if (allowEditPref && isLoaded) View.VISIBLE else View.GONE
     }
 
     inner class ViewHolder(val binder: CardLocationBinding) : RecyclerView.ViewHolder(binder.root) {
         init {
             binder.root.setOnClickListener {
-                if (adapterPosition != RecyclerView.NO_POSITION) {
+                if (adapterPosition != RecyclerView.NO_POSITION && locations[adapterPosition].isLoaded == true) {
                     val locationId = locations[adapterPosition].uId
                     listener.onItemClicked(locationId)
                 }
@@ -76,6 +76,10 @@ class LocationListAdapter(
 
             binder.locationMenu.setOnClickListener {
                 listener.onMenuClick(it, locations[adapterPosition])
+            }
+
+            binder.locationLoad.setOnClickListener {
+                listener.onDownloadClicked(locations[adapterPosition])
             }
         }
     }

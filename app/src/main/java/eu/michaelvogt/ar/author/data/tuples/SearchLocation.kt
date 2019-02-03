@@ -16,26 +16,29 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-package eu.michaelvogt.ar.author.utils
+package eu.michaelvogt.ar.author.data.tuples
 
-import android.view.View
-import eu.michaelvogt.ar.author.data.Location
-import eu.michaelvogt.ar.author.data.tuples.SearchLocation
+import kotlinx.serialization.Optional
+import kotlinx.serialization.Serializable
 
-interface CardLinkListener {
-    fun onTextClicked(searchLocation: SearchLocation)
-}
+@Serializable
+data class SearchLocation(
+        val name: String,
 
-interface CardMenuListener {
-    fun onMenuClick(view: View, location: Location)
-    fun onItemClicked(uId: Long)
-    fun onDownloadClicked(location: Location)
-}
+        val description: String,
 
-interface ItemClickListener {
-    fun onItemClicked(uId: Long)
-}
+        val module_id: String,
 
-interface MenuSelectedListener {
-    fun onMenuSelected(id: Int)
-}
+        val thumb_path: String,
+
+        val intro_html_path: String,
+
+        @Optional
+        val content_size: String = "?KB",
+
+        @Optional
+        val is_title: Boolean = false,
+
+        @Optional
+        val is_active: Boolean = false
+)

@@ -22,72 +22,73 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import eu.michaelvogt.ar.author.data.tuples.ListMarker
-import eu.michaelvogt.ar.author.databinding.CardMarkerBinding
-import eu.michaelvogt.ar.author.databinding.CardMarkerHeaderBinding
-import eu.michaelvogt.ar.author.utils.ItemClickListener
+import eu.michaelvogt.ar.author.data.tuples.SearchLocation
+import eu.michaelvogt.ar.author.databinding.CardLocationHeaderBinding
+import eu.michaelvogt.ar.author.databinding.CardLocationSearchBinding
+import eu.michaelvogt.ar.author.utils.CardLinkListener
 
-class MarkerListAdapter(context: Context?) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private var markers: List<ListMarker> = emptyList()
+/**
+ * Adapter for the list of [Location]s available from the server
+ */
+class LocationSearchAdapter(
+        private val context: Context?,
+        private val listener: CardLinkListener?)
+    : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    private var locations: List<SearchLocation> = emptyList()
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
-    private var listener: ItemClickListener? = null
-
-    fun setItemClickListener(listener: ItemClickListener) {
-        this.listener = listener
-    }
-
-    fun setMarkers(markers: List<ListMarker>) {
-        this.markers = markers
+    fun setLocations(locations: List<SearchLocation>) {
+        this.locations = locations
         notifyDataSetChanged()
     }
 
     override
     fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return if (viewType == TYPE_HEADER) {
-            val headerBinder = CardMarkerHeaderBinding.inflate(inflater, parent, false)
+        return if (viewType == LocationSearchAdapter.TYPE_HEADER) {
+            val headerBinder = CardLocationHeaderBinding.inflate(inflater, parent, false)
             HeaderHolder(headerBinder)
         } else {
-            val markerBinder = CardMarkerBinding.inflate(inflater, parent, false)
-            MarkerHolder(markerBinder)
+            val locationSearchBinding = CardLocationSearchBinding.inflate(inflater, parent, false)
+            LocationSearchHolder(locationSearchBinding)
         }
     }
 
     override
     fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val marker = markers[position]
+        val location = locations[position]
         if (holder is HeaderHolder) {       // yes, I know
-            holder.binding.marker = marker
+            holder.binding.location = location
         } else {
-            (holder as MarkerHolder).binding.marker = marker
+            (holder as LocationSearchHolder).binding.location = location
         }
     }
 
+
     override
     fun getItemViewType(position: Int): Int {
-        return if (markers[position].isTitle == true) TYPE_HEADER else TYPE_ITEM
+        return if (locations[position].is_title) LocationSearchAdapter.TYPE_HEADER else LocationSearchAdapter.TYPE_ITEM
     }
 
     override
     fun getItemCount(): Int {
-        return markers.size
+        return locations.size
     }
 
-    internal inner class MarkerHolder(val binding: CardMarkerBinding) : RecyclerView.ViewHolder(binding.root) {
+    internal inner class LocationSearchHolder(val binding: CardLocationSearchBinding) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.root.setOnClickListener {
                 if (listener != null) {
                     val position = adapterPosition
                     if (position != RecyclerView.NO_POSITION) {
-                        val uId = markers[position].markerId
-                        listener!!.onItemClicked(uId)
+                        listener.onTextClicked(locations[position])
                     }
                 }
             }
         }
     }
 
-    internal inner class HeaderHolder(val binding: CardMarkerHeaderBinding) : RecyclerView.ViewHolder(binding.root)
+    internal inner class HeaderHolder(val binding: CardLocationHeaderBinding) : RecyclerView.ViewHolder(binding.root)
 
     companion object {
         private const val TYPE_HEADER = 0

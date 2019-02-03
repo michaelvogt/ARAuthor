@@ -71,7 +71,7 @@ class Marker {
     @ColumnInfo(name = "width_in_m")
     var widthInM: Float
 
-    @ColumnInfo(name = "size")
+    @ColumnInfo(name = "contentSize")
     var size: Vector3
 
     @ColumnInfo(name = "zero_point")
@@ -146,7 +146,7 @@ class Marker {
             intro=$intro,
             place=$place,
             widthInM=$widthInM,
-            size=$size,
+            contentSize=$size,
             zeroPoint=$zeroPoint,
             isShowBackground=$isShowBackground)""".trimMargin()
     }

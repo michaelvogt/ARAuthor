@@ -61,10 +61,10 @@ class ImagePreviewFragment : PreviewFragment() {
     }
 
     override
-    fun onConfigurationChanged(newConfig: Configuration?) {
+    fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
 
-        arFragment.changeGrabbedOrientation(newConfig!!.orientation)
+        arFragment.changeGrabbedOrientation(newConfig.orientation)
     }
 
     private fun onUpdateFrame(frameTime: FrameTime) {

@@ -19,6 +19,7 @@
 package eu.michaelvogt.ar.author.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,9 +52,13 @@ class SplashFragment : AppFragment() {
             action = SplashFragmentDirections.actionToIntro().actionId
         }
 
-        // Crash with back navigation.
+        // Crash with back navigation -> Removing from back stack
         // https://github.com/googlesamples/android-architecture-components/issues/446
-        navController.navigate(action)
+        try {
+            navController.navigate(action)
+        } catch (exception: Exception) {
+            Log.e("SplashFragment", "Splash navigation failed", exception)
+        }
     }
 
     override fun onResume() {

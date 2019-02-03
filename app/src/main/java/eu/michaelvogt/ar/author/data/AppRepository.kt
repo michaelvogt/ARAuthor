@@ -18,10 +18,13 @@
 
 package eu.michaelvogt.ar.author.data
 
+import android.content.Context
 import android.util.Log
+import com.android.volley.toolbox.StringRequest
 import eu.michaelvogt.ar.author.data.tuples.ListMarker
 import eu.michaelvogt.ar.author.utils.NEW_CURRENT_LOCATION
 import eu.michaelvogt.ar.author.utils.NEW_CURRENT_MARKER
+import eu.michaelvogt.ar.author.utils.RequestQueueSingleton
 import org.jetbrains.anko.collections.forEach
 import org.jetbrains.anko.doAsyncResult
 import java.util.*
@@ -56,6 +59,10 @@ class AppRepository internal constructor(db: AppDatabase?) {
 
     fun insert(location: Location): CompletableFuture<Long> {
         return CompletableFuture.supplyAsync { locationDao.insert(location) }
+    }
+
+    fun insert(group: TitleGroup): CompletableFuture<Long> {
+        return CompletableFuture.supplyAsync { titleGroupDao.insert(group) }
     }
 
     fun insert(marker: Marker): CompletableFuture<Long> {
@@ -98,11 +105,11 @@ class AppRepository internal constructor(db: AppDatabase?) {
             areaDao.delete(areaVisual.area)
 
             // TODO: Fix when ktx works
-            areaVisual.events.forEach(action = { index, eventDetail ->
+            areaVisual.events.forEach(action = { _, eventDetail ->
                 eventDetailDao.delete(eventDetail)
             })
 
-            areaVisual.details.forEach { index, visualDetail ->
+            areaVisual.details.forEach { _, visualDetail ->
                 visualDetailDao.delete(visualDetail)
             }
         }
@@ -220,6 +227,11 @@ class AppRepository internal constructor(db: AppDatabase?) {
         }
     }
 
+    fun insertMarkerArea(markerArea: MarkerArea): CompletableFuture<Long> {
+        return CompletableFuture.supplyAsync { markerAreaDao.insert(markerArea) }
+    }
+
+
     private fun setupAreaVisual(area: Area): AreaVisual {
         val details = visualDetailDao.getForArea(area.uId)
         val events = eventDetailDao.getForArea(area.uId)
@@ -232,5 +244,11 @@ class AppRepository internal constructor(db: AppDatabase?) {
 
     private fun handleException(throwable: Throwable) {
         Log.e(AppRepository::class.simpleName, "Database error", throwable)
+    }
+
+
+    //    Server access
+    fun handleRequest(context: Context, request: StringRequest) {
+        RequestQueueSingleton.getInstance(context.applicationContext).addToRequestQueue(request)
     }
 }

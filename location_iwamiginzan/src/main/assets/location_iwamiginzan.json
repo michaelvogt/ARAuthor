@@ -1,0 +1,36 @@
+{
+  "location": {
+    "module_id": "location_iwamiginzan",
+    "groups": [
+      {
+        "name": "group",
+        "markers": [
+          {
+            "title": "title",
+            "marker_image_path": "image path",
+            "intro": "intro",
+            "location": "location",
+            "width_in_m": "width",
+            "zero_point": "zero point",
+            "size": "size",
+            "areas": [
+              {
+                "title": "title",
+                "object_type": 0,
+                "usage_type": 0,
+                "group": "group",
+                "resource": "resource",
+                "zero_point": "zero",
+                "size": "size",
+                "coord_type": 0,
+                "position": "position",
+                "rotation": "rotation",
+                "scale": "scale"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
