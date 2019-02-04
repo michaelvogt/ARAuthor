@@ -1,0 +1,12 @@
+{
+  "location": {
+    "module_id": "location_izumotaisha",
+    "groups": [
+      {
+        "name": "group",
+        "markers": [
+        ]
+      }
+    ]
+  }
+}

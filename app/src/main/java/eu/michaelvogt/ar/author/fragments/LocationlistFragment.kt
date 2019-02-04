@@ -183,11 +183,6 @@ class LocationlistFragment : AppFragment(), CardMenuListener {
                                         null
                                     }
                                 }
-
-                                location.isLoaded = true
-                                viewModel.updateLocation(location).thenAccept {
-                                    setLocations()
-                                }
                             }.exceptionally {
                                 Log.e(TAG, "Unable to insert marker.", it)
                                 null
@@ -197,6 +192,11 @@ class LocationlistFragment : AppFragment(), CardMenuListener {
                         Log.e(TAG, "Unable to insert group", it)
                         null
                     }
+                }
+
+                location.isLoaded = true
+                viewModel.updateLocation(location).thenAccept {
+                    setLocations()
                 }
             } else {
                 // TODO: Update content

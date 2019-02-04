@@ -1,0 +1,4 @@
+
+function openIzumoTaishaView() {
+    Android.openArView()
+}

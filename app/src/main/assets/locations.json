@@ -19,12 +19,12 @@
   },
   {
     "name": "Izumo Taisha",
-    "description": "",
+    "description": "Japanese Grand Shrine",
     "module_id": "location_izumotaisha",
     "content_size": "1234MB",
-    "thumb_path": "",
-    "intro_html_path": "",
-    "is_active": false
+    "thumb_path": "/android_asset/izumo_taisha/images/izumotaishathumb.webp",
+    "intro_html_path": "/android_asset/izumo_taisha/izumotaisha.html",
+    "is_active": true
   },
   {
     "name": "Nara",
