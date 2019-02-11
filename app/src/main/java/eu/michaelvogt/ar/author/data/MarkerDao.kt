@@ -34,7 +34,7 @@ interface MarkerDao : BaseDao<Marker> {
     @Query("SELECT u_id as markerId, title, intro, image_path as imagePath FROM markers WHERE group_id IS NULL")
     fun getAllWithoutGroup(): List<ListMarker>
 
-    @Query("SELECT u_id as markerId, title, intro, image_path as imagePath FROM markers WHERE location_id=:locationId")
+    @Query("SELECT u_id as markerId, title, intro, image_path as imagePath FROM markers WHERE location_id=:locationId AND group_id IS null")
     fun getAllWithoutGroupForLocation(locationId: Long): List<ListMarker>
 
     @Query("SELECT * FROM markers WHERE markers.u_id=:uId")

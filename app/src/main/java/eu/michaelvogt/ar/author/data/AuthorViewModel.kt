@@ -83,8 +83,8 @@ class AuthorViewModel(application: Application) : AndroidViewModel(application) 
     fun getMarkersForLocation(locationId: Long) =
             repository.getMarkersForLocation(locationId)
 
-    fun getMarkerGroupsForLocation(locationId: Long) =
-            repository.getMarkerGroupsForLocation(locationId)
+    fun getMarkerGroupsForLocation(context: Context?, locationId: Long) =
+            repository.getMarkerGroupsForLocation(context, locationId)
 
     fun clearCropMarker() {
         cropMarker = null
