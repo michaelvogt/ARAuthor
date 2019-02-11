@@ -13,8 +13,8 @@
     "description": "World Heritage silver mine area",
     "module_id": "location_iwamiginzan",
     "content_size": "1234MB",
-    "thumb_path": "/android_asset/iwami_ginzan/images/iwamiginzanthumb.webp",
-    "intro_html_path": "/android_asset/iwami_ginzan/iwamiginzan.html",
+    "thumb_path": "/module_asset/iwami_ginzan/iwamiginzanthumb.webp",
+    "intro_html_path": "/module_asset/iwami_ginzan/site/iwamiginzan.html",
     "is_active": true
   },
   {
@@ -22,8 +22,8 @@
     "description": "Japanese Grand Shrine",
     "module_id": "location_izumotaisha",
     "content_size": "1234MB",
-    "thumb_path": "/android_asset/izumo_taisha/images/izumotaishathumb.webp",
-    "intro_html_path": "/android_asset/izumo_taisha/izumotaisha.html",
+    "thumb_path": "/module_asset/izumo_taisha/images/izumotaishathumb.webp",
+    "intro_html_path": "/module_asset/izumo_taisha/izumotaisha.html",
     "is_active": true
   },
   {

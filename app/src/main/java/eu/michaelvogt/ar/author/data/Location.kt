@@ -102,8 +102,8 @@ class Location(
                     "My location",
                     "Your current location",
                     "",
-                    "/android_asset/location/images/mylocationthumb.webp",
-                    "/android_asset/location/mylocationintro.html",
+                    "/module_asset/location/images/mylocationthumb.webp",
+                    "/module_asset/location/mylocationintro.html",
                     true,
                     "",
                     true)

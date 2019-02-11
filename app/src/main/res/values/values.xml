@@ -15,7 +15,7 @@
 -->
 <resources>
     <string name="file_prefix">file://</string>
-    <string name="asset_prefix">/android_asset/</string>
+    <string name="asset_prefix">/module_asset/</string>
 
     <!--Web view content keys-->
     <string name="about_key">about</string>
@@ -28,8 +28,8 @@
     <string name="location_content_base_uri">https://touristar.glitch.me/</string>
     <string name="available_locations_path">available_locations.json</string>
 
-    <string name="default_background">/android_asset/location/images/mylocationback.webp</string>
-    <string name="default_locationthumb">/android_asset/location/images/mylocationthumb.webp</string>
-    <string name="default_locationintro">/android_asset/location/mylocationintro.html</string>
-    <string name="default_marker">/android_asset/location/images/mymarker.webp</string>
+    <string name="default_background">/module_asset/location/images/mylocationback.webp</string>
+    <string name="default_locationthumb">/module_asset/location/images/mylocationthumb.webp</string>
+    <string name="default_locationintro">/module_asset/location/mylocationintro.html</string>
+    <string name="default_marker">/module_asset/location/images/mymarker.webp</string>
 </resources>

@@ -87,7 +87,7 @@ class Marker {
                 groupId: Long?,
                 title: String,
                 markerImagePath: String = "",
-                backgroundImagePath: String = "/android_asset/location/images/mylocationback.webp",
+                backgroundImagePath: String = "/module_asset/location/images/mylocationback.webp",
                 intro: String? = null,
                 place: String = "",
                 widthInM: Float = 0.2f,     // ARCore crashes when width isn't set

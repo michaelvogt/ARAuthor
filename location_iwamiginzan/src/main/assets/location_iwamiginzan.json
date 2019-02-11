@@ -3,29 +3,92 @@
     "module_id": "location_iwamiginzan",
     "groups": [
       {
-        "name": "group",
+        "name": "宗岡家",
         "markers": [
           {
-            "title": "title",
-            "marker_image_path": "image path",
-            "intro": "intro",
-            "location": "location",
-            "width_in_m": "width",
-            "zero_point": "zero point",
-            "size": "size",
+            "title": "看板",
+            "marker_image_path": "/module_asset/iwami_ginzan/markers/infoboard.webp",
+            "background_image_path": "/module_asset/iwami_ginzan/content/muneokake/infoboard/boardbackground.webp",
+            "intro": "宗岡は、戦国時代毛利輝元の「銀山六人衆」として知られ、諸役の徴収方を担いました。江戸時代に入ると、奉行大久保長安に召し抱えられ",
+            "location": "宗岡家",
+            "width_in_m": "0.435f",
+            "zero_point": "<vector3>0.0,0.0,0.0",
+            "size": "<vector3>0.945,0.005,0.632",
+            "show_background": true,
             "areas": [
               {
-                "title": "title",
-                "object_type": 0,
-                "usage_type": 0,
-                "group": "group",
-                "resource": "resource",
-                "zero_point": "zero",
-                "size": "size",
-                "coord_type": 0,
-                "position": "position",
-                "rotation": "rotation",
-                "scale": "scale"
+                "title": "Muneoka Background Image",
+                "object_type": "TYPE_IMAGEONIMAGE",
+                "usage_type": "KIND_CONTENT",
+                "group": "GROUP_START",
+                "resource": "layout/view_image",
+                "zero_point": "<vector3>0.0,0.0,0.0",
+                "size": "<vector3>0.415,0.572,0.001",
+                "coord_type": "COORDINATE_LOCAL",
+                "position": "<vector3>-0.436,0.001,0.0",
+                "rotation": "<quaternion>-1.0,0.0,0.0,90.0",
+                "scale": "<vector3>1.0,1.0,1.0",
+                "visual_detail": [
+                  {
+                    "key": "KEY_IMAGEPATH",
+                    "value": "module_asset/iwami_ginzan/content/muneokake/infoboard/waitingroom.webp"
+                  },
+                  {
+                    "key": "KEY_SECONDARYIMAGEPATH",
+                    "value": "module_asset/iwami_ginzan/content/muneokake/infoboard/storage.webp"
+                  },
+                  {
+                    "key": "KEY_FADE_RIGHT_WIDTH",
+                    "value": 0.4
+                  },
+                  {
+                    "key": "KEY_ALLOWZOOM",
+                    "value": true
+                  }
+                ],
+                "event_detail": [
+                  {
+                    "type": "EVENT_HIDECONTENT",
+                    "target": "TYPE_EVENT_ALL",
+                    "value": "NO_VALUE"
+                  },
+                  {
+                    "type": "EVENT_ZOOM",
+                    "target": "TYPE_EVENT_ALL",
+                    "value": "NO_VALUE"
+                  }
+                ]
+              },
+              {
+                "title": "Muneoka Background Intro",
+                "object_type": "TYPE_TEXTONIMAGE",
+                "usage_type": "KIND_CONTENT",
+                "group": "GROUP_START",
+                "resource": "layout/view_text",
+                "zero_point": "<vector3>0.0,0.0,0.0",
+                "size": "<vector3>0.445,0.572,0.2",
+                "coord_type": "COORDINATE_LOCAL",
+                "position": "<vector3>0.106,0.01,0.32",
+                "rotation": "<quaternion>-1.0,0.0,0.0,90.0",
+                "scale": "<vector3>1.0,1.0,1.0",
+                "visual_detail": [
+                  {
+                    "key": "KEY_TEXTPATH",
+                    "value": "module_asset/iwami_ginzan/content/muneokake/infoboard/infoboardtxt.html"
+                  },
+                  {
+                    "key": "KEY_HTMLPATH",
+                    "value": "module_asset/iwami_ginzan/muneokake/infoboard/infoboard.html"
+                  },
+                  {
+                    "key": "KEY_BACKGROUNDCOLOR",
+                    "value": "<argb>0,0,0,0"
+                  },
+                  {
+                    "key": "KEY_TEXTSIZE",
+                    "value": 12.0
+                  }
+                ]
               }
             ]
           }
