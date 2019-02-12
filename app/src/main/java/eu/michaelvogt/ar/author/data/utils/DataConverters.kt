@@ -23,7 +23,7 @@ import com.google.ar.sceneform.math.Quaternion
 import com.google.ar.sceneform.math.Vector3
 import java.util.*
 
-const val VALUE_DIVIDER = "!!"
+const val VALUE_DIVIDER = ","
 
 const val TAG_BOOL = "<bool>"
 const val TAG_INT = "<int>"
@@ -35,8 +35,6 @@ const val TAG_QUATERNION = "<quaternion>"
 const val TAG_FLOATLIST = "<floatlist>"
 
 class Converters {
-    // TODO: Use kotlin.serializable when usable
-
     @TypeConverter
     fun vector3FromString(value: String?): Vector3? {
         if (value == null) return null

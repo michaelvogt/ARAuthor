@@ -34,6 +34,7 @@ import com.google.ar.sceneform.math.Vector3
 import eu.michaelvogt.ar.author.R
 import eu.michaelvogt.ar.author.data.*
 import eu.michaelvogt.ar.author.data.utils.Converters
+import eu.michaelvogt.ar.author.data.utils.VALUE_DIVIDER
 import eu.michaelvogt.ar.author.fragments.AreaEditCard
 import java.io.FileNotFoundException
 
@@ -121,7 +122,7 @@ fun setVector3(view: AreaEditCard, vector3: Vector3?) {
 @InverseBindingAdapter(attribute = "values")
 fun getVector3(view: AreaEditCard): Vector3 {
     return Converters().vector3FromString(
-            "<vector3>${view.getXValue()}!!${view.getYValue()}!!${view.getZValue()}")
+            "<vector3>${view.getXValue()}$VALUE_DIVIDER${view.getYValue()}$VALUE_DIVIDER${view.getZValue()}")
             ?: Vector3.zero()
 }
 
@@ -149,7 +150,7 @@ fun setQuaternion(view: AreaEditCard, quaternion: Quaternion?) {
 @InverseBindingAdapter(attribute = "values")
 fun getQuaternion(view: AreaEditCard): Quaternion {
     return Converters().quaternionFromString(
-            "<quaternion>${view.getXValue()}!!${view.getYValue()}!!${view.getZValue()}!!${view.getWValue()}")
+            "<quaternion>${view.getXValue()}$VALUE_DIVIDER${view.getYValue()}$VALUE_DIVIDER${view.getZValue()}$VALUE_DIVIDER${view.getWValue()}")
             ?: Quaternion.identity()
 }
 
@@ -177,7 +178,7 @@ fun setInteger(view: AreaEditCard, int: Int) {
             put(KIND_BACKGROUND, "Background")
         }
         R.id.areaEditObjectType -> SparseArray<String>().apply {
-            // TODO: GEt the object types from available areas
+            // TODO: Get the object types from available areas
             put(TYPE_DEFAULT, "Default")
             put(TYPE_3DOBJECTONIMAGE, "3D Objects on Image")
             put(TYPE_3DOBJECTONPLANE, "3D Object on Plane")

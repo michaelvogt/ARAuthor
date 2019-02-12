@@ -80,8 +80,8 @@ class WebViewFragment : AppFragment(), View.OnClickListener {
         val locationId = viewModel.currentLocationId
         viewModel.getLocation(locationId)
                 .thenAccept {
-                    val path = if (it.introHtmlPath!!.startsWith(getString(R.string.asset_prefix))) {
-                        getString(R.string.file_prefix) + it.introHtmlPath
+                    val path = if (it.introHtmlPath?.startsWith(getString(R.string.asset_prefix)) == true) {
+                        getString(R.string.file_prefix) + it.introHtmlPath?.replace(getString(R.string.asset_prefix), "/android_asset/")
                     } else {
                         FileUtils.getFullPuplicFolderLocalUrl(it.introHtmlPath)
                     }

@@ -1,1 +1,1 @@
-include ':app', ':location_iwamiginzan'
+include ':app', ':location_iwamiginzan', ':location_izumotaisha'

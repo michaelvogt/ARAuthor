@@ -64,7 +64,7 @@ android {
         enabled = true
     }
 
-    dynamicFeatures = [":location_iwamiginzan"]
+    dynamicFeatures = [":location_iwamiginzan", ":location_izumotaisha"]
 }
 
 dependencies {

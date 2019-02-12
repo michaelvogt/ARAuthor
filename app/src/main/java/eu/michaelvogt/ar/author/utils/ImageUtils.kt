@@ -28,7 +28,8 @@ import java.io.IOException
 import java.io.InputStream
 
 object ImageUtils {
-    const val assetPathPrefix = "/android_asset/"
+    // TODO: Get prefix from string resource
+    const val assetPathPrefix = "/module_asset/"
 
     fun decodeSampledBitmapFromImagePath(path: String, reqWidth: Int, reqHeight: Int): Bitmap {
         // First decode with inJustDecodeBounds=true to check dimensions

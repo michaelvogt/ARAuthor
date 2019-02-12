@@ -27,8 +27,10 @@ import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import com.google.ar.sceneform.math.Vector3
 import eu.michaelvogt.ar.author.R
 import eu.michaelvogt.ar.author.data.*
+import eu.michaelvogt.ar.author.data.utils.Converters
 import eu.michaelvogt.ar.author.databinding.FragmentLocationlistBinding
 import eu.michaelvogt.ar.author.fragments.adapters.LocationListAdapter
 import eu.michaelvogt.ar.author.utils.*
@@ -141,6 +143,8 @@ class LocationlistFragment : AppFragment(), CardMenuListener {
         // save in database
         // reload location list
 
+        // Todo: Refactor
+
         val assetManager = activity?.assets
 
         if (assetManager != null) {
@@ -170,23 +174,22 @@ class LocationlistFragment : AppFragment(), CardMenuListener {
                         for (markerIndex in 0 until markersArray.length()) {
                             val markerObject = markersArray.getJSONObject(markerIndex)
 
-                            viewModel.insertMarker(Marker(location.uId, groupId, markerObject.getString("title"))).thenAccept { markerId ->
+                            viewModel.insertMarker(Marker(location.uId, groupId,
+                                    markerObject.getString("title"),
+                                    zeroPoint = Converters().vector3FromString(markerObject.getString("zero_point"))
+                                            ?: Vector3.zero())
+                            ).thenAccept { markerId ->
                                 val areasArray = markerObject.getJSONArray("areas")
 
                                 for (areaIndex in 0 until areasArray.length()) {
                                     val areaObject = areasArray.getJSONObject(areaIndex)
 
-                                    viewModel.insertArea(Area(areaObject.getString("title"), areaObject.getInt("object_type"))).thenAccept { areaId ->
+                                    viewModel.insertArea(Area(areaObject.getString("title"))).thenAccept { areaId ->
                                         viewModel.insertMarkerArea(MarkerArea(markerId, areaId))
                                     }.exceptionally {
                                         Log.e(TAG, "Unable to insert area.", it)
                                         null
                                     }
-                                }
-
-                                location.isLoaded = true
-                                viewModel.updateLocation(location).thenAccept {
-                                    setLocations()
                                 }
                             }.exceptionally {
                                 Log.e(TAG, "Unable to insert marker.", it)
@@ -197,6 +200,11 @@ class LocationlistFragment : AppFragment(), CardMenuListener {
                         Log.e(TAG, "Unable to insert group", it)
                         null
                     }
+                }
+
+                location.isLoaded = true
+                viewModel.updateLocation(location).thenAccept {
+                    setLocations()
                 }
             } else {
                 // TODO: Update content

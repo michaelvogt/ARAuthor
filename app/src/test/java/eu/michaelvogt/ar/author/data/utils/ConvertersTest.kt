@@ -3,8 +3,8 @@ package eu.michaelvogt.ar.author.data.utils
 import com.google.ar.sceneform.math.Quaternion
 import com.google.ar.sceneform.math.Vector3
 import org.hamcrest.CoreMatchers.*
+import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsInstanceOf
-import org.junit.Assert.assertThat
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -17,31 +17,31 @@ class ConvertersTest {
 
     @Test
     fun vector3FromString_vector() {
-        assertThat(Converters().vector3FromString("${TAG_VECTOR3}1.0!!1.0!!1.0"), `is`(instanceOf(Vector3::class.java)))
+        assertThat(Converters().vector3FromString("${TAG_VECTOR3}1.0${VALUE_DIVIDER}1.0${VALUE_DIVIDER}1.0"), `is`(instanceOf(Vector3::class.java)))
     }
 
     @Test
     fun vector3FromString_111() {
         assertTrue(Vector3.equals(Converters()
-                .vector3FromString("${TAG_VECTOR3}1.0!!1.0!!1.0"), Vector3(1.0f, 1.0f, 1.0f)))
+                .vector3FromString("${TAG_VECTOR3}1.0${VALUE_DIVIDER}1.0${VALUE_DIVIDER}1.0"), Vector3(1.0f, 1.0f, 1.0f)))
     }
 
     @Test
     fun vector3FromString_123() {
         assertTrue(Vector3.equals(Converters()
-                .vector3FromString("${TAG_VECTOR3}1.0!!2.1!!3.2"), Vector3(1.0f, 2.1f, 3.2f)))
+                .vector3FromString("${TAG_VECTOR3}1.0${VALUE_DIVIDER}2.1${VALUE_DIVIDER}3.2"), Vector3(1.0f, 2.1f, 3.2f)))
     }
 
     @Test
     fun vector3ToString_111() {
         assertThat(Converters()
-                .vector3ToString(Vector3.one()), `is`(equalTo("${TAG_VECTOR3}1.0!!1.0!!1.0")))
+                .vector3ToString(Vector3.one()), `is`(equalTo("${TAG_VECTOR3}1.0${VALUE_DIVIDER}1.0${VALUE_DIVIDER}1.0")))
     }
 
     @Test
     fun vector3ToString_negative123() {
         assertThat(Converters()
-                .vector3ToString(Vector3(-1f, -2f, -3f)), `is`(equalTo("$TAG_VECTOR3-1.0!!-2.0!!-3.0")))
+                .vector3ToString(Vector3(-1f, -2f, -3f)), `is`(equalTo("$TAG_VECTOR3-1.0${VALUE_DIVIDER}-2.0${VALUE_DIVIDER}-3.0")))
     }
 
     @Test
@@ -53,31 +53,31 @@ class ConvertersTest {
     @Test
     fun quaternionFromString_quaternion() {
         assertThat(Converters()
-                .quaternionFromString("${TAG_QUATERNION}1.0!!1.0!!1.0!!1.0"), `is`(instanceOf(Quaternion::class.java)))
+                .quaternionFromString("${TAG_QUATERNION}1.0${VALUE_DIVIDER}1.0${VALUE_DIVIDER}1.0${VALUE_DIVIDER}1.0"), `is`(instanceOf(Quaternion::class.java)))
     }
 
     @Test
     fun quaternionFromString_1111() {
-        assertThat(Converters().quaternionFromString("${TAG_QUATERNION}1.0!!1.0!!1.0!!1.0").toString(),
+        assertThat(Converters().quaternionFromString("${TAG_QUATERNION}1.0${VALUE_DIVIDER}1.0${VALUE_DIVIDER}1.0${VALUE_DIVIDER}1.0").toString(),
                 `is`(equalTo("[x=1.0, y=1.0, z=1.0, w=1.0]")))
     }
 
     @Test
     fun quaternionFromString_negative1234() {
-        assertThat(Converters().quaternionFromString("$TAG_QUATERNION-1.0!!2.0!!-3.0!!4.0").toString(),
+        assertThat(Converters().quaternionFromString("$TAG_QUATERNION-1.0${VALUE_DIVIDER}2.0${VALUE_DIVIDER}-3.0${VALUE_DIVIDER}4.0").toString(),
                 `is`(equalTo("[x=-1.0, y=2.0, z=-3.0, w=4.0]")))
     }
 
     @Test
     fun quaternionToString_111() {
         assertThat(Converters().quaternionToString(setupQuaternion(1f, 1f, 1f, 1f)),
-                `is`(equalTo("${TAG_QUATERNION}1.0!!1.0!!1.0!!1.0")))
+                `is`(equalTo("${TAG_QUATERNION}1.0${VALUE_DIVIDER}1.0${VALUE_DIVIDER}1.0${VALUE_DIVIDER}1.0")))
     }
 
     @Test
     fun quaternionToString_negative123() {
         assertThat(Converters().quaternionToString(setupQuaternion(-1f, -2f, -3f, -4f)),
-                `is`(equalTo("$TAG_QUATERNION-1.0!!-2.0!!-3.0!!-4.0")))
+                `is`(equalTo("$TAG_QUATERNION-1.0${VALUE_DIVIDER}-2.0${VALUE_DIVIDER}-3.0${VALUE_DIVIDER}-4.0")))
     }
 
     @Test
@@ -123,16 +123,16 @@ class ConvertersTest {
     fun stringifyVector() {
         val converter = Converters()
 
-        assertThat(converter.stringify(Vector3.one()), equalTo("${TAG_VECTOR3}1.0!!1.0!!1.0"))
-        assertThat(converter.stringify(Vector3(3.1f, -2.1f, 1.1f)), equalTo("${TAG_VECTOR3}3.1!!-2.1!!1.1"))
+        assertThat(converter.stringify(Vector3.one()), equalTo("${TAG_VECTOR3}1.0${VALUE_DIVIDER}1.0${VALUE_DIVIDER}1.0"))
+        assertThat(converter.stringify(Vector3(3.1f, -2.1f, 1.1f)), equalTo("${TAG_VECTOR3}3.1${VALUE_DIVIDER}-2.1${VALUE_DIVIDER}1.1"))
     }
 
     @Test
     fun stringifyQuaternion() {
         val converter = Converters()
 
-        assertThat(converter.stringify(Quaternion.identity()), equalTo("${TAG_QUATERNION}0.0!!0.0!!0.0!!1.0"))
-        assertThat(converter.stringify(setupQuaternion(0.1f, 0.2f, -0.3f, 0.4f)), equalTo("${TAG_QUATERNION}0.1!!0.2!!-0.3!!0.4"))
+        assertThat(converter.stringify(Quaternion.identity()), equalTo("${TAG_QUATERNION}0.0${VALUE_DIVIDER}0.0${VALUE_DIVIDER}0.0${VALUE_DIVIDER}1.0"))
+        assertThat(converter.stringify(setupQuaternion(0.1f, 0.2f, -0.3f, 0.4f)), equalTo("${TAG_QUATERNION}0.1${VALUE_DIVIDER}0.2${VALUE_DIVIDER}-0.3${VALUE_DIVIDER}0.4"))
     }
 
     @Test

@@ -21,6 +21,7 @@ package eu.michaelvogt.ar.author.data
 import android.content.Context
 import android.util.Log
 import com.android.volley.toolbox.StringRequest
+import eu.michaelvogt.ar.author.R
 import eu.michaelvogt.ar.author.data.tuples.ListMarker
 import eu.michaelvogt.ar.author.utils.NEW_CURRENT_LOCATION
 import eu.michaelvogt.ar.author.utils.NEW_CURRENT_MARKER
@@ -149,8 +150,8 @@ class AppRepository internal constructor(db: AppDatabase?) {
         }
     }
 
-    fun getMarkerGroupsForLocation(locationId: Long): List<ListMarker> {
-        var listMarkers: List<ListMarker> = emptyList()
+    fun getMarkerGroupsForLocation(context: Context?, locationId: Long): List<ListMarker> {
+        val listMarkers: MutableList<ListMarker> = emptyList<ListMarker>().toMutableList()
 
         val groups = CompletableFuture<List<ListMarker>>().doAsyncResult { titleGroupDao.getAll() }.get()
 
@@ -178,9 +179,8 @@ class AppRepository internal constructor(db: AppDatabase?) {
         }.get()
 
         if (markers.isNotEmpty()) {
-            if (groups.isNotEmpty())
-                listMarkers += ListMarker(0L, "@string/repo_marker_name_no_group", isTitle = true)
-
+            listMarkers += ListMarker(0L, context?.getString(R.string.repo_marker_name_no_group)
+                    ?: "No Group", isTitle = true)
             listMarkers += markers
         }
 
