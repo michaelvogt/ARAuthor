@@ -39,9 +39,11 @@ class AppWebViewJs(
     fun openArView() {
         val importMarkersPref = Preferences.getPreference(activity, R.string.import_marker_images_pref, false)
 
-        if (importMarkersPref && viewModel.markersCache.isNotEmpty())
-            navController.navigate(R.id.image_preview_fragment)
-        else
-            navController.navigate(R.id.touch_preview_fragment)
+        activity?.runOnUiThread {
+            if (importMarkersPref && viewModel.markersCache.isNotEmpty())
+                navController.navigate(R.id.image_preview_fragment)
+            else
+                navController.navigate(R.id.touch_preview_fragment)
+        }
     }
 }

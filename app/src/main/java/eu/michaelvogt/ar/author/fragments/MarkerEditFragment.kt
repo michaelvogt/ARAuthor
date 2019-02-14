@@ -83,7 +83,7 @@ class MarkerEditFragment : AppFragment() {
     override fun onResume() {
         super.onResume()
 
-        setupFab(android.R.drawable.ic_menu_save, View.OnClickListener {
+        setupFab(android.R.drawable.ic_menu_save, AppFragment.Companion.FabVisibility.EDITING, View.OnClickListener {
             // TODO: Decide on correct validation strategy
             if (editMarker.locationId <= 0) {
                 Snackbar.make(view!!,

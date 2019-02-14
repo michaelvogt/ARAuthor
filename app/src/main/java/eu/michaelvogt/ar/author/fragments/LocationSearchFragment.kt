@@ -54,7 +54,7 @@ class LocationSearchFragment : AppFragment(), CardLinkListener {
     fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binder.locationList.setHasFixedSize(true)
+        binder.locationList.setHasFixedSize(false)
 
         adapter = LocationSearchAdapter(context, this)
         binder.locationList.adapter = adapter
@@ -84,7 +84,7 @@ class LocationSearchFragment : AppFragment(), CardLinkListener {
     override fun onResume() {
         super.onResume()
 
-        setupFab(android.R.drawable.ic_input_add, View.OnClickListener {
+        setupFab(android.R.drawable.ic_input_add, AppFragment.Companion.FabVisibility.EDITING, View.OnClickListener {
             navController.navigate(LocationSearchFragmentDirections.actionToLocationEdit())
         })
 

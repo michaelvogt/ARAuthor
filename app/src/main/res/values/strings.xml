@@ -137,11 +137,13 @@
     <string name="location_info_secondary">More or less just an organisational structure to combine
         several AR scenes together for easy access. This can be a statue in your neighbourhood or
         a tour through a historical town.\n\n
-        You can create your own location through the + button below.
+        You can import additional locations through the search button below.
     </string>
     <string name="location_search_primary">Search Location</string>
-    <string name="location_search_secondary">location search info</string>
-    <string name="location_search_loaded_check_desc">Button to open info about locations</string>
+    <string name="location_search_secondary">Here you can select a location to import into the
+        location list. From there you can download the related media files needed for this location.
+        \n\nThe list loads kinda slow right now. Will fix with an upcoming version.</string>
+    <string name="location_search_loaded_check_desc">related location already imported</string>
 
     <string name="locationthumb_placeholder">/module_asset/location/images/placeholderthumb.webp</string>
 

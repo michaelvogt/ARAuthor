@@ -26,7 +26,7 @@ interface CardLinkListener {
     fun onTextClicked(searchLocation: SearchLocation)
 }
 
-interface CardMenuListener {
+interface CardEventListener {
     fun onMenuClick(view: View, location: Location)
     fun onItemClicked(uId: Long)
     fun onDownloadClicked(location: Location)

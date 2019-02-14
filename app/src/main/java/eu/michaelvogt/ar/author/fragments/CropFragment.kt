@@ -49,7 +49,7 @@ class CropFragment : AppFragment() {
     fun onResume() {
         super.onResume()
 
-        setupFab(android.R.drawable.ic_menu_save, View.OnClickListener {
+        setupFab(android.R.drawable.ic_menu_save, Companion.FabVisibility.EDITING, View.OnClickListener {
             FileUtils.saveImageToExternalStorage(crop_view.crop()!!, imagePath)
             navController.popBackStack()
         })
