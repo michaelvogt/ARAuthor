@@ -99,7 +99,7 @@ class LocationEditFragment : AppFragment() {
     override fun onResume() {
         super.onResume()
 
-        setupFab(android.R.drawable.ic_menu_save, fabListener)
+        setupFab(android.R.drawable.ic_menu_save, AppFragment.Companion.FabVisibility.EDITING, fabListener)
         setupBottomNav(R.menu.actionbar_locationedit_menu, Toolbar.OnMenuItemClickListener {
             when (it.itemId) {
                 R.id.actionbar_location_delete -> {

@@ -99,7 +99,7 @@ class Location(
     companion object {
         fun getDefaultLocation(): Location {
             return Location(
-                    "My location",
+                    "Current location",
                     "Your current location",
                     "",
                     "/module_asset/location/images/mylocationthumb.webp",
