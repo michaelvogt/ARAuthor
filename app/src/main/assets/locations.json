@@ -10,45 +10,63 @@
   },
   {
     "name": "Iwami Ginzan",
-    "description": "World Heritage silver mine area",
+    "description": "The Iwami Ginzan (石見銀山) was an underground silver mine in the city of Ōda, in Shimane Prefecture on the main island of Honshu, Japan.[1] It was the largest silver mine in Japanese history. It was active for almost four hundred years, from its discovery in 1526 to its closing in 1923.",
     "module_id": "location_iwamiginzan",
-    "content_size": "1234MB",
+    "content_size": "234 MB",
     "thumb_path": "/module_asset/iwami_ginzan/iwamiginzanthumb.webp",
     "intro_html_path": "/module_asset/iwami_ginzan/site/iwamiginzan.html",
     "is_active": true
   },
   {
     "name": "Izumo Taisha",
-    "description": "Japanese Grand Shrine",
+    "description": "Izumo-taisha (出雲大社, Izumo Grand Shrine), officially Izumo Ōyashiro, is one of the most ancient and important Shinto shrines in Japan. No record gives the date of establishment. Located in Izumo, Shimane Prefecture, it is believed by many to be the oldest Shinto shrine in Japan, even predating the Ise Grand Shrine.",
     "module_id": "location_izumotaisha",
-    "content_size": "1234MB",
+    "content_size": "234 MB",
     "thumb_path": "/module_asset/izumo_taisha/images/izumotaishathumb.webp",
     "intro_html_path": "/module_asset/izumo_taisha/izumotaisha.html",
     "is_active": true
   },
   {
     "name": "Nara",
-    "description": "",
+    "description": "Nara (奈良市 Nara-shi, Japanese: [naꜜɾa]) is the capital city of Nara Prefecture located in the Kansai region of Japan. The city occupies the northern part of Nara Prefecture, bordering Kyoto Prefecture. During 710 CE - 784 CE, Nara was the capital of Japan, and the Emperor (天皇) lived there before moving the capital to Kyoto.",
     "module_id": "location_nara",
-    "content_size": "1234MB",
+    "content_size": "234 MB",
     "thumb_path": "",
     "intro_html_path": "",
     "is_active": false
   },
   {
     "name": "Hiroshima",
-    "description": "",
+    "description": "Hiroshima (広島市 Hiroshima-shi, Japanese: [çiɾoɕima]) is the capital of Hiroshima Prefecture and the largest city in the Chūgoku region of western Honshu, the largest island of Japan. On April 1, 1980, Hiroshima became a designated city. Hiroshima was the first city targeted by a nuclear weapon, when the United States Army Air Forces (USAAF) dropped an atomic bomb on the city at 8:15 a.m. on August 6, 1945, near the end of World War II.",
     "module_id": "location_hiroshima",
-    "content_size": "1234MB",
+    "content_size": "234 MB",
     "thumb_path": "",
     "intro_html_path": "",
     "is_active": false
   },
   {
-    "name": "Niigata",
-    "description": "",
+    "name": "Sado Island",
+    "description": "Sado (佐渡市 Sado-shi) is a city located on Sado Island (佐渡ヶ島 Sadogashima) in Niigata Prefecture, Japan. Sado experienced a sudden economic boom during the Edo period when gold was found in 1601 at Aikawa (相川). A major source of revenue for the Tokugawa shogunate.",
     "module_id": "location_niigata",
-    "content_size": "1234MB",
+    "content_size": "234 MB",
+    "thumb_path": "",
+    "intro_html_path": "",
+    "is_active": false
+  },
+  {
+    "name": "Germany",
+    "description": "",
+    "module_id": "",
+    "is_title": true,
+    "thumb_path": "",
+    "intro_html_path": "",
+    "is_active": false
+  },
+  {
+    "name": "Kloster Hirsau",
+    "description": "Hirsau Abbey, formerly known as Hirschau Abbey, was once one of the most important Benedictine abbeys of Germany. It is located in the Hirsau borough of Calw on the northern slopes of the Black Forest mountain range. In the 11th and 12th century, the monastery was a centre of the Cluniac Reforms, implemented as \"Hirsau\" Reforms in the German lands. The complex was devastated during the War of the Palatine Succession in 1692 and not rebuilt.",
+    "module_id": "location_kloster_hirsau",
+    "content_size": "234 MB",
     "thumb_path": "",
     "intro_html_path": "",
     "is_active": false
@@ -64,9 +82,9 @@
   },
   {
     "name": "Machu Picchu",
-    "description": "",
+    "description": "Machu Picchu is a 15th-century Inca citadel, located in the Eastern Cordillera of southern Peru, on a mountain ridge 2,430 metres above sea level. Most archaeologists believe that Machu Picchu was constructed as an estate for the Inca emperor Pachacuti (1438–1472).",
     "module_id": "location_machupicchu",
-    "content_size": "1234MB",
+    "content_size": "234 MB",
     "thumb_path": "",
     "intro_html_path": "",
     "is_active": false

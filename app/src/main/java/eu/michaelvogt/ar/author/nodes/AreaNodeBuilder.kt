@@ -34,7 +34,7 @@ import java.util.concurrent.CompletionStage
 class AreaNodeBuilder private constructor(private val context: Context, private val areaVisual: AreaVisual) {
     private var scene: Scene? = null
 
-    fun setScene(scene: Scene): AreaNodeBuilder {
+    fun setScene(scene: Scene?): AreaNodeBuilder {
         this.scene = scene
         return this
     }

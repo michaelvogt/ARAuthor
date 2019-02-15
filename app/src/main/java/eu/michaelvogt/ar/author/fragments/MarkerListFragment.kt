@@ -92,7 +92,7 @@ class MarkerListFragment : AppFragment(), ItemClickListener {
             }
         })
 
-        setupFab(android.R.drawable.ic_input_add, View.OnClickListener {
+        setupFab(android.R.drawable.ic_input_add, AppFragment.Companion.FabVisibility.EDITING, View.OnClickListener {
             viewModel.currentMarkerId = NEW_CURRENT_MARKER
             navController.navigate(MarkerListFragmentDirections.actionEditMarker())
         })

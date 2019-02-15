@@ -32,8 +32,9 @@ open class AppFragment : Fragment() {
         viewModel = ViewModelProviders.of(activity!!).get(AuthorViewModel::class.java)
     }
 
-    fun setupFab(@DrawableRes iconRes: Int, listener: View.OnClickListener) {
-        if (!Preferences.getPreference(context, R.string.allow_edit_pref, false)) {
+    fun setupFab(@DrawableRes iconRes: Int, visibility: FabVisibility, listener: View.OnClickListener) {
+        if (visibility != FabVisibility.ALWAYS
+                && !Preferences.getPreference(context, R.string.allow_edit_pref, false)) {
             hideFab()
             return
         }
@@ -71,5 +72,11 @@ open class AppFragment : Fragment() {
 
     fun hideBottomBar() {
         activity!!.bottom_nav.visibility = View.GONE
+    }
+
+    companion object {
+        enum class FabVisibility {
+            ALWAYS, EDITING
+        }
     }
 }

@@ -71,10 +71,11 @@ class ImagePreviewFragment : PreviewFragment() {
         arFragment.onUpdate(frameTime)
 
         val frame = arFragment.arSceneView.arFrame
-        val updatedAugmentedImages = frame.getUpdatedTrackables(AugmentedImage::class.java)
+        val updatedAugmentedImages = frame?.getUpdatedTrackables(AugmentedImage::class.java)
+                ?: emptyList()
 
         for (image in updatedAugmentedImages) {
-            val trackingState = arFragment.arSceneView.arFrame.camera.trackingState
+            val trackingState = arFragment.arSceneView.arFrame?.camera?.trackingState
             if (trackingState == TrackingState.TRACKING && !handledImages.contains(image.name)) {
                 handledImages.plus(image.name)
                 val anchor: Anchor?

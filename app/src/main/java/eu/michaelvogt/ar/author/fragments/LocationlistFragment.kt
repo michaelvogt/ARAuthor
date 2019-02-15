@@ -27,15 +27,14 @@ import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
-import com.google.ar.sceneform.math.Vector3
 import eu.michaelvogt.ar.author.R
 import eu.michaelvogt.ar.author.data.*
-import eu.michaelvogt.ar.author.data.utils.Converters
+import eu.michaelvogt.ar.author.data.utils.Json
 import eu.michaelvogt.ar.author.databinding.FragmentLocationlistBinding
 import eu.michaelvogt.ar.author.fragments.adapters.LocationListAdapter
+import eu.michaelvogt.ar.author.modules.Module
 import eu.michaelvogt.ar.author.utils.*
 import kotlinx.android.synthetic.main.fragment_locationlist.*
-import org.json.JSONObject
 
 /**
  * View to list the [Location]s provided by the view model.
@@ -43,7 +42,7 @@ import org.json.JSONObject
  * Tab on a list item navigates to the web view, which loads the content of the URL stored in
  * [Location.introHtmlPath].
  */
-class LocationlistFragment : AppFragment(), CardMenuListener {
+class LocationlistFragment : AppFragment(), CardEventListener {
     private lateinit var adapter: LocationListAdapter
     private lateinit var binder: FragmentLocationlistBinding
 
@@ -62,6 +61,7 @@ class LocationlistFragment : AppFragment(), CardMenuListener {
 
         adapter = LocationListAdapter(context, this)
         binder.locationList.adapter = adapter
+        binder.mylocation.handler = adapter
 
         val appBarConfiguration = AppBarConfiguration.Builder(R.id.location_list_fragment).build()
         NavigationUI.setupWithNavController(top_toolbar, navController, appBarConfiguration)
@@ -75,7 +75,7 @@ class LocationlistFragment : AppFragment(), CardMenuListener {
     override fun onResume() {
         super.onResume()
 
-        setupFab(R.drawable.ic_search_black_24dp, View.OnClickListener {
+        setupFab(R.drawable.ic_search_black_24dp, AppFragment.Companion.FabVisibility.ALWAYS, View.OnClickListener {
             viewModel.currentLocationId = NEW_CURRENT_LOCATION
             navController.navigate(LocationlistFragmentDirections.actionToLocationSearch())
         })
@@ -102,112 +102,9 @@ class LocationlistFragment : AppFragment(), CardMenuListener {
 
     override
     fun onDownloadClicked(location: Location) {
-/*
-        // Can't be used currently, because of an incompatibility of play.core and sceneform
-        // https://github.com/google-ar/sceneform-android-sdk/issues/507
-
-        val splitManager = SplitInstallManagerFactory.create(context)
-        val splitRequest = SplitInstallRequest.newBuilder().addModule(moduleId).build()
-
-        splitManager.startInstall(splitRequest)
-                .addOnSuccessListener {
-                    println("Module isLoaded. Session: $it")
-                }
-                .addOnFailureListener {
-                    println("LocationListFragment error: $it")
-                }
-
-        splitManager.registerListener { state ->
-            state.moduleNames().forEach {
-                when (state.status()) {
-                    SplitInstallSessionStatus.PENDING -> println("pending")
-                    SplitInstallSessionStatus.REQUIRES_USER_CONFIRMATION -> {
-                        println("confirmation")
-                        activity?.startIntentSender(
-                                state.resolutionIntent().getIntentSender(),
-                                null, 0, 0, 0)
-                    }
-                    SplitInstallSessionStatus.DOWNLOADING -> println("downloading")
-                    SplitInstallSessionStatus.INSTALLING -> println("installing")
-                    SplitInstallSessionStatus.INSTALLED -> println("installed")
-                    SplitInstallSessionStatus.FAILED -> println("failed")
-                    SplitInstallSessionStatus.CANCELING -> println("canceling")
-                    SplitInstallSessionStatus.CANCELED -> println("canceled")
-                }
-            }
-        }
-*/
-        // Module is already isLoaded and active until Sceneform bug is fixed
-
-        // import module json file
-        // save in database
-        // reload location list
-
-        // Todo: Refactor
-
-        val assetManager = activity?.assets
-
-        if (assetManager != null) {
-            val moduleId = location.moduleId.also {
-                when (it) {
-                    null, "" -> {
-                        Log.e(TAG, "Module ID of location ${location.name} is missing. Required to access content")
-                    }
-                }
-            }
-
-            val reader = assetManager.open("$moduleId.json").bufferedReader()
-            val contentString = reader.readText()
-            reader.close()
-
-            if (location.isLoaded != null && location.isLoaded == false) {
-                // Insert content
-                val locationObject = JSONObject(contentString).getJSONObject("location")
-                val groupArray = locationObject.getJSONArray("groups")
-
-                for (groupIndex in 0 until groupArray.length()) {
-                    val groupObject = groupArray.getJSONObject(groupIndex)
-
-                    viewModel.insertTitleGroup(TitleGroup(groupObject.getString("name"))).thenAccept { groupId ->
-                        val markersArray = groupObject.getJSONArray("markers")
-
-                        for (markerIndex in 0 until markersArray.length()) {
-                            val markerObject = markersArray.getJSONObject(markerIndex)
-
-                            viewModel.insertMarker(Marker(location.uId, groupId,
-                                    markerObject.getString("title"),
-                                    zeroPoint = Converters().vector3FromString(markerObject.getString("zero_point"))
-                                            ?: Vector3.zero())
-                            ).thenAccept { markerId ->
-                                val areasArray = markerObject.getJSONArray("areas")
-
-                                for (areaIndex in 0 until areasArray.length()) {
-                                    val areaObject = areasArray.getJSONObject(areaIndex)
-
-                                    viewModel.insertArea(Area(areaObject.getString("title"))).thenAccept { areaId ->
-                                        viewModel.insertMarkerArea(MarkerArea(markerId, areaId))
-                                    }.exceptionally {
-                                        Log.e(TAG, "Unable to insert area.", it)
-                                        null
-                                    }
-                                }
-                            }.exceptionally {
-                                Log.e(TAG, "Unable to insert marker.", it)
-                                null
-                            }
-                        }
-                    }.exceptionally {
-                        Log.e(TAG, "Unable to insert group", it)
-                        null
-                    }
-                }
-
-                location.isLoaded = true
-                viewModel.updateLocation(location).thenAccept {
-                    setLocations()
-                }
-            } else {
-                // TODO: Update content
+        Module.load(context, location.moduleId) {
+            Json.importLocation(context, viewModel, location) {
+                setLocations()
             }
         }
     }

@@ -100,16 +100,46 @@
             <ImageButton
                 android:id="@+id/location_load"
                 android:layout_width="44dp"
-                android:layout_height="0dp"
-                android:layout_marginEnd="8dp"
+                android:layout_height="44dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="8dp"
                 android:background="#7fff"
+
                 android:contentDescription="@string/location_load_desc"
                 android:visibility="@{location.loaded ? View.GONE : View.VISIBLE}"
-
-                card_view:layout_constraintBottom_toBottomOf="@+id/location_title"
-                card_view:layout_constraintEnd_toEndOf="parent"
-                card_view:layout_constraintTop_toTopOf="@+id/location_title"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintStart_toStartOf="parent"
                 card_view:srcCompat="@drawable/ic_file_download_black_24dp" />
+
+            <TextView
+                android:id="@+id/location_contentsize_label"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:background="#4cffffff"
+                android:gravity="bottom"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingBottom="7dp"
+                android:text="Size: "
+                android:textSize="18sp"
+                card_view:layout_constraintBottom_toBottomOf="@+id/location_load"
+                card_view:layout_constraintStart_toEndOf="@+id/location_load"
+                card_view:layout_constraintTop_toTopOf="@+id/location_load" />
+
+            <TextView
+                android:id="@+id/location_contentsize"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:background="#4cffffff"
+                android:gravity="bottom"
+                android:paddingBottom="7dp"
+                android:text="@{location.contentSize}"
+                android:textSize="18sp"
+                android:visibility="@{location.loaded ? View.GONE : View.VISIBLE}"
+                card_view:layout_constraintBottom_toBottomOf="@+id/location_load"
+                card_view:layout_constraintStart_toEndOf="@+id/location_contentsize_label"
+                card_view:layout_constraintTop_toTopOf="@+id/location_load"
+                card_view:layout_constraintVertical_bias="0.0" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

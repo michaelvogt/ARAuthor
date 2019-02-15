@@ -26,7 +26,7 @@ import androidx.recyclerview.widget.RecyclerView
 import eu.michaelvogt.ar.author.R
 import eu.michaelvogt.ar.author.data.Location
 import eu.michaelvogt.ar.author.databinding.CardLocationBinding
-import eu.michaelvogt.ar.author.utils.CardMenuListener
+import eu.michaelvogt.ar.author.utils.CardEventListener
 import eu.michaelvogt.ar.author.utils.Preferences
 
 /**
@@ -34,7 +34,7 @@ import eu.michaelvogt.ar.author.utils.Preferences
  */
 class LocationListAdapter(
         private val context: Context?,
-        private val listener: CardMenuListener)
+        private val listener: CardEventListener)
     : RecyclerView.Adapter<LocationListAdapter.ViewHolder>() {
 
     private var locations: List<Location> = emptyList()
