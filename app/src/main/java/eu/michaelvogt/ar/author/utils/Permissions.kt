@@ -155,7 +155,7 @@ fun handleRequestPermissionsResult(activity: Activity, requestCode: Int, grantRe
         }
 
         else ->
-            throw IllegalArgumentException("Unhandled permision request result")
+            throw IllegalArgumentException("Unhandled permision request result: $requestCode")
     }
 
     checkPermissions(activity, activity.app_layout)
@@ -218,7 +218,7 @@ private fun openAppSettings(activity: Activity) {
  * @param context   Activity context
  * @return          true when ARCore is available, false otherwise
  */
-internal fun isArcoreAvailable(context: Context?): Boolean {
+fun isArcoreAvailable(context: Context?): Boolean {
     val availability = ArCoreApk.getInstance().checkAvailability(context)
     if (availability.isTransient) {
         Handler().postDelayed({ isArcoreAvailable(context) }, 200)

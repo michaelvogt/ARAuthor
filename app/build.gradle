@@ -26,7 +26,7 @@ android {
              * devices and x86 to run on the emulator. Your application should
              * list the ABIs most appropriate to minimize APK size (arm64-v8a recommended).
              */
-            abiFilters 'arm64-v8a', 'x86'
+            abiFilters 'arm64-v8a', 'armeabi-v7a', 'x86_64'
         }
         kapt {
             arguments {

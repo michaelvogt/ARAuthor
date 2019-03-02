@@ -39,11 +39,19 @@ class AppWebViewJs(
     fun openArView() {
         val importMarkersPref = Preferences.getPreference(activity, R.string.import_marker_images_pref, false)
 
-        activity?.runOnUiThread {
-            if (importMarkersPref && viewModel.markersCache.isNotEmpty())
-                navController.navigate(R.id.image_preview_fragment)
-            else
-                navController.navigate(R.id.touch_preview_fragment)
+        if (isArcoreAvailable(activity)) {
+            activity?.runOnUiThread {
+                if (importMarkersPref && viewModel.markersCache.isNotEmpty())
+                    navController.navigate(R.id.image_preview_fragment)
+                else
+                    navController.navigate(R.id.touch_preview_fragment)
+            }
+        } else {
+            // TODO: check if alternative scene is available, and open it
+            activity?.runOnUiThread {
+                navController.navigate(R.id.ar_replacement_fragment)
+            }
         }
+
     }
 }
