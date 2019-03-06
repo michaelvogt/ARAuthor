@@ -4,7 +4,7 @@
     package="eu.michaelvogt.locations.iwamiginzan">
 
     <dist:module
-        dist:onDemand="false"
+        dist:onDemand="true"
         dist:title="@string/title_location_iwamiginzan">
         <dist:fusing dist:include="true" />
     </dist:module>

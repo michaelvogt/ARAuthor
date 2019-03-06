@@ -38,6 +38,8 @@ const val STORAGE_PERMISSION = Manifest.permission.WRITE_EXTERNAL_STORAGE
 const val PATH_SELECT_THUMB_CODE = 2
 const val PATH_SELECT_LOCATION_INTRO_CODE = 3
 
+const val MODULE_USER_REQUEST_CODE = 4
+
 /**
  * Constructs a string with the current version of the app and the model of the phone.
  */

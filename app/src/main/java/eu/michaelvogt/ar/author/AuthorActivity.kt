@@ -18,6 +18,7 @@
 
 package eu.michaelvogt.ar.author
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
@@ -28,6 +29,10 @@ import eu.michaelvogt.ar.author.data.AuthorViewModel
 import eu.michaelvogt.ar.author.utils.AppNavigationListener
 import eu.michaelvogt.ar.author.utils.handleRequestPermissionsResult
 import kotlinx.android.synthetic.main.activity_author.*
+import android.content.Intent
+import eu.michaelvogt.ar.author.modules.ModuleLoader
+import eu.michaelvogt.ar.author.utils.MODULE_USER_REQUEST_CODE
+
 
 /**
  * Single activity of the application. Navigation is done through the Navigation Jetpack
@@ -72,6 +77,14 @@ class AuthorActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         handleRequestPermissionsResult(this, requestCode, grantResults)
+    }
+
+    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == MODULE_USER_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_CANCELED) {
+                // TODO: Reactivate the download UI
+            }
+        }
     }
 
     companion object {

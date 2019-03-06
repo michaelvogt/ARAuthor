@@ -32,7 +32,8 @@ import eu.michaelvogt.ar.author.data.*
 import eu.michaelvogt.ar.author.data.utils.Json
 import eu.michaelvogt.ar.author.databinding.FragmentLocationlistBinding
 import eu.michaelvogt.ar.author.fragments.adapters.LocationListAdapter
-import eu.michaelvogt.ar.author.modules.Module
+import eu.michaelvogt.ar.author.modules.ModuleLoader
+import eu.michaelvogt.ar.author.modules.ModuleLoaderCallback
 import eu.michaelvogt.ar.author.utils.*
 import kotlinx.android.synthetic.main.fragment_locationlist.*
 
@@ -102,11 +103,10 @@ class LocationlistFragment : AppFragment(), CardEventListener {
 
     override
     fun onDownloadClicked(location: Location) {
-        Module.load(context, location.moduleId) {
-            Json.importLocation(context, viewModel, location) {
-                setLocations()
-            }
-        }
+        ModuleLoader(activity)
+                .setModules(location.moduleId)
+                .setCallback(getModuleCallbacks(location))
+                .install()
     }
 
     private fun setLocations() {
@@ -117,8 +117,8 @@ class LocationlistFragment : AppFragment(), CardEventListener {
                         adapter.setLocations(locations.filter { !it.isDefaultLocation })
                     }
                 }
-                .exceptionally { throwable ->
-                    Log.e(TAG, "Unable to fetch all locations.", throwable)
+                .exceptionally {
+                    Log.e(TAG, "Unable to fetch all locations.", it)
                     null
                 }
     }
@@ -140,6 +140,27 @@ class LocationlistFragment : AppFragment(), CardEventListener {
             }
         } else {
             mylocation.visibility = View.GONE
+        }
+    }
+
+    private fun getModuleCallbacks(location: Location): ModuleLoaderCallback {
+        return object : ModuleLoaderCallback {
+            override fun onCanceled() {
+                // TODO: Re-enable download UI
+            }
+
+            override fun onFailed() {
+                // TODO: Show error message and re-enable download UI
+            }
+
+            override fun onProgress(current: Long, total: Long) {
+                // TODO: Update progress UI
+            }
+
+            override fun onSuccess() {
+                Json.importLocation(context, viewModel, location)
+                        .thenAccept { setLocations() }
+            }
         }
     }
 

@@ -22,6 +22,7 @@
         android:required="false" />
 
     <application
+        android:name="com.google.android.play.core.splitcompat.SplitCompatApplication"
         android:allowBackup="false"
         android:hasCode="true"
         android:icon="@mipmap/ic_launcher"

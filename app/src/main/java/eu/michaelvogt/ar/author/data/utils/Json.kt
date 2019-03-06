@@ -23,19 +23,24 @@ import android.util.Log
 import com.google.ar.sceneform.math.Vector3
 import eu.michaelvogt.ar.author.data.*
 import org.json.JSONObject
+import java.util.concurrent.CompletableFuture
 
 class Json {
     companion object {
         private val TAG = Json::class.java.simpleName
 
-        fun importLocation(context: Context?, viewModel: AuthorViewModel, location: Location, onFinished: () -> Unit) {
-            val assetManager = context?.assets
+        fun importLocation(context: Context?, viewModel: AuthorViewModel, location: Location): CompletableFuture<Void> {
+            val future = CompletableFuture<Void>()
+
+            // Necessary to access dynamic module content directly without app restart
+            val newContext = context?.createPackageContext(context.packageName, 0)
+            val assetManager = newContext?.assets
 
             if (assetManager != null) {
                 val moduleId = location.moduleId.also {
                     when (it) {
                         null, "" -> {
-                            Log.e(TAG, "Module ID of location ${location.name} is missing. Required to access content")
+                            Log.e(TAG, "ModuleLoader ID of location ${location.name} is missing. Required to access content")
                         }
                     }
                 }
@@ -90,12 +95,13 @@ class Json {
 
                     location.isLoaded = true
                     viewModel.updateLocation(location).thenAccept {
-                        onFinished()
+                        future.complete(null)
                     }
                 } else {
                     // TODO: Update content
                 }
             }
+            return future
         }
     }
 }

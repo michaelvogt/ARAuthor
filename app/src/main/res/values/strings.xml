@@ -36,9 +36,9 @@
     <!--Permissions-->
     <string name="req_header">The application needs your approval to access the following features of
         your device.</string>
-    <string name="arcore_cap">Augmented reality (AR) functionality is provided using ARCore from
-        Google, which can be installed for free from Play store. It allows to place 3D objects
-        into the real world as if they\'re really there.</string>
+    <string name="arcore_cap">Augmented reality (AR) functionality runs on ARCore, which is provided
+        by Google LLC and governed by the Google Privacy Policy. ARCore can be installed for free from
+        Play store. It allows to place 3D objects into the real world as if they\'re really there.</string>
     <string name="arcore_cap_not_capable">Unfortunately, your phone isn\'t able to run ArCore.
         AR scenes will be partially available as 3D models.</string>
     <string name="arcore_cap_deactivated">ARCore is deactivated</string>
