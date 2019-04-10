@@ -1,4 +1,9 @@
 # ARAuthor
+
+Currently not working on this app anymore, because of the shortcoming of ARCore and the perceived unwillingness of Google to fix even the simplest bugs and implement requested features. Will continue as soon as one of the ARCloud frameworks are available for Android apps.
+
+
+
 Experiment with the image recognition feature of ARCore
 
 This is a prototype for an application that should provide tourist with information about historical sites using augmented reality (AR).
