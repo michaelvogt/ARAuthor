@@ -79,7 +79,9 @@ class LocationListAdapter(
             }
 
             binder.locationLoad.setOnClickListener {
-                listener.onDownloadClicked(locations[adapterPosition])
+                listener.onDownloadClicked(locations[adapterPosition],
+                        binder.locationLoad, binder.locationProgress, binder.locationContentsizeLabel,
+                        binder.locationContentsize, binder.locationMessage)
             }
         }
     }

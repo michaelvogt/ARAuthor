@@ -28,6 +28,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.navigation.ui.NavigationUI
+import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
 import eu.michaelvogt.ar.author.R
 import eu.michaelvogt.ar.author.data.Location
 import eu.michaelvogt.ar.author.databinding.FragmentLocationEditBinding
@@ -103,9 +104,13 @@ class LocationEditFragment : AppFragment() {
         setupBottomNav(R.menu.actionbar_locationedit_menu, Toolbar.OnMenuItemClickListener {
             when (it.itemId) {
                 R.id.actionbar_location_delete -> {
+                    val splitInstallManager = SplitInstallManagerFactory.create(context)
+                    splitInstallManager.deferredUninstall(listOf(location.moduleId))
+
                     viewModel.deleteLocation(location).thenAccept {
                         activity!!.runOnUiThread { navController.popBackStack() }
                     }
+
                     true
                 }
                 else -> false

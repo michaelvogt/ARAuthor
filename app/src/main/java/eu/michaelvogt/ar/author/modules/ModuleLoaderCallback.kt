@@ -19,8 +19,9 @@
 package eu.michaelvogt.ar.author.modules
 
 interface ModuleLoaderCallback {
-    fun onSuccess()
     fun onCanceled()
+    fun onFailed(message: String?)
+    fun onInfo(info: String)
     fun onProgress(current: Long, total: Long)
-    fun onFailed()
+    fun onSuccess()
 }

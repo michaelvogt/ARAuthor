@@ -144,6 +144,7 @@
         location list. From there you can download the related media files needed for this location.
         \n\nThe list loads kinda slow right now. Will fix with an upcoming version.</string>
     <string name="location_search_loaded_check_desc">related location already imported</string>
+    <string name="location_size_label">Size: </string>
 
     <string name="locationthumb_placeholder">/module_asset/location/images/placeholderthumb.webp</string>
 

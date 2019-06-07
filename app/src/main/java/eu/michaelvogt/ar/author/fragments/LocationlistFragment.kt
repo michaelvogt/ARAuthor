@@ -23,6 +23,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.navigation.ui.AppBarConfiguration
@@ -102,18 +105,24 @@ class LocationlistFragment : AppFragment(), CardEventListener {
     }
 
     override
-    fun onDownloadClicked(location: Location) {
+    fun onDownloadClicked(location: Location, download: View,
+                          progress: ProgressBar, label: View, size: View, message: TextView) {
         ModuleLoader(activity)
                 .setModules(location.moduleId)
-                .setCallback(getModuleCallbacks(location))
+                .setCallback(getModuleCallbacks(location, download, progress, label, size, message))
                 .install()
+
+        // TODO: Comment when deactivating dynamic modules
+        download.visibility = View.GONE
+        progress.visibility = View.VISIBLE
+        progress.isIndeterminate = true
     }
 
     private fun setLocations() {
         viewModel.getAllLocations()
                 .thenAccept { locations ->
                     activity!!.runOnUiThread {
-                        fillMylocation(locations.filter { it.isDefaultLocation })
+                        fillMyLocation(locations.filter { it.isDefaultLocation })
                         adapter.setLocations(locations.filter { !it.isDefaultLocation })
                     }
                 }
@@ -123,7 +132,7 @@ class LocationlistFragment : AppFragment(), CardEventListener {
                 }
     }
 
-    private fun fillMylocation(locations: List<Location>) {
+    private fun fillMyLocation(locations: List<Location>) {
         if (locations.isNotEmpty()) {
             // Only one 'mylocation' allowed
             val location = locations[0]
@@ -143,25 +152,55 @@ class LocationlistFragment : AppFragment(), CardEventListener {
         }
     }
 
-    private fun getModuleCallbacks(location: Location): ModuleLoaderCallback {
+    private fun getModuleCallbacks(location: Location, download: View, progress: ProgressBar,
+                                   sizeLabel: View, size: View, messageDisplay: TextView): ModuleLoaderCallback {
         return object : ModuleLoaderCallback {
-            override fun onCanceled() {
-                // TODO: Re-enable download UI
+            override
+            fun onCanceled() {
+                download.visibility = View.VISIBLE
+                progress.visibility = View.GONE
             }
 
-            override fun onFailed() {
-                // TODO: Show error message and re-enable download UI
+            override
+            fun onFailed(message: String?) {
+                showMessage(message, sizeLabel, size, messageDisplay)
             }
 
-            override fun onProgress(current: Long, total: Long) {
-                // TODO: Update progress UI
+            override fun onInfo(info: String) {
+                showInfo(info)
             }
 
-            override fun onSuccess() {
+            override
+            fun onProgress(current: Long, total: Long) {
+                progress.isIndeterminate = false
+                progress.max = total.toInt()
+                progress.setProgress(current.toInt(), true)
+            }
+
+            override
+            fun onSuccess() {
                 Json.importLocation(context, viewModel, location)
                         .thenAccept { setLocations() }
             }
         }
+    }
+
+    private fun showMessage(message: String?, sizeLabel: View, size: View, messageDisplay: View) {
+        sizeLabel.visibility = View.GONE
+        size.visibility = View.GONE
+        messageDisplay.visibility = View.VISIBLE
+        (messageDisplay as TextView).text = message
+
+        Run.after(3000) {
+            sizeLabel.visibility = View.VISIBLE
+            size.visibility = View.VISIBLE
+            messageDisplay.visibility = View.GONE
+        }
+    }
+
+    private fun showInfo(message: String?) {
+        val toast = Toast.makeText(activity, message, Toast.LENGTH_LONG)
+        toast.show()
     }
 
     companion object {

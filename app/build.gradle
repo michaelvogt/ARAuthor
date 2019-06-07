@@ -14,8 +14,8 @@ android {
         // 24 is the minimum since ARCore only works with 24 and higher.
         minSdkVersion 24
         targetSdkVersion 28
-        versionCode 8
-        versionName '0.7 - prototype'
+        versionCode 13
+        versionName '0.12 - test'
 
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
 
@@ -110,6 +110,9 @@ dependencies {
     implementation('com.lyft:scissors:1.1.1') {
         exclude group: 'com.github.bumptech.glide'
     }
+
+    // Still no progress bar available in Material
+    implementation 'me.zhanghai.android.materialprogressbar:library:1.6.1'
 
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1'

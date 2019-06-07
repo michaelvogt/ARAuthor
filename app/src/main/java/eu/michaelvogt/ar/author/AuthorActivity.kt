@@ -30,7 +30,6 @@ import eu.michaelvogt.ar.author.utils.AppNavigationListener
 import eu.michaelvogt.ar.author.utils.handleRequestPermissionsResult
 import kotlinx.android.synthetic.main.activity_author.*
 import android.content.Intent
-import eu.michaelvogt.ar.author.modules.ModuleLoader
 import eu.michaelvogt.ar.author.utils.MODULE_USER_REQUEST_CODE
 
 
@@ -82,7 +81,13 @@ class AuthorActivity : AppCompatActivity() {
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == MODULE_USER_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_CANCELED) {
-                // TODO: Reactivate the download UI
+                // TODO: Check if fragment is found - needs module larger 10MB
+                val manager = supportFragmentManager
+                val locationList = manager.findFragmentById(R.id.location_list_fragment)
+
+                print("LocationList $locationList")
+
+                // TODO: Start download or reset UI depending on resultCode
             }
         }
     }

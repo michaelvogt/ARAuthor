@@ -19,6 +19,8 @@
 package eu.michaelvogt.ar.author.utils
 
 import android.view.View
+import android.widget.ProgressBar
+import android.widget.TextView
 import eu.michaelvogt.ar.author.data.Location
 import eu.michaelvogt.ar.author.data.tuples.SearchLocation
 
@@ -29,7 +31,8 @@ interface CardLinkListener {
 interface CardEventListener {
     fun onMenuClick(view: View, location: Location)
     fun onItemClicked(uId: Long)
-    fun onDownloadClicked(location: Location)
+    fun onDownloadClicked(location: Location, download: View,
+                          progress: ProgressBar, label: View, size: View, message: TextView)
 }
 
 interface ItemClickListener {
